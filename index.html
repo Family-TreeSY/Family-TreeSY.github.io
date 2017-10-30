@@ -179,6 +179,120 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-login-douban" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/10/30/login-douban/">Python模拟登陆豆瓣</a>
+    </h1>
+  
+
+        
+        <a href="/2017/10/30/login-douban/" class="archive-article-date">
+  	<time datetime="2017-10-30T08:16:20.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-10-30</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>这几天在学习模拟登陆，而登陆离不开http中Cookie技术</p>
+<h3 id="Cookie"><a href="#Cookie" class="headerlink" title="Cookie"></a><strong>Cookie</strong></h3><p>由于HTTP是一种无状态的协议，服务器单从网络连接上无从知道客户身份。怎么办呢？就给客户端们颁发一个通行证吧，每人一个，无论谁访问都必须携带自己通行证。这样服务器就能从通行证上确认客户身份了。这就是Cookie的工作原理。<br><img src="https://timgsa.baidu.com/timg?image&amp;quality=80&amp;size=b9999_10000&amp;sec=1509363866179&amp;di=573e91f2708405e58e5387722e2def0a&amp;imgtype=0&amp;src=http%3A%2F%2Fimg.mp.itc.cn%2Fupload%2F20160702%2Fb014306d961742ea89c74c86f8d14e9f_th.png" alt=""></p>
+<h3 id="分析网页数据"><a href="#分析网页数据" class="headerlink" title="分析网页数据"></a><strong>分析网页数据</strong></h3><p>我们用Chrome来打开<a href="https://accounts.douban.com/login?alias=&amp;redir=https%3A%2F%2Fwww.douban.com%2F&amp;source=index_nav&amp;error=1001" target="_blank" rel="external">豆瓣</a>（F12开发者工具），先输入一个错误的账户信息来观察浏览器是如何发送请求的</p>
+<p><img src="http://a2.qpic.cn/psb?/V10WDaE22S84Sl/lF5ujf5darh1W5vWX7x2FoByn5ScY8SJw4o8AQgW08U!/b/dOIAAAAAAAAA&amp;bo=MgVGAgAAAAADB1E!&amp;rf=viewer_4" alt=""><br>从浏览器的请求可以发现几个关键的信息</p>
+<ul>
+<li>登录的 URL 地址是 <a href="https://accounts.douban.com/login" target="_blank" rel="external">https://accounts.douban.com/login</a></li>
+<li>登录需要提供的表单数据有7个：</li>
+</ul>
+<ol>
+<li>source:index_nav</li>
+<li>redir:<a href="https://www.douban.com/" target="_blank" rel="external">https://www.douban.com/</a></li>
+<li>form_email:286210002@qq.com</li>
+<li>form_password:123</li>
+<li>captcha-solution:errfdf</li>
+<li>captcha-id:lWtHfckzUAF4PoAtFtQdsyZy:en</li>
+<li>login:登录</li>
+</ol>
+<ul>
+<li>获取验证码的URL地址是 <a href="https://www.douban.com/misc/captcha?id=gTpnLfXlpVM2vIB2xlT09deP:en&amp;size=s" target="_blank" rel="external">https://www.douban.com/misc/captcha?id=gTpnLfXlpVM2vIB2xlT09deP:en&amp;size=s</a></li>
+</ul>
+<p>我们还需要获取验证码元素，我们在开发者工具中切换到Elements一栏<br><img src="http://a3.qpic.cn/psb?/V10WDaE22S84Sl/6EndpYOzS5ITZ6iCYu7o*wDKZVPcvY*2NlfHsmmaVYk!/b/dPIAAAAAAAAA&amp;bo=OgWzAQAAAAADB68!&amp;rf=viewer_4" alt=""><br>从中我们得到了验证码元素在img标签内</p>
+<blockquote>
+<p>img id=”captcha_image” </p>
+</blockquote>
+<p>最后我们还需要captcha-id元素，Ctrl+U打开页面源码（在登陆页面打开），Ctrl+F搜索captcha-id<br><img src="http://a1.qpic.cn/psb?/V10WDaE22S84Sl/65.u1lYW6pl0AIBVopKZaLbiP7bSoXviTfnRBC1sh68!/b/dPMAAAAAAAAA&amp;bo=VQfiAQAAAAADB5M!&amp;rf=viewer_4" alt=""><br>好了，到了这一步所需的数据全部获取完毕</p>
+<h3 id="实战应用"><a href="#实战应用" class="headerlink" title="实战应用"></a><strong>实战应用</strong></h3><p>登陆所需要的模块</p>
+<ul>
+<li>Requests</li>
+<li>BeautifulSoup4<blockquote>
+<p>pip install requests<br>pip install BeautifulSoup4</p>
+</blockquote>
+</li>
+</ul>
+<p>http.cookiejar 模块可用于自动处理HTTP Cookie，LWPCookieJar 对象就是对 cookies 的封装，它支持把 cookies 保存到文件以及从文件中加载。<br>而 session 对象 提供了 Cookie 的持久化，连接池功能，可以通过 session 对象发送请求<br>首先从cookies 文件中加载 cookie信息，因为首次运行还没有cookie，会出现 LoadError 异常。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> requests</div><div class="line"><span class="keyword">from</span> http <span class="keyword">import</span> cookiejar</div><div class="line">session = requests.session()</div><div class="line">session.cookies = cookiejar.LWPCookieJar(filename=<span class="string">'cookies'</span>)</div><div class="line"><span class="keyword">try</span>:</div><div class="line">    print(session.cookies)</div><div class="line">    session.cookies.load(ignore_discard=<span class="keyword">True</span>)</div><div class="line"><span class="keyword">except</span> LoadError:</div><div class="line">    print(<span class="string">'no cookie'</span>)</div></pre></td></tr></table></figure></p>
+<h3 id="获取验证码"><a href="#获取验证码" class="headerlink" title="获取验证码"></a><strong>获取验证码</strong></h3><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">get_captcha</span><span class="params">()</span>:</span></div><div class="line">    <span class="string">'''</span></div><div class="line"><span class="string">    把验证码图片保存到当前目录，手动识别验证码</span></div><div class="line"><span class="string">    :return:</span></div><div class="line"><span class="string">    '''</span></div><div class="line">    r = requests.post(download_url, data=data, headers=headers)</div><div class="line">    page = r.text</div><div class="line">    soup = BeautifulSoup(page, <span class="string">'html.parser'</span>)</div><div class="line">    image = soup.find(<span class="string">'img'</span>, attrs=&#123;<span class="string">'id'</span>: <span class="string">'captcha_image'</span>&#125;).get(<span class="string">'src'</span>)</div><div class="line">    s = session.get(captcha_url, headers=headers)</div><div class="line">    <span class="keyword">with</span> open(<span class="string">'captcha.jpg'</span>, <span class="string">'wb'</span>) <span class="keyword">as</span> f:</div><div class="line">        f.write(s.content)</div><div class="line">    captcha = input(<span class="string">'Please input the captcha: '</span>)</div><div class="line">    captcha_id = soup.find(<span class="string">'input'</span>, &#123;<span class="string">'type'</span>: <span class="string">'hidden'</span>, <span class="string">'name'</span>: <span class="string">'captcha-id'</span> &#125;).get(<span class="string">'value'</span>)</div><div class="line">    <span class="keyword">return</span> captcha, captcha_id</div></pre></td></tr></table></figure>
+<h3 id="登陆"><a href="#登陆" class="headerlink" title="登陆"></a><strong>登陆</strong></h3><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">login</span><span class="params">()</span>:</span></div><div class="line">    captcha, captcha_id = get_captcha()</div><div class="line">    <span class="comment"># 增加表数据</span></div><div class="line">    data[<span class="string">'captcha-solution'</span>] = captcha</div><div class="line">    data[<span class="string">'captcha-id'</span>] = captcha_id</div><div class="line">    response = session.post(download_url, data=data, headers=headers)</div><div class="line">    page = response.text</div><div class="line">    print(page)</div><div class="line">    session.cookies.save()</div></pre></td></tr></table></figure>
+<p>第一次登陆后session 会自动把 服务端的返回的cookie 信息填充到 session.cookies 对象中，下次登陆时就不需要再输入账号密码<br><a href="https://github.com/Family-TreeSY/login-douban/blob/master/login-douban.py" target="_blank" rel="external">完整代码</a></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">PYTHON</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">爬虫</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2017/10/30/login-douban/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-douban-reading" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
