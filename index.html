@@ -173,6 +173,100 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-SecondQuestion" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/10/31/SecondQuestion/">Python每日一题：第二题</a>
+    </h1>
+  
+
+        
+        <a href="/2017/10/31/SecondQuestion/" class="archive-article-date">
+  	<time datetime="2017-10-31T12:38:59.944Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-10-31</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>今天我们学习下<a href="https://wx.xiaomiquan.com/mweb/views/joingroup/join_group.html?group_id=518855855524&amp;secret=meqx22a2blf4c1ae3ucbgpui4somnpwa&amp;user_id=1152122252" target="_blank" rel="external">Python之禅和他朋友们</a>的第二道题目,了解分析下军哥的<a href="https://foofish.net/daily-question2.html" target="_blank" rel="external">代码</a></p>
+<p><strong>题目</strong></p>
+<blockquote>
+<p>设计一个猜数字的游戏，系统随机生成一个1~100之间的整数，玩家有5次机会，每猜一次系统就会提示玩家该数字是偏大还是偏小，如果猜中了，则告知玩家并提前结束游戏，如果5次都没猜中，结束游戏并告知正确答案。</p>
+</blockquote>
+<p>老样子！在做题之前我们需要了解以下几点知识：</p>
+<ul>
+<li>try … except … else …语句</li>
+<li>if … elif … else … 语句</li>
+<li>while … else … 语句</li>
+</ul>
+<p><strong>try … except … else … 语句</strong><br>工作原理大致如下：Python执行try代码块，只有可能发生异常的代码才需要放在try语句中；except代码块告诉Python，如果try语句运行发生异常时，该怎么办；else代码块告诉Python，在try代码块成功执行时才需要的运行的代码，放在else代码块中。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div></pre></td><td class="code"><pre><div class="line">first_number = input(<span class="string">'First number: '</span>)</div><div class="line">second_number = input(<span class="string">'Second number: '</span>)</div><div class="line"><span class="keyword">try</span>:</div><div class="line">    answer = int(first_number) / int(second_number)</div><div class="line"><span class="keyword">except</span> ZeroDivisionError:</div><div class="line">    print(<span class="string">"You can't divide by 0 !"</span>)</div><div class="line"><span class="keyword">else</span>:</div><div class="line">    print(answer)</div><div class="line">``` </div><div class="line"></div><div class="line">**<span class="keyword">if</span> ... <span class="keyword">elif</span> ... <span class="keyword">else</span> ... 语句**</div><div class="line">``` python</div><div class="line"><span class="comment"># 年龄不满4岁，入场为0</span></div><div class="line">age = <span class="number">12</span></div><div class="line"><span class="keyword">if</span> age &lt; <span class="number">4</span>: <span class="comment"># 年龄不满4岁，入场为0，跳过余下测试</span></div><div class="line">	print(<span class="string">'Your admission cost is $0.'</span>)</div><div class="line"><span class="keyword">elif</span> age &lt; <span class="number">18</span>: <span class="comment"># elif仅在if语句为False时才能运行</span></div><div class="line">	print(<span class="string">'Your admission cost is $5.'</span>)</div><div class="line"><span class="keyword">else</span>: <span class="comment"># 如果if和elif都未通过，else语句才被运行</span></div><div class="line">	print(<span class="string">'Your admission cost is $10.'</span>)</div><div class="line">``` </div><div class="line"></div><div class="line">**<span class="keyword">while</span> ... <span class="keyword">else</span> ... 语句**</div><div class="line"><span class="keyword">while</span> … <span class="keyword">else</span> 在循环条件为 false 时执行 <span class="keyword">else</span> 语句块，翻了Python学习手册，<span class="keyword">while</span>...<span class="keyword">else</span>...有点晦涩难懂，菜鸟教程的更容易理解</div><div class="line">``` python</div><div class="line">count = <span class="number">0</span></div><div class="line"><span class="keyword">while</span> count &lt; <span class="number">5</span>:</div><div class="line">   <span class="keyword">print</span> count, <span class="string">" is  less than 5"</span></div><div class="line">   count = count + <span class="number">1</span></div><div class="line"><span class="keyword">else</span>: <span class="comment"># while循环被设置为&lt; 5,当count&gt; 5时，便执行else语句</span></div><div class="line">   <span class="keyword">print</span> count, <span class="string">" is not less than 5"</span></div><div class="line">   </div><div class="line"><span class="number">0</span> <span class="keyword">is</span> less than <span class="number">5</span></div><div class="line"><span class="number">1</span> <span class="keyword">is</span> less than <span class="number">5</span></div><div class="line"><span class="number">2</span> <span class="keyword">is</span> less than <span class="number">5</span></div><div class="line"><span class="number">3</span> <span class="keyword">is</span> less than <span class="number">5</span></div><div class="line"><span class="number">4</span> <span class="keyword">is</span> less than <span class="number">5</span></div><div class="line"><span class="number">5</span> <span class="keyword">is</span> <span class="keyword">not</span> less than <span class="number">5</span></div></pre></td></tr></table></figure>
+<p>基本的解题知识学完后，我们来看一下的军哥的代码</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> random</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">GuessGame</span><span class="params">()</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, min_num, max_num, choice)</span>:</span></div><div class="line">        <span class="string">'''</span></div><div class="line"><span class="string"></span></div><div class="line"><span class="string">        :param min_num:</span></div><div class="line"><span class="string">        :param max_num:</span></div><div class="line"><span class="string">        :param choice:</span></div><div class="line"><span class="string">        :return:</span></div><div class="line"><span class="string">        '''</span></div><div class="line"></div><div class="line">        self.min_num = min_num</div><div class="line">        self.max_num = max_num</div><div class="line">        self.choice = choice</div><div class="line">        self.target = random.randint(min_num, max_num)</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">guess</span><span class="params">(self)</span>:</span></div><div class="line">        <span class="string">'''</span></div><div class="line"><span class="string"></span></div><div class="line"><span class="string">        :return:</span></div><div class="line"><span class="string">        '''</span></div><div class="line">        choice = self.choice</div><div class="line">        <span class="keyword">while</span> choice &gt; <span class="number">0</span>:</div><div class="line">            choice -= <span class="number">1</span></div><div class="line">            <span class="keyword">try</span>:</div><div class="line">                num = int(input(<span class="string">'输入数字: '</span>))</div><div class="line">            <span class="keyword">except</span>:</div><div class="line">                print(<span class="string">'输入有效数字'</span>)</div><div class="line">                <span class="keyword">continue</span> <span class="comment"># 跳出这次循环</span></div><div class="line"></div><div class="line">            <span class="keyword">if</span> num == self.target:</div><div class="line">                print(<span class="string">'恭喜你猜中了'</span>)</div><div class="line">                <span class="keyword">break</span> <span class="comment"># 退出循环</span></div><div class="line">            <span class="keyword">elif</span> num &lt;= self.target:</div><div class="line">                print(<span class="string">'你猜的数字太小了，还剩%d次机会'</span> % choice) <span class="comment"># 运用字符串格式化表达式</span></div><div class="line">            <span class="keyword">else</span>:</div><div class="line">                print(<span class="string">'你猜的数字太大了，还剩%d次机会'</span> % choice)</div><div class="line"></div><div class="line">        <span class="keyword">else</span>:</div><div class="line">            print(<span class="string">'很遗憾，%d 次机会都用完了,只差一点点就猜中了，正确答案是 %d'</span> % (self.choice, self.target))</div><div class="line"></div><div class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</div><div class="line">    game = GuessGame(<span class="number">1</span>, <span class="number">100</span>, <span class="number">5</span>) <span class="comment"># 创建实例</span></div><div class="line">    game.guess()</div></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">你猜的数字太小了，还剩<span class="number">4</span>次机会</div><div class="line">输入数字: <span class="number">1</span></div><div class="line">你猜的数字太小了，还剩<span class="number">3</span>次机会</div><div class="line">输入数字: <span class="number">100</span></div><div class="line">你猜的数字太大了，还剩<span class="number">2</span>次机会</div><div class="line">输入数字: <span class="number">90</span></div><div class="line">你猜的数字太大了，还剩<span class="number">1</span>次机会</div><div class="line">输入数字: <span class="number">0</span></div><div class="line">你猜的数字太小了，还剩<span class="number">0</span>次机会</div><div class="line">很遗憾，<span class="number">5</span> 次机会都用完了,只差一点点就猜中了，正确答案是 <span class="number">70</span></div></pre></td></tr></table></figure>
+<p>欢迎访问博客<a href="https://family-treesy.github.io/" target="_blank" rel="external">Treehl的博客</a><br><a href="https://github.com/Family-TreeSY" target="_blank" rel="external">GitHub</a></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">PYTHON</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">DailyQuestion</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2017/10/31/SecondQuestion/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-FirstQuestion" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -713,11 +807,11 @@ getOwnMetadataKeys:function(t){return o(i(t),arguments.length<2?void 0:u(argumen
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">爬虫</a>
+                <a href="javascript:void(0)" class="js-tag color4">DailyQuestion</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">DailyQuestion</a>
+                <a href="javascript:void(0)" class="js-tag color3">爬虫</a>
               </li>
              
               <li class="article-tag-list-item">
