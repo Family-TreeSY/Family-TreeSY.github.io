@@ -633,112 +633,6 @@ numbers = [<span class="number">10</span>, <span class="number">29</span>, <span
 
 
   
-    <article id="post-Xpath模拟登陆GitHub" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/10/24/Xpath模拟登陆GitHub/">Xpath模拟登陆GitHub</a>
-    </h1>
-  
-
-        
-        <a href="/2017/10/24/Xpath模拟登陆GitHub/" class="archive-article-date">
-  	<time datetime="2017-10-24T01:52:13.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-10-24</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="这是我用python2-7写的简单教程"><a href="#这是我用python2-7写的简单教程" class="headerlink" title="这是我用python2.7写的简单教程"></a><strong>这是我用python2.7写的简单教程</strong></h3><p><strong>准备工作</strong><br>安装requests lxml模块</p>
-<blockquote>
-<p>pip install requests<br>pip install lxml</p>
-</blockquote>
-<p><a href="http://docs.python-requests.org/zh_CN/latest/user/quickstart.html#id11" target="_blank" rel="external">requests文档</a><br><a href="http://lxml.de/" target="_blank" rel="external">lxml文档</a><br><a href="http://www.w3school.com.cn/xpath/index.asp" target="_blank" rel="external">Xpath教程</a></p>
-<hr>
-<p><strong>实战应用</strong><br><img src="http://a1.qpic.cn/psb?/V10WDaE22S84Sl/kgIbyAqyVUEboZyCcWApTA1d9qxLDmjowHvebGpA628!/b/dIkBAAAAAAAA&amp;bo=FQIVAwAAAAADACQ!&amp;rf=viewer_4" alt=""><br>首先进入GitHub登陆页面<a href="https://github.com/login" target="_blank" rel="external">https://github.com/login</a>, 打开Chrome的开发者工具(F12)，先尝试输入错误的密码观察浏览器是如何发送请求的。</p>
-<p><img src="http://a3.qpic.cn/psb?/V10WDaE22S84Sl/r6CPmdb8CMkCI768tbnd9.vdR4XpkQVsnnfse7k.sD4!/b/dD0BAAAAAAAA&amp;bo=ngSAAgAAAAADAD0!&amp;rf=viewer_4" alt=""></p>
-<p><strong>从浏览器的请求可以看到几个关键信息</strong></p>
-<ul>
-<li>登陆的URL地址是<a href="https://github.com/session" target="_blank" rel="external">https://github.com/session</a></li>
-<li>登陆需要提供的表单数据有5个</li>
-<li>commit:Sign in</li>
-<li>utf8:✓</li>
-<li>authenticity_token: #这是一种防范CSRF攻击的方式，在请求地址中添加 token 并验证</li>
-<li>login:Family-TreeSY</li>
-<li>password:123456</li>
-</ul>
-<p>然后按<strong>ctrl+u</strong>打开源代码页面，再按下<strong>ctrl+f</strong>打开搜索栏，查找<strong>authenticity_token</strong></p>
-<p><img src="http://a1.qpic.cn/psb?/V10WDaE22S84Sl/OuzcCKxwb26otA2kbCvX1tQn7s45Lp632HU1QzKeShY!/b/dGkAAAAAAAAA&amp;bo=PgccAQAAAAADAAE!&amp;rf=viewer_4" alt=""></p>
-<p>可以看到 name=”authenticity_token” 这也是Xpath需要查找的元素</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">xpath(‘//input[@name=”authenticity_token”]’)</div></pre></td></tr></table></figure>
-<p>理解了浏览器登陆时所需的数据获取方式后，就可以开始写代码用Python来模拟登陆了。</p>
-<p><strong>解析网页使用Xpath查找所需要的元素</strong></p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> requests</div><div class="line"><span class="keyword">from</span> lxml <span class="keyword">import</span> etree</div><div class="line"></div><div class="line">LOGIN_URL = <span class="string">'https://github.com/login'</span></div><div class="line">SESSION_URL = <span class="string">'https://github.com/session'</span></div><div class="line"></div><div class="line">s = requests.session()</div><div class="line">y = s.get(LOGIN_URL)</div><div class="line">tree = etree.HTML(y.text)</div><div class="line">ele = tree.xpath(<span class="string">'//input[@name="authenticity_token"]'</span>)[<span class="number">0</span>]</div></pre></td></tr></table></figure>
-<p><strong>写入表单数据</strong><br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">data = &#123;</div><div class="line">    <span class="string">'commit'</span>: <span class="string">'Sign in'</span>,</div><div class="line">    <span class="string">'utf8'</span>: <span class="string">'✓'</span>,</div><div class="line">    <span class="string">'authenticity_token'</span>: <span class="string">'fwuV3HbD15A9BKiEJVtsEYEqzDv+r+yG9rj0uuFKLPtKjeK00ubWkbmKqQ6VJp9worJ5BVGMz3ZJV9Feyg9IKw=='</span>,</div><div class="line">    <span class="string">'login'</span>: <span class="string">'用户名'</span>,</div><div class="line">    <span class="string">'password'</span>: <span class="string">'xxxxx'</span></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p><strong>使用POST请求</strong><br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">y = s.post(SESSION_URL, data=data)</div></pre></td></tr></table></figure></p>
-<p><strong>登陆成功</strong><br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">y.url</div><div class="line">Out[<span class="number">4</span>]: <span class="string">u'https://github.com/session'</span></div></pre></td></tr></table></figure></p>
-<p><a href="https://github.com/Family-TreeSY/Spider/blob/master/github.py" target="_blank" rel="external">源码地址</a></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">PYTHON</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">爬虫</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/10/24/Xpath模拟登陆GitHub/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
     <article id="post-douban-reading" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -816,6 +710,112 @@ numbers = [<span class="number">10</span>, <span class="number">29</span>, <span
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2017/10/24/douban-reading/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-Xpath模拟登陆GitHub" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/10/24/Xpath模拟登陆GitHub/">Xpath模拟登陆GitHub</a>
+    </h1>
+  
+
+        
+        <a href="/2017/10/24/Xpath模拟登陆GitHub/" class="archive-article-date">
+  	<time datetime="2017-10-24T01:52:13.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-10-24</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="这是我用python2-7写的简单教程"><a href="#这是我用python2-7写的简单教程" class="headerlink" title="这是我用python2.7写的简单教程"></a><strong>这是我用python2.7写的简单教程</strong></h3><p><strong>准备工作</strong><br>安装requests lxml模块</p>
+<blockquote>
+<p>pip install requests<br>pip install lxml</p>
+</blockquote>
+<p><a href="http://docs.python-requests.org/zh_CN/latest/user/quickstart.html#id11" target="_blank" rel="external">requests文档</a><br><a href="http://lxml.de/" target="_blank" rel="external">lxml文档</a><br><a href="http://www.w3school.com.cn/xpath/index.asp" target="_blank" rel="external">Xpath教程</a></p>
+<hr>
+<p><strong>实战应用</strong><br><img src="http://a1.qpic.cn/psb?/V10WDaE22S84Sl/kgIbyAqyVUEboZyCcWApTA1d9qxLDmjowHvebGpA628!/b/dIkBAAAAAAAA&amp;bo=FQIVAwAAAAADACQ!&amp;rf=viewer_4" alt=""><br>首先进入GitHub登陆页面<a href="https://github.com/login" target="_blank" rel="external">https://github.com/login</a>, 打开Chrome的开发者工具(F12)，先尝试输入错误的密码观察浏览器是如何发送请求的。</p>
+<p><img src="http://a3.qpic.cn/psb?/V10WDaE22S84Sl/r6CPmdb8CMkCI768tbnd9.vdR4XpkQVsnnfse7k.sD4!/b/dD0BAAAAAAAA&amp;bo=ngSAAgAAAAADAD0!&amp;rf=viewer_4" alt=""></p>
+<p><strong>从浏览器的请求可以看到几个关键信息</strong></p>
+<ul>
+<li>登陆的URL地址是<a href="https://github.com/session" target="_blank" rel="external">https://github.com/session</a></li>
+<li>登陆需要提供的表单数据有5个</li>
+<li>commit:Sign in</li>
+<li>utf8:✓</li>
+<li>authenticity_token: #这是一种防范CSRF攻击的方式，在请求地址中添加 token 并验证</li>
+<li>login:Family-TreeSY</li>
+<li>password:123456</li>
+</ul>
+<p>然后按<strong>ctrl+u</strong>打开源代码页面，再按下<strong>ctrl+f</strong>打开搜索栏，查找<strong>authenticity_token</strong></p>
+<p><img src="http://a1.qpic.cn/psb?/V10WDaE22S84Sl/OuzcCKxwb26otA2kbCvX1tQn7s45Lp632HU1QzKeShY!/b/dGkAAAAAAAAA&amp;bo=PgccAQAAAAADAAE!&amp;rf=viewer_4" alt=""></p>
+<p>可以看到 name=”authenticity_token” 这也是Xpath需要查找的元素</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">xpath(‘//input[@name=”authenticity_token”]’)</div></pre></td></tr></table></figure>
+<p>理解了浏览器登陆时所需的数据获取方式后，就可以开始写代码用Python来模拟登陆了。</p>
+<p><strong>解析网页使用Xpath查找所需要的元素</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> requests</div><div class="line"><span class="keyword">from</span> lxml <span class="keyword">import</span> etree</div><div class="line"></div><div class="line">LOGIN_URL = <span class="string">'https://github.com/login'</span></div><div class="line">SESSION_URL = <span class="string">'https://github.com/session'</span></div><div class="line"></div><div class="line">s = requests.session()</div><div class="line">y = s.get(LOGIN_URL)</div><div class="line">tree = etree.HTML(y.text)</div><div class="line">ele = tree.xpath(<span class="string">'//input[@name="authenticity_token"]'</span>)[<span class="number">0</span>]</div></pre></td></tr></table></figure>
+<p><strong>写入表单数据</strong><br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">data = &#123;</div><div class="line">    <span class="string">'commit'</span>: <span class="string">'Sign in'</span>,</div><div class="line">    <span class="string">'utf8'</span>: <span class="string">'✓'</span>,</div><div class="line">    <span class="string">'authenticity_token'</span>: <span class="string">'fwuV3HbD15A9BKiEJVtsEYEqzDv+r+yG9rj0uuFKLPtKjeK00ubWkbmKqQ6VJp9worJ5BVGMz3ZJV9Feyg9IKw=='</span>,</div><div class="line">    <span class="string">'login'</span>: <span class="string">'用户名'</span>,</div><div class="line">    <span class="string">'password'</span>: <span class="string">'xxxxx'</span></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p><strong>使用POST请求</strong><br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">y = s.post(SESSION_URL, data=data)</div></pre></td></tr></table></figure></p>
+<p><strong>登陆成功</strong><br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">y.url</div><div class="line">Out[<span class="number">4</span>]: <span class="string">u'https://github.com/session'</span></div></pre></td></tr></table></figure></p>
+<p><a href="https://github.com/Family-TreeSY/Spider/blob/master/github.py" target="_blank" rel="external">源码地址</a></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">PYTHON</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">爬虫</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2017/10/24/Xpath模拟登陆GitHub/">展开全文 >></a>
         </p>
       
 
