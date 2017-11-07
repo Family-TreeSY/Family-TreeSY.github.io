@@ -12,7 +12,7 @@
 <meta name="keywords" content="PYTHON,Scrapy">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Scrapy爬取豆瓣电影Top250">
-<meta property="og:url" content="//Family-TreeSY.github.io/2017/11/03/Scrapy爬取豆瓣电影TOP250/index.html">
+<meta property="og:url" content="//Family-TreeSY.github.io/2017/11/03/Scrapy/index.html">
 <meta property="og:site_name" content="Treehl的博客">
 <meta property="og:description" content="这两天摸索了下scrapy，刚看文档的时候觉得有点生无可恋，scrapy框架个人还是觉得比较难懂的，需要学习的地方非常多，之前用beautifulsoup4爬过top250，比scrapy简单更容易理解！！ Scrapy简介Scrapy，Python开发的一个快速、高层次的屏幕抓取和web抓取框架，用于抓取web站点并从页面中提取结构化的数据。Scrapy用途广泛，可以用于数据挖掘、监测和自动化测">
 <meta property="og:locale" content="zh-Hans">
@@ -25,7 +25,7 @@
 <meta property="og:image" content="http://a1.qpic.cn/psb?/V10WDaE22S84Sl/V1vYiLxCAWQJZ7vMnb6wDY.E6Hgp44cevou25VN0KSY!/b/dPMAAAAAAAAA&bo=FQPnAAAAAAADB9M!&rf=viewer_4">
 <meta property="og:image" content="http://a3.qpic.cn/psb?/V10WDaE22S84Sl/DnsQdXjejv9UbgZkWc9MUxUu1m8iMNkgSjh1wMEe2jc!/b/dPIAAAAAAAAA&bo=xga3AQAAAAADB1Q!&rf=viewer_4">
 <meta property="og:image" content="http://a1.qpic.cn/psb?/V10WDaE22S84Sl/rT4vp6Fib.QJfkeH4CZ8DT8GwPtDUeWYhc2Fq1vzeFA!/b/dPMAAAAAAAAA&bo=.wOAAgAAAAADB1g!&rf=viewer_4">
-<meta property="og:updated_time" content="2017-11-07T08:09:16.000Z">
+<meta property="og:updated_time" content="2017-11-07T08:17:48.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Scrapy爬取豆瓣电影Top250">
 <meta name="twitter:description" content="这两天摸索了下scrapy，刚看文档的时候觉得有点生无可恋，scrapy框架个人还是觉得比较难懂的，需要学习的地方非常多，之前用beautifulsoup4爬过top250，比scrapy简单更容易理解！！ Scrapy简介Scrapy，Python开发的一个快速、高层次的屏幕抓取和web抓取框架，用于抓取web站点并从页面中提取结构化的数据。Scrapy用途广泛，可以用于数据挖掘、监测和自动化测">
@@ -183,7 +183,7 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-Scrapy爬取豆瓣电影TOP250" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-Scrapy" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
@@ -195,7 +195,7 @@
   
 
         
-        <a href="/2017/11/03/Scrapy爬取豆瓣电影TOP250/" class="archive-article-date">
+        <a href="/2017/11/03/Scrapy/" class="archive-article-date">
   	<time datetime="2017-11-03T11:43:16.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-11-03</time>
 </a>
         
@@ -281,7 +281,21 @@
 <li>seletor的方法返回后一定要用它的 extract()方法，来返回一个列表 ；<strong>extract()文档的定义：</strong>串行化并将匹配到的节点返回一个unicode字符串列表。 结尾是编码内容的百分比</li>
 <li>接着，我们把得到的数据保存在Item中</li>
 <li>最后，我们使用Feed exports来保存数据</li>
+<li>这里使用了yield生成器函数，生成器函数和迭代器有密切关系，也并不是很容易理解，这一点需要多多学习</li>
 </ul>
+<pre><code class="python"><span class="comment">#看一个yield函数的示例</span>
+<span class="comment">#函数在每次循环时都会产生一个值，之后将其返回给它的调用者</span>
+<span class="comment">#函数不断的生成数字的平方</span>
+
+<span class="function"><span class="keyword">def</span> <span class="title">gensquares</span><span class="params">(N)</span>:</span>
+    <span class="keyword">for</span> i <span class="keyword">in</span> range(N):
+        <span class="keyword">yield</span> i ** <span class="number">2</span>
+
+<span class="keyword">for</span> i <span class="keyword">in</span> gensquares(<span class="number">5</span>):
+    print(i, end=<span class="string">' '</span>)
+
+<span class="number">0</span> <span class="number">1</span> <span class="number">4</span> <span class="number">9</span> <span class="number">16</span>
+</code></pre>
 <p>好了，spider暂时写完了，我们试着运行下</p>
 <blockquote>
 <p>scrapy crawl db -o douban.json -t json</p>
@@ -406,7 +420,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="http://s.jiathis.com/qrcode.php?url=http://Family-TreeSY.github.io/2017/11/03/Scrapy爬取豆瓣电影TOP250/" alt="微信分享二维码">
+      <img src="http://s.jiathis.com/qrcode.php?url=http://Family-TreeSY.github.io/2017/11/03/Scrapy/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -568,11 +582,11 @@ getOwnMetadataKeys:function(t){return o(i(t),arguments.length<2?void 0:u(argumen
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">DailyQuestion</a>
+                <a href="javascript:void(0)" class="js-tag color3">爬虫</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">爬虫</a>
+                <a href="javascript:void(0)" class="js-tag color4">DailyQuestion</a>
               </li>
              
               <li class="article-tag-list-item">
