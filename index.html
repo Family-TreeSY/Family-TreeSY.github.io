@@ -302,196 +302,6 @@
 
 
   
-    <article id="post-Scrapy" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/11/03/Scrapy/">Scrapy爬取豆瓣电影Top250</a>
-    </h1>
-  
-
-        
-        <a href="/2017/11/03/Scrapy/" class="archive-article-date">
-  	<time datetime="2017-11-03T11:43:16.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-11-03</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>这两天摸索了下scrapy，刚看文档的时候觉得有点生无可恋，scrapy框架个人还是觉得比较难懂的，需要学习的地方非常多，之前用beautifulsoup4爬过top250，比scrapy简单更容易理解！！</p>
-<h3 id="Scrapy简介"><a href="#Scrapy简介" class="headerlink" title="Scrapy简介"></a><strong>Scrapy简介</strong></h3><p>Scrapy，Python开发的一个快速、高层次的屏幕抓取和web抓取框架，用于抓取web站点并从页面中提取结构化的数据。Scrapy用途广泛，可以用于数据挖掘、监测和自动化测试。 下面对每个组件都做了简单介绍，数据流如下所描述。<br><img src="http://scrapy-chs.readthedocs.io/zh_CN/latest/_images/scrapy_architecture.png" alt=""></p>
-<ul>
-<li>Scrapy Engine<br>引擎负责控制数据流在系统中所有组件中流动，并在相应动作发生时触发事件。 详细内容查看下面的数据流(Data Flow)部分</li>
-<li>调度器(Scheduler)<br>调度器从引擎接受request并将他们入队，以便之后引擎请求他们时提供给引擎</li>
-<li>下载器(Downloader)<br>下载器负责获取页面数据并提供给引擎，而后提供给spider</li>
-<li>Spiders<br>Spider是Scrapy用户编写用于分析response并提取item(即获取到的item)或额外跟进的URL的类。 每 个spider负责处理一个特定(或一些)网站</li>
-<li>Item Pipeline<br>Item Pipeline负责处理被spider提取出来的item。典型的处理有清理、 验证及持久化(例如存取到数 据库中)</li>
-<li>下载器中间件(Downloader middlewares)<br>下载器中间件是在引擎及下载器之间的特定钩子(specific hook)，处理Downloader传递给引擎的 response。 其提供了一个简便的机制，通过插入自定义代码来扩展Scrapy功能</li>
-<li>Spider中间件(Spider middlewares)<br>Spider中间件是在引擎及Spider之间的特定钩子(specific hook)，处理spider的输入(response)和输出     (items及requests)。 其提供了一个简便的机制，通过插入自定义代码来扩展Scrapy功能</li>
-<li><p>数据流(Data flow)<br>Scrapy中的数据流由执行引擎控制，其过程如下:</p>
-<p>引擎打开一个网站(open a domain)，找到处理该网站的Spider并向该spider请求第一个要爬取的 URL(s)。<br>引擎从Spider中获取到第一个要爬取的URL并在调度器(Scheduler)以Request调度。<br>引擎向调度器请求下一个要爬取的URL。<br>调度器返回下一个要爬取的URL给引擎，引擎将URL通过下载中间件(请求(request)方向)转发给下载 器(Downloader)。<br>一旦页面下载完毕，下载器生成一个该页面的Response，并将其通过下载中间件(返回(response)方  向)发送给引擎。<br>引擎从下载器中接收到Response并通过Spider中间件(输入方向)发送给Spider处理。<br>Spider处理Response并返回爬取到的Item及(跟进的)新的Request给引擎。<br>引擎将(Spider返回的)爬取到的Item给Item Pipeline，将(Spider返回的)Request给调度器。<br>(从第二步)重复直到调度器中没有更多地request，引擎关闭该网站</p>
-<p><strong>scrapy的流程如图，并且可归纳如下</strong></p>
-</li>
-<li>首先下载器下载request回执的html等的response</li>
-<li>然后下载器传给爬虫解析</li>
-<li>接着爬虫解析后交给调度器过滤，查重等等</li>
-<li>最后交给管道，进行爬取数据的处理</li>
-</ul>
-<p>建议大家参考下中文版的<a href="http://scrapy-chs.readthedocs.io/zh_CN/latest/index.html" target="_blank" rel="external">Scrapy文档</a>，看文档还是比较枯燥的，Scrapy又比较难懂（大神忽略），务必要有耐心！！！！！！</p>
-<h3 id="实战应用"><a href="#实战应用" class="headerlink" title="实战应用"></a><strong>实战应用</strong></h3><p>首先下载Scrapy包</p>
-<blockquote>
-<p>pip install scrapy</p>
-</blockquote>
-<p>这样安装，windows平台应该是会报错的，我当时装Scrapy时废了很大劲才弄完。安装过程中Pycharm或者官网上找不到的模块可以上这个网址找<a href="https://www.lfd.uci.edu/~gohlke/pythonlibs/" target="_blank" rel="external">Unofficial Windows Binaries for Python Extension Packages</a><br><a href="https://sourceforge.net/projects/pywin32/files/pywin32/Build%20221/" target="_blank" rel="external">Pywin32</a></p>
-<p>接着，我们打开CMD，新建一个爬虫文件</p>
-<blockquote>
-<p>scrapy startproject douban</p>
-</blockquote>
-<p><img src="http://a3.qpic.cn/psb?/V10WDaE22S84Sl/KSe9Lz4WjBnnSKYqGU6FuRlu8f4M5x5owDgWkLJVBAs!/b/dPIAAAAAAAAA&amp;bo=GgXQAAAAAAADAOo!&amp;rf=viewer_4" alt=""></p>
-<blockquote>
-<p>C:\Users\ssaw\douban&gt;tree /f<br>C:.<br>│  scrapy.cfg<br>│<br>└─douban<br>    │  items.py<br>    │  middlewares.py<br>    │  pipelines.py<br>    │  settings.py<br>    │  <strong>init</strong>.py<br>    │<br>    └─spiders<br>            <strong>init</strong>.py</p>
-</blockquote>
-<p>简单介绍下这些文件</p>
-<ul>
-<li>scrapy.cfg: 项目的配置文件</li>
-<li>douban/: 该项目的python模块。之后您将在此加入代码</li>
-<li>douban/items.py: 项目中的item文件</li>
-<li>douban/pipelines.py: 项目中的pipelines文件</li>
-<li>douban/settings.py: 项目的设置文件</li>
-<li>douban/spiders/:放置spider代码的目录</li>
-</ul>
-<p>编辑items.py文件<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># -*- coding: utf-8 -*-</span></div><div class="line"></div><div class="line"><span class="comment"># Define here the models for your scraped items</span></div><div class="line"><span class="comment">#</span></div><div class="line"><span class="comment"># See documentation in:</span></div><div class="line"><span class="comment"># http://doc.scrapy.org/en/latest/topics/items.html</span></div><div class="line"></div><div class="line"><span class="keyword">import</span> scrapy</div><div class="line"></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">DoubanItem</span><span class="params">(scrapy.Item)</span>:</span></div><div class="line">    <span class="comment"># define the fields for your item here like:</span></div><div class="line">    <span class="comment"># name = scrapy.Field()</span></div><div class="line">    movie_name = scrapy.Field()</div><div class="line">    movie_star = scrapy.Field()</div><div class="line">    movie_quote = scrapy.Field()</div></pre></td></tr></table></figure></p>
-<ul>
-<li>首先，引入Scrapy</li>
-<li>接着，创建一个类，继承自scrapy.item,这个是用来储存要爬下来的数据的存放容器，类似orm的写法</li>
-<li>我们要记录的是：电影的名字、电影的评分、电影的引述（quote）</li>
-</ul>
-<p>现在，我们在spiders文件夹下创建douban_spider.py<br>在我们编写爬虫之前，先了解一下scrapy的爬取机制，scrapy提取数据有自己的一套机制。它们被称作选择器(seletors)，因为他们通过特定的 XPath 或者 CSS 表达式来“选择” HTML文件中的某个部分。<br>之前我在博客上也总结过一篇<a href="https://family-treesy.github.io/2017/10/24/Xpath%E6%A8%A1%E6%8B%9F%E7%99%BB%E9%99%86GitHub/" target="_blank" rel="external">使用Xpath模拟登陆GitHub</a>有兴趣可以看一下<br>附上Xpath学习教程<a href="http://www.w3school.com.cn/xpath/index.asp" target="_blank" rel="external">Xpath</a></p>
-<h4 id="获取网页数据"><a href="#获取网页数据" class="headerlink" title="获取网页数据"></a><strong>获取网页数据</strong></h4><p>打开Chrome(F12),查找元素<br><a href="https://movie.douban.com/top250" target="_blank" rel="external">豆瓣电影TOP250</a><br><img src="http://a3.qpic.cn/psb?/V10WDaE22S84Sl/0bCq9nJbs2y00pG2rgDlHgHwFkb6hjanb.oPVV1E3ug!/b/dPIAAAAAAAAA&amp;bo=Uwd4AgAAAAADBww!&amp;rf=viewer_4" alt=""><br>红框圈出来的分别代表</p>
-<blockquote>
-<p>movie_name = div[@class=”hd”]/a/span/<br>movie_star = div[@class=”bd”]/div[@class=”star”]/span[@class=”rating_num”]<br>movie_quote = div[@class=”bd”]/p[@class=”quote”]/span[@class=”inq”]</p>
-</blockquote>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># _*_ coding=utf-8 _*_</span></div><div class="line"></div><div class="line"><span class="keyword">from</span> scrapy.spiders <span class="keyword">import</span> Spider</div><div class="line"><span class="keyword">from</span> scrapy.selector <span class="keyword">import</span> Selector</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">DouBanSpider</span><span class="params">(Spider)</span>:</span></div><div class="line">    name = <span class="string">'db'</span></div><div class="line">    start_urls = [<span class="string">'https://movie.douban.com/top250'</span>]</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">parse</span><span class="params">(self, response)</span>:</span></div><div class="line">        <span class="comment"># print(response.body)</span></div><div class="line">        selector = Selector(response)</div><div class="line"></div><div class="line">        <span class="comment"># print(selector)</span></div><div class="line">        movies = selector.xpath(<span class="string">'//div[@class="info"]'</span>)</div><div class="line">        <span class="keyword">for</span> movie <span class="keyword">in</span> movies:</div><div class="line">            movie_name = movie.xpath(<span class="string">'div[@class="hd"]/a/span/text()'</span>).extract()</div><div class="line">            movie_star = movie.xpath(<span class="string">'div[@class="bd"]/div[@class="star"]/span[@class="rating_num"]/text()'</span>).extract()</div><div class="line">            movie_quote = movie.xpath(<span class="string">'div[@class="bd"]/p[@class="quote"]/span[@class="inq"]/text()'</span>).extract()</div><div class="line"></div><div class="line"></div><div class="line">            print(movie_name)</div><div class="line">            print(movie_star)</div><div class="line">            print(movie_quote)</div></pre></td></tr></table></figure>
-<p>我们打开setting.py，加上U-A</p>
-<blockquote>
-<p>USER_AGENT = ‘Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/61.0.3163.100 Safari/537.36’</p>
-</blockquote>
-<p>在CMD中输入scrapy crawl db，运行如下：<br><img src="http://a1.qpic.cn/psb?/V10WDaE22S84Sl/T91UqI*QCUSBwERAtR0EqIARnZX5rOUtpVeLMJVPoTg!/b/dPMAAAAAAAAA&amp;bo=SAWAAgAAAAADB.0!&amp;rf=viewer_4" alt=""><br>我们还可以在douban文件根目录创建一个main.py，这样就可以在Pycharm中运行了</p>
-<blockquote>
-<p>from scrapy import cmdline<br>cmdline.execute(“scrapy crawl db”.split())</p>
-</blockquote>
-<h4 id="使用Item"><a href="#使用Item" class="headerlink" title="使用Item"></a><strong>使用Item</strong></h4><p>Item对象是自定义的python字典。 您可以使用标准的字典语法来获取到其每个字段的值。(字段即是我们之前用Field赋值的属性)，Spider将会将爬取到的数据以 Item 对象返回。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">item = DoubanItem()</div><div class="line"></div><div class="line">item[<span class="string">'movie_name'</span>] = movie_name</div><div class="line">item[<span class="string">'movie_star'</span>] = movie_star</div><div class="line">item[<span class="string">'movie_quote'</span>] = movie_quote</div></pre></td></tr></table></figure></p>
-<p>好了，现在我们先试着爬取单页面，查看下结果后，再去爬取多页面<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> scrapy.spiders <span class="keyword">import</span> Spider</div><div class="line"><span class="keyword">from</span> scrapy.selector <span class="keyword">import</span> Selector</div><div class="line"><span class="keyword">from</span> douban.items <span class="keyword">import</span> DoubanItem</div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">DouBanSpider</span><span class="params">(Spider)</span>:</span></div><div class="line">    name = <span class="string">'db'</span></div><div class="line">    start_urls = [<span class="string">'https://movie.douban.com/top250'</span>]</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">parse</span><span class="params">(self, response)</span>:</span></div><div class="line">        <span class="comment"># print(response.body)</span></div><div class="line">        selector = Selector(response)</div><div class="line"></div><div class="line">        <span class="comment"># print(selector)</span></div><div class="line">        movies = selector.xpath(<span class="string">'//div[@class="info"]'</span>)</div><div class="line">        <span class="keyword">for</span> movie <span class="keyword">in</span> movies:</div><div class="line">            movie_name = movie.xpath(<span class="string">'div[@class="hd"]/a/span/text()'</span>).extract()</div><div class="line">            movie_star = movie.xpath(<span class="string">'div[@class="bd"]/div[@class="star"]/span[@class="rating_num"]/text()'</span>).extract()</div><div class="line">            movie_quote = movie.xpath(<span class="string">'div[@class="bd"]/p[@class="quote"]/span[@class="inq"]/text()'</span>).extract()</div><div class="line"></div><div class="line">            <span class="comment">#print(movie_name)</span></div><div class="line">            <span class="comment">#print(movie_star)</span></div><div class="line">            <span class="comment">#print(movie_quote)</span></div><div class="line"></div><div class="line">            item = DoubanItem()</div><div class="line"></div><div class="line">            item[<span class="string">'movie_name'</span>] = movie_name</div><div class="line">            item[<span class="string">'movie_star'</span>] = movie_star</div><div class="line">            item[<span class="string">'movie_quote'</span>] = movie_quote</div><div class="line">            <span class="keyword">yield</span> item</div><div class="line">            print(movie_name)</div><div class="line">            print(movie_star)</div><div class="line">            print(movie_quote)</div></pre></td></tr></table></figure></p>
-<ul>
-<li>首先，我们先从scrapy中获得所需要的通用的 spider和 selector</li>
-<li>接着，我们使用Item将爬取的数据返回</li>
-<li>创建了一个DouBanSpider，继承了 scrapy.Spider 类， 且定义以下三个属性:</li>
-</ul>
-<ol>
-<li>name: 用于区别Spider。 该名字必须是唯一的，您不可以为不同的Spider设定相同的名字</li>
-<li>start_urls: 包含了Spider在启动时进行爬取的url列表。 因此，第一个被获取到的页面将是其中之一， 后续的URL则从初始的URL获取到的数据中提取。</li>
-<li>parse() 是spider的一个方法。 被调用时，每个初始URL完成下载后生成的 Response 对象将会作为唯一的参数传递给该函数。 该方法负责解析返回的数据(response data)，提取数据(生成item)以及生成需要进一步处理的URL的 Request 对象</li>
-</ol>
-<ul>
-<li>seletor的方法返回后一定要用它的 extract()方法，来返回一个列表 ；<strong>extract()文档的定义：</strong>串行化并将匹配到的节点返回一个unicode字符串列表。 结尾是编码内容的百分比</li>
-<li>接着，我们把得到的数据保存在Item中</li>
-<li>最后，我们使用Feed exports来保存数据</li>
-<li>这里使用了yield生成器函数，生成器函数和迭代器有密切关系，也并不是很容易理解，这一点需要多多学习</li>
-</ul>
-<pre><code class="python"><span class="comment">#看一个yield函数的示例</span>
-<span class="comment">#函数在每次循环时都会产生一个值，之后将其返回给它的调用者</span>
-<span class="comment">#函数不断的生成数字的平方</span>
-
-<span class="function"><span class="keyword">def</span> <span class="title">gensquares</span><span class="params">(N)</span>:</span>
-    <span class="keyword">for</span> i <span class="keyword">in</span> range(N):
-        <span class="keyword">yield</span> i ** <span class="number">2</span>
-
-<span class="keyword">for</span> i <span class="keyword">in</span> gensquares(<span class="number">5</span>):
-    print(i, end=<span class="string">' '</span>)
-
-<span class="number">0</span> <span class="number">1</span> <span class="number">4</span> <span class="number">9</span> <span class="number">16</span>
-</code></pre>
-<p>好了，spider暂时写完了，我们试着运行下</p>
-<blockquote>
-<p>scrapy crawl db -o douban.json -t json</p>
-</blockquote>
-<p>-o 后面是导出文件名，-t 后面是导出类型。<br>然后来看一下导出的结果，Pycharm打开json文件即可<br><img src="http://a3.qpic.cn/psb?/V10WDaE22S84Sl/LossKz0SW7Hx2McZTBD8XUmBeoKvbEGB3T6AFUkQwOI!/b/dPIAAAAAAAAA&amp;bo=7wVlAgAAAAADB68!&amp;rf=viewer_4" alt=""><br>打印出来的内容需要编码<br>我们换种方式，把文件格式保存为CSV，使用EXCEL打开</p>
-<blockquote>
-<p>scrapy crawl db -o douban.csv -t csv </p>
-</blockquote>
-<p><img src="http://a1.qpic.cn/psb?/V10WDaE22S84Sl/ujnMrzC601KzTrM7RJb9AD6hr6csiUWdTGWrDWo7y5c!/b/dPMAAAAAAAAA&amp;bo=hASAAgAAAAADByA!&amp;rf=viewer_4" alt=""></p>
-<p>用excel打开后假如是一堆乱码，就使用记事本打开，把它“另存为”时，编码选择ANSI<br><img src="http://a1.qpic.cn/psb?/V10WDaE22S84Sl/V1vYiLxCAWQJZ7vMnb6wDY.E6Hgp44cevou25VN0KSY!/b/dPMAAAAAAAAA&amp;bo=FQPnAAAAAAADB9M!&amp;rf=viewer_4" alt=""></p>
-<p>好了，现在我们添加多页面链接，完整地把TOP250爬取下来<br>我们从Elements中找到翻页lianjie<br><img src="http://a3.qpic.cn/psb?/V10WDaE22S84Sl/DnsQdXjejv9UbgZkWc9MUxUu1m8iMNkgSjh1wMEe2jc!/b/dPIAAAAAAAAA&amp;bo=xga3AQAAAAADB1Q!&amp;rf=viewer_4" alt=""></p>
-<pre><code class="python">next_page =response.selector.xpath(<span class="string">'//span[@class="next"]/link/@href'</span>).extract()
-<span class="keyword">if</span> next_page:
-    next_page = next_page[<span class="number">0</span>]
-    print(next_page)
-    <span class="keyword">yield</span> Request(self.url + next_page, callback=self.parse)
-</code></pre>
-<p>CMD输入scrapy crawl db -o douban.csv -t csv ，开始运行<br><img src="http://a1.qpic.cn/psb?/V10WDaE22S84Sl/rT4vp6Fib.QJfkeH4CZ8DT8GwPtDUeWYhc2Fq1vzeFA!/b/dPMAAAAAAAAA&amp;bo=.wOAAgAAAAADB1g!&amp;rf=viewer_4" alt=""></p>
-<p>学习Scrapy需要反复查看文档、资料，这是个简单的学习总结，这两天准备再去学习MongoDB数据库，大家一起加油！！</p>
-<p><a href="http://blog.csdn.net/flyingfishmark/article/details/51316159" target="_blank" rel="external">参考链接</a><br><a href="http://aljun.me/post/5" target="_blank" rel="external">参考链接</a><br><a href="http://scrapy-chs.readthedocs.io/zh_CN/latest/intro/overview.html" target="_blank" rel="external">Scrapy文档</a><br><a href="https://github.com/Family-TreeSY" target="_blank" rel="external">GitHub</a><br>最后，欢迎大家访问我的博客<a href="https://family-treesy.github.io/" target="_blank" rel="external">Treehl的博客</a></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">PYTHON</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Scrapy</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/11/03/Scrapy/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
     <article id="post-second" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -1132,19 +942,15 @@ getOwnMetadataKeys:function(t){return o(i(t),arguments.length<2?void 0:u(argumen
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">爬虫</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">DailyQuestion</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">豆瓣</a>
+                <a href="javascript:void(0)" class="js-tag color3">爬虫</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Scrapy</a>
+                <a href="javascript:void(0)" class="js-tag color3">豆瓣</a>
               </li>
             
             <div class="clearfix"></div>
