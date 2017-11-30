@@ -173,6 +173,126 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-Lianjia" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/11/29/Lianjia/">Python爬取上海链家网房源数据并存入MongoDB数据库</a>
+    </h1>
+  
+
+        
+        <a href="/2017/11/29/Lianjia/" class="archive-article-date">
+  	<time datetime="2017-11-29T11:40:23.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-11-29</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>以下是我爬取<a href="http://sh.lianjia.com/ershoufang/baoshan" target="_blank" rel="external">上海链家网宝山区</a>房源信息的学习总结</p>
+<h4 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a><strong>准备工作</strong></h4><p>用到的Python模块：</p>
+<ul>
+<li>requests</li>
+<li>bs4</li>
+<li>pymongo</li>
+<li>datetime</li>
+<li>time</li>
+<li>random</li>
+</ul>
+<h4 id="分析网页"><a href="#分析网页" class="headerlink" title="分析网页"></a><strong>分析网页</strong></h4><p>登陆<a href="http://sh.lianjia.com/ershoufang/baoshan" target="_blank" rel="external">http://sh.lianjia.com/ershoufang/baoshan</a> 用Chrome打开开发者工具<br><img src="http://a2.qpic.cn/psb?/V10WDaE22S84Sl/OWX8XXIREtlNyAkBe52YViDpyDxfk5XwFAoUUjx6vso!/b/dD8BAAAAAAAA&amp;bo=eQdpAgAAAAADBzc!&amp;rf=viewer_4" alt=""><br>每条房源信息都在li元素中，我们再来看一下翻页链接<br><img src="http://a1.qpic.cn/psb?/V10WDaE22S84Sl/lDEAd9FQQ79CUtKdVLMJoGolSXELOAqjwFm.nmJ.wkw!/b/dPMAAAAAAAAA&amp;bo=aAdtAQAAAAADByE!&amp;rf=viewer_4" alt=""><br>试着点击下一页，我们浏览器上的链接是有规律可循的</p>
+<blockquote>
+<p><a href="http://sh.lianjia.com/ershoufang/baoshan/d1" target="_blank" rel="external">http://sh.lianjia.com/ershoufang/baoshan/d1</a><br><a href="http://sh.lianjia.com/ershoufang/baoshan/d2" target="_blank" rel="external">http://sh.lianjia.com/ershoufang/baoshan/d2</a><br><a href="http://sh.lianjia.com/ershoufang/baoshan/d3" target="_blank" rel="external">http://sh.lianjia.com/ershoufang/baoshan/d3</a><br>………<br><a href="http://sh.lianjia.com/ershoufang/baoshan/100" target="_blank" rel="external">http://sh.lianjia.com/ershoufang/baoshan/100</a></p>
+</blockquote>
+<p>现在我们试着爬取前10页的链接<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> requests</div><div class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1</span>, <span class="number">11</span>):</div><div class="line">    r = requests.get(<span class="string">'http://sh.lianjia.com/ershoufang/baoshan/d'</span> + str(i))</div><div class="line">    print(r.url)</div></pre></td></tr></table></figure></p>
+<p>爬取结果<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div></pre></td><td class="code"><pre><div class="line">http://sh.lianjia.com/ershoufang/baoshan/d1</div><div class="line">http://sh.lianjia.com/ershoufang/baoshan/d2</div><div class="line">http://sh.lianjia.com/ershoufang/baoshan/d3</div><div class="line">http://sh.lianjia.com/ershoufang/baoshan/d4</div><div class="line">http://sh.lianjia.com/ershoufang/baoshan/d5</div><div class="line">http://sh.lianjia.com/ershoufang/baoshan/d6</div><div class="line">http://sh.lianjia.com/ershoufang/baoshan/d7</div><div class="line">http://sh.lianjia.com/ershoufang/baoshan/d8</div><div class="line">http://sh.lianjia.com/ershoufang/baoshan/d9</div><div class="line">http://sh.lianjia.com/ershoufang/baoshan/d10</div><div class="line"></div><div class="line">``` </div><div class="line"></div><div class="line"><span class="comment">#### **解析网页**</span></div><div class="line"></div><div class="line">![](http://a3.qpic.cn/psb?/V10WDaE22S84Sl/Yq7DpRZ0c*o0bN6NkHnGoGJx9HzDr2Tpa1xrEng*JnA!/b/dPIAAAAAAAAA&amp;bo=UAT.AAAAAAADB4g!&amp;rf=viewer_4)</div><div class="line"></div><div class="line"></div><div class="line">要抓取的信息如下：</div><div class="line">- 标题：room_title = room.find(<span class="string">'div'</span>, attrs=&#123;<span class="string">'class'</span>: <span class="string">'prop-title'</span>&#125;)</div><div class="line">- 房屋信息：room_info = room.find(<span class="string">'span'</span>, attrs=&#123;<span class="string">'class'</span>: <span class="string">'info-col row1-text'</span>&#125;)</div><div class="line">- 位置：room_location = room.find(<span class="string">'span'</span>, attrs=&#123;<span class="string">'class'</span>: <span class="string">'info-col row2-text'</span>&#125;)</div><div class="line">- 附加信息：extra_info = room.find(<span class="string">'div'</span>, attrs=&#123;<span class="string">'class'</span>: <span class="string">'property-tag-container'</span>&#125;)</div><div class="line">- 总价：room_price = room.find(<span class="string">'span'</span>, attrs=&#123;<span class="string">'class'</span>: <span class="string">'total-price strong-num'</span>&#125;)</div><div class="line">- 单价：room_unit_price = room.find(<span class="string">'span'</span>, attrs=&#123;<span class="string">'class'</span>: <span class="string">'info-col price-item minor'</span>&#125;)</div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line">``` python</div><div class="line">soup = BeautifulSoup(r.text, <span class="string">'html.parser'</span>)</div><div class="line">rooms = soup.find(<span class="string">'ul'</span>, attrs=&#123;<span class="string">'class'</span>: <span class="string">'js_fang_list'</span>&#125;)</div><div class="line"><span class="keyword">for</span> room <span class="keyword">in</span> rooms.find_all(<span class="string">'li'</span>):</div><div class="line">    room_title = room.find(<span class="string">'div'</span>, attrs=&#123;<span class="string">'class'</span>: <span class="string">'prop-title'</span>&#125;).get_text()</div><div class="line">    room_info = room.find(<span class="string">'span'</span>, attrs=&#123;<span class="string">'class'</span>: <span class="string">'info-col row1-text'</span>&#125;).get_text()</div><div class="line">    room_location = room.find(<span class="string">'span'</span>, attrs=&#123;<span class="string">'class'</span>: <span class="string">'info-col row2-text'</span>&#125;).find(<span class="string">'a'</span>).get_text()</div><div class="line">    room_price = room.find(<span class="string">'span'</span>, attrs=&#123;<span class="string">'class'</span>: <span class="string">'total-price strong-num'</span>&#125;).get_text()</div><div class="line">    room_unit_price = room.find(<span class="string">'span'</span>, attrs=&#123;<span class="string">'class'</span>: <span class="string">'info-col price-item minor'</span>&#125;).get_text()</div><div class="line">    extra_info = room.find(<span class="string">'div'</span>, attrs=&#123;<span class="string">'class'</span>: <span class="string">'property-tag-container'</span>&#125;).get_text()</div><div class="line"></div><div class="line"></div><div class="line">    print(room_title, room_info, room_location, room_price, room_unit_price, extra_info)</div><div class="line"></div><div class="line">``` </div><div class="line"></div><div class="line"></div><div class="line">下面是网页解析下来的一个房源信息</div><div class="line"></div><div class="line"></div><div class="line">``` python</div><div class="line"></div><div class="line">厨卫全明，卧室带阳台，地铁房，高区采光好</div><div class="line"> </div><div class="line">							<span class="number">1</span>室<span class="number">1</span>厅 | <span class="number">44.73</span>平</div><div class="line">							</div><div class="line">								| 高区/<span class="number">6</span>层</div><div class="line">							</div><div class="line">							</div><div class="line">								| 朝南</div><div class="line">							</div><div class="line">						 葑润华庭 <span class="number">255</span> </div><div class="line">							单价<span class="number">57008</span>元/平</div><div class="line">						 </div><div class="line">距离<span class="number">7</span>号线祁华路站<span class="number">698</span>米</div><div class="line">满二</div><div class="line">有钥匙</div></pre></td></tr></table></figure></p>
+<h4 id="存入MongoDB数据库"><a href="#存入MongoDB数据库" class="headerlink" title="存入MongoDB数据库"></a><strong>存入MongoDB数据库</strong></h4><p>MongoDB数据结构是以键值对{key:value}形式组成，有点类似于JSON<br><img src="http://a1.qpic.cn/psb?/V10WDaE22S84Sl/UddoxaYMkMYW.yttCHnp450QvwYz732SEb0MvRU0Od4!/b/dD4BAAAAAAAA&amp;bo=iQPVAAAAAAADB30!&amp;rf=viewer_4" alt=""></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># 链接数据库</span></div><div class="line">client = MongoClient(<span class="string">'localhost'</span>, <span class="number">27017</span>)</div><div class="line"><span class="comment"># 建立数据库</span></div><div class="line">db = client.tests</div><div class="line"><span class="comment"># 建立集合</span></div><div class="line">homes = db.homes</div><div class="line"></div><div class="line">rooms_list = []</div><div class="line"></div><div class="line"><span class="comment"># 先将爬下来的数据赋值为字典</span></div><div class="line">rooms_info =&#123;</div><div class="line">                <span class="string">'title'</span>: room_title,</div><div class="line">                <span class="string">'info'</span>: room_info,</div><div class="line">                <span class="string">'location'</span>: room_location,</div><div class="line">                <span class="string">'price'</span>: room_price,</div><div class="line">                <span class="string">'unit_proce'</span>: room_unit_price,</div><div class="line">                <span class="string">'message'</span>: extra_info,</div><div class="line">                <span class="string">'time'</span>: datetime.datetime.now()</div><div class="line">            &#125;</div><div class="line"></div><div class="line">rooms_list.append(rooms_info)</div><div class="line"><span class="comment"># 存入数据库</span></div><div class="line">result = homes.insert_many(rooms_list)</div><div class="line">print(result)</div></pre></td></tr></table></figure>
+<p>运行代码，我们可以看到数据存入了MongoDB</p>
+<pre><code class="python">&lt;pymongo.results.InsertManyResult object at <span class="number">0x00000260C536AB8</span>&gt;
+&lt;pymongo.results.InsertManyResult object at <span class="number">0x00000260C536AAC</span>&gt;
+&lt;pymongo.results.InsertManyResult object at <span class="number">0x00000260C536AA0</span>&gt;
+&lt;pymongo.results.InsertManyResult object at <span class="number">0x00000260C536AB4</span>&gt;
+&lt;pymongo.results.InsertManyResult object at <span class="number">0x00000260C536AB0</span>&gt;
+&lt;pymongo.results.InsertManyResult object at <span class="number">0x00000260C536A28</span>&gt;
+&lt;pymongo.results.InsertManyResult object at <span class="number">0x00000260C536AC8</span>&gt;
+&lt;pymongo.results.InsertManyResult object at <span class="number">0x00000260C536A08</span>&gt;
+&lt;pymongo.results.InsertManyResult object at <span class="number">0x00000260C536A88</span>&gt;
+&lt;pymongo.results.InsertManyResult object at <span class="number">0x00000260C536A88</span>&gt;
+&lt;pymongo.results.InsertManyResult object at <span class="number">0x00000260C536888</span>&gt;
+&lt;pymongo.results.InsertManyResult object at <span class="number">0x00000260C536A08</span>&gt;
+&lt;pymongo.results.InsertManyResult object at <span class="number">0x00000260C536AC8</span>&gt;
+&lt;pymongo.results.InsertManyResult object at <span class="number">0x00000260C536A48</span>&gt;
+&lt;pymongo.results.InsertManyResult object at <span class="number">0x00000260C536A88</span>&gt;
+</code></pre>
+<p>可以下载一个MongoDB可视化工具，我用的是Robo3T，数据就这样存入了</p>
+<p><img src="http://a1.qpic.cn/psb?/V10WDaE22S84Sl/VSPcQXPsEyWxVdgnsXKjSMUznFRMd6H*9kjsdbfcuI8!/b/dPMAAAAAAAAA&amp;bo=AAWAAgAAAAADB6U!&amp;rf=viewer_4" alt=""></p>
+<p>总共有100页的数据，用time.sleep()来控制速度防止被封掉，但爬取效率实在很低，这两天准备学习pandas</p>
+<p>完整代码在<a href="https://github.com/Family-TreeSY/LianjiaSpider/blob/master/lianjia.py" target="_blank" rel="external">GitHub</a><br><a href="http://www.jianshu.com/u/a01bc3ec4f88" target="_blank" rel="external">简书</a><br>欢迎访问博客<a href="https://family-treesy.github.io/" target="_blank" rel="external">Treehl的博客</a></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">PYTHON</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">爬虫</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">MongoDB</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2017/11/29/Lianjia/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-Sixth" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -483,11 +603,11 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Python</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">爬虫</a>
         		</li>
       		 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">爬虫</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Python</a>
         		</li>
       		 
         		<li class="article-tag-list-item">
@@ -1275,112 +1395,6 @@ numbers = [<span class="number">10</span>, <span class="number">29</span>, <span
 
 
   
-    <article id="post-Xpath模拟登陆GitHub" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/10/24/Xpath模拟登陆GitHub/">Xpath模拟登陆GitHub</a>
-    </h1>
-  
-
-        
-        <a href="/2017/10/24/Xpath模拟登陆GitHub/" class="archive-article-date">
-  	<time datetime="2017-10-24T01:52:13.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-10-24</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="这是我用python2-7写的简单教程"><a href="#这是我用python2-7写的简单教程" class="headerlink" title="这是我用python2.7写的简单教程"></a><strong>这是我用python2.7写的简单教程</strong></h3><p><strong>准备工作</strong><br>安装requests lxml模块</p>
-<blockquote>
-<p>pip install requests<br>pip install lxml</p>
-</blockquote>
-<p><a href="http://docs.python-requests.org/zh_CN/latest/user/quickstart.html#id11" target="_blank" rel="external">requests文档</a><br><a href="http://lxml.de/" target="_blank" rel="external">lxml文档</a><br><a href="http://www.w3school.com.cn/xpath/index.asp" target="_blank" rel="external">Xpath教程</a></p>
-<hr>
-<p><strong>实战应用</strong><br><img src="http://a1.qpic.cn/psb?/V10WDaE22S84Sl/kgIbyAqyVUEboZyCcWApTA1d9qxLDmjowHvebGpA628!/b/dIkBAAAAAAAA&amp;bo=FQIVAwAAAAADACQ!&amp;rf=viewer_4" alt=""><br>首先进入GitHub登陆页面<a href="https://github.com/login" target="_blank" rel="external">https://github.com/login</a>, 打开Chrome的开发者工具(F12)，先尝试输入错误的密码观察浏览器是如何发送请求的。</p>
-<p><img src="http://a3.qpic.cn/psb?/V10WDaE22S84Sl/r6CPmdb8CMkCI768tbnd9.vdR4XpkQVsnnfse7k.sD4!/b/dD0BAAAAAAAA&amp;bo=ngSAAgAAAAADAD0!&amp;rf=viewer_4" alt=""></p>
-<p><strong>从浏览器的请求可以看到几个关键信息</strong></p>
-<ul>
-<li>登陆的URL地址是<a href="https://github.com/session" target="_blank" rel="external">https://github.com/session</a></li>
-<li>登陆需要提供的表单数据有5个</li>
-<li>commit:Sign in</li>
-<li>utf8:✓</li>
-<li>authenticity_token: #这是一种防范CSRF攻击的方式，在请求地址中添加 token 并验证</li>
-<li>login:Family-TreeSY</li>
-<li>password:123456</li>
-</ul>
-<p>然后按<strong>ctrl+u</strong>打开源代码页面，再按下<strong>ctrl+f</strong>打开搜索栏，查找<strong>authenticity_token</strong></p>
-<p><img src="http://a1.qpic.cn/psb?/V10WDaE22S84Sl/OuzcCKxwb26otA2kbCvX1tQn7s45Lp632HU1QzKeShY!/b/dGkAAAAAAAAA&amp;bo=PgccAQAAAAADAAE!&amp;rf=viewer_4" alt=""></p>
-<p>可以看到 name=”authenticity_token” 这也是Xpath需要查找的元素</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">xpath(‘//input[@name=”authenticity_token”]’)</div></pre></td></tr></table></figure>
-<p>理解了浏览器登陆时所需的数据获取方式后，就可以开始写代码用Python来模拟登陆了。</p>
-<p><strong>解析网页使用Xpath查找所需要的元素</strong></p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> requests</div><div class="line"><span class="keyword">from</span> lxml <span class="keyword">import</span> etree</div><div class="line"></div><div class="line">LOGIN_URL = <span class="string">'https://github.com/login'</span></div><div class="line">SESSION_URL = <span class="string">'https://github.com/session'</span></div><div class="line"></div><div class="line">s = requests.session()</div><div class="line">y = s.get(LOGIN_URL)</div><div class="line">tree = etree.HTML(y.text)</div><div class="line">ele = tree.xpath(<span class="string">'//input[@name="authenticity_token"]'</span>)[<span class="number">0</span>]</div></pre></td></tr></table></figure>
-<p><strong>写入表单数据</strong><br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">data = &#123;</div><div class="line">    <span class="string">'commit'</span>: <span class="string">'Sign in'</span>,</div><div class="line">    <span class="string">'utf8'</span>: <span class="string">'✓'</span>,</div><div class="line">    <span class="string">'authenticity_token'</span>: <span class="string">'fwuV3HbD15A9BKiEJVtsEYEqzDv+r+yG9rj0uuFKLPtKjeK00ubWkbmKqQ6VJp9worJ5BVGMz3ZJV9Feyg9IKw=='</span>,</div><div class="line">    <span class="string">'login'</span>: <span class="string">'用户名'</span>,</div><div class="line">    <span class="string">'password'</span>: <span class="string">'xxxxx'</span></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p><strong>使用POST请求</strong><br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">y = s.post(SESSION_URL, data=data)</div></pre></td></tr></table></figure></p>
-<p><strong>登陆成功</strong><br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">y.url</div><div class="line">Out[<span class="number">4</span>]: <span class="string">u'https://github.com/session'</span></div></pre></td></tr></table></figure></p>
-<p><a href="https://github.com/Family-TreeSY/Spider/blob/master/github.py" target="_blank" rel="external">源码地址</a></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">PYTHON</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">爬虫</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/10/24/Xpath模拟登陆GitHub/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
       <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
@@ -1478,23 +1492,7 @@ getOwnMetadataKeys:function(t){return o(i(t),arguments.length<2?void 0:u(argumen
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">随笔</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">PYTHON</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">DailyQuestion</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Scrapy</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Python</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1502,7 +1500,27 @@ getOwnMetadataKeys:function(t){return o(i(t),arguments.length<2?void 0:u(argumen
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">MongoDB</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">随笔</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">DailyQuestion</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Python</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">BeautifulSoup</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Scrapy</a>
               </li>
              
               <li class="article-tag-list-item">
