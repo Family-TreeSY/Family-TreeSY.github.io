@@ -173,6 +173,259 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-1. 什么是MongoDB数据库？" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/11/30/1. 什么是MongoDB数据库？/">MongoDB数据库学习</a>
+    </h1>
+  
+
+        
+        <a href="/2017/11/30/1. 什么是MongoDB数据库？/" class="archive-article-date">
+  	<time datetime="2017-11-30T09:00:23.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-11-30</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h5 id="1-什么是MongoDB数据库？"><a href="#1-什么是MongoDB数据库？" class="headerlink" title="1. 什么是MongoDB数据库？"></a><strong>1. 什么是MongoDB数据库？</strong></h5><p><img src="http://m.qpic.cn/psb?/V10WDaE22S84Sl/UOPr3jkXyfGKr.VjNF02tCCUoFH7h7sxSE427VZ0z3Q!/b/dPMAAAAAAAAA&amp;bo=IAMWAQAAAAARBwQ!&amp;rf=viewer_4" alt=""><br>MongoDB 是由C++语言编写的，是一个基于分布式文件存储的开源数据库系统。<br>MongoDB中的一条记录就是一个文档，是一个数据结构，由字段和值对组成。MongoDB文档与JSON对象类似。字段的值有可能包括其它文档、数组以及文档数组。<br><img src="http://www.mongoing.com/docs/_images/crud-annotated-document.png" alt=""></p>
+<h5 id="2-安装与环境"><a href="#2-安装与环境" class="headerlink" title="2. 安装与环境"></a><strong>2. 安装与环境</strong></h5><p><a href="https://www.mongodb.com/download-center?jmp=nav#community" target="_blank" rel="external">MongoDB下载地址</a><br>Windows安装：可以参考<a href="http://www.runoob.com/mongodb/mongodb-window-install.html" target="_blank" rel="external">http://www.runoob.com/mongodb/mongodb-window-install.html</a><br>Linux安装：可以参考<a href="http://www.runoob.com/mongodb/mongodb-linux-install.html" target="_blank" rel="external">http://www.runoob.com/mongodb/mongodb-linux-install.html</a><br>Mac安装：可以参考<a href="http://www.runoob.com/mongodb/mongodb-osx-install.html" target="_blank" rel="external">http://www.runoob.com/mongodb/mongodb-osx-install.html</a></p>
+<h5 id="3-创建数据库、集合-amp-删除数据库、集合"><a href="#3-创建数据库、集合-amp-删除数据库、集合" class="headerlink" title="3. 创建数据库、集合&amp;删除数据库、集合"></a><strong>3. 创建数据库、集合&amp;删除数据库、集合</strong></h5><p>打开Mongo shell</p>
+<blockquote>
+<p>use test</p>
+</blockquote>
+<p>这样就创建了一个叫<strong>test</strong>的数据库，但这个时候数据库还是空的，用下面命令查看</p>
+<blockquote>
+<p>show dbs</p>
+</blockquote>
+<p>可以看到并没有<strong>test</strong>这个数据库（lianjia数据库是我之前创建的，大家忽略，哈哈！！）</p>
+<blockquote>
+<p>admin    0.000GB<br>   lianjia  0.000GB<br>   local    0.000GB</p>
+</blockquote>
+<p> 在数据库中添加一个集合（<strong>collection</strong>）</p>
+<blockquote>
+<p>db.createCollection(‘movies’)<br>{ “ok” : 1 }</p>
+</blockquote>
+<p> 我们再执行<strong>show dbs</strong>，<strong>test</strong>数据库就显示出来啦！！</p>
+<blockquote>
+<p>admin    0.000GB<br>    lianjia  0.000GB<br>    local    0.000GB<br>    test     0.000GB</p>
+</blockquote>
+<p>先暂时不要<strong>movies</strong>这个集合，执行删除命令</p>
+<blockquote>
+<p>db.movies.drop()<br>true</p>
+</blockquote>
+<p>执行<strong>show collections</strong>命令就不会再出现集合啦</p>
+<p>再来执行删除数据库的命令</p>
+<blockquote>
+<p>db.dropDatabase()</p>
+</blockquote>
+<p>shell返回{ “dropped” : “test”, “ok” : 1 }就删除啦！！，再确认下数据库</p>
+<blockquote>
+<p>show dbs</p>
+</blockquote>
+<p><strong>test</strong>数据库就没了</p>
+<blockquote>
+<p>admin    0.000GB<br>    lianjia  0.000GB<br>    local    0.000GB</p>
+</blockquote>
+<h5 id="4-插入文档"><a href="#4-插入文档" class="headerlink" title="4. 插入文档"></a><strong>4. 插入文档</strong></h5><p>先创建数据库和集合，别忘了噢！<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># 创建数据库</span></div><div class="line">use test</div><div class="line"><span class="comment"># 创建集合</span></div><div class="line">db.createCollection(<span class="string">'movies'</span>)</div><div class="line"><span class="comment"># 查看数据库</span></div><div class="line">show dbs</div></pre></td></tr></table></figure></p>
+<p><a href="https://movie.douban.com/subject/1292052/" target="_blank" rel="external">肖申克的救赎</a><br><img src="http://a3.qpic.cn/psb?/V10WDaE22S84Sl/Djoj4AhWozS67i.CjnQZz9ZVA*eDmp5AWYzhO7z.JK4!/b/dPIAAAAAAAAA&amp;bo=1gO5AQAAAAADAEg!&amp;rf=viewer_4" alt=""><br>我们以肖申克的救赎为例，把电影信息存储到MongoDB中，电影信息：</p>
+<ul>
+<li>电影名字</li>
+<li>导演</li>
+<li>编剧</li>
+<li>主演</li>
+<li>类型</li>
+<li>制片国家</li>
+<li>语言</li>
+<li>上映时间</li>
+<li>片长</li>
+<li>评分</li>
+</ul>
+<p>插入数据</p>
+<blockquote>
+<p>  db.movies.insert(<br>… {<br>… title: ‘肖申克的救赎’,<br>… directed_by: ‘弗兰克’,<br>… actor: [‘摩根.摩里曼’, ‘罗宾斯’],<br>… type: ‘剧情’,<br>… country: ‘美国’,<br>… language: ‘英语’,<br>… release_time: ‘1994-09-10’,<br>… time: ‘142’,<br>… score: 9.6<br>… }<br>… )</p>
+</blockquote>
+<p><strong>insert操作</strong>有几点需要注意：</p>
+<ul>
+<li>数据是以key:value键值对形式组成，有点类似与JSON</li>
+<li>如果一个key有多个value，value要用[]，现在只有一个value，到后面还要添加可以预先使用[]</li>
+<li>一整个数据块要用花括号{}</li>
+</ul>
+<p>shell对格式要求很高，中英文的逗号都一样，肉眼分辨不出来，大家注意格式，不然不断报错很浪费时间。。。。，看到<strong>WriteResult({ “nInserted” : 1 })</strong>，说明写入成功</p>
+<p>查询数据</p>
+<blockquote>
+<p>db.movies.find().pretty()</p>
+</blockquote>
+<p>返回的数据</p>
+<blockquote>
+<p>{<br>        “_id” : ObjectId(“5a1ff3a6bff1b3cbd8e8f812”),<br>        “title” : “肖申克的救赎”,<br>        “directed_by” : “弗兰克”,<br>        “actor” : [<br>                “摩根.摩里曼”,<br>                “罗宾斯”<br>        ],<br>        “type” : “剧情”,<br>        “country” : “美国”,<br>        “language” : “英语”,<br>        “release_time” : “1994-09-10”,<br>        “time” : “142”,<br>        “score” : 9.6<br>}</p>
+</blockquote>
+<p>这里使用了<strong>pretty()</strong>，它的作用是让美化数据返回，使用<strong>db.movies.find()</strong><br>返回的数据就是一坨一坨的 - -！！！大家可以试一下！</p>
+<blockquote>
+<p>{ “_id” : ObjectId(“5a1fee21bff1b3cbd8e8f80f”), “title” : “肖申克的救赎”, “directed_by” : “弗兰克”, “actor” : [ “摩根.摩里曼”, “罗宾斯” ], “type” : “剧情”, “country” : “美国”, “language” : “英语”, “release_time” : “1994-09-10”, “time” : “142”, “score” : “9.6” }</p>
+</blockquote>
+<p>同时插入多个数据</p>
+<blockquote>
+<p>db.movies.insert([<br>… {<br>… title: ‘肖申克的救赎’,<br>… directed_by: ‘弗兰克’,<br>… actor: [‘摩根.摩里曼’, ‘罗宾斯’],<br>… type: ‘剧情’,<br>… country: ‘美国’,<br>… language: ‘英语’,<br>… release_time: ‘1994-09-10’,<br>… time: ‘142’,<br>… score: 9.6<br>… },<br>… {<br>… title: ‘霸王别姬’,<br>… directed_by: ‘陈凯歌’,<br>… actor: [‘张国荣’, ‘巩俐’],<br>… type: ‘剧情’,<br>… country: ‘中国’,<br>… language: ‘汉语普通法’,<br>… release_time: ‘1993-01-01’,<br>… time: ‘171’,<br>… score: 9.5<br>… }<br>… ])</p>
+</blockquote>
+<p>如果插入成功，就会返回</p>
+<blockquote>
+<p>BulkWriteResult({<br>        “writeErrors” : [ ],<br>        “writeConcernErrors” : [ ],<br>        “nInserted” : 2,<br>        “nUpserted” : 0,<br>        “nMatched” : 0,<br>        “nModified” : 0,<br>        “nRemoved” : 0,<br>        “upserted” : [ ]<br>})</p>
+</blockquote>
+<p>多数据插入模式为：<strong>db.collection.insert([{key1: ‘value1’},{key2: ‘value2’}]</strong></p>
+<h4 id="5-查询数据"><a href="#5-查询数据" class="headerlink" title="5. 查询数据"></a><strong>5. 查询数据</strong></h4><p>以特定条件查询</p>
+<blockquote>
+<p>db.movies.find({‘language’: ‘汉语普通法’}).pretty()</p>
+</blockquote>
+<p>我们看下返回的数据</p>
+<blockquote>
+<p>{<br>        “_id” : ObjectId(“5a1ff19bbff1b3cbd8e8f811”),<br>        “title” : “霸王别姬”,<br>        “directed_by” : “陈凯歌”,<br>        “actor” : [<br>                “张国荣”,<br>                “巩俐”<br>        ],<br>        “type” : “剧情”,<br>        “country” : “中国”,<br>        “language” : “汉语普通法”,<br>        “release_time” : “1993-01-01”,<br>        “time” : “171”,<br>        “score” : 9.5<br>}</p>
+</blockquote>
+<p><strong>AND</strong>条件查询</p>
+<blockquote>
+<p>db.movies.find({‘title’:’霸王别姬’, ‘language’:’汉语普通法’}).pretty()</p>
+</blockquote>
+<p>只有同时满足两个条件的电影才会被查找出来</p>
+<p><strong>OR条件查询</strong></p>
+<blockquote>
+<p>db.movies.find({$or:[{‘title’:’霸王别姬’}, {‘language’:’英语’}]}).pretty()</p>
+</blockquote>
+<p>这里面的括号略显复杂，写的时候要仔细点</p>
+<p><strong>条件操作符</strong><br>大于操作符 - $gt，查找评分大于9的电影</p>
+<blockquote>
+<p>db.movies.find({‘score’:{$gt:9}}).pretty()</p>
+</blockquote>
+<p>小于操作符 - $lt</p>
+<blockquote>
+<p>db.movies.find({‘score’:{$lt:10}}).pretty()</p>
+</blockquote>
+<p>类似操作符还有，大于等于操作符 - $gte，小于等于操作符 - $lte，不等于操作符 - $ne<br>这里就不一一列举了，与上同理</p>
+<p><strong>limit和skip</strong>条件操作符<br>limit()方法接受一个数字参数，该参数指定从MongoDB中读取的记录条数</p>
+<blockquote>
+<p>db.movies.find().limit(1).pretty()</p>
+</blockquote>
+<p>这样就返回一部电影信息</p>
+<blockquote>
+<p> {<br>        “_id” : ObjectId(“5a1feb04bff1b3cbd8e8f80e”),<br>        “title” : “肖申克的救赎”,<br>        “directed_by” : “弗兰克”,<br>        “actor” : “摩根.摩里曼”,<br>        “type” : “剧情”,<br>        “country” : “美国”,<br>        “language” : “英语”,<br>        “release_time” : “1994-09-10”,<br>        “time” : “142”,<br>        “score” : 9.6<br>}</p>
+</blockquote>
+<p>skip()方法来跳过指定数量的数据，skip方法同样接受一个数字参数作为跳过的记录条数</p>
+<blockquote>
+<p>db.movies.find().skip(1).pretty()</p>
+</blockquote>
+<h4 id="6-删除文档"><a href="#6-删除文档" class="headerlink" title="6. 删除文档"></a><strong>6. 删除文档</strong></h4><blockquote>
+<p>db.movies.remove({‘title’: ‘霸王别姬’})</p>
+</blockquote>
+<p> 删除title为霸王别姬的文档，再查询下还剩几条文档</p>
+<blockquote>
+<p>db.movies.find()</p>
+</blockquote>
+<h4 id="7-更新文档"><a href="#7-更新文档" class="headerlink" title="7. 更新文档"></a><strong>7. 更新文档</strong></h4><blockquote>
+<p>db.movies.update({‘title’:’肖申克的救赎’},{$set:{‘title’:’MongoDB_Test’}})</p>
+</blockquote>
+<p>把value改成了MongoDB_Test</p>
+<blockquote>
+<p>{<br>        “_id” : ObjectId(“5a200300bff1b3cbd8e8f813”),<br>        “title” : “MongoDB_Test”,<br>        “directed_by” : “弗兰克”,<br>        “actor” : [<br>                “摩根.摩里曼”,<br>                “罗宾斯”<br>        ],<br>        “type” : “剧情”,<br>        “country” : “美国”,<br>        “language” : “英语”,<br>        “release_time” : “1994-09-10”,<br>        “time” : “142”,<br>        “score” : 9.6<br>}</p>
+</blockquote>
+<p><strong>$set</strong> 操作符表示更新文档中的某一个字段，而不是全部替换<br>{ $set: { <field1>: <value1>, … } }</value1></field1></p>
+<p><strong>修改多条相同的文档，只需要设置 multi 参数为 true</strong></p>
+<blockquote>
+<p>db.movies.update({‘title’:’肖申克的救赎’},{$set:{‘title’:’MongoDB_Test’}},{multi:true})</p>
+</blockquote>
+<p>以上两个操作会把原有数据改掉，如果想在原有值的基础上增加一个值的话需要添加<strong>$push</strong>，比如在actor中添加一个新演员进去</p>
+<blockquote>
+<p>db.movies.update({‘title’:’霸王别姬’}.{$push:{‘actor’:’Treehl’}})</p>
+</blockquote>
+<p>这样actor就有三个演员了</p>
+<blockquote>
+<p>actor” : [<br>                “张国荣”,<br>                “巩俐”,<br>                “Treehl”<br>        ]</p>
+</blockquote>
+<h4 id="8-排序和索引"><a href="#8-排序和索引" class="headerlink" title="8. 排序和索引"></a><strong>8. 排序和索引</strong></h4><p><strong>sort()</strong>方法</p>
+<p>对数据进行排序，sort()方法可以通过参数指定排序的字段，并使用 1 和 -1 来指定排序的方式，其中 1 为升序排列，而-1是用于降序排列<br>举个例子以score电影评分为例</p>
+<blockquote>
+<p>db.movies.find().sort({‘score’:1}).pretty()</p>
+</blockquote>
+<p><strong>ensureIndex()</strong>方法<br>索引通常能够极大的提高查询的效率，如果没有索引，MongoDB在读取数据时必须扫描集合中的每个文件并选取那些符合查询条件的记录。为文档中的一些key加上索引(index)可以加快搜索速度，比如给type电影类型加上索引，这样电影type这个字符串与数字形成了映射，搜索速度会快很多</p>
+<blockquote>
+<p>db.movies.ensureIndex({‘type’:1})</p>
+</blockquote>
+<p>1:升序；-1：降序</p>
+<h4 id="9-聚合"><a href="#9-聚合" class="headerlink" title="9. 聚合"></a><strong>9. 聚合</strong></h4><p>MongoDB中聚合(aggregate)主要用于处理数据(诸如统计平均值,求和等)，并返回计算后的数据结果</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&gt; db.movies.aggregate([&#123;$group:&#123;_id:<span class="string">'$title'</span>,num_movies:&#123;$sum:<span class="number">1</span>&#125;&#125;&#125;])</div></pre></td></tr></table></figure>
+<p>返回</p>
+<blockquote>
+<p>{ “_id” : “霸王别姬”, “num_movies” : 1 }<br>{ “_id” : “MongoDB_Test”, “num_movies” : 1 }</p>
+</blockquote>
+<p>理解一下命令<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">$group: 将集合中的文档分组，可用于统计结果</div><div class="line">$sum:计算总和</div></pre></td></tr></table></figure></p>
+<p>这是建议可以参考菜鸟教程的<a href="http://www.runoob.com/mongodb/mongodb-aggregate.html" target="_blank" rel="external">聚合</a></p>
+<h4 id="10-Python操作MongoDB"><a href="#10-Python操作MongoDB" class="headerlink" title="10. Python操作MongoDB"></a><strong>10. Python操作MongoDB</strong></h4><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> pymongo <span class="keyword">import</span> MongoClient</div><div class="line"></div><div class="line"><span class="comment"># 链接数据库</span></div><div class="line">client = MongoClient(<span class="string">'localhost'</span>, <span class="number">27017</span>)</div><div class="line"><span class="comment"># 建立douban数据库</span></div><div class="line">db = client.douban</div><div class="line"><span class="comment"># 建立homes集合</span></div><div class="line">movies = db.movies</div><div class="line"></div><div class="line">movie_name_list = []</div><div class="line"></div><div class="line">movie_name = &#123;</div><div class="line">    <span class="string">'title'</span>: <span class="string">'肖申克的救赎'</span>,</div><div class="line">    <span class="string">'description'</span>: <span class="string">'小有成就的青年银行家安迪'</span>,</div><div class="line">    <span class="string">'year'</span>: <span class="string">'1991'</span></div><div class="line">&#125;</div><div class="line">movie_name_list.append(movie_name)</div><div class="line"></div><div class="line"><span class="comment"># 使用for循环打印出数据</span></div><div class="line"><span class="keyword">for</span> item <span class="keyword">in</span> movie_name_list:</div><div class="line">    movies.insert(item)</div><div class="line">    </div><div class="line"><span class="comment"># 查找数据</span></div><div class="line"><span class="keyword">for</span> item <span class="keyword">in</span> movies.find():</div><div class="line">    print(item)</div></pre></td></tr></table></figure>
+<p>返回</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&#123;<span class="string">'_id'</span>: ObjectId(<span class="string">'5a20c4f3aa85c109e881c7c7'</span>), <span class="string">'title'</span>: <span class="string">'肖申克的救赎'</span>, <span class="string">'description'</span>: <span class="string">'小有成就的青年银行家安迪'</span>, <span class="string">'year'</span>: <span class="string">'1991'</span>&#125;</div></pre></td></tr></table></figure>
+<p>这是个简单的python操作MongoDB的例子，有兴趣的可以看下我的[Python爬取上海链家房源存入MongoDB数据库(<a href="https://family-treesy.github.io/2017/11/29/lianjia/" target="_blank" rel="external">https://family-treesy.github.io/2017/11/29/lianjia/</a>)</p>
+<p>相信大家看完一遍能对MongoDB有个最基本的认识啦！！！</p>
+<p>参考链接<a href="http://www.runoob.com/mongodb/mongodb-tutorial.html" target="_blank" rel="external">菜鸟教程</a></p>
+<p>欢迎大家访问我的博客<a href="https://family-treesy.github.io/" target="_blank" rel="external">Treehl的博客</a><br><a href="http://www.jianshu.com/u/a01bc3ec4f88" target="_blank" rel="external">简书</a><br><a href="https://github.com/Family-TreeSY" target="_blank" rel="external">GitHub</a></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">PYTHON</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">MongoDB</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2017/11/30/1. 什么是MongoDB数据库？/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-lianjia" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -1295,120 +1548,6 @@ numbers = [<span class="number">10</span>, <span class="number">29</span>, <span
 
 
   
-    <article id="post-login-douban" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/10/30/login-douban/">Python模拟登陆豆瓣</a>
-    </h1>
-  
-
-        
-        <a href="/2017/10/30/login-douban/" class="archive-article-date">
-  	<time datetime="2017-10-30T08:16:20.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-10-30</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>这几天在学习模拟登陆，而登陆离不开http中Cookie技术</p>
-<h3 id="Cookie"><a href="#Cookie" class="headerlink" title="Cookie"></a><strong>Cookie</strong></h3><p>由于HTTP是一种无状态的协议，服务器单从网络连接上无从知道客户身份。怎么办呢？就给客户端们颁发一个通行证吧，每人一个，无论谁访问都必须携带自己通行证。这样服务器就能从通行证上确认客户身份了。这就是Cookie的工作原理。<br><img src="https://timgsa.baidu.com/timg?image&amp;quality=80&amp;size=b9999_10000&amp;sec=1509363866179&amp;di=573e91f2708405e58e5387722e2def0a&amp;imgtype=0&amp;src=http%3A%2F%2Fimg.mp.itc.cn%2Fupload%2F20160702%2Fb014306d961742ea89c74c86f8d14e9f_th.png" alt=""></p>
-<h3 id="分析网页数据"><a href="#分析网页数据" class="headerlink" title="分析网页数据"></a><strong>分析网页数据</strong></h3><p>我们用Chrome来打开<a href="https://accounts.douban.com/login?alias=&amp;redir=https%3A%2F%2Fwww.douban.com%2F&amp;source=index_nav&amp;error=1001" target="_blank" rel="external">豆瓣</a>（F12开发者工具），先输入一个错误的账户信息来观察浏览器是如何发送请求的</p>
-<p><img src="http://a2.qpic.cn/psb?/V10WDaE22S84Sl/lF5ujf5darh1W5vWX7x2FoByn5ScY8SJw4o8AQgW08U!/b/dOIAAAAAAAAA&amp;bo=MgVGAgAAAAADB1E!&amp;rf=viewer_4" alt=""><br>从浏览器的请求可以发现几个关键的信息</p>
-<ul>
-<li>登录的 URL 地址是 <a href="https://accounts.douban.com/login" target="_blank" rel="external">https://accounts.douban.com/login</a></li>
-<li>登录需要提供的表单数据有7个：</li>
-</ul>
-<ol>
-<li>source:index_nav</li>
-<li>redir:<a href="https://www.douban.com/" target="_blank" rel="external">https://www.douban.com/</a></li>
-<li>form_email:286210002@qq.com</li>
-<li>form_password:123</li>
-<li>captcha-solution:errfdf</li>
-<li>captcha-id:lWtHfckzUAF4PoAtFtQdsyZy:en</li>
-<li>login:登录</li>
-</ol>
-<ul>
-<li>获取验证码的URL地址是 <a href="https://www.douban.com/misc/captcha?id=gTpnLfXlpVM2vIB2xlT09deP:en&amp;size=s" target="_blank" rel="external">https://www.douban.com/misc/captcha?id=gTpnLfXlpVM2vIB2xlT09deP:en&amp;size=s</a></li>
-</ul>
-<p>我们还需要获取验证码元素，我们在开发者工具中切换到Elements一栏<br><img src="http://a3.qpic.cn/psb?/V10WDaE22S84Sl/6EndpYOzS5ITZ6iCYu7o*wDKZVPcvY*2NlfHsmmaVYk!/b/dPIAAAAAAAAA&amp;bo=OgWzAQAAAAADB68!&amp;rf=viewer_4" alt=""><br>从中我们得到了验证码元素在img标签内</p>
-<blockquote>
-<p>img id=”captcha_image” </p>
-</blockquote>
-<p>最后我们还需要captcha-id元素，Ctrl+U打开页面源码（在登陆页面打开），Ctrl+F搜索captcha-id<br><img src="http://a1.qpic.cn/psb?/V10WDaE22S84Sl/65.u1lYW6pl0AIBVopKZaLbiP7bSoXviTfnRBC1sh68!/b/dPMAAAAAAAAA&amp;bo=VQfiAQAAAAADB5M!&amp;rf=viewer_4" alt=""><br>好了，到了这一步所需的数据全部获取完毕</p>
-<h3 id="实战应用"><a href="#实战应用" class="headerlink" title="实战应用"></a><strong>实战应用</strong></h3><p>登陆所需要的模块</p>
-<ul>
-<li>Requests</li>
-<li>BeautifulSoup4<blockquote>
-<p>pip install requests<br>pip install BeautifulSoup4</p>
-</blockquote>
-</li>
-</ul>
-<p>http.cookiejar 模块可用于自动处理HTTP Cookie，LWPCookieJar 对象就是对 cookies 的封装，它支持把 cookies 保存到文件以及从文件中加载。<br>而 session 对象 提供了 Cookie 的持久化，连接池功能，可以通过 session 对象发送请求<br>首先从cookies 文件中加载 cookie信息，因为首次运行还没有cookie，会出现 LoadError 异常。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> requests</div><div class="line"><span class="keyword">from</span> http <span class="keyword">import</span> cookiejar</div><div class="line">session = requests.session()</div><div class="line">session.cookies = cookiejar.LWPCookieJar(filename=<span class="string">'cookies'</span>)</div><div class="line"><span class="keyword">try</span>:</div><div class="line">    print(session.cookies)</div><div class="line">    session.cookies.load(ignore_discard=<span class="keyword">True</span>)</div><div class="line"><span class="keyword">except</span> LoadError:</div><div class="line">    print(<span class="string">'no cookie'</span>)</div></pre></td></tr></table></figure></p>
-<h3 id="获取验证码"><a href="#获取验证码" class="headerlink" title="获取验证码"></a><strong>获取验证码</strong></h3><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">get_captcha</span><span class="params">()</span>:</span></div><div class="line">    <span class="string">'''</span></div><div class="line"><span class="string">    把验证码图片保存到当前目录，手动识别验证码</span></div><div class="line"><span class="string">    :return:</span></div><div class="line"><span class="string">    '''</span></div><div class="line">    r = requests.post(download_url, data=data, headers=headers)</div><div class="line">    page = r.text</div><div class="line">    soup = BeautifulSoup(page, <span class="string">'html.parser'</span>)</div><div class="line">    image = soup.find(<span class="string">'img'</span>, attrs=&#123;<span class="string">'id'</span>: <span class="string">'captcha_image'</span>&#125;).get(<span class="string">'src'</span>)</div><div class="line">    s = session.get(captcha_url, headers=headers)</div><div class="line">    <span class="keyword">with</span> open(<span class="string">'captcha.jpg'</span>, <span class="string">'wb'</span>) <span class="keyword">as</span> f:</div><div class="line">        f.write(s.content)</div><div class="line">    captcha = input(<span class="string">'Please input the captcha: '</span>)</div><div class="line">    captcha_id = soup.find(<span class="string">'input'</span>, &#123;<span class="string">'type'</span>: <span class="string">'hidden'</span>, <span class="string">'name'</span>: <span class="string">'captcha-id'</span> &#125;).get(<span class="string">'value'</span>)</div><div class="line">    <span class="keyword">return</span> captcha, captcha_id</div></pre></td></tr></table></figure>
-<h3 id="登陆"><a href="#登陆" class="headerlink" title="登陆"></a><strong>登陆</strong></h3><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">login</span><span class="params">()</span>:</span></div><div class="line">    captcha, captcha_id = get_captcha()</div><div class="line">    <span class="comment"># 增加表数据</span></div><div class="line">    data[<span class="string">'captcha-solution'</span>] = captcha</div><div class="line">    data[<span class="string">'captcha-id'</span>] = captcha_id</div><div class="line">    response = session.post(download_url, data=data, headers=headers)</div><div class="line">    page = response.text</div><div class="line">    print(page)</div><div class="line">    session.cookies.save()</div></pre></td></tr></table></figure>
-<p>第一次登陆后session 会自动把 服务端的返回的cookie 信息填充到 session.cookies 对象中，下次登陆时就不需要再输入账号密码<br><a href="https://github.com/Family-TreeSY/login-douban/blob/master/login-douban.py" target="_blank" rel="external">完整代码</a></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">PYTHON</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">爬虫</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/10/30/login-douban/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
       <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
@@ -1526,15 +1665,15 @@ getOwnMetadataKeys:function(t){return o(i(t),arguments.length<2?void 0:u(argumen
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">MongoDB</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">随笔</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">Scrapy</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">MongoDB</a>
               </li>
              
               <li class="article-tag-list-item">
