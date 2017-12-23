@@ -6,22 +6,18 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="//Family-TreeSY.github.io">
-  <title>Python爬取豆瓣电影TOP250 | Treehl的博客</title>
+  <title>Tag: Scrapy-Redis | Treehl的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="闲来无事温故了下BeautifulSoup和requests，之后又写了个简单的爬虫，网址豆瓣TOP250电影先附上关键模块文档，对新手还是比较友好的！  BeautifulSoup文档 Requests文档  这次不总结详细的过程，有兴趣了解的可以看下我之前写的Python爬取豆瓣电子小说或者有兴趣了解scrapy的可以看下我另外一篇Scrapy爬取豆瓣电影TOP250 我们先来看下，reque">
-<meta name="keywords" content="Python,爬虫,BeautifulSoup">
-<meta property="og:type" content="article">
-<meta property="og:title" content="Python爬取豆瓣电影TOP250">
-<meta property="og:url" content="//Family-TreeSY.github.io/2017/11/14/Python爬取豆瓣电影TOP250/index.html">
+  <meta name="description" content="Changing &amp; Building">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Treehl的博客">
+<meta property="og:url" content="//Family-TreeSY.github.io/tags/Scrapy-Redis/index.html">
 <meta property="og:site_name" content="Treehl的博客">
-<meta property="og:description" content="闲来无事温故了下BeautifulSoup和requests，之后又写了个简单的爬虫，网址豆瓣TOP250电影先附上关键模块文档，对新手还是比较友好的！  BeautifulSoup文档 Requests文档  这次不总结详细的过程，有兴趣了解的可以看下我之前写的Python爬取豆瓣电子小说或者有兴趣了解scrapy的可以看下我另外一篇Scrapy爬取豆瓣电影TOP250 我们先来看下，reque">
+<meta property="og:description" content="Changing &amp; Building">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://a3.qpic.cn/psb?/V10WDaE22S84Sl/OcYYzP78k1AK*O1yeB.ohifl7ftXhy7RObfJPaq1P30!/b/dPIAAAAAAAAA&bo=AAaAAgAAAAADB6Y!&rf=viewer_4">
-<meta property="og:updated_time" content="2017-11-14T10:55:58.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Python爬取豆瓣电影TOP250">
-<meta name="twitter:description" content="闲来无事温故了下BeautifulSoup和requests，之后又写了个简单的爬虫，网址豆瓣TOP250电影先附上关键模块文档，对新手还是比较友好的！  BeautifulSoup文档 Requests文档  这次不总结详细的过程，有兴趣了解的可以看下我之前写的Python爬取豆瓣电子小说或者有兴趣了解scrapy的可以看下我另外一篇Scrapy爬取豆瓣电影TOP250 我们先来看下，reque">
-<meta name="twitter:image" content="http://a3.qpic.cn/psb?/V10WDaE22S84Sl/OcYYzP78k1AK*O1yeB.ohifl7ftXhy7RObfJPaq1P30!/b/dPIAAAAAAAAA&bo=AAaAAgAAAAADB6Y!&rf=viewer_4">
+<meta name="twitter:title" content="Treehl的博客">
+<meta name="twitter:description" content="Changing &amp; Building">
   
     <link rel="alternative" href="/atom.xml" title="Treehl的博客" type="application/atom+xml">
   
@@ -175,88 +171,42 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-Python爬取豆瓣电影TOP250" class="article article-type-post " itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
+            
   
-    <h1 class="article-title" itemprop="name">
-      Python爬取豆瓣电影TOP250
+  
+    
+    
+      
+      
+      <section class="archives-wrap">
+        <div class="archive-year-wrap">
+          <a href="/archives/2017" class="archive-year">2017</a>
+        </div>
+        <div class="archives">
+    
+    <article class="archive-article archive-type-post">
+  <div class="archive-article-inner">
+    <header class="archive-article-header">
+      	<div class="article-meta">
+	      	<a href="/2017/12/23/scrapy-redis(一)/" class="archive-article-date">
+  	<time datetime="2017-12-23T09:48:23.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-12-23</time>
+</a>
+        </div>
+    	 
+  
+    <h1 itemprop="name">
+      <a class="archive-article-title" href="/2017/12/23/scrapy-redis(一)/">Scrapy-Redis分布式爬取自如网（一）</a>
     </h1>
   
 
-        
-        <a href="/2017/11/14/Python爬取豆瓣电影TOP250/" class="archive-article-date">
-  	<time datetime="2017-11-14T02:36:16.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-11-14</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>闲来无事温故了下BeautifulSoup和requests，之后又写了个简单的爬虫，网址<a href="https://movie.douban.com/top250" target="_blank" rel="external">豆瓣TOP250电影</a><br>先附上关键模块文档，对新手还是比较友好的！</p>
-<ul>
-<li><a href="http://beautifulsoup.readthedocs.io/zh_CN/latest/#get-text" target="_blank" rel="external">BeautifulSoup文档</a></li>
-<li><a href="http://docs.python-requests.org/zh_CN/latest/user/quickstart.html#id11" target="_blank" rel="external">Requests文档</a></li>
-</ul>
-<p>这次不总结详细的过程，有兴趣了解的可以看下我之前写的<a href="https://family-treesy.github.io/2017/10/24/douban-reading/" target="_blank" rel="external">Python爬取豆瓣电子小说</a>或者有兴趣了解scrapy的可以看下我另外一篇<a href="https://family-treesy.github.io/2017/11/07/Scrapy%E7%AE%80%E4%BB%8B/" target="_blank" rel="external">Scrapy爬取豆瓣电影TOP250</a></p>
-<p>我们先来看下，requests和bs4怎么结合使用。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> requests</div><div class="line"><span class="keyword">from</span> bs4 <span class="keyword">import</span> BeautifulSoup</div><div class="line"></div><div class="line">url = <span class="string">'https://movie.douban.com/top250'</span></div><div class="line"><span class="comment"># 使用U-A伪装成浏览器发送请求</span></div><div class="line">headers = &#123;<span class="string">'User-Agent'</span>: <span class="string">'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/61.0.3163.100 Safari/537.36'</span>&#125;</div><div class="line"><span class="comment"># 先使用requests发送网络请求从而获取网页</span></div><div class="line">r = requests.get(<span class="string">'https://movie.douban.com/top250'</span>, headers=headers)</div><div class="line"><span class="comment"># 使用bs4解析获取的网页</span></div><div class="line">soup = BeautifulSoup(r.text, <span class="string">'html.parser'</span>)</div><div class="line"><span class="comment"># 调用prettify()方法来使解析的HTML更加规范化</span></div><div class="line">print(soup.prettify())</div></pre></td></tr></table></figure>
-<p>解析出来的部分HTML<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">&lt;!DOCTYPE html&gt;</div><div class="line">&lt;html class="ua-windows ua-webkit" lang="zh-cmn-Hans"&gt;</div><div class="line"> &lt;head&gt;</div><div class="line">  &lt;meta content=<span class="string">"text/html; charset=utf-8"</span> http-equiv=<span class="string">"Content-Type"</span>/&gt;</div><div class="line">  &lt;meta content=<span class="string">"webkit"</span> name=<span class="string">"renderer"</span>/&gt;</div><div class="line">  &lt;meta content=<span class="string">"always"</span> name=<span class="string">"referrer"</span>/&gt;</div><div class="line">  &lt;title&gt;</div><div class="line">   豆瓣电影 Top <span class="number">250</span></div><div class="line">  &lt;/title&gt;</div><div class="line">  &lt;meta content=<span class="string">"cZdR4xxR7RxmM4zE"</span> name=<span class="string">"baidu-site-verification"</span>&gt;</div><div class="line">   &lt;meta content=<span class="string">"no-cache"</span> http-equiv=<span class="string">"Pragma"</span>/&gt;</div><div class="line">   &lt;meta content=<span class="string">"Sun, 6 Mar 2005 01:00:00 GMT"</span> http-equiv=<span class="string">"Expires"</span>/&gt;</div><div class="line">   &lt;link href=<span class="string">"https://img3.doubanio.com/f/movie/d59b2715fdea4968a450ee5f6c95c7d7a2030065/pics/movie/apple-touch-icon.png"</span> rel=<span class="string">"apple-touch-icon"</span>/&gt;</div><div class="line">   &lt;link href=<span class="string">"https://img3.doubanio.com/f/shire/da18e98a294047dd92298000fe2080b38efda2ae/css/douban.css"</span> rel=<span class="string">"stylesheet"</span> type=<span class="string">"text/css"</span>/&gt;</div><div class="line">   &lt;link href=<span class="string">"https://img3.doubanio.com/f/shire/ae3f5a3e3085968370b1fc63afcecb22d3284848/css/separation/_all.css"</span> rel=<span class="string">"stylesheet"</span> type=<span class="string">"text/css"</span>/&gt;</div><div class="line">   &lt;link href=<span class="string">"https://img3.doubanio.com/f/movie/8864d3756094f5272d3c93e30ee2e324665855b0/css/movie/base/init.css"</span> rel=<span class="string">"stylesheet"</span>/&gt;</div><div class="line">   &lt;script type=<span class="string">"text/javascript"</span>&gt;</div></pre></td></tr></table></figure></p>
-<h4 id="分析元素"><a href="#分析元素" class="headerlink" title="分析元素"></a><strong>分析元素</strong></h4><p><img src="http://a3.qpic.cn/psb?/V10WDaE22S84Sl/OcYYzP78k1AK*O1yeB.ohifl7ftXhy7RObfJPaq1P30!/b/dPIAAAAAAAAA&amp;bo=AAaAAgAAAAADB6Y!&amp;rf=viewer_4" alt=""></p>
-<blockquote>
-<p>movie_list_soup = soup.find(‘ol’, attrs={‘class’: ‘grid_view’}) #电影列表<br>movie_name = movie_li.find(‘span’, attrs={‘class’: ‘title’}).get_text() #电影名字<br>movie_info = movie_li.find(‘div’, attrs={‘class’: ‘bd’}).find(‘p’).get_text() # 电影信息<br>movie_star = movie_li.find(‘span’, attrs={‘class’: ‘rating_num’}).get_text() # 电影评分</p>
-</blockquote>
-<p>先来看下电影列表<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">for</span> movie <span class="keyword">in</span> movie_list.find_all(<span class="string">'li'</span>):</div><div class="line">    movie_name = movie.find(<span class="string">'span'</span>, attrs=&#123;<span class="string">'class'</span>: <span class="string">'title'</span>&#125;)</div><div class="line">    print(movie_name)</div><div class="line">    </div><div class="line">&lt;span class="title"&gt;肖申克的救赎&lt;/span&gt;</div><div class="line">&lt;span class="title"&gt;霸王别姬&lt;/span&gt;</div><div class="line">&lt;span class="title"&gt;这个杀手不太冷&lt;/span&gt;</div><div class="line">&lt;span class="title"&gt;阿甘正传&lt;/span&gt;</div><div class="line">&lt;span class="title"&gt;美丽人生&lt;/span&gt;</div><div class="line">&lt;span class="title"&gt;千与千寻&lt;/span&gt;</div><div class="line">&lt;span class="title"&gt;辛德勒的名单&lt;/span&gt;</div><div class="line">&lt;span class="title"&gt;泰坦尼克号&lt;/span&gt;</div><div class="line">&lt;span class="title"&gt;盗梦空间&lt;/span&gt;</div><div class="line">&lt;span class="title"&gt;机器人总动员&lt;/span&gt;</div><div class="line">&lt;span class="title"&gt;海上钢琴师&lt;/span&gt;</div><div class="line">&lt;span class="title"&gt;三傻大闹宝莱坞&lt;/span&gt;</div><div class="line">&lt;span class="title"&gt;忠犬八公的故事&lt;/span&gt;</div><div class="line">&lt;span class="title"&gt;放牛班的春天&lt;/span&gt;</div><div class="line">&lt;span class="title"&gt;大话西游之大圣娶亲&lt;/span&gt;</div><div class="line">``` </div><div class="line"></div><div class="line">调用get_text()获取内容</div><div class="line">``` python</div><div class="line"><span class="keyword">for</span> movie <span class="keyword">in</span> movie_list.find_all(<span class="string">'li'</span>):</div><div class="line">    movie_name = movie.find(<span class="string">'span'</span>, attrs=&#123;<span class="string">'class'</span>: <span class="string">'title'</span>&#125;)</div><div class="line">    print(movie_name.get_text())</div><div class="line">    </div><div class="line">肖申克的救赎</div><div class="line">霸王别姬</div><div class="line">这个杀手不太冷</div><div class="line">阿甘正传</div><div class="line">美丽人生</div><div class="line">千与千寻</div><div class="line">辛德勒的名单</div><div class="line">泰坦尼克号</div><div class="line">盗梦空间</div><div class="line">机器人总动员</div><div class="line">海上钢琴师</div><div class="line">三傻大闹宝莱坞</div><div class="line">忠犬八公的故事</div><div class="line">放牛班的春天</div><div class="line">大话西游之大圣娶亲</div><div class="line">``` </div><div class="line"></div><div class="line">电影信息，电影评分同理</div><div class="line">``` python</div><div class="line">movie_info = movie.find(<span class="string">'div'</span>, attrs=&#123;<span class="string">'class'</span>: <span class="string">'bd'</span>&#125;).find(<span class="string">'p'</span>)</div><div class="line">print(movie_info.get_text())</div><div class="line">                            导演: 大卫·芬奇 David Fincher   主演: 爱德华·诺顿 Edward Norton / 布拉...</div><div class="line">                            <span class="number">1999</span> / 美国 德国 / 剧情 动作 悬疑 惊悚</div></pre></td></tr></table></figure></p>
-<p>附上完整代码，关于next_page的理解可以看下我的<a href="https://family-treesy.github.io/2017/10/24/douban-reading/" target="_blank" rel="external">python爬取豆瓣小说</a></p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#_*_ coding=utf-8 _*_</span></div><div class="line"></div><div class="line"><span class="string">'''</span></div><div class="line"><span class="string">爬取豆瓣电影TOP250</span></div><div class="line"><span class="string">'''</span></div><div class="line"></div><div class="line"><span class="keyword">import</span> codecs</div><div class="line"><span class="keyword">import</span> requests</div><div class="line"><span class="keyword">from</span> bs4 <span class="keyword">import</span> BeautifulSoup</div><div class="line"></div><div class="line">DOWNLOAD_URL = <span class="string">'https://movie.douban.com/top250'</span></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">download_page</span><span class="params">(url)</span>:</span></div><div class="line">    <span class="keyword">return</span> requests.get(url, headers=&#123;</div><div class="line">        <span class="string">'User-Agent'</span>:<span class="string">'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/61.0.3163.100 Safari/537.36'</span></div><div class="line">    &#125;).content</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">parse_html</span><span class="params">(html)</span>:</span></div><div class="line">    soup = BeautifulSoup(html, <span class="string">'html.parser'</span>)</div><div class="line">    <span class="comment"># 电影列表</span></div><div class="line">    movie_list_soup = soup.find(<span class="string">'ol'</span>, attrs=&#123;<span class="string">'class'</span>: <span class="string">'grid_view'</span>&#125;)</div><div class="line"></div><div class="line">    movie_name_list = []</div><div class="line"></div><div class="line">    <span class="keyword">for</span> movie_li <span class="keyword">in</span> movie_list_soup.find_all(<span class="string">'li'</span>):</div><div class="line">        movie_name = movie_li.find(<span class="string">'span'</span>, attrs=&#123;<span class="string">'class'</span>: <span class="string">'title'</span>&#125;).get_text()</div><div class="line">        movie_info = movie_li.find(<span class="string">'div'</span>, attrs=&#123;<span class="string">'class'</span>: <span class="string">'bd'</span>&#125;).find(<span class="string">'p'</span>).get_text()</div><div class="line">        movie_star = movie_li.find(<span class="string">'span'</span>, attrs=&#123;<span class="string">'class'</span>: <span class="string">'rating_num'</span>&#125;).get_text()</div><div class="line"></div><div class="line">        movie_name_list.append(movie_name)</div><div class="line">        movie_name_list.append(movie_info)</div><div class="line">        movie_name_list.append(movie_star)</div><div class="line">        </div><div class="line">    <span class="comment"># 下一页链接</span></div><div class="line">    next_page = soup.find(<span class="string">'span'</span>, attrs=&#123;<span class="string">'class'</span>: <span class="string">'next'</span>&#125;).find(<span class="string">'a'</span>)</div><div class="line">    <span class="keyword">if</span> next_page:</div><div class="line">        <span class="keyword">return</span> movie_name_list,DOWNLOAD_URL + next_page[<span class="string">'href'</span>]</div><div class="line">    <span class="keyword">return</span> movie_name_list, <span class="keyword">None</span></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">main</span><span class="params">()</span>:</span></div><div class="line">    url = DOWNLOAD_URL</div><div class="line">    <span class="keyword">with</span> codecs.open(<span class="string">'movies'</span>,<span class="string">'wb'</span>, encoding=<span class="string">'utf-8'</span>) <span class="keyword">as</span> f:</div><div class="line">        <span class="keyword">while</span> <span class="keyword">True</span>:</div><div class="line">            html = download_page(url)</div><div class="line">            movies, url =parse_html(html)</div><div class="line">            f.write(<span class="string">u'&#123;movies&#125;\n'</span>.format(movies=<span class="string">'\n'</span>.join(movies)))</div><div class="line"></div><div class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</div><div class="line">    main()</div></pre></td></tr></table></figure>
-<p>欢迎大家访问我的博客<a href="https://family-treesy.github.io/" target="_blank" rel="external">Treehl的博客</a><br><a href="https://github.com/Family-TreeSY" target="_blank" rel="external">GitHub</a><br><a href="http://www.jianshu.com/u/a01bc3ec4f88" target="_blank" rel="external">简书</a></p>
-
-      
-
-      
-        <div class="page-reward">
-          <a href="javascript:;" class="page-reward-btn tooltip-top">
-            <div class="tooltip tooltip-east">
-            <span class="tooltip-item">
-              赏
-            </span>
-            <span class="tooltip-content">
-              <span class="tooltip-text">
-                <span class="tooltip-inner">
-                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
-                  <div class="reward-box">
-                    
-                    <div class="reward-box-item">
-                      <img class="reward-img" src="/img/alipay.jpg">
-                      <span class="reward-type">支付宝</span>
-                    </div>
-                    
-                    
-                    <div class="reward-box-item">
-                      <img class="reward-img" src="/img/wechat.jpg">
-                      <span class="reward-type">微信</span>
-                    </div>
-                    
-                  </div>
-                </span>
-              </span>
-            </span>
-          </div>
-          </a>
-        </div>
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
+        <div class="article-info info-on-right">
+          
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Python</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">PYTHON</a>
         		</li>
       		 
         		<li class="article-tag-list-item">
@@ -264,128 +214,37 @@
         		</li>
       		 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">BeautifulSoup</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">MongoDB</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Scrapy</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Redis</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">Scrapy-Redis</a>
         		</li>
       		
 		</ul>
 	</div>
 
-      
+          
 
-      
-
-      
-        
-<div class="share-btn share-icons tooltip-left">
-  <div class="tooltip tooltip-east">
-    <span class="tooltip-item">
-      <a href="javascript:;" class="share-sns share-outer">
-        <i class="icon icon-share"></i>
-      </a>
-    </span>
-    <span class="tooltip-content">
-      <div class="share-wrap">
-        <div class="share-icons">
-          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
-            <i class="icon icon-weibo"></i>
-          </a>
-          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
-            <i class="icon icon-weixin"></i>
-          </a>
-          <a class="qq share-sns" href="javascript:;" data-type="qq">
-            <i class="icon icon-qq"></i>
-          </a>
-          <a class="douban share-sns" href="javascript:;" data-type="douban">
-            <i class="icon icon-douban"></i>
-          </a>
-          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
-            <i class="icon icon-qzone"></i>
-          </a>
-          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
-            <i class="icon icon-facebook"></i>
-          </a>
-          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
-            <i class="icon icon-twitter"></i>
-          </a>
-          <a class="google share-sns" href="javascript:;" data-type="google">
-            <i class="icon icon-google"></i>
-          </a>
         </div>
-      </div>
-    </span>
-  </div>
-</div>
-
-<div class="page-modal wx-share js-wx-box">
-    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
-    <p>扫一扫，分享到微信</p>
-    <div class="wx-qrcode">
-      <img src="http://s.jiathis.com/qrcode.php?url=http://Family-TreeSY.github.io/2017/11/14/Python爬取豆瓣电影TOP250/" alt="微信分享二维码">
-    </div>
-</div>
-
-<div class="mask js-mask"></div>
-      
-      <div class="clearfix"></div>
-    </div>
+        <div class="clearfix"></div>
+    </header>
   </div>
 </article>
-
-  
-<nav id="article-nav">
-  
-    <a href="/2017/11/21/Keep Clam/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          Keep Clam
-        
-      </div>
-    </a>
   
   
-    <a href="/2017/11/09/fourth/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">python每日一题：第四题</div>
-      <i class="icon-circle-right"></i>
-    </a>
-  
-</nav>
-
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-  
-  <!-- UY BEGIN -->
-<div id="uyan_frame"></div>
-<script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=2147729"></script>
-<!-- UY END -->
+    </div></section>
   
 
-  
-  
-  
-
-  
-
-  
-
-  
+    
 
 
           </div>
@@ -408,9 +267,9 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: true,
+		isPost: false,
 		isArchive: false,
-		isTag: false,
+		isTag: true,
 		isCategory: false,
 		open_in_new: false,
 		toc_hide_index: true,
