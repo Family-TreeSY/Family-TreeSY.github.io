@@ -6,18 +6,20 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="//Family-TreeSY.github.io">
-  <title>Treehl的博客</title>
+  <title>Scrapy-Redis分布式爬取链家上海17个区房源信息（二） | Treehl的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="Changing &amp; Building">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Treehl的博客">
-<meta property="og:url" content="//Family-TreeSY.github.io/page/2/index.html">
+  <meta name="description" content="免责声明：本项目旨在学习Scrapy爬虫框架和MongoDB数据库，不可使用于商业和个人其他意图。若使用不当，均由个人承担。  ###简介之前用requests + bs4 抓取过宝山区的房源信息，今天我们用scrapy-redis分布式抓取上海17个区所有的房源信息，这个工程比起上一个scrapy-redis抓取自如网/)，增加了如下功能：  创建了imagepipeline管道，抓取房型图">
+<meta name="keywords" content="PYTHON,MongoDB,爬虫,Scrapy,Redis,Scrapy-Redis">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Scrapy-Redis分布式爬取链家上海17个区房源信息（二）">
+<meta property="og:url" content="//Family-TreeSY.github.io/2018/01/10/scrapy-redis(二)/index.html">
 <meta property="og:site_name" content="Treehl的博客">
-<meta property="og:description" content="Changing &amp; Building">
+<meta property="og:description" content="免责声明：本项目旨在学习Scrapy爬虫框架和MongoDB数据库，不可使用于商业和个人其他意图。若使用不当，均由个人承担。  ###简介之前用requests + bs4 抓取过宝山区的房源信息，今天我们用scrapy-redis分布式抓取上海17个区所有的房源信息，这个工程比起上一个scrapy-redis抓取自如网/)，增加了如下功能：  创建了imagepipeline管道，抓取房型图">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-01-10T04:33:43.177Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Treehl的博客">
-<meta name="twitter:description" content="Changing &amp; Building">
+<meta name="twitter:title" content="Scrapy-Redis分布式爬取链家上海17个区房源信息（二）">
+<meta name="twitter:description" content="免责声明：本项目旨在学习Scrapy爬虫框架和MongoDB数据库，不可使用于商业和个人其他意图。若使用不当，均由个人承担。  ###简介之前用requests + bs4 抓取过宝山区的房源信息，今天我们用scrapy-redis分布式抓取上海17个区所有的房源信息，这个工程比起上一个scrapy-redis抓取自如网/)，增加了如下功能：  创建了imagepipeline管道，抓取房型图">
   
     <link rel="alternative" href="/atom.xml" title="Treehl的博客" type="application/atom+xml">
   
@@ -171,238 +173,96 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-    <article id="post-fourth" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+            <article id="post-scrapy-redis(二)" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/11/09/fourth/">python每日一题：第四题</a>
+    <h1 class="article-title" itemprop="name">
+      Scrapy-Redis分布式爬取链家上海17个区房源信息（二）
     </h1>
   
 
         
-        <a href="/2017/11/09/fourth/" class="archive-article-date">
-  	<time datetime="2017-11-09T02:36:16.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-11-09</time>
+        <a href="/2018/01/10/scrapy-redis(二)/" class="archive-article-date">
+  	<time datetime="2018-01-10T02:32:23.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-01-10</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>今天来学一下<a href="https://wx.xiaomiquan.com/mweb/views/joingroup/join_group.html?group_id=518855855524&amp;secret=meqx22a2blf4c1ae3ucbgpui4somnpwa&amp;user_id=1152122252" target="_blank" rel="external">Python之禅和他朋友们</a>的第四题</p>
-<h3 id="题目"><a href="#题目" class="headerlink" title="题目"></a><strong>题目</strong></h3><p><img src="https://foofish.net/images/fn.png" alt=""></p>
-<blockquote>
-<p>数列从0和1开始，之后的斐波那契系数由之前的两数相加而得出，例如斐波那契数列的前10个数是：0, 1, 1, 2, 3, 5, 8, 13, 21, 34。用 Python 实现斐波那契数列常见的写法有三种，各算法的执行效率也有很大差别。</p>
+        <blockquote>
+<p>免责声明：本项目旨在学习Scrapy爬虫框架和MongoDB数据库，不可使用于商业和个人其他意图。若使用不当，均由个人承担。</p>
 </blockquote>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"><span class="string">'''</span></div><div class="line"><span class="string">用Python实现斐波那契数列(Fibonacci sequence)</span></div><div class="line"><span class="string">除第一个和第二个数外，任意一个数都可由前两个数相加得到:</span></div><div class="line"><span class="string">1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144, ...</span></div><div class="line"><span class="string">'''</span></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">fib</span><span class="params">(max)</span>:</span></div><div class="line">    <span class="comment">#n=0, a=0, b=1</span></div><div class="line">    n, a, b = <span class="number">0</span>, <span class="number">0</span>, <span class="number">1</span></div><div class="line">    <span class="comment">#条件满足 n &lt; max 就循环,n &gt; max 就停止</span></div><div class="line">    <span class="keyword">while</span> n &lt; max:</div><div class="line">        print(b)</div><div class="line">        <span class="comment">#不等于a=b, b=a + b</span></div><div class="line">        a, b = b, a + b</div><div class="line">        n = n + <span class="number">1</span></div><div class="line">    <span class="keyword">return</span> <span class="string">'done'</span></div><div class="line"><span class="comment">#调用函数</span></div><div class="line">f= fib(<span class="number">9</span>)</div><div class="line">print(f)</div><div class="line"></div><div class="line">&gt; <span class="number">1</span> <span class="number">1</span> <span class="number">2</span> <span class="number">3</span> <span class="number">5</span> <span class="number">8</span> <span class="number">13</span> <span class="number">21</span> <span class="number">34</span> done</div></pre></td></tr></table></figure>
-<p>这里再来看下<a href="https://foofish.net/daily-question4.html" target="_blank" rel="external">Python之禅</a>递推法讲解</p>
-<pre><code class="python"><span class="function"><span class="keyword">def</span> <span class="title">fib_loop</span><span class="params">(n)</span>:</span>
-    a, b = <span class="number">0</span>, <span class="number">1</span>
-    <span class="keyword">for</span> i <span class="keyword">in</span> range(n):
-        a, b = b, a + b
-    <span class="keyword">return</span> a
-
-<span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">20</span>):
-    print(fib_loop(i), end=<span class="string">" "</span>)
-</code></pre>
-<p>显然代码更加简洁易懂<br>欢迎访问我的博客<a href="https://family-treesy.github.io/" target="_blank" rel="external">Treehl的博客</a><br><a href="https://github.com/Family-TreeSY" target="_blank" rel="external">GitHub</a></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">DailyQuestion</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Python</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/11/09/fourth/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-Scrapy简介" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/11/07/Scrapy简介/">Scrapy爬取豆瓣电影Top250</a>
-    </h1>
-  
-
-        
-        <a href="/2017/11/07/Scrapy简介/" class="archive-article-date">
-  	<time datetime="2017-11-07T08:39:16.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-11-07</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>这两天摸索了下scrapy，刚看文档的时候觉得有点生无可恋，scrapy框架个人还是觉得比较难懂的，需要学习的地方非常多，之前用beautifulsoup4爬过top250，比scrapy简单更容易理解！！</p>
-<h3 id="Scrapy简介"><a href="#Scrapy简介" class="headerlink" title="Scrapy简介"></a><strong>Scrapy简介</strong></h3><p>Scrapy，Python开发的一个快速、高层次的屏幕抓取和web抓取框架，用于抓取web站点并从页面中提取结构化的数据。Scrapy用途广泛，可以用于数据挖掘、监测和自动化测试。 下面对每个组件都做了简单介绍，数据流如下所描述。<br><img src="http://scrapy-chs.readthedocs.io/zh_CN/latest/_images/scrapy_architecture.png" alt=""></p>
+<p>###<strong>简介</strong><br>之前用requests + bs4 抓取过宝山区的房源信息，今天我们用scrapy-redis分布式抓取上海17个区所有的房源信息，这个工程比起上一个<a href="https://family-treesy.github.io/2017/12/23/scrapy-redis(%E4%B8%80" target="_blank" rel="external">scrapy-redis抓取自如网</a>/)，增加了如下功能：</p>
 <ul>
-<li>Scrapy Engine<br>引擎负责控制数据流在系统中所有组件中流动，并在相应动作发生时触发事件。 详细内容查看下面的数据流(Data Flow)部分</li>
-<li>调度器(Scheduler)<br>调度器从引擎接受request并将他们入队，以便之后引擎请求他们时提供给引擎</li>
-<li>下载器(Downloader)<br>下载器负责获取页面数据并提供给引擎，而后提供给spider</li>
-<li>Spiders<br>Spider是Scrapy用户编写用于分析response并提取item(即获取到的item)或额外跟进的URL的类。 每 个spider负责处理一个特定(或一些)网站</li>
-<li>Item Pipeline<br>Item Pipeline负责处理被spider提取出来的item。典型的处理有清理、 验证及持久化(例如存取到数 据库中)</li>
-<li>下载器中间件(Downloader middlewares)<br>下载器中间件是在引擎及下载器之间的特定钩子(specific hook)，处理Downloader传递给引擎的 response。 其提供了一个简便的机制，通过插入自定义代码来扩展Scrapy功能</li>
-<li>Spider中间件(Spider middlewares)<br>Spider中间件是在引擎及Spider之间的特定钩子(specific hook)，处理spider的输入(response)和输出     (items及requests)。 其提供了一个简便的机制，通过插入自定义代码来扩展Scrapy功能</li>
-<li><p>数据流(Data flow)<br>Scrapy中的数据流由执行引擎控制，其过程如下:</p>
-<p>引擎打开一个网站(open a domain)，找到处理该网站的Spider并向该spider请求第一个要爬取的 URL(s)。<br>引擎从Spider中获取到第一个要爬取的URL并在调度器(Scheduler)以Request调度。<br>引擎向调度器请求下一个要爬取的URL。<br>调度器返回下一个要爬取的URL给引擎，引擎将URL通过下载中间件(请求(request)方向)转发给下载 器(Downloader)。<br>一旦页面下载完毕，下载器生成一个该页面的Response，并将其通过下载中间件(返回(response)方  向)发送给引擎。<br>引擎从下载器中接收到Response并通过Spider中间件(输入方向)发送给Spider处理。<br>Spider处理Response并返回爬取到的Item及(跟进的)新的Request给引擎。<br>引擎将(Spider返回的)爬取到的Item给Item Pipeline，将(Spider返回的)Request给调度器。<br>(从第二步)重复直到调度器中没有更多地request，引擎关闭该网站</p>
-<p><strong>scrapy的流程如图，并且可归纳如下</strong></p>
-</li>
-<li>首先下载器下载request回执的html等的response</li>
-<li>然后下载器传给爬虫解析</li>
-<li>接着爬虫解析后交给调度器过滤，查重等等</li>
-<li>最后交给管道，进行爬取数据的处理</li>
+<li>创建了imagepipeline管道，抓取房型图</li>
+<li>输出csv指定了列顺序</li>
 </ul>
-<p>建议大家参考下中文版的<a href="http://scrapy-chs.readthedocs.io/zh_CN/latest/index.html" target="_blank" rel="external">Scrapy文档</a>，看文档还是比较枯燥的，Scrapy又比较难懂（大神忽略），务必要有耐心！！！！！！</p>
-<h3 id="实战应用"><a href="#实战应用" class="headerlink" title="实战应用"></a><strong>实战应用</strong></h3><p>首先下载Scrapy包</p>
-<blockquote>
-<p>pip install scrapy</p>
-</blockquote>
-<p>这样安装，windows平台应该是会报错的，我当时装Scrapy时废了很大劲才弄完。安装过程中Pycharm或者官网上找不到的模块可以上这个网址找<a href="https://www.lfd.uci.edu/~gohlke/pythonlibs/" target="_blank" rel="external">Unofficial Windows Binaries for Python Extension Packages</a><br><a href="https://sourceforge.net/projects/pywin32/files/pywin32/Build%20221/" target="_blank" rel="external">Pywin32</a></p>
-<p>接着，我们打开CMD，新建一个爬虫文件</p>
-<blockquote>
-<p>scrapy startproject douban</p>
-</blockquote>
-<p><img src="http://a3.qpic.cn/psb?/V10WDaE22S84Sl/KSe9Lz4WjBnnSKYqGU6FuRlu8f4M5x5owDgWkLJVBAs!/b/dPIAAAAAAAAA&amp;bo=GgXQAAAAAAADAOo!&amp;rf=viewer_4" alt=""></p>
-<blockquote>
-<p>C:\Users\ssaw\douban&gt;tree /f<br>C:.<br>│  scrapy.cfg<br>│<br>└─douban<br>    │  items.py<br>    │  middlewares.py<br>    │  pipelines.py<br>    │  settings.py<br>    │  <strong>init</strong>.py<br>    │<br>    └─spiders<br>            <strong>init</strong>.py</p>
-</blockquote>
-<p>简单介绍下这些文件</p>
+<p>这次只总结学习以上两点内容，关于scrapy-redis的实现，有兴趣可以看第一篇<a href="https://family-treesy.github.io/2017/12/23/scrapy-redis(%E4%B8%80" target="_blank" rel="external">自如</a>/)</p>
+<p>###<strong>所需要的库</strong></p>
 <ul>
-<li>scrapy.cfg: 项目的配置文件</li>
-<li>douban/: 该项目的python模块。之后您将在此加入代码</li>
-<li>douban/items.py: 项目中的item文件</li>
-<li>douban/pipelines.py: 项目中的pipelines文件</li>
-<li>douban/settings.py: 项目的设置文件</li>
-<li>douban/spiders/:放置spider代码的目录</li>
+<li>scrapy</li>
+<li>scrapy-redis</li>
+<li>mongodb</li>
+<li>redis</li>
 </ul>
-<p>编辑items.py文件<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># -*- coding: utf-8 -*-</span></div><div class="line"></div><div class="line"><span class="comment"># Define here the models for your scraped items</span></div><div class="line"><span class="comment">#</span></div><div class="line"><span class="comment"># See documentation in:</span></div><div class="line"><span class="comment"># http://doc.scrapy.org/en/latest/topics/items.html</span></div><div class="line"></div><div class="line"><span class="keyword">import</span> scrapy</div><div class="line"></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">DoubanItem</span><span class="params">(scrapy.Item)</span>:</span></div><div class="line">    <span class="comment"># define the fields for your item here like:</span></div><div class="line">    <span class="comment"># name = scrapy.Field()</span></div><div class="line">    movie_name = scrapy.Field()</div><div class="line">    movie_star = scrapy.Field()</div><div class="line">    movie_quote = scrapy.Field()</div></pre></td></tr></table></figure></p>
-<ul>
-<li>首先，引入Scrapy</li>
-<li>接着，创建一个类，继承自scrapy.item,这个是用来储存要爬下来的数据的存放容器，类似orm的写法</li>
-<li>我们要记录的是：电影的名字、电影的评分、电影的引述（quote）</li>
-</ul>
-<p>现在，我们在spiders文件夹下创建douban_spider.py<br>在我们编写爬虫之前，先了解一下scrapy的爬取机制，scrapy提取数据有自己的一套机制。它们被称作选择器(seletors)，因为他们通过特定的 XPath 或者 CSS 表达式来“选择” HTML文件中的某个部分。<br>之前我在博客上也总结过一篇<a href="https://family-treesy.github.io/2017/10/24/Xpath%E6%A8%A1%E6%8B%9F%E7%99%BB%E9%99%86GitHub/" target="_blank" rel="external">使用Xpath模拟登陆GitHub</a>有兴趣可以看一下<br>附上Xpath学习教程<a href="http://www.w3school.com.cn/xpath/index.asp" target="_blank" rel="external">Xpath</a></p>
-<h4 id="获取网页数据"><a href="#获取网页数据" class="headerlink" title="获取网页数据"></a><strong>获取网页数据</strong></h4><p>打开Chrome(F12),查找元素<br><a href="https://movie.douban.com/top250" target="_blank" rel="external">豆瓣电影TOP250</a><br><img src="http://a3.qpic.cn/psb?/V10WDaE22S84Sl/0bCq9nJbs2y00pG2rgDlHgHwFkb6hjanb.oPVV1E3ug!/b/dPIAAAAAAAAA&amp;bo=Uwd4AgAAAAADBww!&amp;rf=viewer_4" alt=""><br>红框圈出来的分别代表</p>
-<blockquote>
-<p>movie_name = div[@class=”hd”]/a/span/<br>movie_star = div[@class=”bd”]/div[@class=”star”]/span[@class=”rating_num”]<br>movie_quote = div[@class=”bd”]/p[@class=”quote”]/span[@class=”inq”]</p>
-</blockquote>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># _*_ coding=utf-8 _*_</span></div><div class="line"></div><div class="line"><span class="keyword">from</span> scrapy.spiders <span class="keyword">import</span> Spider</div><div class="line"><span class="keyword">from</span> scrapy.selector <span class="keyword">import</span> Selector</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">DouBanSpider</span><span class="params">(Spider)</span>:</span></div><div class="line">    name = <span class="string">'db'</span></div><div class="line">    start_urls = [<span class="string">'https://movie.douban.com/top250'</span>]</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">parse</span><span class="params">(self, response)</span>:</span></div><div class="line">        <span class="comment"># print(response.body)</span></div><div class="line">        selector = Selector(response)</div><div class="line"></div><div class="line">        <span class="comment"># print(selector)</span></div><div class="line">        movies = selector.xpath(<span class="string">'//div[@class="info"]'</span>)</div><div class="line">        <span class="keyword">for</span> movie <span class="keyword">in</span> movies:</div><div class="line">            movie_name = movie.xpath(<span class="string">'div[@class="hd"]/a/span/text()'</span>).extract()</div><div class="line">            movie_star = movie.xpath(<span class="string">'div[@class="bd"]/div[@class="star"]/span[@class="rating_num"]/text()'</span>).extract()</div><div class="line">            movie_quote = movie.xpath(<span class="string">'div[@class="bd"]/p[@class="quote"]/span[@class="inq"]/text()'</span>).extract()</div><div class="line"></div><div class="line"></div><div class="line">            print(movie_name)</div><div class="line">            print(movie_star)</div><div class="line">            print(movie_quote)</div></pre></td></tr></table></figure>
-<p>我们打开setting.py，加上U-A</p>
-<blockquote>
-<p>USER_AGENT = ‘Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/61.0.3163.100 Safari/537.36’</p>
-</blockquote>
-<p>在CMD中输入scrapy crawl db，运行如下：<br><img src="http://a1.qpic.cn/psb?/V10WDaE22S84Sl/T91UqI*QCUSBwERAtR0EqIARnZX5rOUtpVeLMJVPoTg!/b/dPMAAAAAAAAA&amp;bo=SAWAAgAAAAADB.0!&amp;rf=viewer_4" alt=""><br>我们还可以在douban文件根目录创建一个main.py，这样就可以在Pycharm中运行了</p>
-<blockquote>
-<p>from scrapy import cmdline<br>cmdline.execute(“scrapy crawl db”.split())</p>
-</blockquote>
-<h4 id="使用Item"><a href="#使用Item" class="headerlink" title="使用Item"></a><strong>使用Item</strong></h4><p>Item对象是自定义的python字典。 您可以使用标准的字典语法来获取到其每个字段的值。(字段即是我们之前用Field赋值的属性)，Spider将会将爬取到的数据以 Item 对象返回。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">item = DoubanItem()</div><div class="line"></div><div class="line">item[<span class="string">'movie_name'</span>] = movie_name</div><div class="line">item[<span class="string">'movie_star'</span>] = movie_star</div><div class="line">item[<span class="string">'movie_quote'</span>] = movie_quote</div></pre></td></tr></table></figure></p>
-<p>好了，现在我们先试着爬取单页面，查看下结果后，再去爬取多页面<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> scrapy.spiders <span class="keyword">import</span> Spider</div><div class="line"><span class="keyword">from</span> scrapy.selector <span class="keyword">import</span> Selector</div><div class="line"><span class="keyword">from</span> douban.items <span class="keyword">import</span> DoubanItem</div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">DouBanSpider</span><span class="params">(Spider)</span>:</span></div><div class="line">    name = <span class="string">'db'</span></div><div class="line">    start_urls = [<span class="string">'https://movie.douban.com/top250'</span>]</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">parse</span><span class="params">(self, response)</span>:</span></div><div class="line">        <span class="comment"># print(response.body)</span></div><div class="line">        selector = Selector(response)</div><div class="line"></div><div class="line">        <span class="comment"># print(selector)</span></div><div class="line">        movies = selector.xpath(<span class="string">'//div[@class="info"]'</span>)</div><div class="line">        <span class="keyword">for</span> movie <span class="keyword">in</span> movies:</div><div class="line">            movie_name = movie.xpath(<span class="string">'div[@class="hd"]/a/span/text()'</span>).extract()</div><div class="line">            movie_star = movie.xpath(<span class="string">'div[@class="bd"]/div[@class="star"]/span[@class="rating_num"]/text()'</span>).extract()</div><div class="line">            movie_quote = movie.xpath(<span class="string">'div[@class="bd"]/p[@class="quote"]/span[@class="inq"]/text()'</span>).extract()</div><div class="line"></div><div class="line">            <span class="comment">#print(movie_name)</span></div><div class="line">            <span class="comment">#print(movie_star)</span></div><div class="line">            <span class="comment">#print(movie_quote)</span></div><div class="line"></div><div class="line">            item = DoubanItem()</div><div class="line"></div><div class="line">            item[<span class="string">'movie_name'</span>] = movie_name</div><div class="line">            item[<span class="string">'movie_star'</span>] = movie_star</div><div class="line">            item[<span class="string">'movie_quote'</span>] = movie_quote</div><div class="line">            <span class="keyword">yield</span> item</div><div class="line">            print(movie_name)</div><div class="line">            print(movie_star)</div><div class="line">            print(movie_quote)</div></pre></td></tr></table></figure></p>
-<ul>
-<li>首先，我们先从scrapy中获得所需要的通用的 spider和 selector</li>
-<li>接着，我们使用Item将爬取的数据返回</li>
-<li>创建了一个DouBanSpider，继承了 scrapy.Spider 类， 且定义以下三个属性:</li>
-</ul>
-<ol>
-<li>name: 用于区别Spider。 该名字必须是唯一的，您不可以为不同的Spider设定相同的名字</li>
-<li>start_urls: 包含了Spider在启动时进行爬取的url列表。 因此，第一个被获取到的页面将是其中之一， 后续的URL则从初始的URL获取到的数据中提取。</li>
-<li>parse() 是spider的一个方法。 被调用时，每个初始URL完成下载后生成的 Response 对象将会作为唯一的参数传递给该函数。 该方法负责解析返回的数据(response data)，提取数据(生成item)以及生成需要进一步处理的URL的 Request 对象</li>
+<h3 id="使用图片管道"><a href="#使用图片管道" class="headerlink" title="使用图片管道"></a><strong>使用图片管道</strong></h3><p>新建一个imagepipeline来抓取房型图，这里说下流程</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> scrapy.pipelines.images <span class="keyword">import</span> ImagesPipeline</div><div class="line"><span class="keyword">from</span> scrapy.exceptions <span class="keyword">import</span> DropItem</div><div class="line"><span class="keyword">from</span> scrapy <span class="keyword">import</span> Request</div><div class="line"><span class="keyword">import</span> os</div><div class="line"></div><div class="line">PROJECT_DIR = os.path.abspath(os.path.dirname(__file__))</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyImagesPipeline</span><span class="params">(ImagesPipeline)</span>:</span></div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">get_media_requests</span><span class="params">(self, item, info)</span>:</span></div><div class="line">        <span class="keyword">for</span> image_url <span class="keyword">in</span> item[<span class="string">'image_urls'</span>]:</div><div class="line">            <span class="keyword">yield</span> Request(image_url, meta=&#123;<span class="string">'item'</span>:item,<span class="string">'index'</span>:item[<span class="string">'image_urls'</span>].index(image_url)&#125;)</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">item_completed</span><span class="params">(self, results, item, info)</span>:</span></div><div class="line">        image_paths = [x[<span class="string">'path'</span>] <span class="keyword">for</span> ok, x <span class="keyword">in</span> results <span class="keyword">if</span> ok]</div><div class="line">        <span class="comment"># image_paths = os.path.join(PROJECT_DIR,'media/lianjia_image')</span></div><div class="line">        <span class="keyword">if</span> <span class="keyword">not</span> image_paths:</div><div class="line">            <span class="keyword">raise</span> DropItem(<span class="string">"Item contains no images"</span>)</div><div class="line">        item[<span class="string">'image_paths'</span>] = image_paths</div><div class="line">        <span class="keyword">return</span> item</div></pre></td></tr></table></figure>
+<p>在items.py中添加image_urls、image_paths<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">image_urls = scrapy.Field()</div><div class="line"></div><div class="line">image_paths = scrapy.Field()</div></pre></td></tr></table></figure></p>
+<p>在setting.py中设置如下</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line"> 图片尺寸</div><div class="line">IMAGES_THUMBS = &#123;</div><div class="line">    <span class="string">'small'</span>: (<span class="number">50</span>, <span class="number">50</span>),</div><div class="line">    <span class="string">'big'</span>: (<span class="number">270</span>, <span class="number">270</span>),</div><div class="line">&#125;</div><div class="line"></div><div class="line">IMAGES_URLS_FIELD = <span class="string">"image_urls"</span></div><div class="line"></div><div class="line"><span class="comment">#获取当前运行脚本的绝对路径（去掉最后一个路径),获取当前爬虫项目的绝对路径</span></div><div class="line">PROJECT_DIR = os.path.abspath(os.path.dirname(__file__))</div><div class="line"></div><div class="line"></div><div class="line"><span class="comment"># 7天的图片失效期限</span></div><div class="line">IMAGES_EXPIRES = <span class="number">7</span></div><div class="line"></div><div class="line"><span class="comment"># 图片存储路径</span></div><div class="line">IMAGES_STORE = os.path.join(PROJECT_DIR,<span class="string">'media/lianjia_image'</span>)</div><div class="line"></div><div class="line">ITEM_PIPELINES = &#123;</div><div class="line">    <span class="comment"># 'lianjia.pipelines.LianjiaPipeline': 300,</span></div><div class="line">    <span class="string">'lianjia.pipelines.lianjia_image.MyImagesPipeline'</span>: <span class="number">50</span>,</div><div class="line">    ..........</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>这里要注意下要在itempipelines中开启图片管道才可以抓取房型图，我在学习的时候遇到了个问题，在setting中设置了请求头，图片地址和HOST不一样，导致出现502 Bad Gateway</p>
+<h3 id="设置CSV输出列顺序"><a href="#设置CSV输出列顺序" class="headerlink" title="设置CSV输出列顺序"></a><strong>设置CSV输出列顺序</strong></h3><ol>
+<li>我们在spiders文件中新建csv_item_exporter.py</li>
 </ol>
-<ul>
-<li>seletor的方法返回后一定要用它的 extract()方法，来返回一个列表 ；<strong>extract()文档的定义：</strong>串行化并将匹配到的节点返回一个unicode字符串列表。 结尾是编码内容的百分比</li>
-<li>接着，我们把得到的数据保存在Item中</li>
-<li>最后，我们使用Feed exports来保存数据</li>
-<li>这里使用了yield生成器函数，生成器函数和迭代器有密切关系，也并不是很容易理解，这一点需要多多学习</li>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># -*- coding:utf-8 -*-</span></div><div class="line"></div><div class="line"><span class="keyword">from</span> scrapy.conf <span class="keyword">import</span> settings</div><div class="line"><span class="keyword">from</span> scrapy.contrib.exporter <span class="keyword">import</span> CsvItemExporter</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyProjectCsvItemExporter</span><span class="params">(CsvItemExporter)</span>:</span></div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, *args, **kwargs)</span>:</span></div><div class="line">        delimiter = settings.get(<span class="string">'CSV_DELIMITER'</span>, <span class="string">','</span>)</div><div class="line">        kwargs[<span class="string">'delimiter'</span>] = delimiter</div><div class="line"></div><div class="line">        fields_to_export = settings.get(<span class="string">'FIELDS_TO_EXPORT'</span>, [])</div><div class="line">        <span class="keyword">if</span> fields_to_export :</div><div class="line">            kwargs[<span class="string">'fields_to_export'</span>] = fields_to_export</div><div class="line"></div><div class="line">        super(MyProjectCsvItemExporter, self).__init__(*args, **kwargs)</div></pre></td></tr></table></figure>
+<ol>
+<li>设置setting.py</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># csv设置</span></div><div class="line">FEED_EXPORTERS = &#123;</div><div class="line">    <span class="string">'csv'</span>: <span class="string">'lianjia.spiders.csv_item_exporter.MyProjectCsvItemExporter'</span>,</div><div class="line">&#125;</div><div class="line"></div><div class="line">FEED_EXPORT_ENCODING = <span class="string">'utf-8'</span></div><div class="line"></div><div class="line"><span class="comment"># 按如下名称先后形成列</span></div><div class="line">FIELDS_TO_EXPORT = [</div><div class="line">    <span class="string">'home_community_name'</span>,</div><div class="line">    <span class="string">'home_area'</span>,</div><div class="line">    <span class="string">'home_unit_price'</span>,</div><div class="line">    <span class="string">'home_total_price'</span>,</div><div class="line">    <span class="string">'home_reference_down_payment'</span>,</div><div class="line">    <span class="string">'home_build_time'</span>,</div><div class="line">    <span class="string">'home_decoration'</span>,</div><div class="line">    <span class="string">'home_time'</span>,</div><div class="line">    <span class="string">'home_floor'</span>,</div><div class="line">    <span class="string">'home_location'</span>,</div><div class="line">    <span class="string">'home_type'</span>,</div><div class="line">    <span class="string">'home_tword'</span>,</div><div class="line"></div><div class="line">]</div></pre></td></tr></table></figure>
+<h3 id="待解决问题"><a href="#待解决问题" class="headerlink" title="待解决问题"></a><strong>待解决问题</strong></h3><ul>
+<li>scrapy-redis输出到数据库的数据全部是bytes</li>
+<li>使用scrapy-redis分布式抓取后，CSV文件出现乱码，txt保存格式直接为ANSI，用Scrapy框架爬取无此问题，我觉得两个问题是有关联的，跪谢各路网友指教！！！！！</li>
 </ul>
-<pre><code class="python"><span class="comment">#看一个yield函数的示例</span>
-<span class="comment">#函数在每次循环时都会产生一个值，之后将其返回给它的调用者</span>
-<span class="comment">#函数不断的生成数字的平方</span>
-
-<span class="function"><span class="keyword">def</span> <span class="title">gensquares</span><span class="params">(N)</span>:</span>
-    <span class="keyword">for</span> i <span class="keyword">in</span> range(N):
-        <span class="keyword">yield</span> i ** <span class="number">2</span>
-
-<span class="keyword">for</span> i <span class="keyword">in</span> gensquares(<span class="number">5</span>):
-    print(i, end=<span class="string">' '</span>)
-
-<span class="number">0</span> <span class="number">1</span> <span class="number">4</span> <span class="number">9</span> <span class="number">16</span>
-</code></pre>
-<p>好了，spider暂时写完了，我们试着运行下</p>
-<blockquote>
-<p>scrapy crawl db -o douban.json -t json</p>
-</blockquote>
-<p>-o 后面是导出文件名，-t 后面是导出类型。<br>然后来看一下导出的结果，Pycharm打开json文件即可<br><img src="http://a3.qpic.cn/psb?/V10WDaE22S84Sl/LossKz0SW7Hx2McZTBD8XUmBeoKvbEGB3T6AFUkQwOI!/b/dPIAAAAAAAAA&amp;bo=7wVlAgAAAAADB68!&amp;rf=viewer_4" alt=""><br>打印出来的内容需要编码<br>我们换种方式，把文件格式保存为CSV，使用EXCEL打开</p>
-<blockquote>
-<p>scrapy crawl db -o douban.csv -t csv </p>
-</blockquote>
-<p><img src="http://a1.qpic.cn/psb?/V10WDaE22S84Sl/ujnMrzC601KzTrM7RJb9AD6hr6csiUWdTGWrDWo7y5c!/b/dPMAAAAAAAAA&amp;bo=hASAAgAAAAADByA!&amp;rf=viewer_4" alt=""></p>
-<p>用excel打开后假如是一堆乱码，就使用记事本打开，把它“另存为”时，编码选择ANSI<br><img src="http://a1.qpic.cn/psb?/V10WDaE22S84Sl/V1vYiLxCAWQJZ7vMnb6wDY.E6Hgp44cevou25VN0KSY!/b/dPMAAAAAAAAA&amp;bo=FQPnAAAAAAADB9M!&amp;rf=viewer_4" alt=""></p>
-<p>好了，现在我们添加多页面链接，完整地把TOP250爬取下来<br>我们从Elements中找到翻页lianjie<br><img src="http://a3.qpic.cn/psb?/V10WDaE22S84Sl/DnsQdXjejv9UbgZkWc9MUxUu1m8iMNkgSjh1wMEe2jc!/b/dPIAAAAAAAAA&amp;bo=xga3AQAAAAADB1Q!&amp;rf=viewer_4" alt=""></p>
-<pre><code class="python">next_page =response.selector.xpath(<span class="string">'//span[@class="next"]/link/@href'</span>).extract()
-<span class="keyword">if</span> next_page:
-    next_page = next_page[<span class="number">0</span>]
-    print(next_page)
-    <span class="keyword">yield</span> Request(self.url + next_page, callback=self.parse)
-</code></pre>
-<p>CMD输入scrapy crawl db -o douban.csv -t csv ，开始运行<br><img src="http://a1.qpic.cn/psb?/V10WDaE22S84Sl/rT4vp6Fib.QJfkeH4CZ8DT8GwPtDUeWYhc2Fq1vzeFA!/b/dPMAAAAAAAAA&amp;bo=.wOAAgAAAAADB1g!&amp;rf=viewer_4" alt=""></p>
-<p>学习Scrapy需要反复查看文档、资料，这是个简单的学习总结，这两天准备再去学习MongoDB数据库，大家一起加油！！</p>
-<p><a href="http://blog.csdn.net/flyingfishmark/article/details/51316159" target="_blank" rel="external">参考链接</a><br><a href="http://aljun.me/post/5" target="_blank" rel="external">参考链接</a><br><a href="http://scrapy-chs.readthedocs.io/zh_CN/latest/intro/overview.html" target="_blank" rel="external">Scrapy文档</a><br><a href="https://github.com/Family-TreeSY" target="_blank" rel="external">GitHub</a><br><a href="http://www.jianshu.com/u/a01bc3ec4f88" target="_blank" rel="external">简书</a><br>最后，欢迎大家访问我的博客<a href="https://family-treesy.github.io/" target="_blank" rel="external">Treehl的博客</a></p>
+<p>欢迎访问<a href="https://family-treesy.github.io/" target="_blank" rel="external">Treehl的博客</a><br>完整代码：<br><a href="https://github.com/Family-TreeSY/Scrapy-Redis-Spider/tree/master/lianjia" target="_blank" rel="external">GitHub</a><br><a href="https://www.jianshu.com/p/2124f1d2c008" target="_blank" rel="external">简书</a></p>
+<p>最后放两个笔者GitHub上的两个项目！！欢迎大家访问！！<br><a href="https://github.com/Family-TreeSY/SpiderList" target="_blank" rel="external">SpiderList</a><br><a href="https://github.com/Family-TreeSY/Scrapy-Redis-Spider" target="_blank" rel="external">Scrapy-redis</a></p>
 
       
 
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/img/alipay.jpg">
+                      <span class="reward-type">支付宝</span>
+                    </div>
+                    
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/img/wechat.jpg">
+                      <span class="reward-type">微信</span>
+                    </div>
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
       
     </div>
     <div class="article-info article-info-index">
@@ -414,11 +274,27 @@
 			 
         		<li class="article-tag-list-item">
         			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">PYTHON</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">MongoDB</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">爬虫</a>
         		</li>
       		 
         		<li class="article-tag-list-item">
         			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Scrapy</a>
         		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Redis</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">Scrapy-Redis</a>
+        		</li>
       		
 		</ul>
 	</div>
@@ -426,16 +302,75 @@
       
 
       
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/11/07/Scrapy简介/">展开全文 >></a>
-        </p>
-      
 
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="http://s.jiathis.com/qrcode.php?url=http://Family-TreeSY.github.io/2018/01/10/scrapy-redis(二)/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
       
       <div class="clearfix"></div>
     </div>
   </div>
 </article>
+
+  
+<nav id="article-nav">
+  
+  
+    <a href="/2017/12/23/scrapy-redis(一)/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Scrapy-Redis分布式爬取自如网（一）</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
 
 <aside class="wrap-side-operation">
     <div class="mod-side-operation">
@@ -455,684 +390,21 @@
 
 
 
-
   
-    <article id="post-third" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
+  <!-- UY BEGIN -->
+<div id="uyan_frame"></div>
+<script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=2147729"></script>
+<!-- UY END -->
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/11/05/third/">Python每日一题：第三题</a>
-    </h1>
-  
-
-        
-        <a href="/2017/11/05/third/" class="archive-article-date">
-  	<time datetime="2017-11-05T10:21:16.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-11-05</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>今天我们来学习总结下<a href="https://wx.xiaomiquan.com/mweb/views/joingroup/join_group.html?group_id=518855855524&amp;secret=meqx22a2blf4c1ae3ucbgpui4somnpwa&amp;user_id=1152122252" target="_blank" rel="external">Python之禅和他朋友们</a>的第三题，这两天一直有事情没跟上大家的学习学习节奏，现在来学习一下的军哥的代码<a href="https://foofish.net/daily-question3.html" target="_blank" rel="external">Python之禅</a>，搞清楚每一行代码的意思</p>
-<h3 id="题目"><a href="#题目" class="headerlink" title="题目"></a><strong>题目</strong></h3><p>统计一个文件中每个单词出现的次数，列出出现频率最多的5个单词。</p>
-<blockquote>
-<p>The Zen of Python, by Tim Peters<br>Beautiful is better than ugly.<br>Explicit is better than implicit.<br>Simple is better than complex.<br>Complex is better than complicated.<br>Flat is better than nested.<br>Sparse is better than dense.<br>Readability counts.<br>Special cases aren’t special enough to break the rules.<br>Although practicality beats purity.<br>Errors should never pass silently.<br>Unless explicitly silenced.<br>In the face of ambiguity, refuse the temptation to guess.<br>There should be one– and preferably only one –obvious way to do it.<br>Although that way may not be obvious at first unless you’re Dutch.<br>Now is better than never.<br>Although never is often better than <em>right</em> now.<br>If the implementation is hard to explain, it’s a bad idea.<br>If the implementation is easy to explain, it may be a good idea.<br>Namespaces are one honking great idea – let’s do more of those!</p>
-</blockquote>
-<p>在学习前我们需要了解一下几点知识：</p>
-<ul>
-<li>Python的i\o操作</li>
-<li>列表解析、sort()方法、sorted()函数</li>
-<li>字典Dict操作</li>
-<li>正则表达式re</li>
-<li>lambda表达式</li>
-<li>Counter</li>
-<li>assert断言</li>
-</ul>
-<h3 id="Python的i-o操作"><a href="#Python的i-o操作" class="headerlink" title="Python的i\o操作"></a><strong>Python的i\o操作</strong></h3><p>I\O：input\output<br>这里推荐网上两个参考教程，一个是廖雪峰老师的，另一个是菜鸟教程<br><a href="https://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/001431917715991ef1ebc19d15a4afdace1169a464eecc2000" target="_blank" rel="external">参考链接</a><br><a href="http://www.runoob.com/python/python-files-io.html" target="_blank" rel="external">参考链接</a></p>
-<p><strong>读写文件</strong><br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#r:表示读，</span></div><div class="line"><span class="comment">#w:表示输出生成并打开文件</span></div><div class="line"><span class="comment">#a:文件尾部追加内容而打开文件</span></div><div class="line"><span class="comment">#文件处理模式字符串尾部加上b可以进行二进制数据处理，Example:'rb'</span></div><div class="line"><span class="comment">#加上‘+’:同时为输入和输出打开文件</span></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>f = open(<span class="string">'myfile.txt'</span>, <span class="string">'w'</span>) <span class="comment">#</span></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>f.write(<span class="string">'hello world!'</span>, <span class="string">'w'</span>) <span class="comment">#在文本内写入“hello world!”</span></div><div class="line"><span class="meta">&gt;&gt;&gt; </span><span class="number">12</span></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>f.write(<span class="string">'hello treehl!'</span>, <span class="string">'w'</span>) <span class="comment">#在文本内写入“hello world!”</span></div><div class="line"><span class="meta">&gt;&gt;&gt; </span><span class="number">12</span></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>f.close() <span class="comment">#关闭文本</span></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>f = open(<span class="string">'myfile.txt'</span>)</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>f.readline() <span class="comment">#读取一行</span></div><div class="line"><span class="meta">&gt;&gt;&gt; </span><span class="string">'hello world!'</span></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>f.readline()</div><div class="line"><span class="meta">&gt;&gt;&gt; </span><span class="string">'hello treehl!'</span></div><div class="line">使用<span class="keyword">for</span>循环打印文本：</div><div class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">for</span> line <span class="keyword">in</span> open(<span class="string">'myfile'</span>):</div><div class="line">print(line)</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>data = open(<span class="string">'data.bin'</span>, <span class="string">'rb'</span>)</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>print(data.read())</div><div class="line"><span class="meta">&gt;&gt;&gt; </span><span class="string">b' \x00\x00\x07spam\x00\x08'</span></div></pre></td></tr></table></figure></p>
-<p>由于文件读写时都有可能产生IOError，一旦出错，后面的f.close()就不会调用。所以，Python引入了with语句来自动帮我们调用close()方法<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">with</span> open(<span class="string">'myfile.txt'</span>, <span class="string">'r'</span>) <span class="keyword">as</span> f: <span class="comment">#r:表示读，w:</span></div><div class="line">print(f.read())</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>hello world!</div><div class="line">hello treehl!</div></pre></td></tr></table></figure></p>
-<h3 id="列表解析、sort-方法、sorted-函数"><a href="#列表解析、sort-方法、sorted-函数" class="headerlink" title="列表解析、sort()方法、sorted()函数"></a><strong>列表解析、sort()方法、sorted()函数</strong></h3><p>在军哥的代码中有一行使用了列表解析式，我们正好学习下</p>
-<blockquote>
-<p>words = [s.lower() for s in re.findall(“\w+”, data)]</p>
-</blockquote>
-<p><strong>1. 列表解析</strong><br>我们先看一下普通的生成列表<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&gt;&gt;&gt; </span>res =[]</div><div class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">for</span> x <span class="keyword">in</span> <span class="string">'spam'</span>:</div><div class="line">res.append(x * <span class="number">4</span>)</div><div class="line"></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>res</div><div class="line">[<span class="string">'ssss'</span>, <span class="string">'pppp'</span>, <span class="string">'aaaa'</span>, <span class="string">'mmmm'</span>]</div><div class="line">``` </div><div class="line"></div><div class="line">我们再来看一下列表解析的代码</div><div class="line"></div><div class="line">``` python</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>res = [x * <span class="number">4</span> <span class="keyword">for</span> x <span class="keyword">in</span> <span class="string">'spam'</span>]</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>res</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>[<span class="string">'ssss'</span>, <span class="string">'pppp'</span>, <span class="string">'aaaa'</span>, <span class="string">'mmmm'</span>]</div></pre></td></tr></table></figure></p>
-<p>生成列表res的方式包含三行代码，而用列表解析只需要一行，非常简单！我们来分析下列表解析，首先制定列表名称，如res，接着定义一个表达式 x * 4 ，最后再编写一个for 循环 for x in ‘spam’</p>
-<p><strong>2. sort()方法</strong><br>sort()方法：原地对列表进行永久性排序，而且已递增的顺序进行排序</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&gt;&gt;&gt; </span>cars = [<span class="string">'bmw'</span>, <span class="string">'audi'</span>, <span class="string">'tesla'</span>, <span class="string">'honda'</span>]</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>cars.sort()</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>print(cars)</div><div class="line">[<span class="string">'audi'</span>, <span class="string">'bmw'</span>, <span class="string">'honda'</span>, <span class="string">'tesla'</span>]</div><div class="line"><span class="comment"># </span></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>print(cars) <span class="comment">#使用sort()方法后无法再回到原来的排序</span></div><div class="line">[<span class="string">'audi'</span>, <span class="string">'bmw'</span>, <span class="string">'honda'</span>, <span class="string">'tesla'</span>]</div></pre></td></tr></table></figure>
-<p>我们可以在列表中添加reverse参数使列表反转</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&gt;&gt;&gt; </span>cars = [<span class="string">'bmw'</span>, <span class="string">'audi'</span>, <span class="string">'tesla'</span>, <span class="string">'honda'</span>]</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>cars.sort(reverse=<span class="keyword">True</span>)</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>print(cars)</div><div class="line">[<span class="string">'tesla'</span>, <span class="string">'honda'</span>, <span class="string">'bmw'</span>, <span class="string">'audi'</span>]</div><div class="line">``` </div><div class="line"></div><div class="line"><span class="comment">### **sorted()函数**</span></div><div class="line">**sort 与 sorted 区别：**</div><div class="line">sort 是应用在 list 上的方法，sorted 可以对所有可迭代的对象进行排序操作。</div><div class="line">list 的 sort 方法返回的是对已经存在的列表进行操作，而内建函数 sorted 方法返回的是一个新的 list，而不是在原来的基础上进行的操作。</div><div class="line">sorted()对列表进行临时性排序，并且同样也可以向sorted函数传递reverse参数</div><div class="line"></div><div class="line">``` python</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>cars = [<span class="string">'bmw'</span>, <span class="string">'audi'</span>, <span class="string">'tesla'</span>, <span class="string">'honda'</span>]</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>print(cars)</div><div class="line">[<span class="string">'bmw'</span>, <span class="string">'audi'</span>, <span class="string">'tesla'</span>, <span class="string">'honda'</span>]</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>cars = [<span class="string">'bmw'</span>, <span class="string">'audi'</span>, <span class="string">'tesla'</span>, <span class="string">'honda'</span>]</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>print(sorted(cars))</div><div class="line">[<span class="string">'audi'</span>, <span class="string">'bmw'</span>, <span class="string">'honda'</span>, <span class="string">'tesla'</span>]</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>print(cars) <span class="comment">#调用函数sorted()列表顺序并没有发生改变</span></div><div class="line">[<span class="string">'bmw'</span>, <span class="string">'audi'</span>, <span class="string">'tesla'</span>, <span class="string">'honda'</span>]</div><div class="line">&gt;&gt;&gt;print(sorted(cars, reverse=<span class="keyword">True</span>))</div><div class="line">[<span class="string">'tesla'</span>, <span class="string">'honda'</span>, <span class="string">'bmw'</span>, <span class="string">'audi'</span>]</div></pre></td></tr></table></figure>
-<h3 id="字典操作"><a href="#字典操作" class="headerlink" title="字典操作"></a><strong>字典操作</strong></h3><p>这里就不总结字典使用方法了，可以参考廖雪峰老师的<a href="https://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/00143167793538255adf33371774853a0ef943280573f4d000" target="_blank" rel="external">Python教程</a><br>我们看到军哥的代码中使用了dict中的get方法</p>
-<blockquote>
-<p>self.mapping[word] = self.mapping.get(word, 0) + 1</p>
-</blockquote>
-<p>字典以“键：值（key：value）”对形式表达</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">D = &#123;<span class="string">'spam'</span>: <span class="number">2</span>, <span class="string">'eggs'</span>: <span class="number">3</span>&#125;</div></pre></td></tr></table></figure>
-<p>字典values和items方法分别返回字典的key值列表和（key, value）对元组</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&gt;&gt;&gt; </span>D = &#123;<span class="string">'spam'</span>: <span class="number">2</span>, <span class="string">'hams'</span>: <span class="number">1</span>, <span class="string">'eggs'</span>: <span class="number">3</span>&#125;</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>D.keys()</div><div class="line">dict_keys([<span class="string">'spam'</span>, <span class="string">'hams'</span>, <span class="string">'eggs'</span>])</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>D.values()</div><div class="line">dict_values([<span class="number">2</span>, <span class="number">1</span>, <span class="number">3</span>])</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>D.items()</div><div class="line">dict_items([(<span class="string">'spam'</span>, <span class="number">2</span>), (<span class="string">'hams'</span>, <span class="number">1</span>), (<span class="string">'eggs'</span>, <span class="number">3</span>)])</div></pre></td></tr></table></figure>
-<h4 id="这里需要重点看下"><a href="#这里需要重点看下" class="headerlink" title="这里需要重点看下"></a><strong>这里需要重点看下</strong></h4><p>读取不存在的键会报错，然而通过get()方法能够返回默认的值（None或用户定义的默认值），这是为了避免missing-key错误而填入默认值的一个方法：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&gt;&gt;&gt; </span>D.get(<span class="string">'spam'</span>)</div><div class="line"><span class="number">2</span></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>print(D.get(<span class="string">'toast'</span>))</div><div class="line"><span class="keyword">None</span></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>D.get(<span class="string">'toast'</span>, <span class="number">88</span>)</div><div class="line"><span class="number">88</span></div></pre></td></tr></table></figure>
-<h3 id="正则表达式re"><a href="#正则表达式re" class="headerlink" title="正则表达式re"></a><strong>正则表达式re</strong></h3><p>学习正则还是有点繁琐的，不多废话附上参考<br><a href="https://github.com/zeeshanu/learn-regex/blob/master/README-cn.md" target="_blank" rel="external">参考链接</a><br><a href="http://www.cnblogs.com/huxi/archive/2010/07/04/1771073.html" target="_blank" rel="external">参考链接</a><br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="string">"\w+"</span></div><div class="line">\w:匹配[A-Z,a-z,<span class="number">0</span><span class="number">-9</span>]；</div><div class="line">+ :匹配前一个字符<span class="number">0</span>次或无限次</div></pre></td></tr></table></figure></p>
-<h3 id="lambda表达式"><a href="#lambda表达式" class="headerlink" title="lambda表达式"></a><strong>lambda表达式</strong></h3><p>lambda表达式创建了一个之后能够调用的函数，但是它返回了一个函数而不是将这个函数赋值给一个变量名，这里不多写了，想深入了解的可以看Python学习手册</p>
-<ul>
-<li>lambda能够出现在Python语法不允许def出现的地方</li>
-<li>lambda的主体是一个单个的表达式，而不是一个代码块</li>
-</ul>
-<p>现在我们看一下def和lambda表达式的区别：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">func</span><span class="params">(x, y, z)</span>:</span></div><div class="line">	<span class="keyword">return</span> x + Y + z</div><div class="line"></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>func(<span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>)</div><div class="line"><span class="number">9</span></div></pre></td></tr></table></figure></p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&gt;&gt;&gt; </span>f = <span class="keyword">lambda</span> x, y, z: x + y +z</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>f(<span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>)</div><div class="line"><span class="number">9</span></div></pre></td></tr></table></figure>
-<p>来看个复杂点的</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">knights</span><span class="params">()</span>:</span></div><div class="line">	title = <span class="string">'Sir'</span></div><div class="line">	action = (<span class="keyword">lambda</span> x: title + <span class="string">' '</span> + x)</div><div class="line">	<span class="keyword">return</span> action</div><div class="line">	</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>act = knights()</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>act(<span class="string">'treehl'</span>)</div><div class="line"><span class="string">'Sir treehl'</span></div></pre></td></tr></table></figure>
-<h3 id="counter"><a href="#counter" class="headerlink" title="counter"></a><strong>counter</strong></h3><p><a href="http://blog.csdn.net/spynao/article/details/50186531" target="_blank" rel="external">参考链接</a><br>这里也谢谢九二同学的分享</p>
-<h3 id="assert断言"><a href="#assert断言" class="headerlink" title="assert断言"></a><strong>assert断言</strong></h3><p>凡是用print()来辅助查看的地方，都可以用断言（assert）来替代，假如断言失败，就会抛出错误<br>这里分享下参考链接，今天翻了Python学习手册的assert，相比廖雪峰老师的教程Python学习手册的assert显得有点难懂。。。。。。。<br><a href="https://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/001431915578556ad30ab3933ae4e82a03ee2e9a4f70871000" target="_blank" rel="external">参考链接</a></p>
-<p>最后附上军哥的代码<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># _*_ coding:utf-8 _*_</span></div><div class="line"><span class="keyword">import</span> io</div><div class="line"><span class="keyword">import</span> re</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Counter</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, path)</span>:</span></div><div class="line">        <span class="string">'''</span></div><div class="line"><span class="string"></span></div><div class="line"><span class="string">        :param path: 文件路径</span></div><div class="line"><span class="string">        '''</span></div><div class="line">        self.mapping = dict()</div><div class="line">        <span class="comment">#使用io.open可以添加encoding参数</span></div><div class="line">        <span class="keyword">with</span> io.open(path, encoding=<span class="string">'utf-8'</span>) <span class="keyword">as</span> f:</div><div class="line">            data = f.read()</div><div class="line">            <span class="comment">#使用列表解析式</span></div><div class="line">            <span class="comment">#findall(string[, pos[, endpos]]) | re.findall(pattern, string[, flags]):</span></div><div class="line">            <span class="comment">#搜索string，以列表形式返回全部能匹配的子串</span></div><div class="line">            <span class="comment">#\w匹配[A-Z,a-z,0-9]；+ 匹配前一个字符0次或无限次，data为读取的文件</span></div><div class="line">            <span class="comment">#Python lower() 方法转换字符串中所有大写字符为小写</span></div><div class="line">            words = [s.lower() <span class="keyword">for</span> s <span class="keyword">in</span> re.findall(<span class="string">'\w+'</span>, data)]</div><div class="line">            <span class="keyword">for</span> word <span class="keyword">in</span> words:</div><div class="line">                <span class="comment">#当key不存在时通过get方法返回默认值</span></div><div class="line">                self.mapping[word] = self.mapping.get(word, <span class="number">0</span>) + <span class="number">1</span></div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">most_common</span><span class="params">(self, n)</span>:</span></div><div class="line">        <span class="comment">#使用assert断言</span></div><div class="line">        <span class="keyword">assert</span> n &gt;<span class="number">0</span>, <span class="string">'n should be larger than 0'</span></div><div class="line">        <span class="comment">#sort()方法对列表进行永久性排列</span></div><div class="line">        <span class="comment">#sorted()函数对列表进行临时排序</span></div><div class="line">        <span class="comment">#reverse=True使列表反转</span></div><div class="line">        <span class="comment">#字典items()返回（key, value）对元组</span></div><div class="line">        <span class="comment">#使用lambda表达式</span></div><div class="line">        <span class="keyword">return</span> sorted(self.mapping.items(), key=<span class="keyword">lambda</span> item:item[<span class="number">1</span>], reverse=<span class="keyword">True</span>)[:n]</div><div class="line"></div><div class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</div><div class="line">    <span class="comment">#创建实例，调用most_common方法，打印排名前五的单词</span></div><div class="line">    most_common_5 = Counter(<span class="string">'importthis.txt'</span>).most_common(<span class="number">5</span>)</div><div class="line">    <span class="keyword">for</span> item <span class="keyword">in</span> most_common_5:</div><div class="line">        print(item)</div></pre></td></tr></table></figure></p>
-<p>欢迎大家访问我的博客<a href="https://family-treesy.github.io/" target="_blank" rel="external">Treehl的博客</a></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">PYTHON</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">DailyQuestion</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/11/05/third/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-second" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/10/31/second/">Python每日一题：第二题</a>
-    </h1>
-  
-
-        
-        <a href="/2017/10/31/second/" class="archive-article-date">
-  	<time datetime="2017-10-31T14:53:59.313Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-10-31</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>今天我们学习下<a href="https://wx.xiaomiquan.com/mweb/views/joingroup/join_group.html?group_id=518855855524&amp;secret=meqx22a2blf4c1ae3ucbgpui4somnpwa&amp;user_id=1152122252" target="_blank" rel="external">Python之禅和他朋友们</a>的第二道题目,了解分析下军哥的<a href="https://foofish.net/daily-question2.html" target="_blank" rel="external">代码</a></p>
-<p><strong>题目</strong></p>
-<blockquote>
-<p>设计一个猜数字的游戏，系统随机生成一个1~100之间的整数，玩家有5次机会，每猜一次系统就会提示玩家该数字是偏大还是偏小，如果猜中了，则告知玩家并提前结束游戏，如果5次都没猜中，结束游戏并告知正确答案。</p>
-</blockquote>
-<p>老样子！在做题之前我们需要了解以下几点知识：</p>
-<ul>
-<li>try … except … else …语句</li>
-<li>if … elif … else … 语句</li>
-<li>while … else … 语句</li>
-<li>random模块</li>
-</ul>
-<p><strong>try … except … else … 语句</strong><br>工作原理大致如下：Python执行try代码块，只有可能发生异常的代码才需要放在try语句中；except代码块告诉Python，如果try语句运行发生异常时，该怎么办；else代码块告诉Python，在try代码块成功执行时才需要的运行的代码，放在else代码块中。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">first_number = input(<span class="string">'First number: '</span>)</div><div class="line">second_number = input(<span class="string">'Second number: '</span>)</div><div class="line"><span class="keyword">try</span>:</div><div class="line">    answer = int(first_number) / int(second_number)</div><div class="line"><span class="keyword">except</span> ZeroDivisionError:</div><div class="line">    print(<span class="string">"You can't divide by 0 !"</span>)</div><div class="line"><span class="keyword">else</span>:</div><div class="line">    print(answer)</div></pre></td></tr></table></figure>
-<p><strong>if … elif … else … 语句</strong></p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># 年龄不满4岁，入场为0</span></div><div class="line">age = <span class="number">12</span></div><div class="line"><span class="keyword">if</span> age &lt; <span class="number">4</span>: <span class="comment"># 年龄不满4岁，入场为0，跳过余下测试</span></div><div class="line">	print(<span class="string">'Your admission cost is $0.'</span>)</div><div class="line"><span class="keyword">elif</span> age &lt; <span class="number">18</span>: <span class="comment"># elif仅在if语句为False时才能运行</span></div><div class="line">	print(<span class="string">'Your admission cost is $5.'</span>)</div><div class="line"><span class="keyword">else</span>: <span class="comment"># 如果if和elif都未通过，else语句才被运行</span></div><div class="line">	print(<span class="string">'Your admission cost is $10.'</span>)</div></pre></td></tr></table></figure>
-<p><strong>while … else … 语句</strong><br>while … else 在循环条件为 false 时执行 else 语句块，翻了Python学习手册，while…else…有点晦涩难懂，菜鸟教程的更容易理解</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">count = <span class="number">0</span></div><div class="line"><span class="keyword">while</span> count &lt; <span class="number">5</span>:</div><div class="line">   <span class="keyword">print</span> count, <span class="string">" is  less than 5"</span></div><div class="line">   count = count + <span class="number">1</span></div><div class="line"><span class="keyword">else</span>: <span class="comment"># while循环被设置为&lt; 5,当count&gt; 5时，便执行else语句</span></div><div class="line">   <span class="keyword">print</span> count, <span class="string">" is not less than 5"</span></div><div class="line">   </div><div class="line"><span class="number">0</span> <span class="keyword">is</span> less than <span class="number">5</span></div><div class="line"><span class="number">1</span> <span class="keyword">is</span> less than <span class="number">5</span></div><div class="line"><span class="number">2</span> <span class="keyword">is</span> less than <span class="number">5</span></div><div class="line"><span class="number">3</span> <span class="keyword">is</span> less than <span class="number">5</span></div><div class="line"><span class="number">4</span> <span class="keyword">is</span> less than <span class="number">5</span></div><div class="line"><span class="number">5</span> <span class="keyword">is</span> <span class="keyword">not</span> less than <span class="number">5</span></div></pre></td></tr></table></figure>
-<p><strong>random模块</strong><br>参考<a href="http://www.cnblogs.com/yd1227/archive/2011/03/18/1988015.html" target="_blank" rel="external">博客园</a></p>
-<p>基本的解题知识学完后，我们来看一下的军哥的代码</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> random</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">GuessGame</span><span class="params">()</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, min_num, max_num, choice)</span>:</span></div><div class="line">        <span class="string">'''</span></div><div class="line"><span class="string"></span></div><div class="line"><span class="string">        :param min_num:</span></div><div class="line"><span class="string">        :param max_num:</span></div><div class="line"><span class="string">        :param choice:</span></div><div class="line"><span class="string">        :return:</span></div><div class="line"><span class="string">        '''</span></div><div class="line"></div><div class="line">        self.min_num = min_num</div><div class="line">        self.max_num = max_num</div><div class="line">        self.choice = choice</div><div class="line">        self.target = random.randint(min_num, max_num)</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">guess</span><span class="params">(self)</span>:</span></div><div class="line">        <span class="string">'''</span></div><div class="line"><span class="string"></span></div><div class="line"><span class="string">        :return:</span></div><div class="line"><span class="string">        '''</span></div><div class="line">        choice = self.choice</div><div class="line">        <span class="keyword">while</span> choice &gt; <span class="number">0</span>:</div><div class="line">            choice -= <span class="number">1</span></div><div class="line">            <span class="keyword">try</span>:</div><div class="line">                num = int(input(<span class="string">'输入数字: '</span>))</div><div class="line">            <span class="keyword">except</span>:</div><div class="line">                print(<span class="string">'输入有效数字'</span>)</div><div class="line">                <span class="keyword">continue</span> <span class="comment"># 跳出这次循环</span></div><div class="line"></div><div class="line">            <span class="keyword">if</span> num == self.target:</div><div class="line">                print(<span class="string">'恭喜你猜中了'</span>)</div><div class="line">                <span class="keyword">break</span> <span class="comment"># 退出循环</span></div><div class="line">            <span class="keyword">elif</span> num &lt;= self.target:</div><div class="line">                print(<span class="string">'你猜的数字太小了，还剩%d次机会'</span> % choice) <span class="comment"># 运用字符串格式化表达式</span></div><div class="line">            <span class="keyword">else</span>:</div><div class="line">                print(<span class="string">'你猜的数字太大了，还剩%d次机会'</span> % choice)</div><div class="line"></div><div class="line">        <span class="keyword">else</span>:</div><div class="line">            print(<span class="string">'很遗憾，%d 次机会都用完了,只差一点点就猜中了，正确答案是 %d'</span> % (self.choice, self.target))</div><div class="line"></div><div class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</div><div class="line">    game = GuessGame(<span class="number">1</span>, <span class="number">100</span>, <span class="number">5</span>) <span class="comment"># 创建实例</span></div><div class="line">    game.guess()</div></pre></td></tr></table></figure>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">你猜的数字太小了，还剩<span class="number">4</span>次机会</div><div class="line">输入数字: <span class="number">1</span></div><div class="line">你猜的数字太小了，还剩<span class="number">3</span>次机会</div><div class="line">输入数字: <span class="number">100</span></div><div class="line">你猜的数字太大了，还剩<span class="number">2</span>次机会</div><div class="line">输入数字: <span class="number">90</span></div><div class="line">你猜的数字太大了，还剩<span class="number">1</span>次机会</div><div class="line">输入数字: <span class="number">0</span></div><div class="line">你猜的数字太小了，还剩<span class="number">0</span>次机会</div><div class="line">很遗憾，<span class="number">5</span> 次机会都用完了,只差一点点就猜中了，正确答案是 <span class="number">70</span></div></pre></td></tr></table></figure>
-<p>欢迎访问博客<a href="https://family-treesy.github.io/" target="_blank" rel="external">Treehl的博客</a><br><a href="https://github.com/Family-TreeSY" target="_blank" rel="external">GitHub</a></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">PYTHON</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">DailyQuestion</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/10/31/second/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-FirstQuestion" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/10/31/FirstQuestion/">Python每日一题：第一题</a>
-    </h1>
-  
-
-        
-        <a href="/2017/10/31/FirstQuestion/" class="archive-article-date">
-  	<time datetime="2017-10-31T04:02:31.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-10-31</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>最近加入了<a href="https://foofish.net/" target="_blank" rel="external">Python之禅</a>的知识星球<a href="https://wx.xiaomiquan.com/mweb/views/joingroup/join_group.html?group_id=518855855524&amp;secret=meqx22a2blf4c1ae3ucbgpui4somnpwa&amp;user_id=1152122252" target="_blank" rel="external">Python之禅和他朋友们</a><br>军哥在星球内分享干货，组织交流，让我这个编程小白获益良多。今天我们来学习一下星球内的第一道题目，也算是我学习第一道题后的总结</p>
-<h3 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h3><blockquote>
-<p>在使用 for 循环迭代一个列表时，有时我们需要获取列表中每个元素所在的下标位置是多少，例如 numbers = [10, 29, 30, 41]，要求输出 (0, 10)，(1, 29)，(2, 30)，(3, 41)</p>
-</blockquote>
-<p>在解题前我们需要了解下面几点知识</p>
-<ul>
-<li>range()函数</li>
-<li>len()函数</li>
-<li>for循环</li>
-<li>字符串格式化表达式</li>
-<li>字符串格式化方法</li>
-<li>enumerate()函数</li>
-</ul>
-<p><strong>range()函数</strong><br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">&gt;&gt;&gt;range(<span class="number">10</span>)        <span class="comment"># 从 0 开始到 10</span></div><div class="line">[<span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span>, <span class="number">9</span>]</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>range(<span class="number">1</span>, <span class="number">11</span>)     <span class="comment"># 从 1 开始到 11</span></div><div class="line">[<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span>, <span class="number">9</span>, <span class="number">10</span>]</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>range(<span class="number">0</span>, <span class="number">30</span>, <span class="number">5</span>)  <span class="comment"># 步长为 5</span></div><div class="line">[<span class="number">0</span>, <span class="number">5</span>, <span class="number">10</span>, <span class="number">15</span>, <span class="number">20</span>, <span class="number">25</span>]</div></pre></td></tr></table></figure></p>
-<p><strong>len()函数</strong><br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">&gt;&gt;&gt;l = <span class="string">"Treehl"</span></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>len(l)             <span class="comment"># 字符串长度</span></div><div class="line"><span class="number">6</span></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>m = [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>]</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>len(m)               <span class="comment"># 列表元素个数</span></div><div class="line"><span class="number">5</span></div></pre></td></tr></table></figure></p>
-<p><strong>for循环</strong><br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">&gt;&gt;&gt;names = [<span class="string">'a'</span>, <span class="string">'b'</span>, <span class="string">'c'</span>]</div><div class="line">&gt;&gt;&gt;<span class="keyword">for</span> name <span class="keyword">in</span> names:</div><div class="line">        print(name)</div><div class="line">a</div><div class="line">b</div><div class="line">c</div></pre></td></tr></table></figure></p>
-<p><strong>字符串格式化表达式</strong><br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&gt;&gt;&gt; </span><span class="string">'That is %d %s bird!'</span> % (<span class="number">1</span>, <span class="string">'dead'</span>)</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>That <span class="keyword">is</span> <span class="number">1</span> dead bird!</div></pre></td></tr></table></figure></p>
-<p><strong>字符串格式化方法</strong><br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&gt;&gt;&gt; </span><span class="string">'That is &#123;0&#125; &#123;1&#125; bird!'</span>.format(<span class="number">1</span>, <span class="string">'dead'</span>)</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>That <span class="keyword">is</span> <span class="number">1</span> dead bird!</div></pre></td></tr></table></figure></p>
-<p><strong>enumerate()函数</strong></p>
-<blockquote>
-<p>enumerate(sequence, [start=0])</p>
-<ul>
-<li>sequence – 一个序列、迭代器或其他支持迭代对象</li>
-<li>start – 下标起始位置</li>
-</ul>
-</blockquote>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">&gt;&gt;&gt;numbers = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>]</div><div class="line">&gt;&gt;&gt;list(enumerate(numbers))</div><div class="line">&gt;&gt;&gt;[(<span class="number">0</span>, <span class="number">1</span>), (<span class="number">1</span>, <span class="number">2</span>), (<span class="number">2</span>, <span class="number">3</span>), (<span class="number">3</span>, <span class="number">4</span>)]</div><div class="line">&gt;&gt;&gt;list(enumerate(numbers, start=<span class="number">1</span>))<span class="comment"># 下标从1开始</span></div><div class="line">&gt;&gt;&gt;[(<span class="number">1</span>, <span class="number">1</span>), (<span class="number">2</span>, <span class="number">2</span>), (<span class="number">3</span>, <span class="number">3</span>), (<span class="number">4</span>, <span class="number">4</span>)]</div></pre></td></tr></table></figure>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># enumerate() 函数用于将一个可遍历的数据对象(如列表、元组或字符串)组合为一个索引序列，同时列出数据和数据下标，一般用在 for 循环当中。</span></div><div class="line">&gt;&gt;&gt;n = numbers</div><div class="line">&gt;&gt;&gt;<span class="keyword">for</span> index, value <span class="keyword">in</span> enumerate(n):</div><div class="line">		print(index, value)</div><div class="line"><span class="number">0</span> <span class="number">1</span></div><div class="line"><span class="number">1</span> <span class="number">2</span></div><div class="line"><span class="number">2</span> <span class="number">3</span></div><div class="line"><span class="number">3</span> <span class="number">4</span></div></pre></td></tr></table></figure>
-<p>到这一步解题的基础知识都了解完了，开始做题吧</p>
-<pre><code class="python"><span class="comment"># answer 1</span>
-numbers = [<span class="number">10</span>, <span class="number">29</span>, <span class="number">30</span>, <span class="number">41</span>]
-<span class="keyword">for</span> i <span class="keyword">in</span> range(len(numbers)):
-    print(<span class="string">'{0}, {1}'</span>.format(i, numbers[i]))
-</code></pre>
-<pre><code class="python"><span class="comment"># answer 2</span>
-numbers = [<span class="number">10</span>, <span class="number">29</span>, <span class="number">30</span>, <span class="number">41</span>]
-<span class="keyword">for</span> index, value <span class="keyword">in</span> enumerate(numbers):
-    print(index, value)
-</code></pre>
-<p>欢迎访问我的博客<a href="https://family-treesy.github.io/" target="_blank" rel="external">Treehl的博客</a><br><a href="https://github.com/Family-TreeSY" target="_blank" rel="external">GitHub</a></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">PYTHON</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">DailyQuestion</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/10/31/FirstQuestion/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-login-douban" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/10/30/login-douban/">Python模拟登陆豆瓣</a>
-    </h1>
-  
-
-        
-        <a href="/2017/10/30/login-douban/" class="archive-article-date">
-  	<time datetime="2017-10-30T08:16:20.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-10-30</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>这几天在学习模拟登陆，而登陆离不开http中Cookie技术</p>
-<h3 id="Cookie"><a href="#Cookie" class="headerlink" title="Cookie"></a><strong>Cookie</strong></h3><p>由于HTTP是一种无状态的协议，服务器单从网络连接上无从知道客户身份。怎么办呢？就给客户端们颁发一个通行证吧，每人一个，无论谁访问都必须携带自己通行证。这样服务器就能从通行证上确认客户身份了。这就是Cookie的工作原理。<br><img src="https://timgsa.baidu.com/timg?image&amp;quality=80&amp;size=b9999_10000&amp;sec=1509363866179&amp;di=573e91f2708405e58e5387722e2def0a&amp;imgtype=0&amp;src=http%3A%2F%2Fimg.mp.itc.cn%2Fupload%2F20160702%2Fb014306d961742ea89c74c86f8d14e9f_th.png" alt=""></p>
-<h3 id="分析网页数据"><a href="#分析网页数据" class="headerlink" title="分析网页数据"></a><strong>分析网页数据</strong></h3><p>我们用Chrome来打开<a href="https://accounts.douban.com/login?alias=&amp;redir=https%3A%2F%2Fwww.douban.com%2F&amp;source=index_nav&amp;error=1001" target="_blank" rel="external">豆瓣</a>（F12开发者工具），先输入一个错误的账户信息来观察浏览器是如何发送请求的</p>
-<p><img src="http://a2.qpic.cn/psb?/V10WDaE22S84Sl/lF5ujf5darh1W5vWX7x2FoByn5ScY8SJw4o8AQgW08U!/b/dOIAAAAAAAAA&amp;bo=MgVGAgAAAAADB1E!&amp;rf=viewer_4" alt=""><br>从浏览器的请求可以发现几个关键的信息</p>
-<ul>
-<li>登录的 URL 地址是 <a href="https://accounts.douban.com/login" target="_blank" rel="external">https://accounts.douban.com/login</a></li>
-<li>登录需要提供的表单数据有7个：</li>
-</ul>
-<ol>
-<li>source:index_nav</li>
-<li>redir:<a href="https://www.douban.com/" target="_blank" rel="external">https://www.douban.com/</a></li>
-<li>form_email:286210002@qq.com</li>
-<li>form_password:123</li>
-<li>captcha-solution:errfdf</li>
-<li>captcha-id:lWtHfckzUAF4PoAtFtQdsyZy:en</li>
-<li>login:登录</li>
-</ol>
-<ul>
-<li>获取验证码的URL地址是 <a href="https://www.douban.com/misc/captcha?id=gTpnLfXlpVM2vIB2xlT09deP:en&amp;size=s" target="_blank" rel="external">https://www.douban.com/misc/captcha?id=gTpnLfXlpVM2vIB2xlT09deP:en&amp;size=s</a></li>
-</ul>
-<p>我们还需要获取验证码元素，我们在开发者工具中切换到Elements一栏<br><img src="http://a3.qpic.cn/psb?/V10WDaE22S84Sl/6EndpYOzS5ITZ6iCYu7o*wDKZVPcvY*2NlfHsmmaVYk!/b/dPIAAAAAAAAA&amp;bo=OgWzAQAAAAADB68!&amp;rf=viewer_4" alt=""><br>从中我们得到了验证码元素在img标签内</p>
-<blockquote>
-<p>img id=”captcha_image” </p>
-</blockquote>
-<p>最后我们还需要captcha-id元素，Ctrl+U打开页面源码（在登陆页面打开），Ctrl+F搜索captcha-id<br><img src="http://a1.qpic.cn/psb?/V10WDaE22S84Sl/65.u1lYW6pl0AIBVopKZaLbiP7bSoXviTfnRBC1sh68!/b/dPMAAAAAAAAA&amp;bo=VQfiAQAAAAADB5M!&amp;rf=viewer_4" alt=""><br>好了，到了这一步所需的数据全部获取完毕</p>
-<h3 id="实战应用"><a href="#实战应用" class="headerlink" title="实战应用"></a><strong>实战应用</strong></h3><p>登陆所需要的模块</p>
-<ul>
-<li>Requests</li>
-<li>BeautifulSoup4<blockquote>
-<p>pip install requests<br>pip install BeautifulSoup4</p>
-</blockquote>
-</li>
-</ul>
-<p>http.cookiejar 模块可用于自动处理HTTP Cookie，LWPCookieJar 对象就是对 cookies 的封装，它支持把 cookies 保存到文件以及从文件中加载。<br>而 session 对象 提供了 Cookie 的持久化，连接池功能，可以通过 session 对象发送请求<br>首先从cookies 文件中加载 cookie信息，因为首次运行还没有cookie，会出现 LoadError 异常。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> requests</div><div class="line"><span class="keyword">from</span> http <span class="keyword">import</span> cookiejar</div><div class="line">session = requests.session()</div><div class="line">session.cookies = cookiejar.LWPCookieJar(filename=<span class="string">'cookies'</span>)</div><div class="line"><span class="keyword">try</span>:</div><div class="line">    print(session.cookies)</div><div class="line">    session.cookies.load(ignore_discard=<span class="keyword">True</span>)</div><div class="line"><span class="keyword">except</span> LoadError:</div><div class="line">    print(<span class="string">'no cookie'</span>)</div></pre></td></tr></table></figure></p>
-<h3 id="获取验证码"><a href="#获取验证码" class="headerlink" title="获取验证码"></a><strong>获取验证码</strong></h3><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">get_captcha</span><span class="params">()</span>:</span></div><div class="line">    <span class="string">'''</span></div><div class="line"><span class="string">    把验证码图片保存到当前目录，手动识别验证码</span></div><div class="line"><span class="string">    :return:</span></div><div class="line"><span class="string">    '''</span></div><div class="line">    r = requests.post(download_url, data=data, headers=headers)</div><div class="line">    page = r.text</div><div class="line">    soup = BeautifulSoup(page, <span class="string">'html.parser'</span>)</div><div class="line">    image = soup.find(<span class="string">'img'</span>, attrs=&#123;<span class="string">'id'</span>: <span class="string">'captcha_image'</span>&#125;).get(<span class="string">'src'</span>)</div><div class="line">    s = session.get(captcha_url, headers=headers)</div><div class="line">    <span class="keyword">with</span> open(<span class="string">'captcha.jpg'</span>, <span class="string">'wb'</span>) <span class="keyword">as</span> f:</div><div class="line">        f.write(s.content)</div><div class="line">    captcha = input(<span class="string">'Please input the captcha: '</span>)</div><div class="line">    captcha_id = soup.find(<span class="string">'input'</span>, &#123;<span class="string">'type'</span>: <span class="string">'hidden'</span>, <span class="string">'name'</span>: <span class="string">'captcha-id'</span> &#125;).get(<span class="string">'value'</span>)</div><div class="line">    <span class="keyword">return</span> captcha, captcha_id</div></pre></td></tr></table></figure>
-<h3 id="登陆"><a href="#登陆" class="headerlink" title="登陆"></a><strong>登陆</strong></h3><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">login</span><span class="params">()</span>:</span></div><div class="line">    captcha, captcha_id = get_captcha()</div><div class="line">    <span class="comment"># 增加表数据</span></div><div class="line">    data[<span class="string">'captcha-solution'</span>] = captcha</div><div class="line">    data[<span class="string">'captcha-id'</span>] = captcha_id</div><div class="line">    response = session.post(download_url, data=data, headers=headers)</div><div class="line">    page = response.text</div><div class="line">    print(page)</div><div class="line">    session.cookies.save()</div></pre></td></tr></table></figure>
-<p>第一次登陆后session 会自动把 服务端的返回的cookie 信息填充到 session.cookies 对象中，下次登陆时就不需要再输入账号密码<br><a href="https://github.com/Family-TreeSY/login-douban/blob/master/login-douban.py" target="_blank" rel="external">完整代码</a></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">PYTHON</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">爬虫</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/10/30/login-douban/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-Xpath模拟登陆GitHub" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/10/24/Xpath模拟登陆GitHub/">Xpath模拟登陆GitHub</a>
-    </h1>
-  
-
-        
-        <a href="/2017/10/24/Xpath模拟登陆GitHub/" class="archive-article-date">
-  	<time datetime="2017-10-24T01:52:13.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-10-24</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="这是我用python2-7写的简单教程"><a href="#这是我用python2-7写的简单教程" class="headerlink" title="这是我用python2.7写的简单教程"></a><strong>这是我用python2.7写的简单教程</strong></h3><p><strong>准备工作</strong><br>安装requests lxml模块</p>
-<blockquote>
-<p>pip install requests<br>pip install lxml</p>
-</blockquote>
-<p><a href="http://docs.python-requests.org/zh_CN/latest/user/quickstart.html#id11" target="_blank" rel="external">requests文档</a><br><a href="http://lxml.de/" target="_blank" rel="external">lxml文档</a><br><a href="http://www.w3school.com.cn/xpath/index.asp" target="_blank" rel="external">Xpath教程</a></p>
-<hr>
-<p><strong>实战应用</strong><br><img src="http://a1.qpic.cn/psb?/V10WDaE22S84Sl/kgIbyAqyVUEboZyCcWApTA1d9qxLDmjowHvebGpA628!/b/dIkBAAAAAAAA&amp;bo=FQIVAwAAAAADACQ!&amp;rf=viewer_4" alt=""><br>首先进入GitHub登陆页面<a href="https://github.com/login" target="_blank" rel="external">https://github.com/login</a>, 打开Chrome的开发者工具(F12)，先尝试输入错误的密码观察浏览器是如何发送请求的。</p>
-<p><img src="http://a3.qpic.cn/psb?/V10WDaE22S84Sl/r6CPmdb8CMkCI768tbnd9.vdR4XpkQVsnnfse7k.sD4!/b/dD0BAAAAAAAA&amp;bo=ngSAAgAAAAADAD0!&amp;rf=viewer_4" alt=""></p>
-<p><strong>从浏览器的请求可以看到几个关键信息</strong></p>
-<ul>
-<li>登陆的URL地址是<a href="https://github.com/session" target="_blank" rel="external">https://github.com/session</a></li>
-<li>登陆需要提供的表单数据有5个</li>
-<li>commit:Sign in</li>
-<li>utf8:✓</li>
-<li>authenticity_token: #这是一种防范CSRF攻击的方式，在请求地址中添加 token 并验证</li>
-<li>login:Family-TreeSY</li>
-<li>password:123456</li>
-</ul>
-<p>然后按<strong>ctrl+u</strong>打开源代码页面，再按下<strong>ctrl+f</strong>打开搜索栏，查找<strong>authenticity_token</strong></p>
-<p><img src="http://a1.qpic.cn/psb?/V10WDaE22S84Sl/OuzcCKxwb26otA2kbCvX1tQn7s45Lp632HU1QzKeShY!/b/dGkAAAAAAAAA&amp;bo=PgccAQAAAAADAAE!&amp;rf=viewer_4" alt=""></p>
-<p>可以看到 name=”authenticity_token” 这也是Xpath需要查找的元素</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">xpath(‘//input[@name=”authenticity_token”]’)</div></pre></td></tr></table></figure>
-<p>理解了浏览器登陆时所需的数据获取方式后，就可以开始写代码用Python来模拟登陆了。</p>
-<p><strong>解析网页使用Xpath查找所需要的元素</strong></p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> requests</div><div class="line"><span class="keyword">from</span> lxml <span class="keyword">import</span> etree</div><div class="line"></div><div class="line">LOGIN_URL = <span class="string">'https://github.com/login'</span></div><div class="line">SESSION_URL = <span class="string">'https://github.com/session'</span></div><div class="line"></div><div class="line">s = requests.session()</div><div class="line">y = s.get(LOGIN_URL)</div><div class="line">tree = etree.HTML(y.text)</div><div class="line">ele = tree.xpath(<span class="string">'//input[@name="authenticity_token"]'</span>)[<span class="number">0</span>]</div></pre></td></tr></table></figure>
-<p><strong>写入表单数据</strong><br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">data = &#123;</div><div class="line">    <span class="string">'commit'</span>: <span class="string">'Sign in'</span>,</div><div class="line">    <span class="string">'utf8'</span>: <span class="string">'✓'</span>,</div><div class="line">    <span class="string">'authenticity_token'</span>: <span class="string">'fwuV3HbD15A9BKiEJVtsEYEqzDv+r+yG9rj0uuFKLPtKjeK00ubWkbmKqQ6VJp9worJ5BVGMz3ZJV9Feyg9IKw=='</span>,</div><div class="line">    <span class="string">'login'</span>: <span class="string">'用户名'</span>,</div><div class="line">    <span class="string">'password'</span>: <span class="string">'xxxxx'</span></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p><strong>使用POST请求</strong><br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">y = s.post(SESSION_URL, data=data)</div></pre></td></tr></table></figure></p>
-<p><strong>登陆成功</strong><br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">y.url</div><div class="line">Out[<span class="number">4</span>]: <span class="string">u'https://github.com/session'</span></div></pre></td></tr></table></figure></p>
-<p><a href="https://github.com/Family-TreeSY/Spider/blob/master/github.py" target="_blank" rel="external">源码地址</a></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">PYTHON</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">爬虫</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/10/24/Xpath模拟登陆GitHub/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-douban-reading" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/10/24/douban-reading/">Python爬取豆瓣电子小说</a>
-    </h1>
-  
-
-        
-        <a href="/2017/10/24/douban-reading/" class="archive-article-date">
-  	<time datetime="2017-10-24T01:52:13.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-10-24</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h4 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a><strong>准备工作</strong></h4><p>安装BeautifulSoup模块<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">pip install BeautifulSoup4</div></pre></td></tr></table></figure></p>
-<p><a href="http://beautifulsoup.readthedocs.io/zh_CN/latest/#" target="_blank" rel="external">BeautifulSoup4 文档</a></p>
-<h4 id="第一步：分析网页"><a href="#第一步：分析网页" class="headerlink" title="第一步：分析网页"></a><strong>第一步：分析网页</strong></h4><p>登陆<a href="https://read.douban.com/kind/100打开Chrome开发者工具（F12），如下图所示：" target="_blank" rel="external">https://read.douban.com/kind/100打开Chrome开发者工具（F12），如下图所示：</a><br><img src="http://a3.qpic.cn/psb?/V10WDaE22S84Sl/*Gnv.I9gax5afkv4b8yuq9QEIQ0YglgXycHK.okGX.g!/b/dIUBAAAAAAAA&amp;bo=bweAAgAAAAADB8g!&amp;rf=viewer_4" alt=""><br>我们得到如下信息</p>
-<ul>
-<li>小说列表在页面位置为<strong>class</strong>属性为<strong>item store-item</strong>的<strong>ul</strong>标签中</li>
-<li>小说信息在<strong>ul</strong>标签下的<strong>li</strong>标签中<h4 id="第二步：使用requets下载网页源码"><a href="#第二步：使用requets下载网页源码" class="headerlink" title="第二步：使用requets下载网页源码"></a><strong>第二步：使用requets下载网页源码</strong></h4><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> requests</div><div class="line"></div><div class="line">download_url = <span class="string">'https://read.douban.com/kind/100'</span></div><div class="line">headers = &#123;</div><div class="line">        <span class="string">'User-Agent'</span>: <span class="string">'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/61.0.3163.100 Safari/537.36'</span></div><div class="line">    &#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">download_page</span><span class="params">(url)</span>:</span></div><div class="line">    data = requests.get(url, headers=headers).content</div><div class="line">    <span class="keyword">return</span> data</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">main</span><span class="params">()</span>:</span></div><div class="line">	url = download_url</div><div class="line">	<span class="keyword">print</span> download_page(download_url)</div><div class="line"></div><div class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</div><div class="line">	main()</div></pre></td></tr></table></figure>
-</li>
-</ul>
-<p>简单测试下，运行后得到的结果<br><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&lt;!DOCTYPE html&gt;&lt;html lang="zh-CN" class="ua-windows ua-chrome ua-chrome61 ua-webkit is-anonymous" &gt;&lt;head&gt;&lt;meta charset="utf-8"&gt;&lt;meta http-equiv="Pragma" content="no-cache"&gt;&lt;meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"&gt;&lt;meta http-equiv="Expires" content="Sun, 6 Mar 2005 01:00:00 GMT"&gt;&lt;meta name="google-site-verification" content="Wyui6dsg_StZ9K3rJ6xtsNbxPhELyhMkEp2MsAhviBQ"&gt;&lt;meta property="weixin:image"  ...............................</div></pre></td></tr></table></figure></p>
-<p>上面的代码中<strong>User-Agent</strong>将创建请求的浏览器和用户代理名称等信息传递给服务器，服务器通过校验请求的<strong>U-A</strong>来识别爬虫，这算是最简单的一种反爬虫机制了。<br>在开发者功能（F12）的Network中我们可以找到<strong>U-A</strong><br><img src="http://a2.qpic.cn/psb?/V10WDaE22S84Sl/hVQw0roQNXXSOXhKCyyeBEd472fO3beTnk2vZVzOSD8!/b/dOIAAAAAAAAA&amp;bo=NQNPAgAAAAADB1k!&amp;rf=viewer_4" alt=""></p>
-<p>当我们拿到网页源码之后，就需要解析HTML源码了。这里，我们使用BeautifulSoup来搞定这件事。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="number">1.</span><span class="keyword">from</span> bs4 <span class="keyword">import</span> BeautifulSoup</div><div class="line"><span class="number">2.</span><span class="function"><span class="keyword">def</span> <span class="title">parse_html</span><span class="params">(html)</span>:</span></div><div class="line"><span class="number">3.</span>	soup = BeautifulSoup(html, <span class="string">'html.parser'</span>)</div><div class="line"><span class="number">4.</span>	read_list_soup = soup.find(<span class="string">'ul'</span>, attrs=&#123;<span class="string">'class'</span>: <span class="string">'list-lined ebook-list  column-list'</span>&#125;)</div><div class="line"><span class="number">5.</span>	<span class="keyword">for</span> read_li <span class="keyword">in</span> read_list_soup.find_all(<span class="string">'li'</span>, attrs=&#123;<span class="string">'class'</span>: <span class="string">'item store-7.</span></div><div class="line"><span class="string">item'</span>&#125;):</div><div class="line"><span class="number">6.</span>		  detail = read_li.find(<span class="string">'div'</span>, attrs=&#123;<span class="string">'class'</span>: <span class="string">'title'</span>&#125;)</div><div class="line"><span class="number">7.</span>        read_name = detail.find(<span class="string">'a'</span>).getText()</div><div class="line"><span class="number">8.</span>        <span class="keyword">print</span> read_name</div></pre></td></tr></table></figure></p>
-<p>现在我们解析下代码</p>
-<ol>
-<li>导入模块</li>
-<li>定义<strong>parse_html</strong>函数，它接受html源码作为输入，并将这个网页中的小说名称打印到控制台</li>
-<li>使用<strong>BeautifulSoup</strong>解析网页</li>
-<li>这是网页<strong>html</strong>源码定位到的小说列表元素</li>
-<li>使用<strong>for</strong>循环解析每个<strong>li</strong>标签<br><strong>6、7</strong>都是解析小说名字</li>
-</ol>
-<p>到这里我们得到了小说的名称，接下来我们需要解析翻页的元素</p>
-<h4 id="第三步：定位下一页链接"><a href="#第三步：定位下一页链接" class="headerlink" title="第三步：定位下一页链接"></a><strong>第三步：定位下一页链接</strong></h4><p><img src="http://a3.qpic.cn/psb?/V10WDaE22S84Sl/cLUdXP24ym5fWUapIZP*sqlHl*kFA2298Z.NzUB1jco!/b/dOAAAAAAAAAA&amp;bo=SQaAAgAAAAADB.8!&amp;rf=viewer_4" alt=""><br>依旧使用开发者工具（F12），我们找到了下一页元素在<strong>li</strong>标签中的<strong>class</strong>为<strong>next</strong>,链接则在<strong>a</strong>标签中，到了最后一页之后，这个<strong>li</strong>中的<strong>a</strong>标签消失了，就不需要再翻页了<br>代码如下：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">parse_html</span><span class="params">(html)</span>:</span></div><div class="line">    soup = BeautifulSoup(html, <span class="string">'html.parser'</span>)</div><div class="line">    read_list_soup = soup.find(<span class="string">'ul'</span>, attrs=&#123;<span class="string">'class'</span>: <span class="string">'list-lined ebook-list column-list'</span>&#125;)</div><div class="line"></div><div class="line">    read_name_list = []</div><div class="line"></div><div class="line">    <span class="keyword">for</span> read_li <span class="keyword">in</span> read_list_soup.find_all(<span class="string">'li'</span>, attrs=&#123;<span class="string">'class'</span>: <span class="string">'item store-item'</span>&#125;):</div><div class="line">        detail = read_li.find(<span class="string">'div'</span>, attrs=&#123;<span class="string">'class'</span>: <span class="string">'title'</span>&#125;)</div><div class="line">        read_name = detail.find(<span class="string">'a'</span>).getText()</div><div class="line">        read_name_list.append(read_name)</div><div class="line"></div><div class="line">    next_page = soup.find(<span class="string">'li'</span>, attrs=&#123;<span class="string">'class'</span>: <span class="string">'next'</span>&#125;).find(<span class="string">'a'</span>)</div><div class="line">    <span class="keyword">if</span> next_page:</div><div class="line">        <span class="keyword">return</span> read_name_list, download_url + next_page[<span class="string">'href'</span>]</div><div class="line">    <span class="keyword">return</span> read_name_list, <span class="keyword">None</span></div></pre></td></tr></table></figure></p>
-<p>在解析<strong>html</strong>之后取回我们需要的数据，<strong>next_page</strong>到最后一页就返回<strong>None</strong></p>
-<h4 id="第四步：使用codecs处理中文编码"><a href="#第四步：使用codecs处理中文编码" class="headerlink" title="第四步：使用codecs处理中文编码"></a><strong>第四步：使用codecs处理中文编码</strong></h4><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">main</span><span class="params">()</span>:</span></div><div class="line">    url = download_url</div><div class="line"></div><div class="line">    <span class="keyword">with</span> codecs.open(<span class="string">'readings'</span>, <span class="string">'wb'</span>, encoding=<span class="string">'utf-8'</span>) <span class="keyword">as</span> f:</div><div class="line">        <span class="keyword">while</span> url:</div><div class="line">            html = download_page(url)</div><div class="line">            readings, url = parse_html(html)</div><div class="line">            f.write(<span class="string">u'&#123;readings&#125;\n'</span>.format(readings=<span class="string">'\n'</span>.join(readings)))</div></pre></td></tr></table></figure>
-<p>程序运行完之后，所有的小说名称全部写入了readings中</p>
-<p><a href="https://github.com/Family-TreeSY/douban-reading-spider/blob/master/Crawler-Reading-douban.py" target="_blank" rel="external">完整代码</a></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">PYTHON</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">爬虫</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">豆瓣</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/10/24/douban-reading/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
 
   
   
-    <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span>
-    </nav>
+  
+
+  
+
+  
+
   
 
 
@@ -1155,8 +427,8 @@ numbers = [<span class="number">10</span>, <span class="number">29</span>, <span
     <script>
 	var yiliaConfig = {
 		mathjax: false,
-		isHome: true,
-		isPost: false,
+		isHome: false,
+		isPost: true,
 		isArchive: false,
 		isTag: false,
 		isCategory: false,
