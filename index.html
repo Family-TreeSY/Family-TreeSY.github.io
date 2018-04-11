@@ -316,6 +316,459 @@
 
 
   
+    <article id="post-Redis数据结构" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/04/01/Redis数据结构/">Redis五种数据命令小结</a>
+    </h1>
+  
+
+        
+        <a href="/2018/04/01/Redis数据结构/" class="archive-article-date">
+  	<time datetime="2018-04-01T12:08:08.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-04-01</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="Redis数据结构"><a href="#Redis数据结构" class="headerlink" title="Redis数据结构"></a><strong>Redis数据结构</strong></h3><p>结构类型</p>
+<ol>
+<li>STRING</li>
+<li>LIST</li>
+<li>SET</li>
+<li>HASH</li>
+<li>ZSET（有序集合）</li>
+</ol>
+<p><strong>STRING</strong></p>
+<ol>
+<li>字符串存储一下3种类型的值<br>字符串<br>整数<br>浮点数</li>
+</ol>
+<ul>
+<li>GET（获取值）</li>
+<li>SET（设置值）</li>
+<li>DEL（删除值）</li>
+</ul>
+<p>redis的自增和自减命令</p>
+<ul>
+<li>INCR incr key-name —-将键存储的值加上1</li>
+<li>DECR decr key-name—-将键存储的值减去1</li>
+<li>INCRBY incrby key-name amount 将键存储的值加上整数amount</li>
+<li>DECRBY decrby key-name amount 将键存储的值减去整数amount</li>
+<li>INCRBYFLOAT incrby key-name amount 将键存储的值加上浮点数amount</li>
+</ul>
+<p>redis处理子串和二进制位的命令</p>
+<ul>
+<li>append（append key-name value——–将值value追加到给定键key-name当前存储的值的末尾）</li>
+<li>getrange（getrange key-name value———-获取一个由偏移量start至偏移量end范围内所有字符串组成的子串，包括start和end在内）</li>
+<li>setrange（setrange key-name offset value—–将从start偏移量开始的子串设置为给定值）</li>
+<li>getbit（getbit key-name offset 将字符串看作是二进制位串，并返回位串中偏移量位offset的二进制位的值）</li>
+<li>setbit（setbit key-name offset value———将字符串看作是二进制位串，并将位串中偏移量为offset的二进制位的值设置为value）</li>
+<li>bitcount</li>
+<li>bitop</li>
+</ul>
+<p>打开redis-cli</p>
+<p>设置键hello的值为world</p>
+<blockquote>
+<p>set hello world</p>
+</blockquote>
+<p>获取键hello的值</p>
+<blockquote>
+<p>get hello</p>
+</blockquote>
+<p><img src="http://m.qpic.cn/psb?/V10WDaE22S84Sl/HWteMrVannnp4EOqWJ1WJevzQA1zvpmyWP7uYFsT4NY!/b/dDABAAAAAAAA&amp;bo=LALjAAAAAAADB.8!&amp;rf=viewer_4" alt=""></p>
+<p>将键存储的值+1</p>
+<blockquote>
+<p>import redis<br> conn = redis.Redis()<br> conn.get(‘key’)<br>conn.incr(‘key’)<br>1<br> conn.incr(‘key’, 15)<br>16</p>
+</blockquote>
+<p><img src="http://m.qpic.cn/psb?/V10WDaE22S84Sl/HkAVFsObaaHGJcC.F2iDE60rQHyzcztXrTUJ1dJn8oo!/b/dDIBAAAAAAAA&amp;bo=XwHCAAAAAAADB74!&amp;rf=viewer_4" alt=""></p>
+<p>将键存储的值减去5</p>
+<blockquote>
+<p>conn.decr(‘key’, 5)<br>11</p>
+</blockquote>
+<p>先设置一个键,key=13，然后再incr自增</p>
+<blockquote>
+<p>conn.set(‘key’, ‘13’)<br>True<br>conn.incr(‘key’)<br>14</p>
+</blockquote>
+<p>将value追加到给出的键当前存储的值的末尾</p>
+<blockquote>
+<p> conn.append(‘new-string-key’, ‘hello’)<br>5<br> conn.append(‘new-string-key’, ‘world’)<br>10</p>
+</blockquote>
+<p>getrange获取从2开始到6结束范围内的所有子串</p>
+<blockquote>
+<p>conn.getrange(‘new-string-key’, 2, 6)<br>b’llowo’</p>
+</blockquote>
+<p>setrange 范围设置操作，在start索引位置替换字符串中已有的内容</p>
+<ul>
+<li>10表示当前字符串总长度<blockquote>
+<p>conn.setrange(‘new-string-key’, 0, ‘H’)<br>conn.setrange(‘new-string-key’, 6, ‘W’)<br>10</p>
+</blockquote>
+</li>
+</ul>
+<p>增长字符串长度</p>
+<blockquote>
+<p> conn.setrange(‘new-string-key’, 11, ‘, how are you?’)<br>25</p>
+</blockquote>
+<p>setbit<br>setbit key-name offset value</p>
+<blockquote>
+<p>conn.setbit(‘another-key’, 2, 1)<br>0<br>conn.setbit(‘another-key’, 7, 1)<br>0<br>conn.get(‘another-key’)<br>b’!’</p>
+</blockquote>
+<p><strong>LIST</strong></p>
+<ul>
+<li>RPUSH（将给定值推入列表的右端）</li>
+<li>LRANGE（获取列表在给定范围上的所有值）</li>
+<li>LINDEX（获取列表在给定位置上的单个元素）</li>
+<li>LPOP（从列表的左端删除一个值，并返回被删除的值）</li>
+<li>LTRIM （对列表进行修剪，只保留从start偏移量到end偏移量范围内的元素）</li>
+</ul>
+<p>阻塞式的列表弹出命令以及在列表之间移动元素的命令</p>
+<ul>
+<li>blpop </li>
+<li>brpop</li>
+<li>rpoplpush</li>
+<li>brpoplpush</li>
+</ul>
+<p>将键为list_key的值推入列表的右端</p>
+<blockquote>
+<p>rpush list_key treehl</p>
+</blockquote>
+<p>获取指定范围内的值</p>
+<ul>
+<li>使用0为范围的起始索引，-1为范围的结束索引，可以取出列表包含的所有元素<blockquote>
+<p>lrange list_key 0 -1</p>
+</blockquote>
+</li>
+</ul>
+<p>从列表中获取单个元素</p>
+<ul>
+<li>1 key后面的数字是索引，从0开始<blockquote>
+<p>lindex list_key 1</p>
+</blockquote>
+</li>
+</ul>
+<p>从列表中删除元素</p>
+<blockquote>
+<p>lpop list_key</p>
+</blockquote>
+<p>只保留起始索引到结束索引之间的元素</p>
+<blockquote>
+<p> conn.lrange(‘list-key’, 0, -1)<br>[b’a’, b’b’, b’c’]</p>
+</blockquote>
+<p>将一个元素从一个列表移动到另一个列表，并返回被移动的元素</p>
+<ul>
+<li>1表示timeout</li>
+</ul>
+<blockquote>
+<p>conn.brpoplpush(‘list2’, ‘list’, 1)<br>b’item6’</p>
+</blockquote>
+<p><strong>SET</strong></p>
+<ul>
+<li>SADD（将给定元素添加到集合）</li>
+<li>SMEMBER（返回集合包含的所有元素）</li>
+<li>SISMEMBER（检查给定元素是否存在于集合中）</li>
+<li>SREM（如果给定元素存在于集合中，那么移除这个元素）</li>
+<li>SCARD （返回集合包含的元素）</li>
+<li>SRANDMEMBER （从集合里面随机地返回一个或多个元素）</li>
+<li>SPOP （随机地移除集合中的一个元素，并返回被移除的元素）</li>
+<li>SMOVE smove source-key dest-key item</li>
+</ul>
+<p>用于组合和处理多个集合的Redis命令</p>
+<ul>
+<li>sdiff（差集）</li>
+<li>sdiffstore（差集，存储到dest-key中）</li>
+<li>sinter（交集）</li>
+<li>sinterstore （交集，存储到dest-key）</li>
+<li>sunion（并集）</li>
+<li>sunionstore（并集，存储到dest-key中）</li>
+</ul>
+<p>将键set-key值为item,item2……添加到集合</p>
+<blockquote>
+<p>sadd set-key item<br>sadd set-key item2<br>sadd set-key item3</p>
+</blockquote>
+<p>添加同样的值会添加不进去</p>
+<blockquote>
+<p>sadd set-key item2<br>(integer) 0</p>
+</blockquote>
+<p>返回集合包含的所有元素</p>
+<blockquote>
+<p>smembers set-key</p>
+</blockquote>
+<p>检查给出的元素是否存在集合中</p>
+<ul>
+<li><p>1代表元素在集合中</p>
+<blockquote>
+<p> sismember set-key item<br>(integer) 1</p>
+</blockquote>
+</li>
+<li><p>0代表所查找的元素不在集合中</p>
+<blockquote>
+<p> sismember set-key item5<br>(integer) 0</p>
+</blockquote>
+</li>
+</ul>
+<p>移除元素</p>
+<ul>
+<li>只有这个元素存在才会被移除</li>
+</ul>
+<blockquote>
+<p>srem set-key item2<br>(integer) 1</p>
+</blockquote>
+<p>将一个元素从一个集合移动到另一个集合</p>
+<ul>
+<li>将a元素从set-key中移动到set-key2中<blockquote>
+<p>conn.smove(‘set-key’, ‘set-key2’, ‘a’)</p>
+</blockquote>
+</li>
+</ul>
+<p>交集、并集、差集<br><img src="http://m.qpic.cn/psb?/V10WDaE22S84Sl/BNKB4kSo4wqOf1VBwCGgvn5wlVvfdkopcRnqBUT4128!/b/dEABAAAAAAAA&amp;bo=5wbdAAAAAAADBx4!&amp;rf=viewer_4" alt=""></p>
+<p><strong>HASH</strong></p>
+<ul>
+<li>可以存储多个键值对之间的映射</li>
+<li>存储值既可以是字符串也可以是数字值</li>
+</ul>
+<ol>
+<li>HSET 在散列里关联给出的键值对</li>
+<li>HGET 获取指定散列键的值</li>
+<li>HGETALL 获取散列包含的所有键值对</li>
+</ol>
+<p>添加和删除键值对的HASH操作</p>
+<ol>
+<li>HDEL 如果指定的键存在于散列中，那么删除这个键</li>
+<li>HLEN 返回散列包含的键值对数量</li>
+<li>HMGET 从散列里面获取一个或者多个键</li>
+<li>HMSET 为散列里面的一个或多个键设置值 </li>
+</ol>
+<p>redis散列的更高级特性</p>
+<ol>
+<li>hexists (检查给定键是否存在于散列中)</li>
+<li>hkeys （获取散列包含的所有键）</li>
+<li>hvals（获取散列包含的所有值）</li>
+<li>hgetall （获取散列包含的所有键值对）</li>
+<li>hincrby（将键key保存的值加上整数increment）</li>
+<li>hincrbyfloat（将键key保存的值加上浮点数）<br>关联给出的键值对</li>
+</ol>
+<blockquote>
+<p>hset hash-key shen 25<br>(integer) 1</p>
+<p>hset hash-key yang 25<br>(integer) </p>
+</blockquote>
+<p>获取所有键值对</p>
+<blockquote>
+<p>hgetall hash-key<br>1) “shen”<br>2) “25”<br>3) “yang”<br>4) “25”</p>
+</blockquote>
+<p>获取指定键的值</p>
+<blockquote>
+<p>hget hash-key yang<br>“25”</p>
+</blockquote>
+<p>将多个键值对添加到散列里面</p>
+<blockquote>
+<p>conn.hmset(‘hash-key’, {‘k1’:’v1’, ‘k2’: ‘v2’, ‘k3’: ‘v3’})</p>
+</blockquote>
+<p>获取多个键值对</p>
+<blockquote>
+<p> conn.hmget(‘hash-key’, [‘k2’, ‘k3’])</p>
+</blockquote>
+<p>获取键值对数量</p>
+<blockquote>
+<p>conn.hlen(‘hash-key’)</p>
+</blockquote>
+<p>获取散列包含的所有键</p>
+<blockquote>
+<p> conn.hkeys(‘hash-key2’)<br>[b’long’, b’short’]</p>
+</blockquote>
+<p>检查指定的键是否存在于散列中</p>
+<blockquote>
+<p> conn.hexists(‘hash-key2’, ‘num’)<br>False</p>
+</blockquote>
+<p>将键key保存的值加上整数increment</p>
+<blockquote>
+<p>conn.hincrby(‘hash-key2’, ‘num’)<br>1<br> conn.hexists(‘hash-key2’, ‘num’)<br>True</p>
+</blockquote>
+<p><strong>ZSET（有序集合）</strong></p>
+<ul>
+<li>有序集合和hash一样都是存储键值对（key:value）</li>
+<li>键被称为member，每一个都是独一无二的</li>
+<li>值被称为分值（SCORE），且必须为浮点数</li>
+</ul>
+<ol>
+<li>ZADD 将一个带有分值的成员添加到有序集合里面</li>
+<li>ZRANGE 根据元素在有序排列中所处的位置，从有序集合里面获取多个元素</li>
+<li>ZRANGEBYSCORE 获取有序集合在给定的分值范围内的所有元素</li>
+<li>ZREM 如果指定的成员存在于有序集合中，那么移除这个成员</li>
+<li>ZCARD 返回有序集合包含的成员数量</li>
+<li>ZINCRBY 将member成员的分值加上increment</li>
+<li>ZCOUNT 返回分值介于min和max之间的成员数量</li>
+<li>ZRANK 返回成员member在有序集合中的排名</li>
+<li>ZSCORE 返回成员member的分值</li>
+</ol>
+<p>有序集合的范围型数据获取命令和范围型数据删除命令以及并集和交集</p>
+<ol>
+<li>zrevrank（返回成员member所处的位置，成员按照分值从大到小排列）</li>
+<li>zrevrange（返回给定范围内的成员，成员按照分值从大到小排列）</li>
+<li>zrangebyscore（返回分值介于min和max之间的所有成员）</li>
+<li>zrevrangebyscore（获取分值介于min和max之间的所有成员，并按照分值从大到小的顺序来返回它们）</li>
+<li>zremrangebyrank（移除有序集合中排名介于start和stop之间的所有成员）</li>
+<li>zremrangebyscore（移除有序集合中分值介于min和max之间的所有成员）</li>
+<li>zinterstore（交集）</li>
+<li>zunionstore（并集）</li>
+</ol>
+<p>将几个带有分值的成员添加到有序集合中</p>
+<blockquote>
+<p>zadd zset-key 888 treehl<br>(integer) 1</p>
+</blockquote>
+<p>获取有序集合中的元素</p>
+<ul>
+<li>0 -1 表示获取所有元素</li>
+<li>withcores表示获取分值并按分值大小进行排序</li>
+</ul>
+<blockquote>
+<p> zrange zset-key 0 -1 withscores<br>1) “hao”<br>2) “666”<br>3) “treehl”<br>4) “888”<br>5) “yang”<br>6) “999”</p>
+</blockquote>
+<p>获取给定的分支范围内的元素</p>
+<blockquote>
+<p>zrangebyscore zset-key 0 889 withscores</p>
+</blockquote>
+<ul>
+<li>hao 999 就包含在内了</li>
+</ul>
+<p>1) “hao”<br>2) “666”<br>3) “treehl”<br>4) “888”</p>
+<p>删除成员</p>
+<blockquote>
+<p> zrem zset-key hao<br>(integer) 1</p>
+</blockquote>
+<hr>
+<p>在python客户端输入有序集合应该写输入成员再输入分值与redis-cli上的输入是有区别的</p>
+<blockquote>
+<p>conn.zadd(‘zset-key’, ‘a’, 3, ‘b’, 2, ‘c’, 1)<br>3</p>
+</blockquote>
+<p>查看成员数量</p>
+<blockquote>
+<p>conn.zcard(‘zset-key’)<br>3</p>
+</blockquote>
+<p>自增操作</p>
+<blockquote>
+<p> conn.zincrby(‘zset-key’, ‘c’, 3)<br>4.0</p>
+</blockquote>
+<p>返回成员分值</p>
+<blockquote>
+<p>conn.zscore(‘zset-key’, ‘b’)<br>3.0</p>
+</blockquote>
+<p>返回成员的排名</p>
+<blockquote>
+<p>conn.zrank(‘zset-key’, ‘c’)<br>2</p>
+</blockquote>
+<p>返回介于min 和 max之间的成员数量</p>
+<blockquote>
+<p> conn.zcount(‘zset-key’, 0, 3)<br>2</p>
+</blockquote>
+<p>移除指定成员</p>
+<blockquote>
+<p> conn.zrem(‘zset-key’, ‘b’)<br>1</p>
+</blockquote>
+<p>返回start和stop之间的成员</p>
+<blockquote>
+<p>conn.zrange(‘zset-key’, 0, -1, withscores=True)<br>[(b’a’, 3.0), (b’c’, 4.0)]</p>
+</blockquote>
+<hr>
+<p> 对集合做交集</p>
+<blockquote>
+<p> conn.zinterstore(‘zset-i’, [‘zset-1’, ‘zset-2’])<br>2</p>
+</blockquote>
+<p> 根据元素在有序排列中所处的位置，从有序集合里面获取多个元素</p>
+<blockquote>
+<p>conn.zrange(‘zset-i’, 0, -1, withscores=True)<br>[(b’c’, 4.0), (b’b’, 6.0)]</p>
+</blockquote>
+<p>对集合做并集</p>
+<blockquote>
+<p>conn.zunionstore(‘zset-u’, [‘zset-1’, ‘zset-2’], aggregate=’min’)<br>4</p>
+<p>conn.zrange(‘zset-u’, 0, -1, withscores=True)<br>[(b’d’, 0.0), (b’a’, 1.0), (b’c’, 1.0), (b’b’, 2.0)]</p>
+</blockquote>
+<p><strong>发布与订阅</strong><br>发布与订阅的命令</p>
+<ul>
+<li>subscribe （订阅给定的一个或多个频道）</li>
+<li>unsubscribe（退订给定的一个或多个频道，如果执行时没有给定任何频道，那么退订所有频道）</li>
+<li>publish（像给定的频道发送消息）</li>
+<li>psubscribe （订阅与给定模式相匹配的所有频道）</li>
+<li>pubsubscribe（退订给定的模式，如果执行时没有给定任何模式，那么退订所有模式）</li>
+</ul>
+<p><strong>其他命令</strong><br>排序-sort</p>
+<blockquote>
+<p> conn.rpush(‘sort-input’, 23, 15, 110, 17)<br>4<br> conn.sort(‘sort-input’)   #升序<br>[b’15’, b’17’, b’23’, b’110’]</p>
+</blockquote>
+<p>降序</p>
+<blockquote>
+<p> conn.sort(‘sort-input’, alpha=True)<br>[b’110’, b’15’, b’17’, b’23’]</p>
+</blockquote>
+<p><strong>键的过期和时间</strong><br>用于处理过期时间的Redis命令</p>
+<ul>
+<li>persist（移除键过期时间）</li>
+<li>ttl（查看给定键距离过期还有多少秒）</li>
+<li>expire（让给定键在指定的秒数之后过期）</li>
+<li>expireat（将给定的过期时间设置为给定的UNIX时间戳）</li>
+<li>pttl（查看给定键距离过期时间还有多少毫秒）</li>
+<li>pexpire（指定的键在指定的毫秒数之后过期）</li>
+<li>pexpireat（将一个毫秒级精度的UNIX时间戳设置为给定键的过期时间）</li>
+</ul>
+<blockquote>
+<p>conn.expire(‘key’, 100); conn.ttl(‘key’)<br>True<br>100</p>
+</blockquote>
+<p><a href="https://github.com/Family-TreeSY" target="_blank" rel="external">GitHub</a><br>欢迎访问博客<a href="https://github.com/Family-TreeSY" target="_blank" rel="external">Treehl的博客</a></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Redis</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/04/01/Redis数据结构/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-MYSQL小结" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -1616,11 +2069,11 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Django</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">PYTHON</a>
         		</li>
       		 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">PYTHON</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Django</a>
         		</li>
       		
 		</ul>
@@ -1789,140 +2242,6 @@
 
 
   
-    <article id="post-scrapy-redis(一)" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/12/23/scrapy-redis(一)/">Scrapy-Redis分布式爬取自如网（一）</a>
-    </h1>
-  
-
-        
-        <a href="/2017/12/23/scrapy-redis(一)/" class="archive-article-date">
-  	<time datetime="2017-12-23T09:48:23.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-12-23</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>继上次<a href="https://family-treesy.github.io/2017/12/21/Scrapy%E7%88%AC%E5%8F%96%E7%8C%AB%E7%9C%BC%E7%94%B5%E5%BD%B1/" target="_blank" rel="external">Scrapy爬取猫眼电影</a>之后，这几天学习了Scrapy-Redis分布式来提高爬取效率，也算是停留在舒适圈一段时间后往前走了一步！！</p>
-<p><strong>准备工作</strong><br><a href="https://www.mongodb.com/" target="_blank" rel="external">MongoDB</a><br><a href="https://redis.io/" target="_blank" rel="external">Redis</a><br><a href="https://github.com/rmax/scrapy-redis" target="_blank" rel="external">Scrapy-Redis</a><br><a href="https://github.com/scrapy/scrapy" target="_blank" rel="external">Scrapy</a></p>
-<p>这次爬取的是<a href="http://sh.ziroom.com/z/nl/z2.html?qwd=" target="_blank" rel="external">上海自如租房</a>，相信在魔都生活的小伙伴们如果不是本地人，租房费用占了每月开销很大的一部分，我们来看下租房体验比较好的自如，除了价格贵外 - -！！</p>
-<h4 id="实战应用"><a href="#实战应用" class="headerlink" title="实战应用"></a><strong>实战应用</strong></h4><p>创建一个工程</p>
-<blockquote>
-<p>scrapy startproject ziru</p>
-</blockquote>
-<p><strong>第一步 编辑item.py</strong><br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> scrapy</div><div class="line"></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">ZiruItem</span><span class="params">(scrapy.Item)</span>:</span></div><div class="line">    <span class="comment"># define the fields for your item here like:</span></div><div class="line">    <span class="comment"># name = scrapy.Field()</span></div><div class="line">    ziroom_area = scrapy.Field()</div><div class="line">    ziroom_face = scrapy.Field()</div><div class="line">    ziroom_floor = scrapy.Field()</div><div class="line">    ziroom_label = scrapy.Field()</div><div class="line">    <span class="comment"># ziroom_location = scrapy.Field()</span></div><div class="line">    ziroom_name = scrapy.Field()</div><div class="line">    ziroom_price = scrapy.Field()</div><div class="line">    ziroom_type = scrapy.Field()</div><div class="line">    ziroom_traffic = scrapy.Field()</div><div class="line">    rounding_info = scrapy.Field()</div><div class="line">    traffic_info = scrapy.Field()</div><div class="line">    ziroom_image = scrapy.Field()</div><div class="line">    <span class="keyword">pass</span></div></pre></td></tr></table></figure></p>
-<ul>
-<li>首先，引入Scrapy</li>
-<li>接着，创建一个类，继承自scrapy.item,这个是用来储存要爬下来的数据的存放容器</li>
-</ul>
-<p><strong>第二步 获取网页数据</strong><br>在spider文件下创建spider.py<br> <img src="http://m.qpic.cn/psb?/V10WDaE22S84Sl/vTL5TWP6nxsx3u*xqp2ZyF0SlQj9jH5V*yObgpA6u7Y!/b/dF4BAAAAAAAA&amp;bo=iwWAAgAAAAADBy4!&amp;rf=viewer_4" alt=""></p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># -*- coding: utf-8 -*-</span></div><div class="line"></div><div class="line"><span class="keyword">from</span> scrapy.spiders <span class="keyword">import</span> Rule</div><div class="line"><span class="keyword">from</span> scrapy.selector <span class="keyword">import</span> Selector</div><div class="line"><span class="keyword">from</span> scrapy.linkextractors <span class="keyword">import</span> LinkExtractor</div><div class="line"><span class="keyword">from</span> ziru.items <span class="keyword">import</span> ZiruItem</div><div class="line"><span class="keyword">from</span> scrapy_redis.spiders <span class="keyword">import</span> RedisCrawlSpider</div><div class="line"></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">ZiroomSpider</span><span class="params">(RedisCrawlSpider)</span>:</span></div><div class="line">    name = <span class="string">'ziroom'</span></div><div class="line">    <span class="comment"># allowed_domains = ['http://sh.ziroom.com/z/nl/z2.html?qwd=']</span></div><div class="line">    <span class="comment"># start_urls = ['http://sh.ziroom.com/z/nl/z2.html?qwd=']</span></div><div class="line">    redis_key = <span class="string">'ziroomspider:start_urls'</span></div><div class="line">    rules = (</div><div class="line">        Rule(LinkExtractor(allow=(<span class="string">r'http://sh.ziroom.com/z/nl/z2.html\?qwd=\&amp;p=\d+'</span>))),</div><div class="line">        Rule(LinkExtractor(allow=(<span class="string">r'http:\//sh\.ziroom\.com\/z\/vr\/\d+\.html'</span>)), callback=<span class="string">'parse_item'</span>)</div><div class="line">    )</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">parse_item</span><span class="params">(self, response)</span>:</span></div><div class="line">        <span class="comment"># print(response.body)</span></div><div class="line">        sel = Selector(response)</div><div class="line">        </div><div class="line">      ...省略索取元素的代码...</div><div class="line"></div><div class="line">        <span class="keyword">yield</span> item</div></pre></td></tr></table></figure>
-<ul>
-<li>比起Scrapy，又多引入了 from scrapy_redis.spiders import RedisCrawlSpider</li>
-<li>start_urls变为redis_key = ‘ziroomspider:start_urls’ 作为所有链接存储到 redis</li>
-<li>爬取rule还是一个链接为翻页，一个为详情页链接</li>
-</ul>
-<p><strong>第三步 编辑管道pipeline.py</strong></p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"></div><div class="line"><span class="keyword">import</span> pymongo</div><div class="line"><span class="keyword">from</span> scrapy.conf <span class="keyword">import</span> settings</div><div class="line"><span class="keyword">from</span> scrapy.exceptions <span class="keyword">import</span> DropItem</div><div class="line"><span class="keyword">from</span> scrapy <span class="keyword">import</span> log</div><div class="line"></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">MongoDBPipeline</span><span class="params">(object)</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self)</span>:</span></div><div class="line">        client = pymongo.MongoClient(settings[<span class="string">'MONGODB_SERVER'</span>], settings[<span class="string">'MONGODB_PORT'</span>])</div><div class="line">        db = client[settings[<span class="string">'MONGODB_DB'</span>]]</div><div class="line">        self.collection = db[settings[<span class="string">'MONGODB_COLLECTION'</span>]]</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">process_item</span><span class="params">(self, item, spider)</span>:</span></div><div class="line">        <span class="comment"># item:  (Item 对象) – 被爬取的item</span></div><div class="line">        <span class="comment"># (Spider 对象) – 爬取该item的spider</span></div><div class="line">        <span class="comment"># 去重，删除重复的数据</span></div><div class="line">        valid = <span class="keyword">True</span></div><div class="line">        <span class="keyword">for</span> data <span class="keyword">in</span> item:</div><div class="line">            <span class="keyword">if</span> <span class="keyword">not</span> data:</div><div class="line">                valid = <span class="keyword">False</span></div><div class="line">                <span class="keyword">raise</span> DropItem(<span class="string">'Missing %s of blogpost from %s'</span> % (data, item[<span class="string">'url'</span>]))</div><div class="line">        <span class="keyword">if</span> valid:</div><div class="line">            homes = [&#123;</div><div class="line">                <span class="string">'ziroom_area'</span>: item[<span class="string">'ziroom_area'</span>],</div><div class="line">                <span class="string">'ziroom_face'</span>: item[<span class="string">'ziroom_face'</span>],</div><div class="line">                <span class="string">'ziroom_floor'</span>: item[<span class="string">'ziroom_floor'</span>],</div><div class="line">                <span class="string">'ziroom_label'</span>: item[<span class="string">'ziroom_label'</span>],</div><div class="line">                <span class="comment"># 'ziroom_location': item['ziroom_location'],</span></div><div class="line">                <span class="string">'ziroom_name'</span> :item[<span class="string">'ziroom_name'</span>],</div><div class="line">                <span class="string">'ziroom_price'</span> : item[<span class="string">'ziroom_price'</span>],</div><div class="line">                <span class="string">'ziroom_type'</span> : item[<span class="string">'ziroom_type'</span>],</div><div class="line">                <span class="string">'ziroom_traffic'</span>: item[<span class="string">'ziroom_traffic'</span>],</div><div class="line">                <span class="string">'rounding_info'</span>: item[<span class="string">'rounding_info'</span>],</div><div class="line">                <span class="string">'traffic_info'</span>: item[<span class="string">'traffic_info'</span>],</div><div class="line">                <span class="string">'ziroom_image'</span>: item[<span class="string">'ziroom_image'</span>],</div><div class="line">            &#125;]</div><div class="line"></div><div class="line">            <span class="comment"># 插入数据库集合中</span></div><div class="line">            self.collection.insert(homes)</div><div class="line">            log.msg(<span class="string">'Item wrote to MongoDB database %s/%s'</span> % (settings[<span class="string">'MONGODB_DB'</span>], settings[<span class="string">'MONGODB_COLLECTION'</span>]),</div><div class="line">                    level=log.DEBUG, spider=spider)</div><div class="line">        <span class="keyword">return</span> item</div></pre></td></tr></table></figure>
-<p>编辑MongoDBpipelines，将获取的数据存入MongoDB数据库中</p>
-<p><strong>第四步 编辑middlewares.py</strong><br>在中间件中写入随机选取伪造请求头来防止spider被封掉</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">RotateUserAgentMiddleware</span><span class="params">(UserAgentMiddleware)</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__int__</span><span class="params">(self, user_agent=<span class="string">''</span>)</span>:</span></div><div class="line">        self.user_agent = user_agent</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">process_request</span><span class="params">(self, request, spider)</span>:</span></div><div class="line">        <span class="comment"># 这句话用于随机选择user-agent</span></div><div class="line">        ua = random.choice(self.user_agent_list)</div><div class="line">        <span class="keyword">if</span> ua:</div><div class="line">            logging.info(ua)</div><div class="line">            request.headers.setdefault(<span class="string">'User-Agent'</span>, ua)</div><div class="line"></div><div class="line">    <span class="comment"># the default user_agent_list composes chrome,I E,firefox,Mozilla,opera,netscape</span></div><div class="line">    <span class="comment"># for more user agent strings,you can find it in http://www.useragentstring.com/pages/useragentstring.php</span></div><div class="line">    user_agent_list = [</div><div class="line">        <span class="string">"Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.1 (KHTML, like Gecko) Chrome/22.0.1207.1 Safari/537.1"</span>,</div><div class="line">        <span class="string">"Mozilla/5.0 (X11; CrOS i686 2268.111.0) AppleWebKit/536.11 (KHTML, like Gecko) Chrome/20.0.1132.57 Safari/536.11"</span>,</div><div class="line">        <span class="string">"Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/536.6 (KHTML, like Gecko) Chrome/20.0.1092.0 Safari/536.6"</span>,</div><div class="line">        <span class="string">"Mozilla/5.0 (Windows NT 6.2) AppleWebKit/536.6 (KHTML, like Gecko) Chrome/20.0.1090.0 Safari/536.6"</span>,</div><div class="line">        <span class="string">"Mozilla/5.0 (Windows NT 6.2; WOW64) AppleWebKit/537.1 (KHTML, like Gecko) Chrome/19.77.34.5 Safari/537.1"</span>,</div><div class="line">        <span class="string">"Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/536.5 (KHTML, like Gecko) Chrome/19.0.1084.9 Safari/536.5"</span>,</div><div class="line">        <span class="string">"Mozilla/5.0 (Windows NT 6.0) AppleWebKit/536.5 (KHTML, like Gecko) Chrome/19.0.1084.36 Safari/536.5"</span>,</div><div class="line">        <span class="string">"Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/536.3 (KHTML, like Gecko) Chrome/19.0.1063.0 Safari/536.3"</span>,</div><div class="line">        <span class="string">"Mozilla/5.0 (Windows NT 5.1) AppleWebKit/536.3 (KHTML, like Gecko) Chrome/19.0.1063.0 Safari/536.3"</span>,</div><div class="line">        <span class="string">"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_8_0) AppleWebKit/536.3 (KHTML, like Gecko) Chrome/19.0.1063.0 Safari/536.3"</span>,</div><div class="line">        <span class="string">"Mozilla/5.0 (Windows NT 6.2) AppleWebKit/536.3 (KHTML, like Gecko) Chrome/19.0.1062.0 Safari/536.3"</span>,</div><div class="line">        <span class="string">"Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/536.3 (KHTML, like Gecko) Chrome/19.0.1062.0 Safari/536.3"</span>,</div><div class="line">        <span class="string">"Mozilla/5.0 (Windows NT 6.2) AppleWebKit/536.3 (KHTML, like Gecko) Chrome/19.0.1061.1 Safari/536.3"</span>,</div><div class="line">        <span class="string">"Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/536.3 (KHTML, like Gecko) Chrome/19.0.1061.1 Safari/536.3"</span>,</div><div class="line">        <span class="string">"Mozilla/5.0 (Windows NT 6.1) AppleWebKit/536.3 (KHTML, like Gecko) Chrome/19.0.1061.1 Safari/536.3"</span>,</div><div class="line">        <span class="string">"Mozilla/5.0 (Windows NT 6.2) AppleWebKit/536.3 (KHTML, like Gecko) Chrome/19.0.1061.0 Safari/536.3"</span>,</div><div class="line">        <span class="string">"Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/535.24 (KHTML, like Gecko) Chrome/19.0.1055.1 Safari/535.24"</span>,</div><div class="line">        <span class="string">"Mozilla/5.0 (Windows NT 6.2; WOW64) AppleWebKit/535.24 (KHTML, like Gecko) Chrome/19.0.1055.1 Safari/535.24"</span>,</div><div class="line">        <span class="string">"Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US) AppleWebKit/531.21.8 (KHTML, like Gecko) Version/4.0.4 Safari/531.21.10"</span>,</div><div class="line">        <span class="string">"Mozilla/5.0 (Windows; U; Windows NT 5.2; en-US) AppleWebKit/533.17.8 (KHTML, like Gecko) Version/5.0.1 Safari/533.17.8"</span>,</div><div class="line">        <span class="string">"Mozilla/5.0 (Windows; U; Windows NT 6.1; en-US) AppleWebKit/533.19.4 (KHTML, like Gecko) Version/5.0.2 Safari/533.18.5"</span>,</div><div class="line">        <span class="string">"Mozilla/5.0 (Windows; U; Windows NT 6.1; en-GB; rv:1.9.1.17) Gecko/20110123 (like Firefox/3.x) SeaMonkey/2.0.12"</span>,</div><div class="line">        <span class="string">"Mozilla/5.0 (Windows NT 5.2; rv:10.0.1) Gecko/20100101 Firefox/10.0.1 SeaMonkey/2.7.1"</span>,</div><div class="line">        <span class="string">"Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10_5_8; en-US) AppleWebKit/532.8 (KHTML, like Gecko) Chrome/4.0.302.2 Safari/532.8"</span>,</div><div class="line">        <span class="string">"Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10_6_4; en-US) AppleWebKit/534.3 (KHTML, like Gecko) Chrome/6.0.464.0 Safari/534.3"</span>,</div><div class="line">        <span class="string">"Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10_6_5; en-US) AppleWebKit/534.13 (KHTML, like Gecko) Chrome/9.0.597.15 Safari/534.13"</span>,</div><div class="line">        <span class="string">"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_7_2) AppleWebKit/535.1 (KHTML, like Gecko) Chrome/14.0.835.186 Safari/535.1"</span>,</div><div class="line">        <span class="string">"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_6_8) AppleWebKit/535.2 (KHTML, like Gecko) Chrome/15.0.874.54 Safari/535.2"</span>,</div><div class="line">        <span class="string">"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_6_8) AppleWebKit/535.7 (KHTML, like Gecko) Chrome/16.0.912.36 Safari/535.7"</span>,</div><div class="line">        <span class="string">"Mozilla/5.0 (Macintosh; U; Mac OS X Mach-O; en-US; rv:2.0a) Gecko/20040614 Firefox/3.0.0 "</span>,</div><div class="line">        <span class="string">"Mozilla/5.0 (Macintosh; U; PPC Mac OS X 10.5; en-US; rv:1.9.0.3) Gecko/2008092414 Firefox/3.0.3"</span>,</div><div class="line">        <span class="string">"Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.5; en-US; rv:1.9.1) Gecko/20090624 Firefox/3.5"</span>,</div><div class="line">        <span class="string">"Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.6; en-US; rv:1.9.2.14) Gecko/20110218 AlexaToolbar/alxf-2.0 Firefox/3.6.14"</span>,</div><div class="line">        <span class="string">"Mozilla/5.0 (Macintosh; U; PPC Mac OS X 10.5; en-US; rv:1.9.2.15) Gecko/20110303 Firefox/3.6.15"</span>,</div><div class="line">        <span class="string">"Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:2.0.1) Gecko/20100101 Firefox/4.0.1"</span></div><div class="line">    ]</div></pre></td></tr></table></figure>
-<p><strong>第五步 设置setting.py</strong></p>
-<p>这一步要修改配置了</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line">DOWNLOADER_MIDDLEWARES = &#123;</div><div class="line">    <span class="comment"># 'ziru.middlewares.MyCustomDownloaderMiddleware': 543,</span></div><div class="line">    <span class="string">'ziru.middlewares.RotateUserAgentMiddleware'</span>:<span class="number">200</span>,</div><div class="line">    <span class="string">'scrapy.downloadermiddlewares.retry.RetryMiddleware'</span>: <span class="number">80</span>,</div><div class="line">    <span class="comment"># 'itjuzi_dis.middlewares.ProxyMiddleware': 90,</span></div><div class="line">    <span class="string">'scrapy.downloadermiddlewares.httpproxy.HttpProxyMiddleware'</span>: <span class="number">100</span>,</div><div class="line">&#125;</div><div class="line"></div><div class="line">ITEM_PIPELINES = &#123;</div><div class="line">    <span class="string">'ziru.pipelines.MongoDBPipeline'</span>: <span class="number">300</span>,</div><div class="line">    <span class="string">'scrapy_redis.pipelines.RedisPipeline'</span>: <span class="number">400</span>,</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">#使用Scrapy-Redis的调度器</span></div><div class="line">SCHEDULER = <span class="string">"scrapy_redis.scheduler.Scheduler"</span></div><div class="line"><span class="comment">#利用Redis的集合实现去重</span></div><div class="line">DUPEFILTER_CLASS = <span class="string">"scrapy_redis.dupefilter.RFPDupeFilter"</span></div><div class="line"><span class="comment">#允许继续爬取</span></div><div class="line">SCHEDULER_PERSIST = <span class="keyword">True</span></div><div class="line"><span class="comment">#设置优先级</span></div><div class="line">SCHEDULER_QUEUE_CLASS = <span class="string">'scrapy_redis.queue.SpiderPriorityQueue'</span></div><div class="line">REDIS_PARAMS = &#123;<span class="string">'host'</span>: <span class="string">'localhost'</span>, <span class="string">'port'</span>: <span class="string">'6379'</span>&#125;</div></pre></td></tr></table></figure>
-<p>好了，所有的配置全部部署完了，现在来启动spider来爬取数据吧！！</p>
-<blockquote>
-<p>scrapy crawl ziroom</p>
-</blockquote>
-<p><img src="http://m.qpic.cn/psb?/V10WDaE22S84Sl/Z4440zj2oYT8nndgHw*D8nneUQyvzidoskXf3zHI9.E!/b/dPMAAAAAAAAA&amp;bo=IAPMAQAAAAARB94!&amp;rf=viewer_4" alt=""></p>
-<p>spider启动，它在等待我们的指令来爬取</p>
-<p>打开redis-cli</p>
-<blockquote>
-<p>lpush ziroomspider:start_urls <a href="http://sh.ziroom.com/z/nl/z2.html?qwd=" target="_blank" rel="external">http://sh.ziroom.com/z/nl/z2.html?qwd=</a></p>
-</blockquote>
-<p><img src="http://m.qpic.cn/psb?/V10WDaE22S84Sl/A6Q6q0FfiRjUjyDCADt4ZOVPO3.BuvLtDyXBZCObz0Y!/b/dD8BAAAAAAAA&amp;bo=KwczAgAAAAADBz8!&amp;rf=viewer_4" alt=""></p>
-<p>我开了六个spider来爬取，电脑CPU有几个处理器就能开几个，我是8核，最多能开8个，接下来准备学习docker来部署spider</p>
-<p><a href="https://github.com/Family-TreeSY/SpiderList/blob/master/ziru/ziru/spiders/ziroom.py" target="_blank" rel="external">完整代码</a><br><a href="https://www.jianshu.com/u/a01bc3ec4f88" target="_blank" rel="external">简书</a><br>[欢迎访问Treehl的博客(<a href="https://family-treesy.github.io/" target="_blank" rel="external">https://family-treesy.github.io/</a>)</p>
-<p>最后放一个爬虫集合，是我最近学习Python写的，喜欢的亲！给个Star呗！！！<br><a href="https://github.com/Family-TreeSY/SpiderList" target="_blank" rel="external">SpiderList</a></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">PYTHON</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">MongoDB</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">爬虫</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Scrapy</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Redis</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">Scrapy-Redis</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/12/23/scrapy-redis(一)/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
       <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
@@ -2020,10 +2339,6 @@ getOwnMetadataKeys:function(t){return o(i(t),arguments.length<2?void 0:u(argumen
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Django</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">PYTHON</a>
               </li>
              
@@ -2032,7 +2347,15 @@ getOwnMetadataKeys:function(t){return o(i(t),arguments.length<2?void 0:u(argumen
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Django</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">DailyQuestion</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">MySQL</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2041,10 +2364,6 @@ getOwnMetadataKeys:function(t){return o(i(t),arguments.length<2?void 0:u(argumen
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">GitHub</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">MySQL</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2064,19 +2383,19 @@ getOwnMetadataKeys:function(t){return o(i(t),arguments.length<2?void 0:u(argumen
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">豆瓣</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">Unittest</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">Redis</a>
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">豆瓣</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">Scrapy-Redis</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">Unittest</a>
               </li>
             
             <div class="clearfix"></div>
