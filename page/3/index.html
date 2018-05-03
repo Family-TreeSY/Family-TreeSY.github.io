@@ -173,140 +173,6 @@
           <div id="js-content" class="content-ll">
             
   
-    <article id="post-lianjia" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/11/29/lianjia/">Python爬取上海链家网房源数据并存入MongoDB数据库</a>
-    </h1>
-  
-
-        
-        <a href="/2017/11/29/lianjia/" class="archive-article-date">
-  	<time datetime="2017-11-29T11:40:23.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-11-29</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>以下是我爬取<a href="http://sh.lianjia.com/ershoufang/baoshan" target="_blank" rel="external">上海链家网宝山区</a>房源信息的学习总结</p>
-<h4 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a><strong>准备工作</strong></h4><p>用到的Python模块：</p>
-<ul>
-<li>requests</li>
-<li>bs4</li>
-<li>pymongo</li>
-<li>datetime</li>
-<li>time</li>
-<li>random</li>
-</ul>
-<h4 id="分析网页"><a href="#分析网页" class="headerlink" title="分析网页"></a><strong>分析网页</strong></h4><p>登陆<a href="http://sh.lianjia.com/ershoufang/baoshan" target="_blank" rel="external">http://sh.lianjia.com/ershoufang/baoshan</a> 用Chrome打开开发者工具<br><img src="http://a2.qpic.cn/psb?/V10WDaE22S84Sl/OWX8XXIREtlNyAkBe52YViDpyDxfk5XwFAoUUjx6vso!/b/dD8BAAAAAAAA&amp;bo=eQdpAgAAAAADBzc!&amp;rf=viewer_4" alt=""><br>每条房源信息都在li元素中，我们再来看一下翻页链接<br><img src="http://a1.qpic.cn/psb?/V10WDaE22S84Sl/lDEAd9FQQ79CUtKdVLMJoGolSXELOAqjwFm.nmJ.wkw!/b/dPMAAAAAAAAA&amp;bo=aAdtAQAAAAADByE!&amp;rf=viewer_4" alt=""></p>
-<p>试着点击下一页，我们浏览器上的链接是有规律可循的</p>
-<blockquote>
-<p><a href="http://sh.lianjia.com/ershoufang/baoshan/d1" target="_blank" rel="external">http://sh.lianjia.com/ershoufang/baoshan/d1</a><br><a href="http://sh.lianjia.com/ershoufang/baoshan/d2" target="_blank" rel="external">http://sh.lianjia.com/ershoufang/baoshan/d2</a><br><a href="http://sh.lianjia.com/ershoufang/baoshan/d3" target="_blank" rel="external">http://sh.lianjia.com/ershoufang/baoshan/d3</a><br>………<br><a href="http://sh.lianjia.com/ershoufang/baoshan/100" target="_blank" rel="external">http://sh.lianjia.com/ershoufang/baoshan/100</a></p>
-</blockquote>
-<p>现在我们试着爬取前10页的链接</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> requests</div><div class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1</span>, <span class="number">11</span>):</div><div class="line">    r = requests.get(<span class="string">'http://sh.lianjia.com/ershoufang/baoshan/d'</span> + str(i))</div><div class="line">    print(r.url)</div></pre></td></tr></table></figure>
-<p>爬取结果</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">http://sh.lianjia.com/ershoufang/baoshan/d1</div><div class="line">http://sh.lianjia.com/ershoufang/baoshan/d2</div><div class="line">http://sh.lianjia.com/ershoufang/baoshan/d3</div><div class="line">http://sh.lianjia.com/ershoufang/baoshan/d4</div><div class="line">http://sh.lianjia.com/ershoufang/baoshan/d5</div><div class="line">http://sh.lianjia.com/ershoufang/baoshan/d6</div><div class="line">http://sh.lianjia.com/ershoufang/baoshan/d7</div><div class="line">http://sh.lianjia.com/ershoufang/baoshan/d8</div><div class="line">http://sh.lianjia.com/ershoufang/baoshan/d9</div><div class="line">http://sh.lianjia.com/ershoufang/baoshan/d10</div></pre></td></tr></table></figure>
-<h4 id="解析网页"><a href="#解析网页" class="headerlink" title="解析网页"></a><strong>解析网页</strong></h4><p><img src="http://a3.qpic.cn/psb?/V10WDaE22S84Sl/Yq7DpRZ0c*o0bN6NkHnGoGJx9HzDr2Tpa1xrEng*JnA!/b/dPIAAAAAAAAA&amp;bo=UAT.AAAAAAADB4g!&amp;rf=viewer_4" alt=""></p>
-<p>要抓取的信息如下：</p>
-<ul>
-<li>标题：room_title = room.find(‘div’, attrs={‘class’: ‘prop-title’})</li>
-<li>房屋信息：room_info = room.find(‘span’, attrs={‘class’: ‘info-col row1-text’})</li>
-<li>位置：room_location = room.find(‘span’, attrs={‘class’: ‘info-col row2-text’})</li>
-<li>附加信息：extra_info = room.find(‘div’, attrs={‘class’: ‘property-tag-container’})</li>
-<li>总价：room_price = room.find(‘span’, attrs={‘class’: ‘total-price strong-num’})</li>
-<li>单价：room_unit_price = room.find(‘span’, attrs={‘class’: ‘info-col price-item minor’})</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div></pre></td><td class="code"><pre><div class="line">soup = BeautifulSoup(r.text, <span class="string">'html.parser'</span>)</div><div class="line">rooms = soup.find(<span class="string">'ul'</span>, attrs=&#123;<span class="string">'class'</span>: <span class="string">'js_fang_list'</span>&#125;)</div><div class="line"><span class="keyword">for</span> room <span class="keyword">in</span> rooms.find_all(<span class="string">'li'</span>):</div><div class="line">    room_title = room.find(<span class="string">'div'</span>, attrs=&#123;<span class="string">'class'</span>: <span class="string">'prop-title'</span>&#125;).get_text()</div><div class="line">    room_info = room.find(<span class="string">'span'</span>, attrs=&#123;<span class="string">'class'</span>: <span class="string">'info-col row1-text'</span>&#125;).get_text()</div><div class="line">    room_location = room.find(<span class="string">'span'</span>, attrs=&#123;<span class="string">'class'</span>: <span class="string">'info-col row2-text'</span>&#125;).find(<span class="string">'a'</span>).get_text()</div><div class="line">    room_price = room.find(<span class="string">'span'</span>, attrs=&#123;<span class="string">'class'</span>: <span class="string">'total-price strong-num'</span>&#125;).get_text()</div><div class="line">    room_unit_price = room.find(<span class="string">'span'</span>, attrs=&#123;<span class="string">'class'</span>: <span class="string">'info-col price-item minor'</span>&#125;).get_text()</div><div class="line">    extra_info = room.find(<span class="string">'div'</span>, attrs=&#123;<span class="string">'class'</span>: <span class="string">'property-tag-container'</span>&#125;).get_text()</div><div class="line"></div><div class="line"></div><div class="line">    print(room_title, room_info, room_location, room_price, room_unit_price, extra_info)</div><div class="line"></div><div class="line">``` </div><div class="line"></div><div class="line"></div><div class="line">下面是网页解析下来的一个房源信息</div><div class="line"></div><div class="line"></div><div class="line">``` python</div><div class="line"></div><div class="line">厨卫全明，卧室带阳台，地铁房，高区采光好</div><div class="line"> </div><div class="line">							<span class="number">1</span>室<span class="number">1</span>厅 | <span class="number">44.73</span>平</div><div class="line">							</div><div class="line">								| 高区/<span class="number">6</span>层</div><div class="line">							</div><div class="line">							</div><div class="line">								| 朝南</div><div class="line">							</div><div class="line">						 葑润华庭 <span class="number">255</span> </div><div class="line">							单价<span class="number">57008</span>元/平</div><div class="line">						 </div><div class="line">距离<span class="number">7</span>号线祁华路站<span class="number">698</span>米</div><div class="line">满二</div><div class="line">有钥匙</div></pre></td></tr></table></figure>
-<h4 id="存入MongoDB数据库"><a href="#存入MongoDB数据库" class="headerlink" title="存入MongoDB数据库"></a><strong>存入MongoDB数据库</strong></h4><p>MongoDB数据结构是以键值对{key:value}形式组成，有点类似于JSON<br><img src="http://a1.qpic.cn/psb?/V10WDaE22S84Sl/UddoxaYMkMYW.yttCHnp450QvwYz732SEb0MvRU0Od4!/b/dD4BAAAAAAAA&amp;bo=iQPVAAAAAAADB30!&amp;rf=viewer_4" alt=""></p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># 链接数据库</span></div><div class="line">client = MongoClient(<span class="string">'localhost'</span>, <span class="number">27017</span>)</div><div class="line"><span class="comment"># 建立数据库</span></div><div class="line">db = client.tests</div><div class="line"><span class="comment"># 建立集合</span></div><div class="line">homes = db.homes</div><div class="line"></div><div class="line">rooms_list = []</div><div class="line"></div><div class="line"><span class="comment"># 先将爬下来的数据赋值为字典</span></div><div class="line">rooms_info =&#123;</div><div class="line">                <span class="string">'title'</span>: room_title,</div><div class="line">                <span class="string">'info'</span>: room_info,</div><div class="line">                <span class="string">'location'</span>: room_location,</div><div class="line">                <span class="string">'price'</span>: room_price,</div><div class="line">                <span class="string">'unit_proce'</span>: room_unit_price,</div><div class="line">                <span class="string">'message'</span>: extra_info,</div><div class="line">                <span class="string">'time'</span>: datetime.datetime.now()</div><div class="line">            &#125;</div><div class="line"></div><div class="line">rooms_list.append(rooms_info)</div><div class="line"><span class="comment"># 存入数据库</span></div><div class="line">result = homes.insert_many(rooms_list)</div><div class="line">print(result)</div></pre></td></tr></table></figure>
-<p>运行代码，我们可以看到数据存入了MongoDB</p>
-<pre><code class="python">&lt;pymongo.results.InsertManyResult object at <span class="number">0x00000260C536AB8</span>&gt;
-&lt;pymongo.results.InsertManyResult object at <span class="number">0x00000260C536AAC</span>&gt;
-&lt;pymongo.results.InsertManyResult object at <span class="number">0x00000260C536AA0</span>&gt;
-&lt;pymongo.results.InsertManyResult object at <span class="number">0x00000260C536AB4</span>&gt;
-&lt;pymongo.results.InsertManyResult object at <span class="number">0x00000260C536AB0</span>&gt;
-&lt;pymongo.results.InsertManyResult object at <span class="number">0x00000260C536A28</span>&gt;
-&lt;pymongo.results.InsertManyResult object at <span class="number">0x00000260C536AC8</span>&gt;
-&lt;pymongo.results.InsertManyResult object at <span class="number">0x00000260C536A08</span>&gt;
-&lt;pymongo.results.InsertManyResult object at <span class="number">0x00000260C536A88</span>&gt;
-&lt;pymongo.results.InsertManyResult object at <span class="number">0x00000260C536A88</span>&gt;
-&lt;pymongo.results.InsertManyResult object at <span class="number">0x00000260C536888</span>&gt;
-&lt;pymongo.results.InsertManyResult object at <span class="number">0x00000260C536A08</span>&gt;
-&lt;pymongo.results.InsertManyResult object at <span class="number">0x00000260C536AC8</span>&gt;
-&lt;pymongo.results.InsertManyResult object at <span class="number">0x00000260C536A48</span>&gt;
-&lt;pymongo.results.InsertManyResult object at <span class="number">0x00000260C536A88</span>&gt;
-</code></pre>
-<p>可以下载一个MongoDB可视化工具，我用的是Robo3T，数据就这样存入了</p>
-<p><img src="http://a1.qpic.cn/psb?/V10WDaE22S84Sl/VSPcQXPsEyWxVdgnsXKjSMUznFRMd6H*9kjsdbfcuI8!/b/dPMAAAAAAAAA&amp;bo=AAWAAgAAAAADB6U!&amp;rf=viewer_4" alt=""></p>
-<p>总共有100页的数据，用time.sleep()来控制速度防止被封掉，但爬取效率实在很低，这两天准备学习pandas</p>
-<p>完整代码在<a href="https://github.com/Family-TreeSY/LianjiaSpider/blob/master/lianjia.py" target="_blank" rel="external">GitHub</a><br><a href="http://www.jianshu.com/u/a01bc3ec4f88" target="_blank" rel="external">简书</a><br>欢迎访问博客<a href="https://family-treesy.github.io/" target="_blank" rel="external">Treehl的博客</a></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">PYTHON</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">MongoDB</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">爬虫</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/11/29/lianjia/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
     <article id="post-Sixth" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -540,11 +406,11 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Python</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">爬虫</a>
         		</li>
       		 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">爬虫</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Python</a>
         		</li>
       		 
         		<li class="article-tag-list-item">
@@ -1001,6 +867,106 @@
 
 
   
+    <article id="post-second" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/10/31/second/">Python每日一题：第二题</a>
+    </h1>
+  
+
+        
+        <a href="/2017/10/31/second/" class="archive-article-date">
+  	<time datetime="2017-10-31T14:53:59.313Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-10-31</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>今天我们学习下<a href="https://wx.xiaomiquan.com/mweb/views/joingroup/join_group.html?group_id=518855855524&amp;secret=meqx22a2blf4c1ae3ucbgpui4somnpwa&amp;user_id=1152122252" target="_blank" rel="external">Python之禅和他朋友们</a>的第二道题目,了解分析下军哥的<a href="https://foofish.net/daily-question2.html" target="_blank" rel="external">代码</a></p>
+<p><strong>题目</strong></p>
+<blockquote>
+<p>设计一个猜数字的游戏，系统随机生成一个1~100之间的整数，玩家有5次机会，每猜一次系统就会提示玩家该数字是偏大还是偏小，如果猜中了，则告知玩家并提前结束游戏，如果5次都没猜中，结束游戏并告知正确答案。</p>
+</blockquote>
+<p>老样子！在做题之前我们需要了解以下几点知识：</p>
+<ul>
+<li>try … except … else …语句</li>
+<li>if … elif … else … 语句</li>
+<li>while … else … 语句</li>
+<li>random模块</li>
+</ul>
+<p><strong>try … except … else … 语句</strong><br>工作原理大致如下：Python执行try代码块，只有可能发生异常的代码才需要放在try语句中；except代码块告诉Python，如果try语句运行发生异常时，该怎么办；else代码块告诉Python，在try代码块成功执行时才需要的运行的代码，放在else代码块中。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">first_number = input(<span class="string">'First number: '</span>)</div><div class="line">second_number = input(<span class="string">'Second number: '</span>)</div><div class="line"><span class="keyword">try</span>:</div><div class="line">    answer = int(first_number) / int(second_number)</div><div class="line"><span class="keyword">except</span> ZeroDivisionError:</div><div class="line">    print(<span class="string">"You can't divide by 0 !"</span>)</div><div class="line"><span class="keyword">else</span>:</div><div class="line">    print(answer)</div></pre></td></tr></table></figure>
+<p><strong>if … elif … else … 语句</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># 年龄不满4岁，入场为0</span></div><div class="line">age = <span class="number">12</span></div><div class="line"><span class="keyword">if</span> age &lt; <span class="number">4</span>: <span class="comment"># 年龄不满4岁，入场为0，跳过余下测试</span></div><div class="line">	print(<span class="string">'Your admission cost is $0.'</span>)</div><div class="line"><span class="keyword">elif</span> age &lt; <span class="number">18</span>: <span class="comment"># elif仅在if语句为False时才能运行</span></div><div class="line">	print(<span class="string">'Your admission cost is $5.'</span>)</div><div class="line"><span class="keyword">else</span>: <span class="comment"># 如果if和elif都未通过，else语句才被运行</span></div><div class="line">	print(<span class="string">'Your admission cost is $10.'</span>)</div></pre></td></tr></table></figure>
+<p><strong>while … else … 语句</strong><br>while … else 在循环条件为 false 时执行 else 语句块，翻了Python学习手册，while…else…有点晦涩难懂，菜鸟教程的更容易理解</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">count = <span class="number">0</span></div><div class="line"><span class="keyword">while</span> count &lt; <span class="number">5</span>:</div><div class="line">   <span class="keyword">print</span> count, <span class="string">" is  less than 5"</span></div><div class="line">   count = count + <span class="number">1</span></div><div class="line"><span class="keyword">else</span>: <span class="comment"># while循环被设置为&lt; 5,当count&gt; 5时，便执行else语句</span></div><div class="line">   <span class="keyword">print</span> count, <span class="string">" is not less than 5"</span></div><div class="line">   </div><div class="line"><span class="number">0</span> <span class="keyword">is</span> less than <span class="number">5</span></div><div class="line"><span class="number">1</span> <span class="keyword">is</span> less than <span class="number">5</span></div><div class="line"><span class="number">2</span> <span class="keyword">is</span> less than <span class="number">5</span></div><div class="line"><span class="number">3</span> <span class="keyword">is</span> less than <span class="number">5</span></div><div class="line"><span class="number">4</span> <span class="keyword">is</span> less than <span class="number">5</span></div><div class="line"><span class="number">5</span> <span class="keyword">is</span> <span class="keyword">not</span> less than <span class="number">5</span></div></pre></td></tr></table></figure>
+<p><strong>random模块</strong><br>参考<a href="http://www.cnblogs.com/yd1227/archive/2011/03/18/1988015.html" target="_blank" rel="external">博客园</a></p>
+<p>基本的解题知识学完后，我们来看一下的军哥的代码</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> random</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">GuessGame</span><span class="params">()</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, min_num, max_num, choice)</span>:</span></div><div class="line">        <span class="string">'''</span></div><div class="line"><span class="string"></span></div><div class="line"><span class="string">        :param min_num:</span></div><div class="line"><span class="string">        :param max_num:</span></div><div class="line"><span class="string">        :param choice:</span></div><div class="line"><span class="string">        :return:</span></div><div class="line"><span class="string">        '''</span></div><div class="line"></div><div class="line">        self.min_num = min_num</div><div class="line">        self.max_num = max_num</div><div class="line">        self.choice = choice</div><div class="line">        self.target = random.randint(min_num, max_num)</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">guess</span><span class="params">(self)</span>:</span></div><div class="line">        <span class="string">'''</span></div><div class="line"><span class="string"></span></div><div class="line"><span class="string">        :return:</span></div><div class="line"><span class="string">        '''</span></div><div class="line">        choice = self.choice</div><div class="line">        <span class="keyword">while</span> choice &gt; <span class="number">0</span>:</div><div class="line">            choice -= <span class="number">1</span></div><div class="line">            <span class="keyword">try</span>:</div><div class="line">                num = int(input(<span class="string">'输入数字: '</span>))</div><div class="line">            <span class="keyword">except</span>:</div><div class="line">                print(<span class="string">'输入有效数字'</span>)</div><div class="line">                <span class="keyword">continue</span> <span class="comment"># 跳出这次循环</span></div><div class="line"></div><div class="line">            <span class="keyword">if</span> num == self.target:</div><div class="line">                print(<span class="string">'恭喜你猜中了'</span>)</div><div class="line">                <span class="keyword">break</span> <span class="comment"># 退出循环</span></div><div class="line">            <span class="keyword">elif</span> num &lt;= self.target:</div><div class="line">                print(<span class="string">'你猜的数字太小了，还剩%d次机会'</span> % choice) <span class="comment"># 运用字符串格式化表达式</span></div><div class="line">            <span class="keyword">else</span>:</div><div class="line">                print(<span class="string">'你猜的数字太大了，还剩%d次机会'</span> % choice)</div><div class="line"></div><div class="line">        <span class="keyword">else</span>:</div><div class="line">            print(<span class="string">'很遗憾，%d 次机会都用完了,只差一点点就猜中了，正确答案是 %d'</span> % (self.choice, self.target))</div><div class="line"></div><div class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</div><div class="line">    game = GuessGame(<span class="number">1</span>, <span class="number">100</span>, <span class="number">5</span>) <span class="comment"># 创建实例</span></div><div class="line">    game.guess()</div></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">你猜的数字太小了，还剩<span class="number">4</span>次机会</div><div class="line">输入数字: <span class="number">1</span></div><div class="line">你猜的数字太小了，还剩<span class="number">3</span>次机会</div><div class="line">输入数字: <span class="number">100</span></div><div class="line">你猜的数字太大了，还剩<span class="number">2</span>次机会</div><div class="line">输入数字: <span class="number">90</span></div><div class="line">你猜的数字太大了，还剩<span class="number">1</span>次机会</div><div class="line">输入数字: <span class="number">0</span></div><div class="line">你猜的数字太小了，还剩<span class="number">0</span>次机会</div><div class="line">很遗憾，<span class="number">5</span> 次机会都用完了,只差一点点就猜中了，正确答案是 <span class="number">70</span></div></pre></td></tr></table></figure>
+<p>欢迎访问博客<a href="https://family-treesy.github.io/" target="_blank" rel="external">Treehl的博客</a><br><a href="https://github.com/Family-TreeSY" target="_blank" rel="external">GitHub</a></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">PYTHON</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">DailyQuestion</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2017/10/31/second/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
   
     <nav id="page-nav">
       <a class="extend prev" rel="prev" href="/page/2/">&laquo; Prev</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/4/">Next &raquo;</a>
@@ -1098,26 +1064,6 @@ getOwnMetadataKeys:function(t){return o(i(t),arguments.length<2?void 0:u(argumen
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">PYTHON</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">MongoDB</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Django</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">DailyQuestion</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">MySQL</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">Git</a>
               </li>
              
@@ -1126,7 +1072,19 @@ getOwnMetadataKeys:function(t){return o(i(t),arguments.length<2?void 0:u(argumen
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Python</a>
+                <a href="javascript:void(0)" class="js-tag color1">MySQL</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">PYTHON</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">DailyQuestion</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">MongoDB</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1134,11 +1092,15 @@ getOwnMetadataKeys:function(t){return o(i(t),arguments.length<2?void 0:u(argumen
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">BeautifulSoup</a>
+                <a href="javascript:void(0)" class="js-tag color2">Scrapy</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Scrapy</a>
+                <a href="javascript:void(0)" class="js-tag color2">Python</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">BeautifulSoup</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1155,6 +1117,10 @@ getOwnMetadataKeys:function(t){return o(i(t),arguments.length<2?void 0:u(argumen
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">Unittest</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Django</a>
               </li>
             
             <div class="clearfix"></div>

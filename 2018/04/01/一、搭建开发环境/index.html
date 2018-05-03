@@ -6,20 +6,20 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="//Family-TreeSY.github.io">
-  <title>初探Django Class Based View（三） | Treehl的博客</title>
+  <title>搭建开发环境 | Treehl的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="Class Based View（基于类的通用视图）使用类视图可以减少视图函数的重复代码，节省开发时间，这里使用Class Based View主要是分离get和post请求 重新修改views.py1234567891011121314151617181920212223242526272829303132333435363738394041424344454647from __future__">
+  <meta name="description" content="一、搭建开发环境 virtualenv django_myblog  激活虚拟环境  source django_myblog/bin/activate  关闭虚拟环境  deactivate  安装Django1.11.3  pip install django==1.11.3  二、创建项目 django-admin startproject MyBlog  把项目设置为中文，在setting">
 <meta name="keywords" content="Django">
 <meta property="og:type" content="article">
-<meta property="og:title" content="初探Django Class Based View（三）">
-<meta property="og:url" content="//Family-TreeSY.github.io/2018/01/24/Class Based View（基于类的通用视图）/index.html">
+<meta property="og:title" content="搭建开发环境">
+<meta property="og:url" content="//Family-TreeSY.github.io/2018/04/01/一、搭建开发环境/index.html">
 <meta property="og:site_name" content="Treehl的博客">
-<meta property="og:description" content="Class Based View（基于类的通用视图）使用类视图可以减少视图函数的重复代码，节省开发时间，这里使用Class Based View主要是分离get和post请求 重新修改views.py1234567891011121314151617181920212223242526272829303132333435363738394041424344454647from __future__">
+<meta property="og:description" content="一、搭建开发环境 virtualenv django_myblog  激活虚拟环境  source django_myblog/bin/activate  关闭虚拟环境  deactivate  安装Django1.11.3  pip install django==1.11.3  二、创建项目 django-admin startproject MyBlog  把项目设置为中文，在setting">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-02-03T07:51:57.521Z">
+<meta property="og:updated_time" content="2018-05-03T08:26:04.968Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="初探Django Class Based View（三）">
-<meta name="twitter:description" content="Class Based View（基于类的通用视图）使用类视图可以减少视图函数的重复代码，节省开发时间，这里使用Class Based View主要是分离get和post请求 重新修改views.py1234567891011121314151617181920212223242526272829303132333435363738394041424344454647from __future__">
+<meta name="twitter:title" content="搭建开发环境">
+<meta name="twitter:description" content="一、搭建开发环境 virtualenv django_myblog  激活虚拟环境  source django_myblog/bin/activate  关闭虚拟环境  deactivate  安装Django1.11.3  pip install django==1.11.3  二、创建项目 django-admin startproject MyBlog  把项目设置为中文，在setting">
   
     <link rel="alternative" href="/atom.xml" title="Treehl的博客" type="application/atom+xml">
   
@@ -173,29 +173,54 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-Class Based View（基于类的通用视图）" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-一、搭建开发环境" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      初探Django Class Based View（三）
+      搭建开发环境
     </h1>
   
 
         
-        <a href="/2018/01/24/Class Based View（基于类的通用视图）/" class="archive-article-date">
-  	<time datetime="2018-01-24T08:32:31.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-01-24</time>
+        <a href="/2018/04/01/一、搭建开发环境/" class="archive-article-date">
+  	<time datetime="2018-04-01T15:20:08.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-04-01</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h3 id="Class-Based-View（基于类的通用视图）"><a href="#Class-Based-View（基于类的通用视图）" class="headerlink" title="Class Based View（基于类的通用视图）"></a><strong>Class Based View（基于类的通用视图）</strong></h3><p>使用类视图可以减少视图函数的重复代码，节省开发时间，这里使用Class Based View主要是分离get和post请求</p>
-<p>重新修改views.py<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> __future__ <span class="keyword">import</span> unicode_literals</div><div class="line"></div><div class="line"><span class="keyword">from</span> django.http <span class="keyword">import</span> HttpResponseRedirect</div><div class="line"><span class="keyword">from</span> django.urls <span class="keyword">import</span> reverse</div><div class="line"><span class="keyword">from</span> django.shortcuts <span class="keyword">import</span> render</div><div class="line"><span class="keyword">from</span> django.views <span class="keyword">import</span> View</div><div class="line"></div><div class="line"><span class="keyword">from</span> .models <span class="keyword">import</span> Student</div><div class="line"><span class="keyword">from</span> .forms <span class="keyword">import</span> StudentForm</div><div class="line"></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">IndexView</span><span class="params">(View)</span>:</span></div><div class="line">    template_name = <span class="string">'index.html'</span></div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">get_context</span><span class="params">(self)</span>:</span></div><div class="line">        students = Student.objects.all()</div><div class="line">        context = &#123;</div><div class="line">            <span class="string">'students'</span>: students,</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> context</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">get</span><span class="params">(self, request)</span>:</span></div><div class="line">        context = self.get_context()</div><div class="line">        form = StudentForm()</div><div class="line">        context.update(&#123;</div><div class="line">            <span class="string">'form'</span>: form,</div><div class="line">        &#125;)</div><div class="line">        <span class="keyword">return</span> render(request, self.template_name, context=context)</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">post</span><span class="params">(self, request)</span>:</span></div><div class="line">        form = StudentForm(request.POST)</div><div class="line">        <span class="keyword">if</span> form.is_valid():</div><div class="line">            cleaned_data = form.cleaned_data</div><div class="line">            student = Student()</div><div class="line">            student.name = cleaned_data[<span class="string">'name'</span>]</div><div class="line">            student.sex = cleaned_data[<span class="string">'sex'</span>]</div><div class="line">            student.email = cleaned_data[<span class="string">'email'</span>]</div><div class="line">            student.profession = cleaned_data[<span class="string">'profession'</span>]</div><div class="line">            student.qq = cleaned_data[<span class="string">'qq'</span>]</div><div class="line">            student.phone = cleaned_data[<span class="string">'phone'</span>]</div><div class="line">            student.save()</div><div class="line">            <span class="keyword">return</span> HttpResponseRedirect(reverse(<span class="string">'index'</span>))</div><div class="line">        context = self.get_context()</div><div class="line">        context.update(&#123;</div><div class="line">            <span class="string">'form'</span>: form,</div><div class="line">        &#125;)</div><div class="line">        <span class="keyword">return</span> render(request, self.template_name, context=context)</div></pre></td></tr></table></figure></p>
-<p>接下来修改django_student/urls.py，<strong>as_view()</strong>将类视图转换成函数视图，之前的index就是视图函数<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">urlpatterns = [</div><div class="line">    url(<span class="string">r'^$'</span>, IndexView.as_view(), name=<span class="string">'index'</span>),</div><div class="line">    url(<span class="string">r'^admin/'</span>, admin.site.urls),</div><div class="line">]</div></pre></td></tr></table></figure></p>
+        <h4 id="一、搭建开发环境"><a href="#一、搭建开发环境" class="headerlink" title="一、搭建开发环境"></a><strong>一、搭建开发环境</strong></h4><blockquote>
+<p>virtualenv django_myblog</p>
+</blockquote>
+<p>激活虚拟环境</p>
+<blockquote>
+<p>source django_myblog/bin/activate</p>
+</blockquote>
+<p>关闭虚拟环境</p>
+<blockquote>
+<p>deactivate</p>
+</blockquote>
+<p>安装Django1.11.3</p>
+<blockquote>
+<p>pip install django==1.11.3</p>
+</blockquote>
+<h4 id="二、创建项目"><a href="#二、创建项目" class="headerlink" title="二、创建项目"></a>二、创建项目</h4><blockquote>
+<p>django-admin startproject MyBlog</p>
+</blockquote>
+<p>把项目设置为中文，在settings.py中修改</p>
+<blockquote>
+<p>LANGUAGE_CODE = ‘zh-hans’</p>
+<p>TIME_ZONE = ‘Asia/Shanghai’</p>
+</blockquote>
+<p>开启服务，运行试一下</p>
+<blockquote>
+<p>python manage.py runserver</p>
+</blockquote>
+<p><a href="https://github.com/Family-TreeSY/Myblog" target="_blank" rel="external">GitHub</a><br>欢迎访问<a href="https://family-treesy.github.io/" target="_blank" rel="external">Treehl的博客</a></p>
 
       
 
@@ -296,7 +321,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="http://s.jiathis.com/qrcode.php?url=http://Family-TreeSY.github.io/2018/01/24/Class Based View（基于类的通用视图）/" alt="微信分享二维码">
+      <img src="http://s.jiathis.com/qrcode.php?url=http://Family-TreeSY.github.io/2018/04/01/一、搭建开发环境/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -310,18 +335,18 @@
   
 <nav id="article-nav">
   
-    <a href="/2018/03/01/MYSQL小结/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2018/04/10/代码测试/" id="article-nav-newer" class="article-nav-link-wrap">
       <i class="icon-circle-left"></i>
       <div class="article-nav-title">
         
-          MySQL学习小结
+          代码测试
         
       </div>
     </a>
   
   
-    <a href="/2018/01/22/一、搭建开发环境/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">初探Django创建admin（一）</div>
+    <a href="/2018/04/01/Redis数据结构/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Redis五种数据命令小结</div>
       <i class="icon-circle-right"></i>
     </a>
   
@@ -454,26 +479,6 @@ getOwnMetadataKeys:function(t){return o(i(t),arguments.length<2?void 0:u(argumen
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">PYTHON</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">MongoDB</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Django</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">DailyQuestion</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">MySQL</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">Git</a>
               </li>
              
@@ -482,7 +487,19 @@ getOwnMetadataKeys:function(t){return o(i(t),arguments.length<2?void 0:u(argumen
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Python</a>
+                <a href="javascript:void(0)" class="js-tag color1">MySQL</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">PYTHON</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">DailyQuestion</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">MongoDB</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -490,11 +507,15 @@ getOwnMetadataKeys:function(t){return o(i(t),arguments.length<2?void 0:u(argumen
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">BeautifulSoup</a>
+                <a href="javascript:void(0)" class="js-tag color2">Scrapy</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Scrapy</a>
+                <a href="javascript:void(0)" class="js-tag color2">Python</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">BeautifulSoup</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -511,6 +532,10 @@ getOwnMetadataKeys:function(t){return o(i(t),arguments.length<2?void 0:u(argumen
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">Unittest</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Django</a>
               </li>
             
             <div class="clearfix"></div>
