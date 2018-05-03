@@ -173,6 +173,869 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-今日头条" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/12/14/今日头条/">Python爬取今日头条江歌案新闻</a>
+    </h1>
+  
+
+        
+        <a href="/2017/12/14/今日头条/" class="archive-article-date">
+  	<time datetime="2017-12-14T10:48:23.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-12-14</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>今天学习总结下爬取今日头条江歌案的新闻，今天头条用到了Ajax技术，所以用传统的索取网页元素的方法是获取不到内容的，之前我写了篇<a href="https://family-treesy.github.io/2017/12/09/%E6%8B%89%E9%92%A9/" target="_blank" rel="external">爬取拉钩上海Python职位信息</a>，有兴趣的可以点开看看！</p>
+<h4 id="第一步"><a href="#第一步" class="headerlink" title="第一步"></a><strong>第一步</strong></h4><p>用Chrome打开网页<a href="https://www.toutiao.com/search/?keyword=%E6%B1%9F%E6%AD%8C，打开开发者工具，红框内的信息是我们需要的，我们要抓取的数据就在data一栏中" target="_blank" rel="external">https://www.toutiao.com/search/?keyword=%E6%B1%9F%E6%AD%8C，打开开发者工具，红框内的信息是我们需要的，我们要抓取的数据就在data一栏中</a><br><img src="http://m.qpic.cn/psb?/V10WDaE22S84Sl/cuuJ8HEBUhxRgk4vsK.cjnY3.5PFgbZdo1IejxzOGmU!/b/dPMAAAAAAAAA&amp;bo=TgWAAgAAAAADB.s!&amp;rf=viewer_4" alt=""></p>
+<p>我们再观察下网页信息，把网页不断的忘下翻，可以看到第一页是offset=0，往下翻过一个节点就是20，40，60这样递增上去<br><img src="http://m.qpic.cn/psb?/V10WDaE22S84Sl/*gmk3rdtCxAOEXEZG5aq5qCZ0em77*nSHYlVhE*.pKs!/b/dD8BAAAAAAAA&amp;bo=KASAAgAAAAADB4w!&amp;rf=viewer_4" alt=""></p>
+<p>好了，基本的分析完了，准备动手写代码</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># -*- coding:utf-8 -*-</span></div><div class="line"><span class="keyword">import</span> requests</div><div class="line"><span class="keyword">from</span> urllib.parse <span class="keyword">import</span> urlencode</div><div class="line"><span class="keyword">from</span> requests.exceptions <span class="keyword">import</span> RequestException</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">get_data</span><span class="params">()</span>:</span></div><div class="line">    data = &#123;</div><div class="line">        <span class="string">'offset'</span>: <span class="number">0</span>,</div><div class="line">        <span class="string">'format'</span>: <span class="string">'json'</span>,</div><div class="line">        <span class="string">'keyword'</span>: <span class="string">'江歌'</span>,</div><div class="line">        <span class="string">'autoload'</span>: <span class="string">'true'</span>,</div><div class="line">        <span class="string">'count'</span>: <span class="string">'20'</span>,</div><div class="line">        <span class="string">'cur_tab'</span>: <span class="number">1</span>,</div><div class="line">        <span class="string">'from'</span>:<span class="string">'search_tab'</span></div><div class="line">    &#125;</div><div class="line">    <span class="comment"># urlencode(data)就是链接的解析</span></div><div class="line">    url = <span class="string">'https://www.toutiao.com/search_content/?'</span> + urlencode(data)</div><div class="line">    response = requests.get(url)</div><div class="line">    <span class="keyword">try</span>:</div><div class="line">        <span class="keyword">if</span> response.status_code == <span class="number">200</span>:</div><div class="line">            <span class="keyword">return</span> response.text</div><div class="line">        <span class="keyword">return</span> <span class="keyword">None</span></div><div class="line">    <span class="keyword">except</span> RequestException:</div><div class="line">        print(<span class="string">'data is error'</span>)</div><div class="line">        <span class="keyword">return</span> <span class="keyword">None</span></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">main</span><span class="params">()</span>:</span></div><div class="line">    html = get_data()</div><div class="line">    print(html)</div><div class="line"></div><div class="line"></div><div class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</div><div class="line">    main()</div></pre></td></tr></table></figure>
+<p>运行下代码，返回了这样的数据</p>
+<p><img src="http://m.qpic.cn/psb?/V10WDaE22S84Sl/j7CnRYOxwXOFjXY49J1XykxO.nCBrQFjaXlJ2x*DQzA!/b/dPMAAAAAAAAA&amp;bo=EwelAQAAAAADB5I!&amp;rf=viewer_4" alt=""></p>
+<h4 id="第二步"><a href="#第二步" class="headerlink" title="第二步"></a><strong>第二步</strong></h4><p><strong>解析数据</strong></p>
+<p>我们可以看下data一栏下的网页数据<br><img src="http://m.qpic.cn/psb?/V10WDaE22S84Sl/a2ezeqiiNJXa4bNyOcz8HGrn2uHmpuZdYkKPJb.ySKg!/b/dPIAAAAAAAAA&amp;bo=5wQSAgAAAAADB9E!&amp;rf=viewer_4" alt=""></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">parse_data</span><span class="params">(html)</span>:</span></div><div class="line">    data = json.loads(html) <span class="comment"># JSON 字符串解码为 Python 对象</span></div><div class="line">    <span class="keyword">if</span> data <span class="keyword">and</span> <span class="string">'data'</span> <span class="keyword">in</span> data.keys():</div><div class="line">        news_list =[]</div><div class="line">        <span class="keyword">for</span> item <span class="keyword">in</span> data.get(<span class="string">'data'</span>):</div><div class="line">            news = &#123;</div><div class="line">                <span class="string">'title'</span>: item.get(<span class="string">'title'</span>), <span class="comment"># 使用get()方法避免了部分keys不存在时报错</span></div><div class="line">                <span class="string">'url'</span>: item.get(<span class="string">'url'</span>),</div><div class="line">            &#125;</div><div class="line">            news_list.append(news)</div><div class="line">        <span class="keyword">return</span> news_list</div></pre></td></tr></table></figure>
+<p>解析后再次运行代码，这就是我们要的数据了<br><img src="http://m.qpic.cn/psb?/V10WDaE22S84Sl/vsmex9Qh5S8torHI5KrQBPmX25QBmd3eB3KR8ZwMPpI!/b/dPMAAAAAAAAA&amp;bo=FQeAAQAAAAADB7E!&amp;rf=viewer_4" alt=""></p>
+<h4 id="第三步"><a href="#第三步" class="headerlink" title="第三步"></a><strong>第三步</strong></h4><p>可以爬下单页数据了，现在来看下怎么爬取多页面</p>
+<p>第一步网页分析的时候，offset的数据是抓取多页面内容的关键，我们先创建一个配置文件config.py，再创建多进程调用map方法</p>
+<blockquote>
+<p>GROUP_START = 1<br>GROUP_END = 20</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">groups = [x * <span class="number">2</span> <span class="keyword">for</span> x <span class="keyword">in</span> range(GROUP_START, GROUP_END + <span class="number">1</span>)]</div><div class="line">   pool = Pool(<span class="number">8</span>)</div><div class="line">   pool.map(main, groups)</div><div class="line">   pool.close()</div><div class="line">   pool.join()</div><div class="line">   print(<span class="string">'ALl is done!'</span>)</div></pre></td></tr></table></figure>
+<p>最后运行代码，开启了多进程后爬取的效率可以说是坐了火箭<br><img src="http://m.qpic.cn/psb?/V10WDaE22S84Sl/7CxdZTw7eCtqzcuv2dCH7HQjOGybJyKsdDsLr88ilKg!/b/dPIAAAAAAAAA&amp;bo=HwcuAgAAAAADBxY!&amp;rf=viewer_4" alt=""></p>
+<p>完整代码在GitHub<br><a href="https://github.com/Family-TreeSY/SpiderList/blob/master/toutiao/toutiao_spider.py" target="_blank" rel="external">GitHub</a><br><a href="http://www.jianshu.com/u/a01bc3ec4f88" target="_blank" rel="external">简书</a><br>欢迎访问我的博客<a href="https://family-treesy.github.io/" target="_blank" rel="external">Treehl的博客</a></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">PYTHON</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">MongoDB</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">爬虫</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2017/12/14/今日头条/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-拉钩" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/12/09/拉钩/">爬取拉钩上海Python职位信息并存入MongoDB数据库</a>
+    </h1>
+  
+
+        
+        <a href="/2017/12/09/拉钩/" class="archive-article-date">
+  	<time datetime="2017-12-09T08:48:23.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-12-09</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>昨天准备爬拉钩的python职位数据，用了老办法bs4+requests发现数据是空的，心情so down！！经过网上的查询才明白，拉钩使用Ajax技术，用bs4查找html元素是找不到数据的。今天我总结下学习过程，也算是巩固自己的知识了！！！</p>
+<h4 id="分析网页"><a href="#分析网页" class="headerlink" title="分析网页"></a><strong>分析网页</strong></h4><p>登陆<a href="https://www.lagou.com/jobs/list_Python?px=default&amp;city=%E4%B8%8A%E6%B5%B7#filterBox" target="_blank" rel="external">拉钩网站</a>，打开开发者功能<br><img src="http://m.qpic.cn/psb?/V10WDaE22S84Sl/55E3RI.cKYuEKspD3Ek08He5MisOZ14cWyuPca.kxCo!/b/dPMAAAAAAAAA&amp;bo=mAaAAgAAAAADBz4!&amp;rf=viewer_4" alt=""></p>
+<p>我们先用requests发送请求并保存一个html，来查看数据</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> requests</div><div class="line"><span class="keyword">import</span> random </div><div class="line"></div><div class="line">user_agents = [</div><div class="line"><span class="string">'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/61.0.3163.100 Safari/537.36'</span>,</div><div class="line">    <span class="string">'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.2995.0 Safari/537.36'</span>,</div><div class="line">    <span class="string">'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/57.0.2986.0 Safari/537.36'</span>,</div><div class="line">    <span class="string">'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.0 Safari/537.36'</span>,</div><div class="line">    <span class="string">'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.0 Safari/537.36'</span>,</div><div class="line">    <span class="string">'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.0 Safari/537.36'</span>,</div><div class="line">    <span class="string">'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.0 Safari/537.36'</span>,</div><div class="line">    <span class="string">'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/52.0.2743.0 Safari/537.36'</span>,</div><div class="line">    <span class="string">'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/51.0.2704.0 Safari/537.36'</span>,</div><div class="line">    <span class="string">'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.0 Safari/537.36'</span>,</div><div class="line">    <span class="string">'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/49.0.2623.0 Safari/537.36'</span>,</div><div class="line">    <span class="string">'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/48.0.2564.0 Safari/537.36'</span></div><div class="line">]</div><div class="line"></div><div class="line">headers = &#123;</div><div class="line">    <span class="string">'Host'</span>: <span class="string">'www.lagou.com'</span>,</div><div class="line">    <span class="string">'Referer'</span>: <span class="string">'https://www.lagou.com/zhaopin/Python/?labelWords=label'</span>,</div><div class="line">    <span class="string">'Upgrade-Insecure-Requests'</span>: <span class="string">'1'</span>,</div><div class="line">    <span class="string">'User-Agent'</span>: random.choice(user_agents)</div><div class="line">&#125;</div><div class="line"></div><div class="line">url = <span class="string">'https://www.lagou.com/jobs/list_Python?px=default&amp;city=%E4%B8%8A%E6%B5%B7#filterBox'</span></div><div class="line">r = requests.get(url, headers=headers)</div><div class="line">result = r.text</div><div class="line"><span class="comment">#print(r.text)</span></div><div class="line"><span class="comment"># 写入logou.html</span></div><div class="line"><span class="keyword">with</span> open(<span class="string">'laogou.html'</span>, <span class="string">'w'</span>, encoding=<span class="string">'utf-8'</span>) <span class="keyword">as</span> f:</div><div class="line">    f.write(result)</div></pre></td></tr></table></figure>
+<p>运行代码试一下，代开<strong>lagou.html</strong>，我们看到职位信息数据是没有的<br><img src="http://a1.qpic.cn/psb?/V10WDaE22S84Sl/uQuWJAg5dAiY2UWEKkJBpK*bagFQwM19Cu2FnF2QNQU!/b/dD4BAAAAAAAA&amp;bo=UQWAAgAAAAADAPM!&amp;rf=viewer_4" alt=""></p>
+<p>接下来，我们再观察下Chrome开发者工具的NetWork一栏，类型选择XHR，找到下面这个链接,我们可以看到有Ajax、Json几个关键字，点击Preview</p>
+<p><img src="http://m.qpic.cn/psb?/V10WDaE22S84Sl/Mpj5Tev3Cwtp7IYHiijrmXv9qOZlAVz1QrZj2HquI8U!/b/dPMAAAAAAAAA&amp;bo=pASZAQAAAAADBxo!&amp;rf=viewer_4" alt=""></p>
+<p>按顺序分别点开红框，就得到我们想要的数据啦</p>
+<p><img src="http://m.qpic.cn/psb?/V10WDaE22S84Sl/1KAkn*zEtrjqo.1Dbq1h9QHce8c5R7FYF*3xiStUOzQ!/b/dPMAAAAAAAAA&amp;bo=PwZlAgAAAAADB3w!&amp;rf=viewer_4" alt=""></p>
+<p>现在来试着写一下，注意这里的请求是post，带上表单，改变请求头的数据</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">data = &#123;</div><div class="line">    <span class="string">'first'</span>: <span class="string">'true'</span>,</div><div class="line">    <span class="string">'pn'</span>: <span class="number">1</span>,</div><div class="line">    <span class="string">'kd'</span>: <span class="string">'Python'</span></div><div class="line">&#125;</div><div class="line"></div><div class="line">r = requests.post(url, headers=headers, data=data).json()</div><div class="line">positions = r[<span class="string">'content'</span>][<span class="string">'positionResult'</span>][<span class="string">'result'</span>]</div><div class="line">print(positions)</div></pre></td></tr></table></figure>
+<p>Run一下，返回的数据就是我们想要的啦！！！</p>
+<p><img src="http://m.qpic.cn/psb?/V10WDaE22S84Sl/VLnBV*h2*U43BwOhXQxAyrDtDU5yWgPc864UKmaD0b4!/b/dPIAAAAAAAAA&amp;bo=9AYYAgAAAAADB8o!&amp;rf=viewer_4" alt=""></p>
+<h3 id="翻页"><a href="#翻页" class="headerlink" title="翻页"></a><strong>翻页</strong></h3><p>我们观察下表单内有一个<strong>pn</strong>参数，这就是页码，大家可以跳转页面来观察下数据的变化</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1</span>, <span class="number">17</span>):</div><div class="line">    data = &#123;</div><div class="line">        <span class="string">'first'</span>: <span class="string">'true'</span>,</div><div class="line">        <span class="string">'pn'</span>: i,</div><div class="line">        <span class="string">'kd'</span>: <span class="string">'Python'</span></div><div class="line">    &#125;</div><div class="line"></div><div class="line">url = <span class="string">'https://www.lagou.com/jobs/positionAjax.json?px=default&amp;city=%E4%B8%8A%E6%B5%B7&amp;needAddtionalResult=false&amp;isSchoolJob=0'</span></div><div class="line"></div><div class="line">r = requests.post(url,  headers=headers, data=data)</div><div class="line">time.sleep(<span class="number">3</span>)</div><div class="line">print(json.url)</div></pre></td></tr></table></figure>
+<p>这样就把16页链接都打印了出来</p>
+<p><img src="http://m.qpic.cn/psb?/V10WDaE22S84Sl/pDUdhhMX7j*HiKhASQdQdnG8s9nBXMPodvVDID.0j4o!/b/dD4BAAAAAAAA&amp;bo=QQSkAQAAAAADB8I!&amp;rf=viewer_4" alt=""></p>
+<p>最后，附上一张爬下来的数据截图<br><img src="http://m.qpic.cn/psb?/V10WDaE22S84Sl/UmfqEZuGM.GPGl.MbGKIs1bRWhdaFJQ6KfGnnDZ3qZk!/b/dPMAAAAAAAAA&amp;bo=cwOAAgAAAAADB9A!&amp;rf=viewer_4" alt=""></p>
+<p>爬取拉钩的思路就是这样，完整代码在GitHub，欢迎大家访问！！！！！！！假如觉得有用点个<strong>Star</strong>噢！！互勉！！！！！！！！！！</p>
+<p>欢迎访问博客<a href="https://family-treesy.github.io/" target="_blank" rel="external">Treehl的博客</a><br><a href="https://github.com/Family-TreeSY/SpiderList/blob/master/lagou/lagou_spider.py" target="_blank" rel="external">GitHub</a><br><a href="http://www.jianshu.com/u/a01bc3ec4f88" target="_blank" rel="external">简书</a></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">PYTHON</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">MongoDB</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">爬虫</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2017/12/09/拉钩/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-Git小结" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/12/01/Git小结/">Git学习小结</a>
+    </h1>
+  
+
+        
+        <a href="/2017/12/01/Git小结/" class="archive-article-date">
+  	<time datetime="2017-12-01T12:08:08.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-12-01</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>前段时间学习了廖雪峰老师的<a href="https://www.liaoxuefeng.com/wiki/0013739516305929606dd18361248578c67b8067c8c017b000/0013743256916071d599b3aed534aaab22a0db6c4e07fd0000" target="_blank" rel="external">Git教程</a>，今天再来温故下，加深下记忆！</p>
+<p>创建文件夹、文件</p>
+<blockquote>
+<p>mkdir gittest</p>
+<p>touch gittest.txt</p>
+</blockquote>
+<p><strong>创建版本库</strong></p>
+<blockquote>
+<p>git init</p>
+</blockquote>
+<p>编辑文本文件gittest.txt</p>
+<blockquote>
+<p>Git is a version control system.<br>Git is free software.</p>
+</blockquote>
+<p>把文件添加到版本库</p>
+<blockquote>
+<p>git add gittest.txt</p>
+</blockquote>
+<p><strong>提交请求</strong>，-m表示提交的信息</p>
+<blockquote>
+<p>git commit -m ‘第一次提交’</p>
+</blockquote>
+<p>再次编辑gittest.txt</p>
+<blockquote>
+<p>Git is a distributed version control system.<br>Git is free software distributed under the GPL.</p>
+</blockquote>
+<p>再次提交到版本库，重复上面git add git commit指令</p>
+<p><strong>查看git 日志</strong>，看看之前提交了什么(有学到了一个新命令)</p>
+<blockquote>
+<p>git log </p>
+</blockquote>
+<p>返回的数据掩护缭乱，那就来个简洁的,只有简单的两行数据</p>
+<blockquote>
+<p>git log –pretty=oneline</p>
+</blockquote>
+<p><strong>返回上一个版本</strong>(HEAD表示当前版本，HEAD^表示上一个版本)</p>
+<blockquote>
+<p>git reset –hard HEAD^</p>
+</blockquote>
+<p><strong>再次返回上一个版本</strong> 后面那一串数字是版本号</p>
+<blockquote>
+<p>git reset –hard 6f5a174c09469994c2dc59cf6db87ac7012d16c4</p>
+</blockquote>
+<p>我们再来看一下日志最新的请求又出现了</p>
+<p>查看命令历史</p>
+<blockquote>
+<p>git reflog</p>
+</blockquote>
+<p><strong>git操作分两步</strong><br>1、git add file 添加文件到版本库就是添加到暂存区<br>2、git commit 提交请求就是把暂存区的内容提交给master分支</p>
+<p><strong>查看工作区和暂存区版本的区别</strong></p>
+<blockquote>
+<p>git diff HEAD –gittest.txt</p>
+</blockquote>
+<p>修改文件后，再添加到版本库之前(<strong>没有git add)</strong>，想撤销掉这次操作</p>
+<blockquote>
+<p>git checkout – gittest.txt</p>
+</blockquote>
+<p>这一次已经将文件添加到了暂存区(git add file)，可以这样撤销操作</p>
+<blockquote>
+<p>git reset HEAD gittest.txt</p>
+</blockquote>
+<p>这样我们就从暂存区返回了工作区，再把工作区的操作撤回就行了</p>
+<p><strong>删除文件</strong></p>
+<p>删除文件之前新建一个test.txt，再添加到暂存区并提交到分支</p>
+<blockquote>
+<p>git rm test.txt</p>
+<p>git commit -m ‘删除test.txt’</p>
+</blockquote>
+<p>如果是误删的话，返回上一个操作</p>
+<blockquote>
+<p>git checkout test.txt</p>
+</blockquote>
+<p><strong>添加远程仓库</strong></p>
+<blockquote>
+<p>git remote add origin git@github.com:Family-TreeSY/git_test.git</p>
+</blockquote>
+<p><strong>将本地库的内容推送到远程</strong></p>
+<blockquote>
+<p>git push -u origin master</p>
+</blockquote>
+<p><strong>从远程库克隆</strong><br>需要先在github上面创建一个仓库</p>
+<blockquote>
+<p>git clone git@github.com:Family-TreeSY/B-2.git</p>
+</blockquote>
+<p><strong>分支管理</strong></p>
+<p>创建分支，这个之后HEADz指向dev,，-b表示创建并切换分支</p>
+<blockquote>
+<p>git checkout -b dev</p>
+</blockquote>
+<p>这条命令相当于下面两条</p>
+<blockquote>
+<p>git branch dev 创建dev分支<br>git checkout dev 切换到dev分支</p>
+</blockquote>
+<p>查看当前分支</p>
+<blockquote>
+<p>git branch</p>
+</blockquote>
+<p>把dev分支合并到master分支</p>
+<blockquote>
+<p>git merge dev</p>
+</blockquote>
+<p>删除分支</p>
+<blockquote>
+<p>git branch -d dev</p>
+</blockquote>
+<p>查看分支合并图</p>
+<blockquote>
+<p>git log –graph –pretty=oneline –abbrev-commit</p>
+</blockquote>
+<p>分支管理策略</p>
+<blockquote>
+<p>git merge –no-ff -m “merge with no-ff” dev</p>
+</blockquote>
+<p><strong>–no-ff:</strong> 表示禁用Fast-forward，使用–no-ff 可以看到合并后的历史有分支<br>这次创建会提交一个commit 所以带有-m参数</p>
+<p><strong>BUG分支</strong><br>把当前工作藏起来，等恢复现场后再来工作</p>
+<blockquote>
+<p>git stash</p>
+</blockquote>
+<p>创建bug分支修改bug流程</p>
+<p>假如需要在master分支上修复bug，那就在master上创建分支<br>git checkout -b issue-101——–&gt;修改gittest.txt——–&gt;git add gittest.txt ———&gt;git commit -m ‘修复bug’————&gt; 切换回master；git checkout master ————-&gt;合并分支;git merge –no-ff -m “合并分支” issue-101———-&gt;删除issue-101分支; git branch -d issue-101</p>
+<blockquote>
+<p>git checkout -b issue-101</p>
+</blockquote>
+<p>修复bug的工作结束了，我们现在重新回到dev分支工作,，查看刚刚的工作现场</p>
+<blockquote>
+<p>git checkout dev</p>
+</blockquote>
+<p>查看刚刚被隐藏的工作现场</p>
+<blockquote>
+<p>git stash list</p>
+</blockquote>
+<p>回到工作现场</p>
+<blockquote>
+<p>git stash pop</p>
+</blockquote>
+<p><strong>feature分支</strong></p>
+<p>强行删除</p>
+<blockquote>
+<p>git branch -D feature-vulcan</p>
+</blockquote>
+<p><strong>多人协作</strong><br>查看远程库信息</p>
+<blockquote>
+<p>git remote -v<br>推送分支<br>git push origin master</p>
+</blockquote>
+<p>如果是推送dev分支</p>
+<blockquote>
+<p>git push origin dev</p>
+</blockquote>
+<p>多人协作模式<br>先推送自己的：git push origin … ———-&gt; 推送失败，远程库比本地新需要：git pull 合并——-&gt;</p>
+<p>如果有冲突就解决冲突———-&gt;没有冲突或解决冲突后: git push origin 分支</p>
+<p><strong>标签管理</strong></p>
+<p>首先切换到要打标签的分支</p>
+<blockquote>
+<p>git checkout master</p>
+</blockquote>
+<p>打标签</p>
+<blockquote>
+<p>git tag v1.0</p>
+</blockquote>
+<p>查看标签</p>
+<blockquote>
+<p>git tag</p>
+</blockquote>
+<p>默认标签是打在最新的commit上的，我们想在其他commit上打标签就需要查看ID号</p>
+<blockquote>
+<p>git log –pretty=oneline –abbrev-commit</p>
+</blockquote>
+<p>打在指定commit ID上面</p>
+<blockquote>
+<p>git tag v0.9 1555a84</p>
+</blockquote>
+<p>查看标签信息</p>
+<blockquote>
+<p>git show v0.9</p>
+</blockquote>
+<p>创建带有说明的标签，用-a指定标签名，-m指定说明文字</p>
+<blockquote>
+<p>git tag -a v0.1 -m ‘指定标签练习’ c839d68</p>
+</blockquote>
+<p>删除标签</p>
+<blockquote>
+<p>git tag -d v0.1</p>
+</blockquote>
+<p>推送指定标签daoyuancheng</p>
+<blockquote>
+<p>git push origin v0.9</p>
+</blockquote>
+<p>推送所有标签到远程</p>
+<blockquote>
+<p>git push origin –tags</p>
+</blockquote>
+<p>标签已经推送到远程后再删除，先删除本地标签，再删除远程仓库标签</p>
+<blockquote>
+<p>git tag -d v1.0</p>
+<p>git push origin :refs/tags/v1.0</p>
+</blockquote>
+<p>欢迎访问<a href="https://family-treesy.github.io/" target="_blank" rel="external">Treehl的博客</a></p>
+<p><a href="https://github.com/Family-TreeSY" target="_blank" rel="external">GitHub</a></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">Git</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">GitHub</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2017/12/01/Git小结/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-1. 什么是MongoDB数据库？" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/11/30/1. 什么是MongoDB数据库？/">MongoDB数据库学习</a>
+    </h1>
+  
+
+        
+        <a href="/2017/11/30/1. 什么是MongoDB数据库？/" class="archive-article-date">
+  	<time datetime="2017-11-30T09:00:23.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-11-30</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h5 id="1-什么是MongoDB数据库？"><a href="#1-什么是MongoDB数据库？" class="headerlink" title="1. 什么是MongoDB数据库？"></a><strong>1. 什么是MongoDB数据库？</strong></h5><p><img src="http://m.qpic.cn/psb?/V10WDaE22S84Sl/UOPr3jkXyfGKr.VjNF02tCCUoFH7h7sxSE427VZ0z3Q!/b/dPMAAAAAAAAA&amp;bo=IAMWAQAAAAARBwQ!&amp;rf=viewer_4" alt=""><br>MongoDB 是由C++语言编写的，是一个基于分布式文件存储的开源数据库系统。<br>MongoDB中的一条记录就是一个文档，是一个数据结构，由字段和值对组成。MongoDB文档与JSON对象类似。字段的值有可能包括其它文档、数组以及文档数组。<br><img src="http://www.mongoing.com/docs/_images/crud-annotated-document.png" alt=""></p>
+<h5 id="2-安装与环境"><a href="#2-安装与环境" class="headerlink" title="2. 安装与环境"></a><strong>2. 安装与环境</strong></h5><p><a href="https://www.mongodb.com/download-center?jmp=nav#community" target="_blank" rel="external">MongoDB下载地址</a><br>Windows安装：可以参考<a href="http://www.runoob.com/mongodb/mongodb-window-install.html" target="_blank" rel="external">http://www.runoob.com/mongodb/mongodb-window-install.html</a><br>Linux安装：可以参考<a href="http://www.runoob.com/mongodb/mongodb-linux-install.html" target="_blank" rel="external">http://www.runoob.com/mongodb/mongodb-linux-install.html</a><br>Mac安装：可以参考<a href="http://www.runoob.com/mongodb/mongodb-osx-install.html" target="_blank" rel="external">http://www.runoob.com/mongodb/mongodb-osx-install.html</a></p>
+<h5 id="3-创建数据库、集合-amp-删除数据库、集合"><a href="#3-创建数据库、集合-amp-删除数据库、集合" class="headerlink" title="3. 创建数据库、集合&amp;删除数据库、集合"></a><strong>3. 创建数据库、集合&amp;删除数据库、集合</strong></h5><p>打开Mongo shell</p>
+<blockquote>
+<p>use test</p>
+</blockquote>
+<p>这样就创建了一个叫<strong>test</strong>的数据库，但这个时候数据库还是空的，用下面命令查看</p>
+<blockquote>
+<p>show dbs</p>
+</blockquote>
+<p>可以看到并没有<strong>test</strong>这个数据库（lianjia数据库是我之前创建的，大家忽略，哈哈！！）</p>
+<blockquote>
+<p>admin    0.000GB<br>   lianjia  0.000GB<br>   local    0.000GB</p>
+</blockquote>
+<p> 在数据库中添加一个集合（<strong>collection</strong>）</p>
+<blockquote>
+<p>db.createCollection(‘movies’)<br>{ “ok” : 1 }</p>
+</blockquote>
+<p> 我们再执行<strong>show dbs</strong>，<strong>test</strong>数据库就显示出来啦！！</p>
+<blockquote>
+<p>admin    0.000GB<br>    lianjia  0.000GB<br>    local    0.000GB<br>    test     0.000GB</p>
+</blockquote>
+<p>先暂时不要<strong>movies</strong>这个集合，执行删除命令</p>
+<blockquote>
+<p>db.movies.drop()<br>true</p>
+</blockquote>
+<p>执行<strong>show collections</strong>命令就不会再出现集合啦</p>
+<p>再来执行删除数据库的命令</p>
+<blockquote>
+<p>db.dropDatabase()</p>
+</blockquote>
+<p>shell返回{ “dropped” : “test”, “ok” : 1 }就删除啦！！，再确认下数据库</p>
+<blockquote>
+<p>show dbs</p>
+</blockquote>
+<p><strong>test</strong>数据库就没了</p>
+<blockquote>
+<p>admin    0.000GB<br>    lianjia  0.000GB<br>    local    0.000GB</p>
+</blockquote>
+<h5 id="4-插入文档"><a href="#4-插入文档" class="headerlink" title="4. 插入文档"></a><strong>4. 插入文档</strong></h5><p>先创建数据库和集合，别忘了噢！<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># 创建数据库</span></div><div class="line">use test</div><div class="line"><span class="comment"># 创建集合</span></div><div class="line">db.createCollection(<span class="string">'movies'</span>)</div><div class="line"><span class="comment"># 查看数据库</span></div><div class="line">show dbs</div></pre></td></tr></table></figure></p>
+<p><a href="https://movie.douban.com/subject/1292052/" target="_blank" rel="external">肖申克的救赎</a><br><img src="http://m.qpic.cn/psb?/V10WDaE22S84Sl/dK1GMZZjXdWg.9pszN81pZPSlW7zj6Bv6.ZF6bpHsK8!/b/dPMAAAAAAAAA&amp;bo=ZAQ7AgAAAAADB3s!&amp;rf=viewer_4" alt=""><br>我们以肖申克的救赎为例，把电影信息存储到MongoDB中，电影信息：</p>
+<ul>
+<li>电影名字</li>
+<li>导演</li>
+<li>编剧</li>
+<li>主演</li>
+<li>类型</li>
+<li>制片国家</li>
+<li>语言</li>
+<li>上映时间</li>
+<li>片长</li>
+<li>评分</li>
+</ul>
+<p>插入数据</p>
+<blockquote>
+<p>  db.movies.insert(<br>… {<br>… title: ‘肖申克的救赎’,<br>… directed_by: ‘弗兰克’,<br>… actor: [‘摩根.摩里曼’, ‘罗宾斯’],<br>… type: ‘剧情’,<br>… country: ‘美国’,<br>… language: ‘英语’,<br>… release_time: ‘1994-09-10’,<br>… time: ‘142’,<br>… score: 9.6<br>… }<br>… )</p>
+</blockquote>
+<p><strong>insert操作</strong>有几点需要注意：</p>
+<ul>
+<li>数据是以key:value键值对形式组成，有点类似与JSON</li>
+<li>如果一个key有多个value，value要用[]，现在只有一个value，到后面还要添加可以预先使用[]</li>
+<li>一整个数据块要用花括号{}</li>
+</ul>
+<p>shell对格式要求很高，中英文的逗号都一样，肉眼分辨不出来，大家注意格式，不然不断报错很浪费时间。。。。，看到<strong>WriteResult({ “nInserted” : 1 })</strong>，说明写入成功</p>
+<p>查询数据</p>
+<blockquote>
+<p>db.movies.find().pretty()</p>
+</blockquote>
+<p>返回的数据</p>
+<blockquote>
+<p>{<br>        “_id” : ObjectId(“5a1ff3a6bff1b3cbd8e8f812”),<br>        “title” : “肖申克的救赎”,<br>        “directed_by” : “弗兰克”,<br>        “actor” : [<br>                “摩根.摩里曼”,<br>                “罗宾斯”<br>        ],<br>        “type” : “剧情”,<br>        “country” : “美国”,<br>        “language” : “英语”,<br>        “release_time” : “1994-09-10”,<br>        “time” : “142”,<br>        “score” : 9.6<br>}</p>
+</blockquote>
+<p>这里使用了<strong>pretty()</strong>，它的作用是让美化数据返回，使用<strong>db.movies.find()</strong><br>返回的数据就是一坨一坨的 - -！！！大家可以试一下！</p>
+<blockquote>
+<p>{ “_id” : ObjectId(“5a1fee21bff1b3cbd8e8f80f”), “title” : “肖申克的救赎”, “directed_by” : “弗兰克”, “actor” : [ “摩根.摩里曼”, “罗宾斯” ], “type” : “剧情”, “country” : “美国”, “language” : “英语”, “release_time” : “1994-09-10”, “time” : “142”, “score” : “9.6” }</p>
+</blockquote>
+<p>同时插入多个数据</p>
+<blockquote>
+<p>db.movies.insert([<br>… {<br>… title: ‘肖申克的救赎’,<br>… directed_by: ‘弗兰克’,<br>… actor: [‘摩根.摩里曼’, ‘罗宾斯’],<br>… type: ‘剧情’,<br>… country: ‘美国’,<br>… language: ‘英语’,<br>… release_time: ‘1994-09-10’,<br>… time: ‘142’,<br>… score: 9.6<br>… },<br>… {<br>… title: ‘霸王别姬’,<br>… directed_by: ‘陈凯歌’,<br>… actor: [‘张国荣’, ‘巩俐’],<br>… type: ‘剧情’,<br>… country: ‘中国’,<br>… language: ‘汉语普通法’,<br>… release_time: ‘1993-01-01’,<br>… time: ‘171’,<br>… score: 9.5<br>… }<br>… ])</p>
+</blockquote>
+<p>如果插入成功，就会返回</p>
+<blockquote>
+<p>BulkWriteResult({<br>        “writeErrors” : [ ],<br>        “writeConcernErrors” : [ ],<br>        “nInserted” : 2,<br>        “nUpserted” : 0,<br>        “nMatched” : 0,<br>        “nModified” : 0,<br>        “nRemoved” : 0,<br>        “upserted” : [ ]<br>})</p>
+</blockquote>
+<p>多数据插入模式为：<strong>db.collection.insert([{key1: ‘value1’},{key2: ‘value2’}]</strong></p>
+<h4 id="5-查询数据"><a href="#5-查询数据" class="headerlink" title="5. 查询数据"></a><strong>5. 查询数据</strong></h4><p>以特定条件查询</p>
+<blockquote>
+<p>db.movies.find({‘language’: ‘汉语普通法’}).pretty()</p>
+</blockquote>
+<p>我们看下返回的数据</p>
+<blockquote>
+<p>{<br>        “_id” : ObjectId(“5a1ff19bbff1b3cbd8e8f811”),<br>        “title” : “霸王别姬”,<br>        “directed_by” : “陈凯歌”,<br>        “actor” : [<br>                “张国荣”,<br>                “巩俐”<br>        ],<br>        “type” : “剧情”,<br>        “country” : “中国”,<br>        “language” : “汉语普通法”,<br>        “release_time” : “1993-01-01”,<br>        “time” : “171”,<br>        “score” : 9.5<br>}</p>
+</blockquote>
+<p><strong>AND</strong>条件查询</p>
+<blockquote>
+<p>db.movies.find({‘title’:’霸王别姬’, ‘language’:’汉语普通法’}).pretty()</p>
+</blockquote>
+<p>只有同时满足两个条件的电影才会被查找出来</p>
+<p><strong>OR条件查询</strong></p>
+<blockquote>
+<p>db.movies.find({$or:[{‘title’:’霸王别姬’}, {‘language’:’英语’}]}).pretty()</p>
+</blockquote>
+<p>这里面的括号略显复杂，写的时候要仔细点</p>
+<p><strong>条件操作符</strong><br>大于操作符 - $gt，查找评分大于9的电影</p>
+<blockquote>
+<p>db.movies.find({‘score’:{$gt:9}}).pretty()</p>
+</blockquote>
+<p>小于操作符 - $lt</p>
+<blockquote>
+<p>db.movies.find({‘score’:{$lt:10}}).pretty()</p>
+</blockquote>
+<p>类似操作符还有，大于等于操作符 - $gte，小于等于操作符 - $lte，不等于操作符 - $ne<br>这里就不一一列举了，与上同理</p>
+<p><strong>limit和skip</strong>条件操作符<br>limit()方法接受一个数字参数，该参数指定从MongoDB中读取的记录条数</p>
+<blockquote>
+<p>db.movies.find().limit(1).pretty()</p>
+</blockquote>
+<p>这样就返回一部电影信息</p>
+<blockquote>
+<p> {<br>        “_id” : ObjectId(“5a1feb04bff1b3cbd8e8f80e”),<br>        “title” : “肖申克的救赎”,<br>        “directed_by” : “弗兰克”,<br>        “actor” : “摩根.摩里曼”,<br>        “type” : “剧情”,<br>        “country” : “美国”,<br>        “language” : “英语”,<br>        “release_time” : “1994-09-10”,<br>        “time” : “142”,<br>        “score” : 9.6<br>}</p>
+</blockquote>
+<p>skip()方法来跳过指定数量的数据，skip方法同样接受一个数字参数作为跳过的记录条数</p>
+<blockquote>
+<p>db.movies.find().skip(1).pretty()</p>
+</blockquote>
+<h4 id="6-删除文档"><a href="#6-删除文档" class="headerlink" title="6. 删除文档"></a><strong>6. 删除文档</strong></h4><blockquote>
+<p>db.movies.remove({‘title’: ‘霸王别姬’})</p>
+</blockquote>
+<p> 删除title为霸王别姬的文档，再查询下还剩几条文档</p>
+<blockquote>
+<p>db.movies.find()</p>
+</blockquote>
+<h4 id="7-更新文档"><a href="#7-更新文档" class="headerlink" title="7. 更新文档"></a><strong>7. 更新文档</strong></h4><blockquote>
+<p>db.movies.update({‘title’:’肖申克的救赎’},{$set:{‘title’:’MongoDB_Test’}})</p>
+</blockquote>
+<p>把value改成了MongoDB_Test</p>
+<blockquote>
+<p>{<br>        “_id” : ObjectId(“5a200300bff1b3cbd8e8f813”),<br>        “title” : “MongoDB_Test”,<br>        “directed_by” : “弗兰克”,<br>        “actor” : [<br>                “摩根.摩里曼”,<br>                “罗宾斯”<br>        ],<br>        “type” : “剧情”,<br>        “country” : “美国”,<br>        “language” : “英语”,<br>        “release_time” : “1994-09-10”,<br>        “time” : “142”,<br>        “score” : 9.6<br>}</p>
+</blockquote>
+<p><strong>$set</strong> 操作符表示更新文档中的某一个字段，而不是全部替换<br>{ $set: { <field1>: <value1>, … } }</value1></field1></p>
+<p><strong>修改多条相同的文档，只需要设置 multi 参数为 true</strong></p>
+<blockquote>
+<p>db.movies.update({‘title’:’肖申克的救赎’},{$set:{‘title’:’MongoDB_Test’}},{multi:true})</p>
+</blockquote>
+<p>以上两个操作会把原有数据改掉，如果想在原有值的基础上增加一个值的话需要添加<strong>$push</strong>，比如在actor中添加一个新演员进去</p>
+<blockquote>
+<p>db.movies.update({‘title’:’霸王别姬’}.{$push:{‘actor’:’Treehl’}})</p>
+</blockquote>
+<p>这样actor就有三个演员了</p>
+<blockquote>
+<p>actor” : [<br>                “张国荣”,<br>                “巩俐”,<br>                “Treehl”<br>        ]</p>
+</blockquote>
+<h4 id="8-排序和索引"><a href="#8-排序和索引" class="headerlink" title="8. 排序和索引"></a><strong>8. 排序和索引</strong></h4><p><strong>sort()</strong>方法</p>
+<p>对数据进行排序，sort()方法可以通过参数指定排序的字段，并使用 1 和 -1 来指定排序的方式，其中 1 为升序排列，而-1是用于降序排列<br>举个例子以score电影评分为例</p>
+<blockquote>
+<p>db.movies.find().sort({‘score’:1}).pretty()</p>
+</blockquote>
+<p><strong>ensureIndex()</strong>方法<br>索引通常能够极大的提高查询的效率，如果没有索引，MongoDB在读取数据时必须扫描集合中的每个文件并选取那些符合查询条件的记录。为文档中的一些key加上索引(index)可以加快搜索速度，比如给type电影类型加上索引，这样电影type这个字符串与数字形成了映射，搜索速度会快很多</p>
+<blockquote>
+<p>db.movies.ensureIndex({‘type’:1})</p>
+</blockquote>
+<p>1:升序；-1：降序</p>
+<h4 id="9-聚合"><a href="#9-聚合" class="headerlink" title="9. 聚合"></a><strong>9. 聚合</strong></h4><p>MongoDB中聚合(aggregate)主要用于处理数据(诸如统计平均值,求和等)，并返回计算后的数据结果</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&gt; db.movies.aggregate([&#123;$group:&#123;_id:<span class="string">'$title'</span>,num_movies:&#123;$sum:<span class="number">1</span>&#125;&#125;&#125;])</div></pre></td></tr></table></figure>
+<p>返回</p>
+<blockquote>
+<p>{ “_id” : “霸王别姬”, “num_movies” : 1 }<br>{ “_id” : “MongoDB_Test”, “num_movies” : 1 }</p>
+</blockquote>
+<p>理解一下命令<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">$group: 将集合中的文档分组，可用于统计结果</div><div class="line">$sum:计算总和</div></pre></td></tr></table></figure></p>
+<p>这是建议可以参考菜鸟教程的<a href="http://www.runoob.com/mongodb/mongodb-aggregate.html" target="_blank" rel="external">聚合</a></p>
+<h4 id="10-Python操作MongoDB"><a href="#10-Python操作MongoDB" class="headerlink" title="10. Python操作MongoDB"></a><strong>10. Python操作MongoDB</strong></h4><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> pymongo <span class="keyword">import</span> MongoClient</div><div class="line"></div><div class="line"><span class="comment"># 链接数据库</span></div><div class="line">client = MongoClient(<span class="string">'localhost'</span>, <span class="number">27017</span>)</div><div class="line"><span class="comment"># 建立douban数据库</span></div><div class="line">db = client.douban</div><div class="line"><span class="comment"># 建立movies集合</span></div><div class="line">movies = db.movies</div><div class="line"></div><div class="line">movie_name_list = []</div><div class="line"></div><div class="line">movie_name = &#123;</div><div class="line">    <span class="string">'title'</span>: <span class="string">'肖申克的救赎'</span>,</div><div class="line">    <span class="string">'description'</span>: <span class="string">'小有成就的青年银行家安迪'</span>,</div><div class="line">    <span class="string">'year'</span>: <span class="string">'1991'</span></div><div class="line">&#125;</div><div class="line">movie_name_list.append(movie_name)</div><div class="line"></div><div class="line"><span class="comment"># 使用for循环打印出数据</span></div><div class="line"><span class="keyword">for</span> item <span class="keyword">in</span> movie_name_list:</div><div class="line">    movies.insert(item)</div><div class="line">    </div><div class="line"><span class="comment"># 查找数据</span></div><div class="line"><span class="keyword">for</span> item <span class="keyword">in</span> movies.find():</div><div class="line">    print(item)</div></pre></td></tr></table></figure>
+<p>返回</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&#123;<span class="string">'_id'</span>: ObjectId(<span class="string">'5a20c4f3aa85c109e881c7c7'</span>), <span class="string">'title'</span>: <span class="string">'肖申克的救赎'</span>, <span class="string">'description'</span>: <span class="string">'小有成就的青年银行家安迪'</span>, <span class="string">'year'</span>: <span class="string">'1991'</span>&#125;</div></pre></td></tr></table></figure>
+<p>这是个简单的python操作MongoDB的例子，有兴趣的可以看下我的[Python爬取上海链家房源存入MongoDB数据库(<a href="https://family-treesy.github.io/2017/11/29/lianjia/" target="_blank" rel="external">https://family-treesy.github.io/2017/11/29/lianjia/</a>)</p>
+<p>相信大家看完一遍能对MongoDB有个最基本的认识啦！！！</p>
+<p>参考链接<a href="http://www.runoob.com/mongodb/mongodb-tutorial.html" target="_blank" rel="external">菜鸟教程</a></p>
+<p>欢迎大家访问我的博客<a href="https://family-treesy.github.io/" target="_blank" rel="external">Treehl的博客</a><br><a href="http://www.jianshu.com/u/a01bc3ec4f88" target="_blank" rel="external">简书</a><br><a href="https://github.com/Family-TreeSY" target="_blank" rel="external">GitHub</a></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">PYTHON</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">MongoDB</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2017/11/30/1. 什么是MongoDB数据库？/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-lianjia" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/11/29/lianjia/">Python爬取上海链家网房源数据并存入MongoDB数据库</a>
+    </h1>
+  
+
+        
+        <a href="/2017/11/29/lianjia/" class="archive-article-date">
+  	<time datetime="2017-11-29T11:40:23.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-11-29</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>以下是我爬取<a href="http://sh.lianjia.com/ershoufang/baoshan" target="_blank" rel="external">上海链家网宝山区</a>房源信息的学习总结</p>
+<h4 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a><strong>准备工作</strong></h4><p>用到的Python模块：</p>
+<ul>
+<li>requests</li>
+<li>bs4</li>
+<li>pymongo</li>
+<li>datetime</li>
+<li>time</li>
+<li>random</li>
+</ul>
+<h4 id="分析网页"><a href="#分析网页" class="headerlink" title="分析网页"></a><strong>分析网页</strong></h4><p>登陆<a href="http://sh.lianjia.com/ershoufang/baoshan" target="_blank" rel="external">http://sh.lianjia.com/ershoufang/baoshan</a> 用Chrome打开开发者工具<br><img src="http://a2.qpic.cn/psb?/V10WDaE22S84Sl/OWX8XXIREtlNyAkBe52YViDpyDxfk5XwFAoUUjx6vso!/b/dD8BAAAAAAAA&amp;bo=eQdpAgAAAAADBzc!&amp;rf=viewer_4" alt=""><br>每条房源信息都在li元素中，我们再来看一下翻页链接<br><img src="http://a1.qpic.cn/psb?/V10WDaE22S84Sl/lDEAd9FQQ79CUtKdVLMJoGolSXELOAqjwFm.nmJ.wkw!/b/dPMAAAAAAAAA&amp;bo=aAdtAQAAAAADByE!&amp;rf=viewer_4" alt=""></p>
+<p>试着点击下一页，我们浏览器上的链接是有规律可循的</p>
+<blockquote>
+<p><a href="http://sh.lianjia.com/ershoufang/baoshan/d1" target="_blank" rel="external">http://sh.lianjia.com/ershoufang/baoshan/d1</a><br><a href="http://sh.lianjia.com/ershoufang/baoshan/d2" target="_blank" rel="external">http://sh.lianjia.com/ershoufang/baoshan/d2</a><br><a href="http://sh.lianjia.com/ershoufang/baoshan/d3" target="_blank" rel="external">http://sh.lianjia.com/ershoufang/baoshan/d3</a><br>………<br><a href="http://sh.lianjia.com/ershoufang/baoshan/100" target="_blank" rel="external">http://sh.lianjia.com/ershoufang/baoshan/100</a></p>
+</blockquote>
+<p>现在我们试着爬取前10页的链接</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> requests</div><div class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1</span>, <span class="number">11</span>):</div><div class="line">    r = requests.get(<span class="string">'http://sh.lianjia.com/ershoufang/baoshan/d'</span> + str(i))</div><div class="line">    print(r.url)</div></pre></td></tr></table></figure>
+<p>爬取结果</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">http://sh.lianjia.com/ershoufang/baoshan/d1</div><div class="line">http://sh.lianjia.com/ershoufang/baoshan/d2</div><div class="line">http://sh.lianjia.com/ershoufang/baoshan/d3</div><div class="line">http://sh.lianjia.com/ershoufang/baoshan/d4</div><div class="line">http://sh.lianjia.com/ershoufang/baoshan/d5</div><div class="line">http://sh.lianjia.com/ershoufang/baoshan/d6</div><div class="line">http://sh.lianjia.com/ershoufang/baoshan/d7</div><div class="line">http://sh.lianjia.com/ershoufang/baoshan/d8</div><div class="line">http://sh.lianjia.com/ershoufang/baoshan/d9</div><div class="line">http://sh.lianjia.com/ershoufang/baoshan/d10</div></pre></td></tr></table></figure>
+<h4 id="解析网页"><a href="#解析网页" class="headerlink" title="解析网页"></a><strong>解析网页</strong></h4><p><img src="http://a3.qpic.cn/psb?/V10WDaE22S84Sl/Yq7DpRZ0c*o0bN6NkHnGoGJx9HzDr2Tpa1xrEng*JnA!/b/dPIAAAAAAAAA&amp;bo=UAT.AAAAAAADB4g!&amp;rf=viewer_4" alt=""></p>
+<p>要抓取的信息如下：</p>
+<ul>
+<li>标题：room_title = room.find(‘div’, attrs={‘class’: ‘prop-title’})</li>
+<li>房屋信息：room_info = room.find(‘span’, attrs={‘class’: ‘info-col row1-text’})</li>
+<li>位置：room_location = room.find(‘span’, attrs={‘class’: ‘info-col row2-text’})</li>
+<li>附加信息：extra_info = room.find(‘div’, attrs={‘class’: ‘property-tag-container’})</li>
+<li>总价：room_price = room.find(‘span’, attrs={‘class’: ‘total-price strong-num’})</li>
+<li>单价：room_unit_price = room.find(‘span’, attrs={‘class’: ‘info-col price-item minor’})</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div></pre></td><td class="code"><pre><div class="line">soup = BeautifulSoup(r.text, <span class="string">'html.parser'</span>)</div><div class="line">rooms = soup.find(<span class="string">'ul'</span>, attrs=&#123;<span class="string">'class'</span>: <span class="string">'js_fang_list'</span>&#125;)</div><div class="line"><span class="keyword">for</span> room <span class="keyword">in</span> rooms.find_all(<span class="string">'li'</span>):</div><div class="line">    room_title = room.find(<span class="string">'div'</span>, attrs=&#123;<span class="string">'class'</span>: <span class="string">'prop-title'</span>&#125;).get_text()</div><div class="line">    room_info = room.find(<span class="string">'span'</span>, attrs=&#123;<span class="string">'class'</span>: <span class="string">'info-col row1-text'</span>&#125;).get_text()</div><div class="line">    room_location = room.find(<span class="string">'span'</span>, attrs=&#123;<span class="string">'class'</span>: <span class="string">'info-col row2-text'</span>&#125;).find(<span class="string">'a'</span>).get_text()</div><div class="line">    room_price = room.find(<span class="string">'span'</span>, attrs=&#123;<span class="string">'class'</span>: <span class="string">'total-price strong-num'</span>&#125;).get_text()</div><div class="line">    room_unit_price = room.find(<span class="string">'span'</span>, attrs=&#123;<span class="string">'class'</span>: <span class="string">'info-col price-item minor'</span>&#125;).get_text()</div><div class="line">    extra_info = room.find(<span class="string">'div'</span>, attrs=&#123;<span class="string">'class'</span>: <span class="string">'property-tag-container'</span>&#125;).get_text()</div><div class="line"></div><div class="line"></div><div class="line">    print(room_title, room_info, room_location, room_price, room_unit_price, extra_info)</div><div class="line"></div><div class="line">``` </div><div class="line"></div><div class="line"></div><div class="line">下面是网页解析下来的一个房源信息</div><div class="line"></div><div class="line"></div><div class="line">``` python</div><div class="line"></div><div class="line">厨卫全明，卧室带阳台，地铁房，高区采光好</div><div class="line"> </div><div class="line">							<span class="number">1</span>室<span class="number">1</span>厅 | <span class="number">44.73</span>平</div><div class="line">							</div><div class="line">								| 高区/<span class="number">6</span>层</div><div class="line">							</div><div class="line">							</div><div class="line">								| 朝南</div><div class="line">							</div><div class="line">						 葑润华庭 <span class="number">255</span> </div><div class="line">							单价<span class="number">57008</span>元/平</div><div class="line">						 </div><div class="line">距离<span class="number">7</span>号线祁华路站<span class="number">698</span>米</div><div class="line">满二</div><div class="line">有钥匙</div></pre></td></tr></table></figure>
+<h4 id="存入MongoDB数据库"><a href="#存入MongoDB数据库" class="headerlink" title="存入MongoDB数据库"></a><strong>存入MongoDB数据库</strong></h4><p>MongoDB数据结构是以键值对{key:value}形式组成，有点类似于JSON<br><img src="http://a1.qpic.cn/psb?/V10WDaE22S84Sl/UddoxaYMkMYW.yttCHnp450QvwYz732SEb0MvRU0Od4!/b/dD4BAAAAAAAA&amp;bo=iQPVAAAAAAADB30!&amp;rf=viewer_4" alt=""></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># 链接数据库</span></div><div class="line">client = MongoClient(<span class="string">'localhost'</span>, <span class="number">27017</span>)</div><div class="line"><span class="comment"># 建立数据库</span></div><div class="line">db = client.tests</div><div class="line"><span class="comment"># 建立集合</span></div><div class="line">homes = db.homes</div><div class="line"></div><div class="line">rooms_list = []</div><div class="line"></div><div class="line"><span class="comment"># 先将爬下来的数据赋值为字典</span></div><div class="line">rooms_info =&#123;</div><div class="line">                <span class="string">'title'</span>: room_title,</div><div class="line">                <span class="string">'info'</span>: room_info,</div><div class="line">                <span class="string">'location'</span>: room_location,</div><div class="line">                <span class="string">'price'</span>: room_price,</div><div class="line">                <span class="string">'unit_proce'</span>: room_unit_price,</div><div class="line">                <span class="string">'message'</span>: extra_info,</div><div class="line">                <span class="string">'time'</span>: datetime.datetime.now()</div><div class="line">            &#125;</div><div class="line"></div><div class="line">rooms_list.append(rooms_info)</div><div class="line"><span class="comment"># 存入数据库</span></div><div class="line">result = homes.insert_many(rooms_list)</div><div class="line">print(result)</div></pre></td></tr></table></figure>
+<p>运行代码，我们可以看到数据存入了MongoDB</p>
+<pre><code class="python">&lt;pymongo.results.InsertManyResult object at <span class="number">0x00000260C536AB8</span>&gt;
+&lt;pymongo.results.InsertManyResult object at <span class="number">0x00000260C536AAC</span>&gt;
+&lt;pymongo.results.InsertManyResult object at <span class="number">0x00000260C536AA0</span>&gt;
+&lt;pymongo.results.InsertManyResult object at <span class="number">0x00000260C536AB4</span>&gt;
+&lt;pymongo.results.InsertManyResult object at <span class="number">0x00000260C536AB0</span>&gt;
+&lt;pymongo.results.InsertManyResult object at <span class="number">0x00000260C536A28</span>&gt;
+&lt;pymongo.results.InsertManyResult object at <span class="number">0x00000260C536AC8</span>&gt;
+&lt;pymongo.results.InsertManyResult object at <span class="number">0x00000260C536A08</span>&gt;
+&lt;pymongo.results.InsertManyResult object at <span class="number">0x00000260C536A88</span>&gt;
+&lt;pymongo.results.InsertManyResult object at <span class="number">0x00000260C536A88</span>&gt;
+&lt;pymongo.results.InsertManyResult object at <span class="number">0x00000260C536888</span>&gt;
+&lt;pymongo.results.InsertManyResult object at <span class="number">0x00000260C536A08</span>&gt;
+&lt;pymongo.results.InsertManyResult object at <span class="number">0x00000260C536AC8</span>&gt;
+&lt;pymongo.results.InsertManyResult object at <span class="number">0x00000260C536A48</span>&gt;
+&lt;pymongo.results.InsertManyResult object at <span class="number">0x00000260C536A88</span>&gt;
+</code></pre>
+<p>可以下载一个MongoDB可视化工具，我用的是Robo3T，数据就这样存入了</p>
+<p><img src="http://a1.qpic.cn/psb?/V10WDaE22S84Sl/VSPcQXPsEyWxVdgnsXKjSMUznFRMd6H*9kjsdbfcuI8!/b/dPMAAAAAAAAA&amp;bo=AAWAAgAAAAADB6U!&amp;rf=viewer_4" alt=""></p>
+<p>总共有100页的数据，用time.sleep()来控制速度防止被封掉，但爬取效率实在很低，这两天准备学习pandas</p>
+<p>完整代码在<a href="https://github.com/Family-TreeSY/LianjiaSpider/blob/master/lianjia.py" target="_blank" rel="external">GitHub</a><br><a href="http://www.jianshu.com/u/a01bc3ec4f88" target="_blank" rel="external">简书</a><br>欢迎访问博客<a href="https://family-treesy.github.io/" target="_blank" rel="external">Treehl的博客</a></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">PYTHON</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">MongoDB</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">爬虫</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2017/11/29/lianjia/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-Sixth" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -356,620 +1219,9 @@
 
 
   
-    <article id="post-Python爬取豆瓣电影TOP250" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/11/14/Python爬取豆瓣电影TOP250/">Python爬取豆瓣电影TOP250</a>
-    </h1>
-  
-
-        
-        <a href="/2017/11/14/Python爬取豆瓣电影TOP250/" class="archive-article-date">
-  	<time datetime="2017-11-14T02:36:16.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-11-14</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>闲来无事温故了下BeautifulSoup和requests，之后又写了个简单的爬虫，网址<a href="https://movie.douban.com/top250" target="_blank" rel="external">豆瓣TOP250电影</a><br>先附上关键模块文档，对新手还是比较友好的！</p>
-<ul>
-<li><a href="http://beautifulsoup.readthedocs.io/zh_CN/latest/#get-text" target="_blank" rel="external">BeautifulSoup文档</a></li>
-<li><a href="http://docs.python-requests.org/zh_CN/latest/user/quickstart.html#id11" target="_blank" rel="external">Requests文档</a></li>
-</ul>
-<p>这次不总结详细的过程，有兴趣了解的可以看下我之前写的<a href="https://family-treesy.github.io/2017/10/24/douban-reading/" target="_blank" rel="external">Python爬取豆瓣电子小说</a>或者有兴趣了解scrapy的可以看下我另外一篇<a href="https://family-treesy.github.io/2017/11/07/Scrapy%E7%AE%80%E4%BB%8B/" target="_blank" rel="external">Scrapy爬取豆瓣电影TOP250</a></p>
-<p>我们先来看下，requests和bs4怎么结合使用。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> requests</div><div class="line"><span class="keyword">from</span> bs4 <span class="keyword">import</span> BeautifulSoup</div><div class="line"></div><div class="line">url = <span class="string">'https://movie.douban.com/top250'</span></div><div class="line"><span class="comment"># 使用U-A伪装成浏览器发送请求</span></div><div class="line">headers = &#123;<span class="string">'User-Agent'</span>: <span class="string">'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/61.0.3163.100 Safari/537.36'</span>&#125;</div><div class="line"><span class="comment"># 先使用requests发送网络请求从而获取网页</span></div><div class="line">r = requests.get(<span class="string">'https://movie.douban.com/top250'</span>, headers=headers)</div><div class="line"><span class="comment"># 使用bs4解析获取的网页</span></div><div class="line">soup = BeautifulSoup(r.text, <span class="string">'html.parser'</span>)</div><div class="line"><span class="comment"># 调用prettify()方法来使解析的HTML更加规范化</span></div><div class="line">print(soup.prettify())</div></pre></td></tr></table></figure>
-<p>解析出来的部分HTML<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">&lt;!DOCTYPE html&gt;</div><div class="line">&lt;html class="ua-windows ua-webkit" lang="zh-cmn-Hans"&gt;</div><div class="line"> &lt;head&gt;</div><div class="line">  &lt;meta content=<span class="string">"text/html; charset=utf-8"</span> http-equiv=<span class="string">"Content-Type"</span>/&gt;</div><div class="line">  &lt;meta content=<span class="string">"webkit"</span> name=<span class="string">"renderer"</span>/&gt;</div><div class="line">  &lt;meta content=<span class="string">"always"</span> name=<span class="string">"referrer"</span>/&gt;</div><div class="line">  &lt;title&gt;</div><div class="line">   豆瓣电影 Top <span class="number">250</span></div><div class="line">  &lt;/title&gt;</div><div class="line">  &lt;meta content=<span class="string">"cZdR4xxR7RxmM4zE"</span> name=<span class="string">"baidu-site-verification"</span>&gt;</div><div class="line">   &lt;meta content=<span class="string">"no-cache"</span> http-equiv=<span class="string">"Pragma"</span>/&gt;</div><div class="line">   &lt;meta content=<span class="string">"Sun, 6 Mar 2005 01:00:00 GMT"</span> http-equiv=<span class="string">"Expires"</span>/&gt;</div><div class="line">   &lt;link href=<span class="string">"https://img3.doubanio.com/f/movie/d59b2715fdea4968a450ee5f6c95c7d7a2030065/pics/movie/apple-touch-icon.png"</span> rel=<span class="string">"apple-touch-icon"</span>/&gt;</div><div class="line">   &lt;link href=<span class="string">"https://img3.doubanio.com/f/shire/da18e98a294047dd92298000fe2080b38efda2ae/css/douban.css"</span> rel=<span class="string">"stylesheet"</span> type=<span class="string">"text/css"</span>/&gt;</div><div class="line">   &lt;link href=<span class="string">"https://img3.doubanio.com/f/shire/ae3f5a3e3085968370b1fc63afcecb22d3284848/css/separation/_all.css"</span> rel=<span class="string">"stylesheet"</span> type=<span class="string">"text/css"</span>/&gt;</div><div class="line">   &lt;link href=<span class="string">"https://img3.doubanio.com/f/movie/8864d3756094f5272d3c93e30ee2e324665855b0/css/movie/base/init.css"</span> rel=<span class="string">"stylesheet"</span>/&gt;</div><div class="line">   &lt;script type=<span class="string">"text/javascript"</span>&gt;</div></pre></td></tr></table></figure></p>
-<h4 id="分析元素"><a href="#分析元素" class="headerlink" title="分析元素"></a><strong>分析元素</strong></h4><p><img src="http://a3.qpic.cn/psb?/V10WDaE22S84Sl/OcYYzP78k1AK*O1yeB.ohifl7ftXhy7RObfJPaq1P30!/b/dPIAAAAAAAAA&amp;bo=AAaAAgAAAAADB6Y!&amp;rf=viewer_4" alt=""></p>
-<blockquote>
-<p>movie_list_soup = soup.find(‘ol’, attrs={‘class’: ‘grid_view’}) #电影列表<br>movie_name = movie_li.find(‘span’, attrs={‘class’: ‘title’}).get_text() #电影名字<br>movie_info = movie_li.find(‘div’, attrs={‘class’: ‘bd’}).find(‘p’).get_text() # 电影信息<br>movie_star = movie_li.find(‘span’, attrs={‘class’: ‘rating_num’}).get_text() # 电影评分</p>
-</blockquote>
-<p>先来看下电影列表<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">for</span> movie <span class="keyword">in</span> movie_list.find_all(<span class="string">'li'</span>):</div><div class="line">    movie_name = movie.find(<span class="string">'span'</span>, attrs=&#123;<span class="string">'class'</span>: <span class="string">'title'</span>&#125;)</div><div class="line">    print(movie_name)</div><div class="line">    </div><div class="line">&lt;span class="title"&gt;肖申克的救赎&lt;/span&gt;</div><div class="line">&lt;span class="title"&gt;霸王别姬&lt;/span&gt;</div><div class="line">&lt;span class="title"&gt;这个杀手不太冷&lt;/span&gt;</div><div class="line">&lt;span class="title"&gt;阿甘正传&lt;/span&gt;</div><div class="line">&lt;span class="title"&gt;美丽人生&lt;/span&gt;</div><div class="line">&lt;span class="title"&gt;千与千寻&lt;/span&gt;</div><div class="line">&lt;span class="title"&gt;辛德勒的名单&lt;/span&gt;</div><div class="line">&lt;span class="title"&gt;泰坦尼克号&lt;/span&gt;</div><div class="line">&lt;span class="title"&gt;盗梦空间&lt;/span&gt;</div><div class="line">&lt;span class="title"&gt;机器人总动员&lt;/span&gt;</div><div class="line">&lt;span class="title"&gt;海上钢琴师&lt;/span&gt;</div><div class="line">&lt;span class="title"&gt;三傻大闹宝莱坞&lt;/span&gt;</div><div class="line">&lt;span class="title"&gt;忠犬八公的故事&lt;/span&gt;</div><div class="line">&lt;span class="title"&gt;放牛班的春天&lt;/span&gt;</div><div class="line">&lt;span class="title"&gt;大话西游之大圣娶亲&lt;/span&gt;</div><div class="line">``` </div><div class="line"></div><div class="line">调用get_text()获取内容</div><div class="line">``` python</div><div class="line"><span class="keyword">for</span> movie <span class="keyword">in</span> movie_list.find_all(<span class="string">'li'</span>):</div><div class="line">    movie_name = movie.find(<span class="string">'span'</span>, attrs=&#123;<span class="string">'class'</span>: <span class="string">'title'</span>&#125;)</div><div class="line">    print(movie_name.get_text())</div><div class="line">    </div><div class="line">肖申克的救赎</div><div class="line">霸王别姬</div><div class="line">这个杀手不太冷</div><div class="line">阿甘正传</div><div class="line">美丽人生</div><div class="line">千与千寻</div><div class="line">辛德勒的名单</div><div class="line">泰坦尼克号</div><div class="line">盗梦空间</div><div class="line">机器人总动员</div><div class="line">海上钢琴师</div><div class="line">三傻大闹宝莱坞</div><div class="line">忠犬八公的故事</div><div class="line">放牛班的春天</div><div class="line">大话西游之大圣娶亲</div><div class="line">``` </div><div class="line"></div><div class="line">电影信息，电影评分同理</div><div class="line">``` python</div><div class="line">movie_info = movie.find(<span class="string">'div'</span>, attrs=&#123;<span class="string">'class'</span>: <span class="string">'bd'</span>&#125;).find(<span class="string">'p'</span>)</div><div class="line">print(movie_info.get_text())</div><div class="line">                            导演: 大卫·芬奇 David Fincher   主演: 爱德华·诺顿 Edward Norton / 布拉...</div><div class="line">                            <span class="number">1999</span> / 美国 德国 / 剧情 动作 悬疑 惊悚</div></pre></td></tr></table></figure></p>
-<p>附上完整代码，关于next_page的理解可以看下我的<a href="https://family-treesy.github.io/2017/10/24/douban-reading/" target="_blank" rel="external">python爬取豆瓣小说</a></p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#_*_ coding=utf-8 _*_</span></div><div class="line"></div><div class="line"><span class="string">'''</span></div><div class="line"><span class="string">爬取豆瓣电影TOP250</span></div><div class="line"><span class="string">'''</span></div><div class="line"></div><div class="line"><span class="keyword">import</span> codecs</div><div class="line"><span class="keyword">import</span> requests</div><div class="line"><span class="keyword">from</span> bs4 <span class="keyword">import</span> BeautifulSoup</div><div class="line"></div><div class="line">DOWNLOAD_URL = <span class="string">'https://movie.douban.com/top250'</span></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">download_page</span><span class="params">(url)</span>:</span></div><div class="line">    <span class="keyword">return</span> requests.get(url, headers=&#123;</div><div class="line">        <span class="string">'User-Agent'</span>:<span class="string">'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/61.0.3163.100 Safari/537.36'</span></div><div class="line">    &#125;).content</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">parse_html</span><span class="params">(html)</span>:</span></div><div class="line">    soup = BeautifulSoup(html, <span class="string">'html.parser'</span>)</div><div class="line">    <span class="comment"># 电影列表</span></div><div class="line">    movie_list_soup = soup.find(<span class="string">'ol'</span>, attrs=&#123;<span class="string">'class'</span>: <span class="string">'grid_view'</span>&#125;)</div><div class="line"></div><div class="line">    movie_name_list = []</div><div class="line"></div><div class="line">    <span class="keyword">for</span> movie_li <span class="keyword">in</span> movie_list_soup.find_all(<span class="string">'li'</span>):</div><div class="line">        movie_name = movie_li.find(<span class="string">'span'</span>, attrs=&#123;<span class="string">'class'</span>: <span class="string">'title'</span>&#125;).get_text()</div><div class="line">        movie_info = movie_li.find(<span class="string">'div'</span>, attrs=&#123;<span class="string">'class'</span>: <span class="string">'bd'</span>&#125;).find(<span class="string">'p'</span>).get_text()</div><div class="line">        movie_star = movie_li.find(<span class="string">'span'</span>, attrs=&#123;<span class="string">'class'</span>: <span class="string">'rating_num'</span>&#125;).get_text()</div><div class="line"></div><div class="line">        movie_name_list.append(movie_name)</div><div class="line">        movie_name_list.append(movie_info)</div><div class="line">        movie_name_list.append(movie_star)</div><div class="line">        </div><div class="line">    <span class="comment"># 下一页链接</span></div><div class="line">    next_page = soup.find(<span class="string">'span'</span>, attrs=&#123;<span class="string">'class'</span>: <span class="string">'next'</span>&#125;).find(<span class="string">'a'</span>)</div><div class="line">    <span class="keyword">if</span> next_page:</div><div class="line">        <span class="keyword">return</span> movie_name_list,DOWNLOAD_URL + next_page[<span class="string">'href'</span>]</div><div class="line">    <span class="keyword">return</span> movie_name_list, <span class="keyword">None</span></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">main</span><span class="params">()</span>:</span></div><div class="line">    url = DOWNLOAD_URL</div><div class="line">    <span class="keyword">with</span> codecs.open(<span class="string">'movies'</span>,<span class="string">'wb'</span>, encoding=<span class="string">'utf-8'</span>) <span class="keyword">as</span> f:</div><div class="line">        <span class="keyword">while</span> <span class="keyword">True</span>:</div><div class="line">            html = download_page(url)</div><div class="line">            movies, url =parse_html(html)</div><div class="line">            f.write(<span class="string">u'&#123;movies&#125;\n'</span>.format(movies=<span class="string">'\n'</span>.join(movies)))</div><div class="line"></div><div class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</div><div class="line">    main()</div></pre></td></tr></table></figure>
-<p>欢迎大家访问我的博客<a href="https://family-treesy.github.io/" target="_blank" rel="external">Treehl的博客</a><br><a href="https://github.com/Family-TreeSY" target="_blank" rel="external">GitHub</a><br><a href="http://www.jianshu.com/u/a01bc3ec4f88" target="_blank" rel="external">简书</a></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">爬虫</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Python</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">BeautifulSoup</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/11/14/Python爬取豆瓣电影TOP250/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-fourth" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/11/09/fourth/">python每日一题：第四题</a>
-    </h1>
-  
-
-        
-        <a href="/2017/11/09/fourth/" class="archive-article-date">
-  	<time datetime="2017-11-09T02:36:16.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-11-09</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>今天来学一下<a href="https://wx.xiaomiquan.com/mweb/views/joingroup/join_group.html?group_id=518855855524&amp;secret=meqx22a2blf4c1ae3ucbgpui4somnpwa&amp;user_id=1152122252" target="_blank" rel="external">Python之禅和他朋友们</a>的第四题</p>
-<h3 id="题目"><a href="#题目" class="headerlink" title="题目"></a><strong>题目</strong></h3><p><img src="https://foofish.net/images/fn.png" alt=""></p>
-<blockquote>
-<p>数列从0和1开始，之后的斐波那契系数由之前的两数相加而得出，例如斐波那契数列的前10个数是：0, 1, 1, 2, 3, 5, 8, 13, 21, 34。用 Python 实现斐波那契数列常见的写法有三种，各算法的执行效率也有很大差别。</p>
-</blockquote>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"><span class="string">'''</span></div><div class="line"><span class="string">用Python实现斐波那契数列(Fibonacci sequence)</span></div><div class="line"><span class="string">除第一个和第二个数外，任意一个数都可由前两个数相加得到:</span></div><div class="line"><span class="string">1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144, ...</span></div><div class="line"><span class="string">'''</span></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">fib</span><span class="params">(max)</span>:</span></div><div class="line">    <span class="comment">#n=0, a=0, b=1</span></div><div class="line">    n, a, b = <span class="number">0</span>, <span class="number">0</span>, <span class="number">1</span></div><div class="line">    <span class="comment">#条件满足 n &lt; max 就循环,n &gt; max 就停止</span></div><div class="line">    <span class="keyword">while</span> n &lt; max:</div><div class="line">        print(b)</div><div class="line">        <span class="comment">#不等于a=b, b=a + b</span></div><div class="line">        a, b = b, a + b</div><div class="line">        n = n + <span class="number">1</span></div><div class="line">    <span class="keyword">return</span> <span class="string">'done'</span></div><div class="line"><span class="comment">#调用函数</span></div><div class="line">f= fib(<span class="number">9</span>)</div><div class="line">print(f)</div><div class="line"></div><div class="line">&gt; <span class="number">1</span> <span class="number">1</span> <span class="number">2</span> <span class="number">3</span> <span class="number">5</span> <span class="number">8</span> <span class="number">13</span> <span class="number">21</span> <span class="number">34</span> done</div></pre></td></tr></table></figure>
-<p>这里再来看下<a href="https://foofish.net/daily-question4.html" target="_blank" rel="external">Python之禅</a>递推法讲解</p>
-<pre><code class="python"><span class="function"><span class="keyword">def</span> <span class="title">fib_loop</span><span class="params">(n)</span>:</span>
-    a, b = <span class="number">0</span>, <span class="number">1</span>
-    <span class="keyword">for</span> i <span class="keyword">in</span> range(n):
-        a, b = b, a + b
-    <span class="keyword">return</span> a
-
-<span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">20</span>):
-    print(fib_loop(i), end=<span class="string">" "</span>)
-</code></pre>
-<p>显然代码更加简洁易懂<br>欢迎访问我的博客<a href="https://family-treesy.github.io/" target="_blank" rel="external">Treehl的博客</a><br><a href="https://github.com/Family-TreeSY" target="_blank" rel="external">GitHub</a></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">DailyQuestion</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Python</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/11/09/fourth/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-Scrapy简介" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/11/07/Scrapy简介/">Scrapy爬取豆瓣电影Top250</a>
-    </h1>
-  
-
-        
-        <a href="/2017/11/07/Scrapy简介/" class="archive-article-date">
-  	<time datetime="2017-11-07T08:39:16.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-11-07</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>这两天摸索了下scrapy，刚看文档的时候觉得有点生无可恋，scrapy框架个人还是觉得比较难懂的，需要学习的地方非常多，之前用beautifulsoup4爬过top250，比scrapy简单更容易理解！！</p>
-<h3 id="Scrapy简介"><a href="#Scrapy简介" class="headerlink" title="Scrapy简介"></a><strong>Scrapy简介</strong></h3><p>Scrapy，Python开发的一个快速、高层次的屏幕抓取和web抓取框架，用于抓取web站点并从页面中提取结构化的数据。Scrapy用途广泛，可以用于数据挖掘、监测和自动化测试。 下面对每个组件都做了简单介绍，数据流如下所描述。<br><img src="http://scrapy-chs.readthedocs.io/zh_CN/latest/_images/scrapy_architecture.png" alt=""></p>
-<ul>
-<li>Scrapy Engine<br>引擎负责控制数据流在系统中所有组件中流动，并在相应动作发生时触发事件。 详细内容查看下面的数据流(Data Flow)部分</li>
-<li>调度器(Scheduler)<br>调度器从引擎接受request并将他们入队，以便之后引擎请求他们时提供给引擎</li>
-<li>下载器(Downloader)<br>下载器负责获取页面数据并提供给引擎，而后提供给spider</li>
-<li>Spiders<br>Spider是Scrapy用户编写用于分析response并提取item(即获取到的item)或额外跟进的URL的类。 每 个spider负责处理一个特定(或一些)网站</li>
-<li>Item Pipeline<br>Item Pipeline负责处理被spider提取出来的item。典型的处理有清理、 验证及持久化(例如存取到数 据库中)</li>
-<li>下载器中间件(Downloader middlewares)<br>下载器中间件是在引擎及下载器之间的特定钩子(specific hook)，处理Downloader传递给引擎的 response。 其提供了一个简便的机制，通过插入自定义代码来扩展Scrapy功能</li>
-<li>Spider中间件(Spider middlewares)<br>Spider中间件是在引擎及Spider之间的特定钩子(specific hook)，处理spider的输入(response)和输出     (items及requests)。 其提供了一个简便的机制，通过插入自定义代码来扩展Scrapy功能</li>
-<li><p>数据流(Data flow)<br>Scrapy中的数据流由执行引擎控制，其过程如下:</p>
-<p>引擎打开一个网站(open a domain)，找到处理该网站的Spider并向该spider请求第一个要爬取的 URL(s)。<br>引擎从Spider中获取到第一个要爬取的URL并在调度器(Scheduler)以Request调度。<br>引擎向调度器请求下一个要爬取的URL。<br>调度器返回下一个要爬取的URL给引擎，引擎将URL通过下载中间件(请求(request)方向)转发给下载 器(Downloader)。<br>一旦页面下载完毕，下载器生成一个该页面的Response，并将其通过下载中间件(返回(response)方  向)发送给引擎。<br>引擎从下载器中接收到Response并通过Spider中间件(输入方向)发送给Spider处理。<br>Spider处理Response并返回爬取到的Item及(跟进的)新的Request给引擎。<br>引擎将(Spider返回的)爬取到的Item给Item Pipeline，将(Spider返回的)Request给调度器。<br>(从第二步)重复直到调度器中没有更多地request，引擎关闭该网站</p>
-<p><strong>scrapy的流程如图，并且可归纳如下</strong></p>
-</li>
-<li>首先下载器下载request回执的html等的response</li>
-<li>然后下载器传给爬虫解析</li>
-<li>接着爬虫解析后交给调度器过滤，查重等等</li>
-<li>最后交给管道，进行爬取数据的处理</li>
-</ul>
-<p>建议大家参考下中文版的<a href="http://scrapy-chs.readthedocs.io/zh_CN/latest/index.html" target="_blank" rel="external">Scrapy文档</a>，看文档还是比较枯燥的，Scrapy又比较难懂（大神忽略），务必要有耐心！！！！！！</p>
-<h3 id="实战应用"><a href="#实战应用" class="headerlink" title="实战应用"></a><strong>实战应用</strong></h3><p>首先下载Scrapy包</p>
-<blockquote>
-<p>pip install scrapy</p>
-</blockquote>
-<p>这样安装，windows平台应该是会报错的，我当时装Scrapy时废了很大劲才弄完。安装过程中Pycharm或者官网上找不到的模块可以上这个网址找<a href="https://www.lfd.uci.edu/~gohlke/pythonlibs/" target="_blank" rel="external">Unofficial Windows Binaries for Python Extension Packages</a><br><a href="https://sourceforge.net/projects/pywin32/files/pywin32/Build%20221/" target="_blank" rel="external">Pywin32</a></p>
-<p>接着，我们打开CMD，新建一个爬虫文件</p>
-<blockquote>
-<p>scrapy startproject douban</p>
-</blockquote>
-<p><img src="http://a3.qpic.cn/psb?/V10WDaE22S84Sl/KSe9Lz4WjBnnSKYqGU6FuRlu8f4M5x5owDgWkLJVBAs!/b/dPIAAAAAAAAA&amp;bo=GgXQAAAAAAADAOo!&amp;rf=viewer_4" alt=""></p>
-<blockquote>
-<p>C:\Users\ssaw\douban&gt;tree /f<br>C:.<br>│  scrapy.cfg<br>│<br>└─douban<br>    │  items.py<br>    │  middlewares.py<br>    │  pipelines.py<br>    │  settings.py<br>    │  <strong>init</strong>.py<br>    │<br>    └─spiders<br>            <strong>init</strong>.py</p>
-</blockquote>
-<p>简单介绍下这些文件</p>
-<ul>
-<li>scrapy.cfg: 项目的配置文件</li>
-<li>douban/: 该项目的python模块。之后您将在此加入代码</li>
-<li>douban/items.py: 项目中的item文件</li>
-<li>douban/pipelines.py: 项目中的pipelines文件</li>
-<li>douban/settings.py: 项目的设置文件</li>
-<li>douban/spiders/:放置spider代码的目录</li>
-</ul>
-<p>编辑items.py文件<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># -*- coding: utf-8 -*-</span></div><div class="line"></div><div class="line"><span class="comment"># Define here the models for your scraped items</span></div><div class="line"><span class="comment">#</span></div><div class="line"><span class="comment"># See documentation in:</span></div><div class="line"><span class="comment"># http://doc.scrapy.org/en/latest/topics/items.html</span></div><div class="line"></div><div class="line"><span class="keyword">import</span> scrapy</div><div class="line"></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">DoubanItem</span><span class="params">(scrapy.Item)</span>:</span></div><div class="line">    <span class="comment"># define the fields for your item here like:</span></div><div class="line">    <span class="comment"># name = scrapy.Field()</span></div><div class="line">    movie_name = scrapy.Field()</div><div class="line">    movie_star = scrapy.Field()</div><div class="line">    movie_quote = scrapy.Field()</div></pre></td></tr></table></figure></p>
-<ul>
-<li>首先，引入Scrapy</li>
-<li>接着，创建一个类，继承自scrapy.item,这个是用来储存要爬下来的数据的存放容器，类似orm的写法</li>
-<li>我们要记录的是：电影的名字、电影的评分、电影的引述（quote）</li>
-</ul>
-<p>现在，我们在spiders文件夹下创建douban_spider.py<br>在我们编写爬虫之前，先了解一下scrapy的爬取机制，scrapy提取数据有自己的一套机制。它们被称作选择器(seletors)，因为他们通过特定的 XPath 或者 CSS 表达式来“选择” HTML文件中的某个部分。<br>之前我在博客上也总结过一篇<a href="https://family-treesy.github.io/2017/10/24/Xpath%E6%A8%A1%E6%8B%9F%E7%99%BB%E9%99%86GitHub/" target="_blank" rel="external">使用Xpath模拟登陆GitHub</a>有兴趣可以看一下<br>附上Xpath学习教程<a href="http://www.w3school.com.cn/xpath/index.asp" target="_blank" rel="external">Xpath</a></p>
-<h4 id="获取网页数据"><a href="#获取网页数据" class="headerlink" title="获取网页数据"></a><strong>获取网页数据</strong></h4><p>打开Chrome(F12),查找元素<br><a href="https://movie.douban.com/top250" target="_blank" rel="external">豆瓣电影TOP250</a><br><img src="http://a3.qpic.cn/psb?/V10WDaE22S84Sl/0bCq9nJbs2y00pG2rgDlHgHwFkb6hjanb.oPVV1E3ug!/b/dPIAAAAAAAAA&amp;bo=Uwd4AgAAAAADBww!&amp;rf=viewer_4" alt=""><br>红框圈出来的分别代表</p>
-<blockquote>
-<p>movie_name = div[@class=”hd”]/a/span/<br>movie_star = div[@class=”bd”]/div[@class=”star”]/span[@class=”rating_num”]<br>movie_quote = div[@class=”bd”]/p[@class=”quote”]/span[@class=”inq”]</p>
-</blockquote>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># _*_ coding=utf-8 _*_</span></div><div class="line"></div><div class="line"><span class="keyword">from</span> scrapy.spiders <span class="keyword">import</span> Spider</div><div class="line"><span class="keyword">from</span> scrapy.selector <span class="keyword">import</span> Selector</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">DouBanSpider</span><span class="params">(Spider)</span>:</span></div><div class="line">    name = <span class="string">'db'</span></div><div class="line">    start_urls = [<span class="string">'https://movie.douban.com/top250'</span>]</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">parse</span><span class="params">(self, response)</span>:</span></div><div class="line">        <span class="comment"># print(response.body)</span></div><div class="line">        selector = Selector(response)</div><div class="line"></div><div class="line">        <span class="comment"># print(selector)</span></div><div class="line">        movies = selector.xpath(<span class="string">'//div[@class="info"]'</span>)</div><div class="line">        <span class="keyword">for</span> movie <span class="keyword">in</span> movies:</div><div class="line">            movie_name = movie.xpath(<span class="string">'div[@class="hd"]/a/span/text()'</span>).extract()</div><div class="line">            movie_star = movie.xpath(<span class="string">'div[@class="bd"]/div[@class="star"]/span[@class="rating_num"]/text()'</span>).extract()</div><div class="line">            movie_quote = movie.xpath(<span class="string">'div[@class="bd"]/p[@class="quote"]/span[@class="inq"]/text()'</span>).extract()</div><div class="line"></div><div class="line"></div><div class="line">            print(movie_name)</div><div class="line">            print(movie_star)</div><div class="line">            print(movie_quote)</div></pre></td></tr></table></figure>
-<p>我们打开setting.py，加上U-A</p>
-<blockquote>
-<p>USER_AGENT = ‘Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/61.0.3163.100 Safari/537.36’</p>
-</blockquote>
-<p>在CMD中输入scrapy crawl db，运行如下：<br><img src="http://a1.qpic.cn/psb?/V10WDaE22S84Sl/T91UqI*QCUSBwERAtR0EqIARnZX5rOUtpVeLMJVPoTg!/b/dPMAAAAAAAAA&amp;bo=SAWAAgAAAAADB.0!&amp;rf=viewer_4" alt=""><br>我们还可以在douban文件根目录创建一个main.py，这样就可以在Pycharm中运行了</p>
-<blockquote>
-<p>from scrapy import cmdline<br>cmdline.execute(“scrapy crawl db”.split())</p>
-</blockquote>
-<h4 id="使用Item"><a href="#使用Item" class="headerlink" title="使用Item"></a><strong>使用Item</strong></h4><p>Item对象是自定义的python字典。 您可以使用标准的字典语法来获取到其每个字段的值。(字段即是我们之前用Field赋值的属性)，Spider将会将爬取到的数据以 Item 对象返回。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">item = DoubanItem()</div><div class="line"></div><div class="line">item[<span class="string">'movie_name'</span>] = movie_name</div><div class="line">item[<span class="string">'movie_star'</span>] = movie_star</div><div class="line">item[<span class="string">'movie_quote'</span>] = movie_quote</div></pre></td></tr></table></figure></p>
-<p>好了，现在我们先试着爬取单页面，查看下结果后，再去爬取多页面<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> scrapy.spiders <span class="keyword">import</span> Spider</div><div class="line"><span class="keyword">from</span> scrapy.selector <span class="keyword">import</span> Selector</div><div class="line"><span class="keyword">from</span> douban.items <span class="keyword">import</span> DoubanItem</div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">DouBanSpider</span><span class="params">(Spider)</span>:</span></div><div class="line">    name = <span class="string">'db'</span></div><div class="line">    start_urls = [<span class="string">'https://movie.douban.com/top250'</span>]</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">parse</span><span class="params">(self, response)</span>:</span></div><div class="line">        <span class="comment"># print(response.body)</span></div><div class="line">        selector = Selector(response)</div><div class="line"></div><div class="line">        <span class="comment"># print(selector)</span></div><div class="line">        movies = selector.xpath(<span class="string">'//div[@class="info"]'</span>)</div><div class="line">        <span class="keyword">for</span> movie <span class="keyword">in</span> movies:</div><div class="line">            movie_name = movie.xpath(<span class="string">'div[@class="hd"]/a/span/text()'</span>).extract()</div><div class="line">            movie_star = movie.xpath(<span class="string">'div[@class="bd"]/div[@class="star"]/span[@class="rating_num"]/text()'</span>).extract()</div><div class="line">            movie_quote = movie.xpath(<span class="string">'div[@class="bd"]/p[@class="quote"]/span[@class="inq"]/text()'</span>).extract()</div><div class="line"></div><div class="line">            <span class="comment">#print(movie_name)</span></div><div class="line">            <span class="comment">#print(movie_star)</span></div><div class="line">            <span class="comment">#print(movie_quote)</span></div><div class="line"></div><div class="line">            item = DoubanItem()</div><div class="line"></div><div class="line">            item[<span class="string">'movie_name'</span>] = movie_name</div><div class="line">            item[<span class="string">'movie_star'</span>] = movie_star</div><div class="line">            item[<span class="string">'movie_quote'</span>] = movie_quote</div><div class="line">            <span class="keyword">yield</span> item</div><div class="line">            print(movie_name)</div><div class="line">            print(movie_star)</div><div class="line">            print(movie_quote)</div></pre></td></tr></table></figure></p>
-<ul>
-<li>首先，我们先从scrapy中获得所需要的通用的 spider和 selector</li>
-<li>接着，我们使用Item将爬取的数据返回</li>
-<li>创建了一个DouBanSpider，继承了 scrapy.Spider 类， 且定义以下三个属性:</li>
-</ul>
-<ol>
-<li>name: 用于区别Spider。 该名字必须是唯一的，您不可以为不同的Spider设定相同的名字</li>
-<li>start_urls: 包含了Spider在启动时进行爬取的url列表。 因此，第一个被获取到的页面将是其中之一， 后续的URL则从初始的URL获取到的数据中提取。</li>
-<li>parse() 是spider的一个方法。 被调用时，每个初始URL完成下载后生成的 Response 对象将会作为唯一的参数传递给该函数。 该方法负责解析返回的数据(response data)，提取数据(生成item)以及生成需要进一步处理的URL的 Request 对象</li>
-</ol>
-<ul>
-<li>seletor的方法返回后一定要用它的 extract()方法，来返回一个列表 ；<strong>extract()文档的定义：</strong>串行化并将匹配到的节点返回一个unicode字符串列表。 结尾是编码内容的百分比</li>
-<li>接着，我们把得到的数据保存在Item中</li>
-<li>最后，我们使用Feed exports来保存数据</li>
-<li>这里使用了yield生成器函数，生成器函数和迭代器有密切关系，也并不是很容易理解，这一点需要多多学习</li>
-</ul>
-<pre><code class="python"><span class="comment">#看一个yield函数的示例</span>
-<span class="comment">#函数在每次循环时都会产生一个值，之后将其返回给它的调用者</span>
-<span class="comment">#函数不断的生成数字的平方</span>
-
-<span class="function"><span class="keyword">def</span> <span class="title">gensquares</span><span class="params">(N)</span>:</span>
-    <span class="keyword">for</span> i <span class="keyword">in</span> range(N):
-        <span class="keyword">yield</span> i ** <span class="number">2</span>
-
-<span class="keyword">for</span> i <span class="keyword">in</span> gensquares(<span class="number">5</span>):
-    print(i, end=<span class="string">' '</span>)
-
-<span class="number">0</span> <span class="number">1</span> <span class="number">4</span> <span class="number">9</span> <span class="number">16</span>
-</code></pre>
-<p>好了，spider暂时写完了，我们试着运行下</p>
-<blockquote>
-<p>scrapy crawl db -o douban.json -t json</p>
-</blockquote>
-<p>-o 后面是导出文件名，-t 后面是导出类型。<br>然后来看一下导出的结果，Pycharm打开json文件即可<br><img src="http://a3.qpic.cn/psb?/V10WDaE22S84Sl/LossKz0SW7Hx2McZTBD8XUmBeoKvbEGB3T6AFUkQwOI!/b/dPIAAAAAAAAA&amp;bo=7wVlAgAAAAADB68!&amp;rf=viewer_4" alt=""><br>打印出来的内容需要编码<br>我们换种方式，把文件格式保存为CSV，使用EXCEL打开</p>
-<blockquote>
-<p>scrapy crawl db -o douban.csv -t csv </p>
-</blockquote>
-<p><img src="http://a1.qpic.cn/psb?/V10WDaE22S84Sl/ujnMrzC601KzTrM7RJb9AD6hr6csiUWdTGWrDWo7y5c!/b/dPMAAAAAAAAA&amp;bo=hASAAgAAAAADByA!&amp;rf=viewer_4" alt=""></p>
-<p>用excel打开后假如是一堆乱码，就使用记事本打开，把它“另存为”时，编码选择ANSI<br><img src="http://a1.qpic.cn/psb?/V10WDaE22S84Sl/V1vYiLxCAWQJZ7vMnb6wDY.E6Hgp44cevou25VN0KSY!/b/dPMAAAAAAAAA&amp;bo=FQPnAAAAAAADB9M!&amp;rf=viewer_4" alt=""></p>
-<p>好了，现在我们添加多页面链接，完整地把TOP250爬取下来<br>我们从Elements中找到翻页lianjie<br><img src="http://a3.qpic.cn/psb?/V10WDaE22S84Sl/DnsQdXjejv9UbgZkWc9MUxUu1m8iMNkgSjh1wMEe2jc!/b/dPIAAAAAAAAA&amp;bo=xga3AQAAAAADB1Q!&amp;rf=viewer_4" alt=""></p>
-<pre><code class="python">next_page =response.selector.xpath(<span class="string">'//span[@class="next"]/link/@href'</span>).extract()
-<span class="keyword">if</span> next_page:
-    next_page = next_page[<span class="number">0</span>]
-    print(next_page)
-    <span class="keyword">yield</span> Request(self.url + next_page, callback=self.parse)
-</code></pre>
-<p>CMD输入scrapy crawl db -o douban.csv -t csv ，开始运行<br><img src="http://a1.qpic.cn/psb?/V10WDaE22S84Sl/rT4vp6Fib.QJfkeH4CZ8DT8GwPtDUeWYhc2Fq1vzeFA!/b/dPMAAAAAAAAA&amp;bo=.wOAAgAAAAADB1g!&amp;rf=viewer_4" alt=""></p>
-<p>学习Scrapy需要反复查看文档、资料，这是个简单的学习总结，这两天准备再去学习MongoDB数据库，大家一起加油！！</p>
-<p><a href="http://blog.csdn.net/flyingfishmark/article/details/51316159" target="_blank" rel="external">参考链接</a><br><a href="http://aljun.me/post/5" target="_blank" rel="external">参考链接</a><br><a href="http://scrapy-chs.readthedocs.io/zh_CN/latest/intro/overview.html" target="_blank" rel="external">Scrapy文档</a><br><a href="https://github.com/Family-TreeSY" target="_blank" rel="external">GitHub</a><br><a href="http://www.jianshu.com/u/a01bc3ec4f88" target="_blank" rel="external">简书</a><br>最后，欢迎大家访问我的博客<a href="https://family-treesy.github.io/" target="_blank" rel="external">Treehl的博客</a></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">PYTHON</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Scrapy</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/11/07/Scrapy简介/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-third" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/11/05/third/">Python每日一题：第三题</a>
-    </h1>
-  
-
-        
-        <a href="/2017/11/05/third/" class="archive-article-date">
-  	<time datetime="2017-11-05T10:21:16.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-11-05</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>今天我们来学习总结下<a href="https://wx.xiaomiquan.com/mweb/views/joingroup/join_group.html?group_id=518855855524&amp;secret=meqx22a2blf4c1ae3ucbgpui4somnpwa&amp;user_id=1152122252" target="_blank" rel="external">Python之禅和他朋友们</a>的第三题，这两天一直有事情没跟上大家的学习学习节奏，现在来学习一下的军哥的代码<a href="https://foofish.net/daily-question3.html" target="_blank" rel="external">Python之禅</a>，搞清楚每一行代码的意思</p>
-<h3 id="题目"><a href="#题目" class="headerlink" title="题目"></a><strong>题目</strong></h3><p>统计一个文件中每个单词出现的次数，列出出现频率最多的5个单词。</p>
-<blockquote>
-<p>The Zen of Python, by Tim Peters<br>Beautiful is better than ugly.<br>Explicit is better than implicit.<br>Simple is better than complex.<br>Complex is better than complicated.<br>Flat is better than nested.<br>Sparse is better than dense.<br>Readability counts.<br>Special cases aren’t special enough to break the rules.<br>Although practicality beats purity.<br>Errors should never pass silently.<br>Unless explicitly silenced.<br>In the face of ambiguity, refuse the temptation to guess.<br>There should be one– and preferably only one –obvious way to do it.<br>Although that way may not be obvious at first unless you’re Dutch.<br>Now is better than never.<br>Although never is often better than <em>right</em> now.<br>If the implementation is hard to explain, it’s a bad idea.<br>If the implementation is easy to explain, it may be a good idea.<br>Namespaces are one honking great idea – let’s do more of those!</p>
-</blockquote>
-<p>在学习前我们需要了解一下几点知识：</p>
-<ul>
-<li>Python的i\o操作</li>
-<li>列表解析、sort()方法、sorted()函数</li>
-<li>字典Dict操作</li>
-<li>正则表达式re</li>
-<li>lambda表达式</li>
-<li>Counter</li>
-<li>assert断言</li>
-</ul>
-<h3 id="Python的i-o操作"><a href="#Python的i-o操作" class="headerlink" title="Python的i\o操作"></a><strong>Python的i\o操作</strong></h3><p>I\O：input\output<br>这里推荐网上两个参考教程，一个是廖雪峰老师的，另一个是菜鸟教程<br><a href="https://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/001431917715991ef1ebc19d15a4afdace1169a464eecc2000" target="_blank" rel="external">参考链接</a><br><a href="http://www.runoob.com/python/python-files-io.html" target="_blank" rel="external">参考链接</a></p>
-<p><strong>读写文件</strong><br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#r:表示读，</span></div><div class="line"><span class="comment">#w:表示输出生成并打开文件</span></div><div class="line"><span class="comment">#a:文件尾部追加内容而打开文件</span></div><div class="line"><span class="comment">#文件处理模式字符串尾部加上b可以进行二进制数据处理，Example:'rb'</span></div><div class="line"><span class="comment">#加上‘+’:同时为输入和输出打开文件</span></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>f = open(<span class="string">'myfile.txt'</span>, <span class="string">'w'</span>) <span class="comment">#</span></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>f.write(<span class="string">'hello world!'</span>, <span class="string">'w'</span>) <span class="comment">#在文本内写入“hello world!”</span></div><div class="line"><span class="meta">&gt;&gt;&gt; </span><span class="number">12</span></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>f.write(<span class="string">'hello treehl!'</span>, <span class="string">'w'</span>) <span class="comment">#在文本内写入“hello world!”</span></div><div class="line"><span class="meta">&gt;&gt;&gt; </span><span class="number">12</span></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>f.close() <span class="comment">#关闭文本</span></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>f = open(<span class="string">'myfile.txt'</span>)</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>f.readline() <span class="comment">#读取一行</span></div><div class="line"><span class="meta">&gt;&gt;&gt; </span><span class="string">'hello world!'</span></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>f.readline()</div><div class="line"><span class="meta">&gt;&gt;&gt; </span><span class="string">'hello treehl!'</span></div><div class="line">使用<span class="keyword">for</span>循环打印文本：</div><div class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">for</span> line <span class="keyword">in</span> open(<span class="string">'myfile'</span>):</div><div class="line">print(line)</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>data = open(<span class="string">'data.bin'</span>, <span class="string">'rb'</span>)</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>print(data.read())</div><div class="line"><span class="meta">&gt;&gt;&gt; </span><span class="string">b' \x00\x00\x07spam\x00\x08'</span></div></pre></td></tr></table></figure></p>
-<p>由于文件读写时都有可能产生IOError，一旦出错，后面的f.close()就不会调用。所以，Python引入了with语句来自动帮我们调用close()方法<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">with</span> open(<span class="string">'myfile.txt'</span>, <span class="string">'r'</span>) <span class="keyword">as</span> f: <span class="comment">#r:表示读，w:</span></div><div class="line">print(f.read())</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>hello world!</div><div class="line">hello treehl!</div></pre></td></tr></table></figure></p>
-<h3 id="列表解析、sort-方法、sorted-函数"><a href="#列表解析、sort-方法、sorted-函数" class="headerlink" title="列表解析、sort()方法、sorted()函数"></a><strong>列表解析、sort()方法、sorted()函数</strong></h3><p>在军哥的代码中有一行使用了列表解析式，我们正好学习下</p>
-<blockquote>
-<p>words = [s.lower() for s in re.findall(“\w+”, data)]</p>
-</blockquote>
-<p><strong>1. 列表解析</strong><br>我们先看一下普通的生成列表<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&gt;&gt;&gt; </span>res =[]</div><div class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">for</span> x <span class="keyword">in</span> <span class="string">'spam'</span>:</div><div class="line">res.append(x * <span class="number">4</span>)</div><div class="line"></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>res</div><div class="line">[<span class="string">'ssss'</span>, <span class="string">'pppp'</span>, <span class="string">'aaaa'</span>, <span class="string">'mmmm'</span>]</div><div class="line">``` </div><div class="line"></div><div class="line">我们再来看一下列表解析的代码</div><div class="line"></div><div class="line">``` python</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>res = [x * <span class="number">4</span> <span class="keyword">for</span> x <span class="keyword">in</span> <span class="string">'spam'</span>]</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>res</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>[<span class="string">'ssss'</span>, <span class="string">'pppp'</span>, <span class="string">'aaaa'</span>, <span class="string">'mmmm'</span>]</div></pre></td></tr></table></figure></p>
-<p>生成列表res的方式包含三行代码，而用列表解析只需要一行，非常简单！我们来分析下列表解析，首先制定列表名称，如res，接着定义一个表达式 x * 4 ，最后再编写一个for 循环 for x in ‘spam’</p>
-<p><strong>2. sort()方法</strong><br>sort()方法：原地对列表进行永久性排序，而且已递增的顺序进行排序</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&gt;&gt;&gt; </span>cars = [<span class="string">'bmw'</span>, <span class="string">'audi'</span>, <span class="string">'tesla'</span>, <span class="string">'honda'</span>]</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>cars.sort()</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>print(cars)</div><div class="line">[<span class="string">'audi'</span>, <span class="string">'bmw'</span>, <span class="string">'honda'</span>, <span class="string">'tesla'</span>]</div><div class="line"><span class="comment"># </span></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>print(cars) <span class="comment">#使用sort()方法后无法再回到原来的排序</span></div><div class="line">[<span class="string">'audi'</span>, <span class="string">'bmw'</span>, <span class="string">'honda'</span>, <span class="string">'tesla'</span>]</div></pre></td></tr></table></figure>
-<p>我们可以在列表中添加reverse参数使列表反转</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&gt;&gt;&gt; </span>cars = [<span class="string">'bmw'</span>, <span class="string">'audi'</span>, <span class="string">'tesla'</span>, <span class="string">'honda'</span>]</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>cars.sort(reverse=<span class="keyword">True</span>)</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>print(cars)</div><div class="line">[<span class="string">'tesla'</span>, <span class="string">'honda'</span>, <span class="string">'bmw'</span>, <span class="string">'audi'</span>]</div><div class="line">``` </div><div class="line"></div><div class="line"><span class="comment">### **sorted()函数**</span></div><div class="line">**sort 与 sorted 区别：**</div><div class="line">sort 是应用在 list 上的方法，sorted 可以对所有可迭代的对象进行排序操作。</div><div class="line">list 的 sort 方法返回的是对已经存在的列表进行操作，而内建函数 sorted 方法返回的是一个新的 list，而不是在原来的基础上进行的操作。</div><div class="line">sorted()对列表进行临时性排序，并且同样也可以向sorted函数传递reverse参数</div><div class="line"></div><div class="line">``` python</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>cars = [<span class="string">'bmw'</span>, <span class="string">'audi'</span>, <span class="string">'tesla'</span>, <span class="string">'honda'</span>]</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>print(cars)</div><div class="line">[<span class="string">'bmw'</span>, <span class="string">'audi'</span>, <span class="string">'tesla'</span>, <span class="string">'honda'</span>]</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>cars = [<span class="string">'bmw'</span>, <span class="string">'audi'</span>, <span class="string">'tesla'</span>, <span class="string">'honda'</span>]</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>print(sorted(cars))</div><div class="line">[<span class="string">'audi'</span>, <span class="string">'bmw'</span>, <span class="string">'honda'</span>, <span class="string">'tesla'</span>]</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>print(cars) <span class="comment">#调用函数sorted()列表顺序并没有发生改变</span></div><div class="line">[<span class="string">'bmw'</span>, <span class="string">'audi'</span>, <span class="string">'tesla'</span>, <span class="string">'honda'</span>]</div><div class="line">&gt;&gt;&gt;print(sorted(cars, reverse=<span class="keyword">True</span>))</div><div class="line">[<span class="string">'tesla'</span>, <span class="string">'honda'</span>, <span class="string">'bmw'</span>, <span class="string">'audi'</span>]</div></pre></td></tr></table></figure>
-<h3 id="字典操作"><a href="#字典操作" class="headerlink" title="字典操作"></a><strong>字典操作</strong></h3><p>这里就不总结字典使用方法了，可以参考廖雪峰老师的<a href="https://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/00143167793538255adf33371774853a0ef943280573f4d000" target="_blank" rel="external">Python教程</a><br>我们看到军哥的代码中使用了dict中的get方法</p>
-<blockquote>
-<p>self.mapping[word] = self.mapping.get(word, 0) + 1</p>
-</blockquote>
-<p>字典以“键：值（key：value）”对形式表达</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">D = &#123;<span class="string">'spam'</span>: <span class="number">2</span>, <span class="string">'eggs'</span>: <span class="number">3</span>&#125;</div></pre></td></tr></table></figure>
-<p>字典values和items方法分别返回字典的key值列表和（key, value）对元组</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&gt;&gt;&gt; </span>D = &#123;<span class="string">'spam'</span>: <span class="number">2</span>, <span class="string">'hams'</span>: <span class="number">1</span>, <span class="string">'eggs'</span>: <span class="number">3</span>&#125;</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>D.keys()</div><div class="line">dict_keys([<span class="string">'spam'</span>, <span class="string">'hams'</span>, <span class="string">'eggs'</span>])</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>D.values()</div><div class="line">dict_values([<span class="number">2</span>, <span class="number">1</span>, <span class="number">3</span>])</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>D.items()</div><div class="line">dict_items([(<span class="string">'spam'</span>, <span class="number">2</span>), (<span class="string">'hams'</span>, <span class="number">1</span>), (<span class="string">'eggs'</span>, <span class="number">3</span>)])</div></pre></td></tr></table></figure>
-<h4 id="这里需要重点看下"><a href="#这里需要重点看下" class="headerlink" title="这里需要重点看下"></a><strong>这里需要重点看下</strong></h4><p>读取不存在的键会报错，然而通过get()方法能够返回默认的值（None或用户定义的默认值），这是为了避免missing-key错误而填入默认值的一个方法：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&gt;&gt;&gt; </span>D.get(<span class="string">'spam'</span>)</div><div class="line"><span class="number">2</span></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>print(D.get(<span class="string">'toast'</span>))</div><div class="line"><span class="keyword">None</span></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>D.get(<span class="string">'toast'</span>, <span class="number">88</span>)</div><div class="line"><span class="number">88</span></div></pre></td></tr></table></figure>
-<h3 id="正则表达式re"><a href="#正则表达式re" class="headerlink" title="正则表达式re"></a><strong>正则表达式re</strong></h3><p>学习正则还是有点繁琐的，不多废话附上参考<br><a href="https://github.com/zeeshanu/learn-regex/blob/master/README-cn.md" target="_blank" rel="external">参考链接</a><br><a href="http://www.cnblogs.com/huxi/archive/2010/07/04/1771073.html" target="_blank" rel="external">参考链接</a><br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="string">"\w+"</span></div><div class="line">\w:匹配[A-Z,a-z,<span class="number">0</span><span class="number">-9</span>]；</div><div class="line">+ :匹配前一个字符<span class="number">0</span>次或无限次</div></pre></td></tr></table></figure></p>
-<h3 id="lambda表达式"><a href="#lambda表达式" class="headerlink" title="lambda表达式"></a><strong>lambda表达式</strong></h3><p>lambda表达式创建了一个之后能够调用的函数，但是它返回了一个函数而不是将这个函数赋值给一个变量名，这里不多写了，想深入了解的可以看Python学习手册</p>
-<ul>
-<li>lambda能够出现在Python语法不允许def出现的地方</li>
-<li>lambda的主体是一个单个的表达式，而不是一个代码块</li>
-</ul>
-<p>现在我们看一下def和lambda表达式的区别：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">func</span><span class="params">(x, y, z)</span>:</span></div><div class="line">	<span class="keyword">return</span> x + Y + z</div><div class="line"></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>func(<span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>)</div><div class="line"><span class="number">9</span></div></pre></td></tr></table></figure></p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&gt;&gt;&gt; </span>f = <span class="keyword">lambda</span> x, y, z: x + y +z</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>f(<span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>)</div><div class="line"><span class="number">9</span></div></pre></td></tr></table></figure>
-<p>来看个复杂点的</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">knights</span><span class="params">()</span>:</span></div><div class="line">	title = <span class="string">'Sir'</span></div><div class="line">	action = (<span class="keyword">lambda</span> x: title + <span class="string">' '</span> + x)</div><div class="line">	<span class="keyword">return</span> action</div><div class="line">	</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>act = knights()</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>act(<span class="string">'treehl'</span>)</div><div class="line"><span class="string">'Sir treehl'</span></div></pre></td></tr></table></figure>
-<h3 id="counter"><a href="#counter" class="headerlink" title="counter"></a><strong>counter</strong></h3><p><a href="http://blog.csdn.net/spynao/article/details/50186531" target="_blank" rel="external">参考链接</a><br>这里也谢谢九二同学的分享</p>
-<h3 id="assert断言"><a href="#assert断言" class="headerlink" title="assert断言"></a><strong>assert断言</strong></h3><p>凡是用print()来辅助查看的地方，都可以用断言（assert）来替代，假如断言失败，就会抛出错误<br>这里分享下参考链接，今天翻了Python学习手册的assert，相比廖雪峰老师的教程Python学习手册的assert显得有点难懂。。。。。。。<br><a href="https://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/001431915578556ad30ab3933ae4e82a03ee2e9a4f70871000" target="_blank" rel="external">参考链接</a></p>
-<p>最后附上军哥的代码<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># _*_ coding:utf-8 _*_</span></div><div class="line"><span class="keyword">import</span> io</div><div class="line"><span class="keyword">import</span> re</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Counter</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, path)</span>:</span></div><div class="line">        <span class="string">'''</span></div><div class="line"><span class="string"></span></div><div class="line"><span class="string">        :param path: 文件路径</span></div><div class="line"><span class="string">        '''</span></div><div class="line">        self.mapping = dict()</div><div class="line">        <span class="comment">#使用io.open可以添加encoding参数</span></div><div class="line">        <span class="keyword">with</span> io.open(path, encoding=<span class="string">'utf-8'</span>) <span class="keyword">as</span> f:</div><div class="line">            data = f.read()</div><div class="line">            <span class="comment">#使用列表解析式</span></div><div class="line">            <span class="comment">#findall(string[, pos[, endpos]]) | re.findall(pattern, string[, flags]):</span></div><div class="line">            <span class="comment">#搜索string，以列表形式返回全部能匹配的子串</span></div><div class="line">            <span class="comment">#\w匹配[A-Z,a-z,0-9]；+ 匹配前一个字符0次或无限次，data为读取的文件</span></div><div class="line">            <span class="comment">#Python lower() 方法转换字符串中所有大写字符为小写</span></div><div class="line">            words = [s.lower() <span class="keyword">for</span> s <span class="keyword">in</span> re.findall(<span class="string">'\w+'</span>, data)]</div><div class="line">            <span class="keyword">for</span> word <span class="keyword">in</span> words:</div><div class="line">                <span class="comment">#当key不存在时通过get方法返回默认值</span></div><div class="line">                self.mapping[word] = self.mapping.get(word, <span class="number">0</span>) + <span class="number">1</span></div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">most_common</span><span class="params">(self, n)</span>:</span></div><div class="line">        <span class="comment">#使用assert断言</span></div><div class="line">        <span class="keyword">assert</span> n &gt;<span class="number">0</span>, <span class="string">'n should be larger than 0'</span></div><div class="line">        <span class="comment">#sort()方法对列表进行永久性排列</span></div><div class="line">        <span class="comment">#sorted()函数对列表进行临时排序</span></div><div class="line">        <span class="comment">#reverse=True使列表反转</span></div><div class="line">        <span class="comment">#字典items()返回（key, value）对元组</span></div><div class="line">        <span class="comment">#使用lambda表达式</span></div><div class="line">        <span class="keyword">return</span> sorted(self.mapping.items(), key=<span class="keyword">lambda</span> item:item[<span class="number">1</span>], reverse=<span class="keyword">True</span>)[:n]</div><div class="line"></div><div class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</div><div class="line">    <span class="comment">#创建实例，调用most_common方法，打印排名前五的单词</span></div><div class="line">    most_common_5 = Counter(<span class="string">'importthis.txt'</span>).most_common(<span class="number">5</span>)</div><div class="line">    <span class="keyword">for</span> item <span class="keyword">in</span> most_common_5:</div><div class="line">        print(item)</div></pre></td></tr></table></figure></p>
-<p>欢迎大家访问我的博客<a href="https://family-treesy.github.io/" target="_blank" rel="external">Treehl的博客</a></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">PYTHON</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">DailyQuestion</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/11/05/third/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-second" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/10/31/second/">Python每日一题：第二题</a>
-    </h1>
-  
-
-        
-        <a href="/2017/10/31/second/" class="archive-article-date">
-  	<time datetime="2017-10-31T14:53:59.313Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-10-31</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>今天我们学习下<a href="https://wx.xiaomiquan.com/mweb/views/joingroup/join_group.html?group_id=518855855524&amp;secret=meqx22a2blf4c1ae3ucbgpui4somnpwa&amp;user_id=1152122252" target="_blank" rel="external">Python之禅和他朋友们</a>的第二道题目,了解分析下军哥的<a href="https://foofish.net/daily-question2.html" target="_blank" rel="external">代码</a></p>
-<p><strong>题目</strong></p>
-<blockquote>
-<p>设计一个猜数字的游戏，系统随机生成一个1~100之间的整数，玩家有5次机会，每猜一次系统就会提示玩家该数字是偏大还是偏小，如果猜中了，则告知玩家并提前结束游戏，如果5次都没猜中，结束游戏并告知正确答案。</p>
-</blockquote>
-<p>老样子！在做题之前我们需要了解以下几点知识：</p>
-<ul>
-<li>try … except … else …语句</li>
-<li>if … elif … else … 语句</li>
-<li>while … else … 语句</li>
-<li>random模块</li>
-</ul>
-<p><strong>try … except … else … 语句</strong><br>工作原理大致如下：Python执行try代码块，只有可能发生异常的代码才需要放在try语句中；except代码块告诉Python，如果try语句运行发生异常时，该怎么办；else代码块告诉Python，在try代码块成功执行时才需要的运行的代码，放在else代码块中。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">first_number = input(<span class="string">'First number: '</span>)</div><div class="line">second_number = input(<span class="string">'Second number: '</span>)</div><div class="line"><span class="keyword">try</span>:</div><div class="line">    answer = int(first_number) / int(second_number)</div><div class="line"><span class="keyword">except</span> ZeroDivisionError:</div><div class="line">    print(<span class="string">"You can't divide by 0 !"</span>)</div><div class="line"><span class="keyword">else</span>:</div><div class="line">    print(answer)</div></pre></td></tr></table></figure>
-<p><strong>if … elif … else … 语句</strong></p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># 年龄不满4岁，入场为0</span></div><div class="line">age = <span class="number">12</span></div><div class="line"><span class="keyword">if</span> age &lt; <span class="number">4</span>: <span class="comment"># 年龄不满4岁，入场为0，跳过余下测试</span></div><div class="line">	print(<span class="string">'Your admission cost is $0.'</span>)</div><div class="line"><span class="keyword">elif</span> age &lt; <span class="number">18</span>: <span class="comment"># elif仅在if语句为False时才能运行</span></div><div class="line">	print(<span class="string">'Your admission cost is $5.'</span>)</div><div class="line"><span class="keyword">else</span>: <span class="comment"># 如果if和elif都未通过，else语句才被运行</span></div><div class="line">	print(<span class="string">'Your admission cost is $10.'</span>)</div></pre></td></tr></table></figure>
-<p><strong>while … else … 语句</strong><br>while … else 在循环条件为 false 时执行 else 语句块，翻了Python学习手册，while…else…有点晦涩难懂，菜鸟教程的更容易理解</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">count = <span class="number">0</span></div><div class="line"><span class="keyword">while</span> count &lt; <span class="number">5</span>:</div><div class="line">   <span class="keyword">print</span> count, <span class="string">" is  less than 5"</span></div><div class="line">   count = count + <span class="number">1</span></div><div class="line"><span class="keyword">else</span>: <span class="comment"># while循环被设置为&lt; 5,当count&gt; 5时，便执行else语句</span></div><div class="line">   <span class="keyword">print</span> count, <span class="string">" is not less than 5"</span></div><div class="line">   </div><div class="line"><span class="number">0</span> <span class="keyword">is</span> less than <span class="number">5</span></div><div class="line"><span class="number">1</span> <span class="keyword">is</span> less than <span class="number">5</span></div><div class="line"><span class="number">2</span> <span class="keyword">is</span> less than <span class="number">5</span></div><div class="line"><span class="number">3</span> <span class="keyword">is</span> less than <span class="number">5</span></div><div class="line"><span class="number">4</span> <span class="keyword">is</span> less than <span class="number">5</span></div><div class="line"><span class="number">5</span> <span class="keyword">is</span> <span class="keyword">not</span> less than <span class="number">5</span></div></pre></td></tr></table></figure>
-<p><strong>random模块</strong><br>参考<a href="http://www.cnblogs.com/yd1227/archive/2011/03/18/1988015.html" target="_blank" rel="external">博客园</a></p>
-<p>基本的解题知识学完后，我们来看一下的军哥的代码</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> random</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">GuessGame</span><span class="params">()</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, min_num, max_num, choice)</span>:</span></div><div class="line">        <span class="string">'''</span></div><div class="line"><span class="string"></span></div><div class="line"><span class="string">        :param min_num:</span></div><div class="line"><span class="string">        :param max_num:</span></div><div class="line"><span class="string">        :param choice:</span></div><div class="line"><span class="string">        :return:</span></div><div class="line"><span class="string">        '''</span></div><div class="line"></div><div class="line">        self.min_num = min_num</div><div class="line">        self.max_num = max_num</div><div class="line">        self.choice = choice</div><div class="line">        self.target = random.randint(min_num, max_num)</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">guess</span><span class="params">(self)</span>:</span></div><div class="line">        <span class="string">'''</span></div><div class="line"><span class="string"></span></div><div class="line"><span class="string">        :return:</span></div><div class="line"><span class="string">        '''</span></div><div class="line">        choice = self.choice</div><div class="line">        <span class="keyword">while</span> choice &gt; <span class="number">0</span>:</div><div class="line">            choice -= <span class="number">1</span></div><div class="line">            <span class="keyword">try</span>:</div><div class="line">                num = int(input(<span class="string">'输入数字: '</span>))</div><div class="line">            <span class="keyword">except</span>:</div><div class="line">                print(<span class="string">'输入有效数字'</span>)</div><div class="line">                <span class="keyword">continue</span> <span class="comment"># 跳出这次循环</span></div><div class="line"></div><div class="line">            <span class="keyword">if</span> num == self.target:</div><div class="line">                print(<span class="string">'恭喜你猜中了'</span>)</div><div class="line">                <span class="keyword">break</span> <span class="comment"># 退出循环</span></div><div class="line">            <span class="keyword">elif</span> num &lt;= self.target:</div><div class="line">                print(<span class="string">'你猜的数字太小了，还剩%d次机会'</span> % choice) <span class="comment"># 运用字符串格式化表达式</span></div><div class="line">            <span class="keyword">else</span>:</div><div class="line">                print(<span class="string">'你猜的数字太大了，还剩%d次机会'</span> % choice)</div><div class="line"></div><div class="line">        <span class="keyword">else</span>:</div><div class="line">            print(<span class="string">'很遗憾，%d 次机会都用完了,只差一点点就猜中了，正确答案是 %d'</span> % (self.choice, self.target))</div><div class="line"></div><div class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</div><div class="line">    game = GuessGame(<span class="number">1</span>, <span class="number">100</span>, <span class="number">5</span>) <span class="comment"># 创建实例</span></div><div class="line">    game.guess()</div></pre></td></tr></table></figure>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">你猜的数字太小了，还剩<span class="number">4</span>次机会</div><div class="line">输入数字: <span class="number">1</span></div><div class="line">你猜的数字太小了，还剩<span class="number">3</span>次机会</div><div class="line">输入数字: <span class="number">100</span></div><div class="line">你猜的数字太大了，还剩<span class="number">2</span>次机会</div><div class="line">输入数字: <span class="number">90</span></div><div class="line">你猜的数字太大了，还剩<span class="number">1</span>次机会</div><div class="line">输入数字: <span class="number">0</span></div><div class="line">你猜的数字太小了，还剩<span class="number">0</span>次机会</div><div class="line">很遗憾，<span class="number">5</span> 次机会都用完了,只差一点点就猜中了，正确答案是 <span class="number">70</span></div></pre></td></tr></table></figure>
-<p>欢迎访问博客<a href="https://family-treesy.github.io/" target="_blank" rel="external">Treehl的博客</a><br><a href="https://github.com/Family-TreeSY" target="_blank" rel="external">GitHub</a></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">PYTHON</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">DailyQuestion</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/10/31/second/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/page/2/">&laquo; Prev</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/4/">Next &raquo;</a>
+      <a class="extend prev" rel="prev" href="/page/2/">&laquo; Prev</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/4/">Next &raquo;</a>
     </nav>
   
 
@@ -1064,6 +1316,14 @@ getOwnMetadataKeys:function(t){return o(i(t),arguments.length<2?void 0:u(argumen
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">PYTHON</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">MongoDB</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">Git</a>
               </li>
              
@@ -1072,27 +1332,7 @@ getOwnMetadataKeys:function(t){return o(i(t),arguments.length<2?void 0:u(argumen
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">MySQL</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">PYTHON</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">DailyQuestion</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">MongoDB</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">爬虫</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Scrapy</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1100,11 +1340,23 @@ getOwnMetadataKeys:function(t){return o(i(t),arguments.length<2?void 0:u(argumen
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">爬虫</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">BeautifulSoup</a>
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Scrapy</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">Redis</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">MySQL</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1116,11 +1368,47 @@ getOwnMetadataKeys:function(t){return o(i(t),arguments.length<2?void 0:u(argumen
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Django</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">Unittest</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Django</a>
+                <a href="javascript:void(0)" class="js-tag color2">DJANGO</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">Silk</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Cache</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">Autocomplete-light</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">Ckeditor</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">Rest-Framework</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">Debug-Toolbar</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">BootStrap</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">DJango</a>
               </li>
             
             <div class="clearfix"></div>

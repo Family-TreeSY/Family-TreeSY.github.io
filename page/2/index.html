@@ -173,6 +173,1938 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-二、建立博客应用" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/04/01/二、建立博客应用/">建立博客应用</a>
+    </h1>
+  
+
+        
+        <a href="/2018/04/01/二、建立博客应用/" class="archive-article-date">
+  	<time datetime="2018-04-01T15:08:08.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-04-01</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="二、建立博客应用"><a href="#二、建立博客应用" class="headerlink" title="二、建立博客应用"></a><strong>二、建立博客应用</strong></h3><p>这里创建3个app</p>
+<ul>
+<li>blog</li>
+<li>config</li>
+<li>comment</li>
+</ul>
+<ol>
+<li>blog应用中包含文章、分类、标签</li>
+<li>config应用包含侧边栏和友联</li>
+<li>comment应用单独放一个评论</li>
+</ol>
+<blockquote>
+<p>python manage.py startapp blog</p>
+<p>python manage.py startapp config</p>
+<p>python manage.py startapp comment</p>
+</blockquote>
+<p>这样就创建好了三个应用，接下来我们需要在setting.py中安装应用<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># Myblog/Myblog/settings.py</span></div><div class="line">INSTALLED_APPS = [</div><div class="line">    <span class="string">'blog'</span>,</div><div class="line">    <span class="string">'config'</span>,</div><div class="line">    <span class="string">'comment'</span>,</div><div class="line">    ....</div></pre></td></tr></table></figure></p>
+<p><img src="http://m.qpic.cn/psb?/V10WDaE22S84Sl/ngWIUHiJR29ozpV96G1u8w08KPPeDfeflQ.kN0fP*Bs!/b/dDEBAAAAAAAA&amp;bo=AwRGAwAAAAADB2A!&amp;rf=viewer_4" alt=""></p>
+<p><a href="https://github.com/Family-TreeSY/Myblog" target="_blank" rel="external">GitHub</a><br>欢迎访问<a href="https://family-treesy.github.io/" target="_blank" rel="external">Treehl的博客</a></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Django</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/04/01/二、建立博客应用/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-Redis数据结构" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/04/01/Redis数据结构/">Redis五种数据命令小结</a>
+    </h1>
+  
+
+        
+        <a href="/2018/04/01/Redis数据结构/" class="archive-article-date">
+  	<time datetime="2018-04-01T12:08:08.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-04-01</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="Redis数据结构"><a href="#Redis数据结构" class="headerlink" title="Redis数据结构"></a><strong>Redis数据结构</strong></h3><p>结构类型</p>
+<ol>
+<li>STRING</li>
+<li>LIST</li>
+<li>SET</li>
+<li>HASH</li>
+<li>ZSET（有序集合）</li>
+</ol>
+<p><strong>STRING</strong></p>
+<ol>
+<li>字符串存储一下3种类型的值<br>字符串<br>整数<br>浮点数</li>
+</ol>
+<ul>
+<li>GET（获取值）</li>
+<li>SET（设置值）</li>
+<li>DEL（删除值）</li>
+</ul>
+<p>redis的自增和自减命令</p>
+<ul>
+<li>INCR incr key-name —-将键存储的值加上1</li>
+<li>DECR decr key-name—-将键存储的值减去1</li>
+<li>INCRBY incrby key-name amount 将键存储的值加上整数amount</li>
+<li>DECRBY decrby key-name amount 将键存储的值减去整数amount</li>
+<li>INCRBYFLOAT incrby key-name amount 将键存储的值加上浮点数amount</li>
+</ul>
+<p>redis处理子串和二进制位的命令</p>
+<ul>
+<li>append（append key-name value——–将值value追加到给定键key-name当前存储的值的末尾）</li>
+<li>getrange（getrange key-name value———-获取一个由偏移量start至偏移量end范围内所有字符串组成的子串，包括start和end在内）</li>
+<li>setrange（setrange key-name offset value—–将从start偏移量开始的子串设置为给定值）</li>
+<li>getbit（getbit key-name offset 将字符串看作是二进制位串，并返回位串中偏移量位offset的二进制位的值）</li>
+<li>setbit（setbit key-name offset value———将字符串看作是二进制位串，并将位串中偏移量为offset的二进制位的值设置为value）</li>
+<li>bitcount</li>
+<li>bitop</li>
+</ul>
+<p>打开redis-cli</p>
+<p>设置键hello的值为world</p>
+<blockquote>
+<p>set hello world</p>
+</blockquote>
+<p>获取键hello的值</p>
+<blockquote>
+<p>get hello</p>
+</blockquote>
+<p><img src="http://m.qpic.cn/psb?/V10WDaE22S84Sl/HWteMrVannnp4EOqWJ1WJevzQA1zvpmyWP7uYFsT4NY!/b/dDABAAAAAAAA&amp;bo=LALjAAAAAAADB.8!&amp;rf=viewer_4" alt=""></p>
+<p>将键存储的值+1</p>
+<blockquote>
+<p>import redis<br> conn = redis.Redis()<br> conn.get(‘key’)<br>conn.incr(‘key’)<br>1<br> conn.incr(‘key’, 15)<br>16</p>
+</blockquote>
+<p><img src="http://m.qpic.cn/psb?/V10WDaE22S84Sl/HkAVFsObaaHGJcC.F2iDE60rQHyzcztXrTUJ1dJn8oo!/b/dDIBAAAAAAAA&amp;bo=XwHCAAAAAAADB74!&amp;rf=viewer_4" alt=""></p>
+<p>将键存储的值减去5</p>
+<blockquote>
+<p>conn.decr(‘key’, 5)<br>11</p>
+</blockquote>
+<p>先设置一个键,key=13，然后再incr自增</p>
+<blockquote>
+<p>conn.set(‘key’, ‘13’)<br>True<br>conn.incr(‘key’)<br>14</p>
+</blockquote>
+<p>将value追加到给出的键当前存储的值的末尾</p>
+<blockquote>
+<p> conn.append(‘new-string-key’, ‘hello’)<br>5<br> conn.append(‘new-string-key’, ‘world’)<br>10</p>
+</blockquote>
+<p>getrange获取从2开始到6结束范围内的所有子串</p>
+<blockquote>
+<p>conn.getrange(‘new-string-key’, 2, 6)<br>b’llowo’</p>
+</blockquote>
+<p>setrange 范围设置操作，在start索引位置替换字符串中已有的内容</p>
+<ul>
+<li>10表示当前字符串总长度<blockquote>
+<p>conn.setrange(‘new-string-key’, 0, ‘H’)<br>conn.setrange(‘new-string-key’, 6, ‘W’)<br>10</p>
+</blockquote>
+</li>
+</ul>
+<p>增长字符串长度</p>
+<blockquote>
+<p> conn.setrange(‘new-string-key’, 11, ‘, how are you?’)<br>25</p>
+</blockquote>
+<p>setbit<br>setbit key-name offset value</p>
+<blockquote>
+<p>conn.setbit(‘another-key’, 2, 1)<br>0<br>conn.setbit(‘another-key’, 7, 1)<br>0<br>conn.get(‘another-key’)<br>b’!’</p>
+</blockquote>
+<p><strong>LIST</strong></p>
+<ul>
+<li>RPUSH（将给定值推入列表的右端）</li>
+<li>LRANGE（获取列表在给定范围上的所有值）</li>
+<li>LINDEX（获取列表在给定位置上的单个元素）</li>
+<li>LPOP（从列表的左端删除一个值，并返回被删除的值）</li>
+<li>LTRIM （对列表进行修剪，只保留从start偏移量到end偏移量范围内的元素）</li>
+</ul>
+<p>阻塞式的列表弹出命令以及在列表之间移动元素的命令</p>
+<ul>
+<li>blpop </li>
+<li>brpop</li>
+<li>rpoplpush</li>
+<li>brpoplpush</li>
+</ul>
+<p>将键为list_key的值推入列表的右端</p>
+<blockquote>
+<p>rpush list_key treehl</p>
+</blockquote>
+<p>获取指定范围内的值</p>
+<ul>
+<li>使用0为范围的起始索引，-1为范围的结束索引，可以取出列表包含的所有元素<blockquote>
+<p>lrange list_key 0 -1</p>
+</blockquote>
+</li>
+</ul>
+<p>从列表中获取单个元素</p>
+<ul>
+<li>1 key后面的数字是索引，从0开始<blockquote>
+<p>lindex list_key 1</p>
+</blockquote>
+</li>
+</ul>
+<p>从列表中删除元素</p>
+<blockquote>
+<p>lpop list_key</p>
+</blockquote>
+<p>只保留起始索引到结束索引之间的元素</p>
+<blockquote>
+<p> conn.lrange(‘list-key’, 0, -1)<br>[b’a’, b’b’, b’c’]</p>
+</blockquote>
+<p>将一个元素从一个列表移动到另一个列表，并返回被移动的元素</p>
+<ul>
+<li>1表示timeout</li>
+</ul>
+<blockquote>
+<p>conn.brpoplpush(‘list2’, ‘list’, 1)<br>b’item6’</p>
+</blockquote>
+<p><strong>SET</strong></p>
+<ul>
+<li>SADD（将给定元素添加到集合）</li>
+<li>SMEMBER（返回集合包含的所有元素）</li>
+<li>SISMEMBER（检查给定元素是否存在于集合中）</li>
+<li>SREM（如果给定元素存在于集合中，那么移除这个元素）</li>
+<li>SCARD （返回集合包含的元素）</li>
+<li>SRANDMEMBER （从集合里面随机地返回一个或多个元素）</li>
+<li>SPOP （随机地移除集合中的一个元素，并返回被移除的元素）</li>
+<li>SMOVE smove source-key dest-key item</li>
+</ul>
+<p>用于组合和处理多个集合的Redis命令</p>
+<ul>
+<li>sdiff（差集）</li>
+<li>sdiffstore（差集，存储到dest-key中）</li>
+<li>sinter（交集）</li>
+<li>sinterstore （交集，存储到dest-key）</li>
+<li>sunion（并集）</li>
+<li>sunionstore（并集，存储到dest-key中）</li>
+</ul>
+<p>将键set-key值为item,item2……添加到集合</p>
+<blockquote>
+<p>sadd set-key item<br>sadd set-key item2<br>sadd set-key item3</p>
+</blockquote>
+<p>添加同样的值会添加不进去</p>
+<blockquote>
+<p>sadd set-key item2<br>(integer) 0</p>
+</blockquote>
+<p>返回集合包含的所有元素</p>
+<blockquote>
+<p>smembers set-key</p>
+</blockquote>
+<p>检查给出的元素是否存在集合中</p>
+<ul>
+<li><p>1代表元素在集合中</p>
+<blockquote>
+<p> sismember set-key item<br>(integer) 1</p>
+</blockquote>
+</li>
+<li><p>0代表所查找的元素不在集合中</p>
+<blockquote>
+<p> sismember set-key item5<br>(integer) 0</p>
+</blockquote>
+</li>
+</ul>
+<p>移除元素</p>
+<ul>
+<li>只有这个元素存在才会被移除</li>
+</ul>
+<blockquote>
+<p>srem set-key item2<br>(integer) 1</p>
+</blockquote>
+<p>将一个元素从一个集合移动到另一个集合</p>
+<ul>
+<li>将a元素从set-key中移动到set-key2中<blockquote>
+<p>conn.smove(‘set-key’, ‘set-key2’, ‘a’)</p>
+</blockquote>
+</li>
+</ul>
+<p>交集、并集、差集<br><img src="http://m.qpic.cn/psb?/V10WDaE22S84Sl/BNKB4kSo4wqOf1VBwCGgvn5wlVvfdkopcRnqBUT4128!/b/dEABAAAAAAAA&amp;bo=5wbdAAAAAAADBx4!&amp;rf=viewer_4" alt=""></p>
+<p><strong>HASH</strong></p>
+<ul>
+<li>可以存储多个键值对之间的映射</li>
+<li>存储值既可以是字符串也可以是数字值</li>
+</ul>
+<ol>
+<li>HSET 在散列里关联给出的键值对</li>
+<li>HGET 获取指定散列键的值</li>
+<li>HGETALL 获取散列包含的所有键值对</li>
+</ol>
+<p>添加和删除键值对的HASH操作</p>
+<ol>
+<li>HDEL 如果指定的键存在于散列中，那么删除这个键</li>
+<li>HLEN 返回散列包含的键值对数量</li>
+<li>HMGET 从散列里面获取一个或者多个键</li>
+<li>HMSET 为散列里面的一个或多个键设置值 </li>
+</ol>
+<p>redis散列的更高级特性</p>
+<ol>
+<li>hexists (检查给定键是否存在于散列中)</li>
+<li>hkeys （获取散列包含的所有键）</li>
+<li>hvals（获取散列包含的所有值）</li>
+<li>hgetall （获取散列包含的所有键值对）</li>
+<li>hincrby（将键key保存的值加上整数increment）</li>
+<li>hincrbyfloat（将键key保存的值加上浮点数）<br>关联给出的键值对</li>
+</ol>
+<blockquote>
+<p>hset hash-key shen 25<br>(integer) 1</p>
+<p>hset hash-key yang 25<br>(integer) </p>
+</blockquote>
+<p>获取所有键值对</p>
+<blockquote>
+<p>hgetall hash-key<br>1) “shen”<br>2) “25”<br>3) “yang”<br>4) “25”</p>
+</blockquote>
+<p>获取指定键的值</p>
+<blockquote>
+<p>hget hash-key yang<br>“25”</p>
+</blockquote>
+<p>将多个键值对添加到散列里面</p>
+<blockquote>
+<p>conn.hmset(‘hash-key’, {‘k1’:’v1’, ‘k2’: ‘v2’, ‘k3’: ‘v3’})</p>
+</blockquote>
+<p>获取多个键值对</p>
+<blockquote>
+<p> conn.hmget(‘hash-key’, [‘k2’, ‘k3’])</p>
+</blockquote>
+<p>获取键值对数量</p>
+<blockquote>
+<p>conn.hlen(‘hash-key’)</p>
+</blockquote>
+<p>获取散列包含的所有键</p>
+<blockquote>
+<p> conn.hkeys(‘hash-key2’)<br>[b’long’, b’short’]</p>
+</blockquote>
+<p>检查指定的键是否存在于散列中</p>
+<blockquote>
+<p> conn.hexists(‘hash-key2’, ‘num’)<br>False</p>
+</blockquote>
+<p>将键key保存的值加上整数increment</p>
+<blockquote>
+<p>conn.hincrby(‘hash-key2’, ‘num’)<br>1<br> conn.hexists(‘hash-key2’, ‘num’)<br>True</p>
+</blockquote>
+<p><strong>ZSET（有序集合）</strong></p>
+<ul>
+<li>有序集合和hash一样都是存储键值对（key:value）</li>
+<li>键被称为member，每一个都是独一无二的</li>
+<li>值被称为分值（SCORE），且必须为浮点数</li>
+</ul>
+<ol>
+<li>ZADD 将一个带有分值的成员添加到有序集合里面</li>
+<li>ZRANGE 根据元素在有序排列中所处的位置，从有序集合里面获取多个元素</li>
+<li>ZRANGEBYSCORE 获取有序集合在给定的分值范围内的所有元素</li>
+<li>ZREM 如果指定的成员存在于有序集合中，那么移除这个成员</li>
+<li>ZCARD 返回有序集合包含的成员数量</li>
+<li>ZINCRBY 将member成员的分值加上increment</li>
+<li>ZCOUNT 返回分值介于min和max之间的成员数量</li>
+<li>ZRANK 返回成员member在有序集合中的排名</li>
+<li>ZSCORE 返回成员member的分值</li>
+</ol>
+<p>有序集合的范围型数据获取命令和范围型数据删除命令以及并集和交集</p>
+<ol>
+<li>zrevrank（返回成员member所处的位置，成员按照分值从大到小排列）</li>
+<li>zrevrange（返回给定范围内的成员，成员按照分值从大到小排列）</li>
+<li>zrangebyscore（返回分值介于min和max之间的所有成员）</li>
+<li>zrevrangebyscore（获取分值介于min和max之间的所有成员，并按照分值从大到小的顺序来返回它们）</li>
+<li>zremrangebyrank（移除有序集合中排名介于start和stop之间的所有成员）</li>
+<li>zremrangebyscore（移除有序集合中分值介于min和max之间的所有成员）</li>
+<li>zinterstore（交集）</li>
+<li>zunionstore（并集）</li>
+</ol>
+<p>将几个带有分值的成员添加到有序集合中</p>
+<blockquote>
+<p>zadd zset-key 888 treehl<br>(integer) 1</p>
+</blockquote>
+<p>获取有序集合中的元素</p>
+<ul>
+<li>0 -1 表示获取所有元素</li>
+<li>withcores表示获取分值并按分值大小进行排序</li>
+</ul>
+<blockquote>
+<p> zrange zset-key 0 -1 withscores<br>1) “hao”<br>2) “666”<br>3) “treehl”<br>4) “888”<br>5) “yang”<br>6) “999”</p>
+</blockquote>
+<p>获取给定的分支范围内的元素</p>
+<blockquote>
+<p>zrangebyscore zset-key 0 889 withscores</p>
+</blockquote>
+<ul>
+<li>hao 999 就包含在内了</li>
+</ul>
+<p>1) “hao”<br>2) “666”<br>3) “treehl”<br>4) “888”</p>
+<p>删除成员</p>
+<blockquote>
+<p> zrem zset-key hao<br>(integer) 1</p>
+</blockquote>
+<hr>
+<p>在python客户端输入有序集合应该写输入成员再输入分值与redis-cli上的输入是有区别的</p>
+<blockquote>
+<p>conn.zadd(‘zset-key’, ‘a’, 3, ‘b’, 2, ‘c’, 1)<br>3</p>
+</blockquote>
+<p>查看成员数量</p>
+<blockquote>
+<p>conn.zcard(‘zset-key’)<br>3</p>
+</blockquote>
+<p>自增操作</p>
+<blockquote>
+<p> conn.zincrby(‘zset-key’, ‘c’, 3)<br>4.0</p>
+</blockquote>
+<p>返回成员分值</p>
+<blockquote>
+<p>conn.zscore(‘zset-key’, ‘b’)<br>3.0</p>
+</blockquote>
+<p>返回成员的排名</p>
+<blockquote>
+<p>conn.zrank(‘zset-key’, ‘c’)<br>2</p>
+</blockquote>
+<p>返回介于min 和 max之间的成员数量</p>
+<blockquote>
+<p> conn.zcount(‘zset-key’, 0, 3)<br>2</p>
+</blockquote>
+<p>移除指定成员</p>
+<blockquote>
+<p> conn.zrem(‘zset-key’, ‘b’)<br>1</p>
+</blockquote>
+<p>返回start和stop之间的成员</p>
+<blockquote>
+<p>conn.zrange(‘zset-key’, 0, -1, withscores=True)<br>[(b’a’, 3.0), (b’c’, 4.0)]</p>
+</blockquote>
+<hr>
+<p> 对集合做交集</p>
+<blockquote>
+<p> conn.zinterstore(‘zset-i’, [‘zset-1’, ‘zset-2’])<br>2</p>
+</blockquote>
+<p> 根据元素在有序排列中所处的位置，从有序集合里面获取多个元素</p>
+<blockquote>
+<p>conn.zrange(‘zset-i’, 0, -1, withscores=True)<br>[(b’c’, 4.0), (b’b’, 6.0)]</p>
+</blockquote>
+<p>对集合做并集</p>
+<blockquote>
+<p>conn.zunionstore(‘zset-u’, [‘zset-1’, ‘zset-2’], aggregate=’min’)<br>4</p>
+<p>conn.zrange(‘zset-u’, 0, -1, withscores=True)<br>[(b’d’, 0.0), (b’a’, 1.0), (b’c’, 1.0), (b’b’, 2.0)]</p>
+</blockquote>
+<p><strong>发布与订阅</strong><br>发布与订阅的命令</p>
+<ul>
+<li>subscribe （订阅给定的一个或多个频道）</li>
+<li>unsubscribe（退订给定的一个或多个频道，如果执行时没有给定任何频道，那么退订所有频道）</li>
+<li>publish（像给定的频道发送消息）</li>
+<li>psubscribe （订阅与给定模式相匹配的所有频道）</li>
+<li>pubsubscribe（退订给定的模式，如果执行时没有给定任何模式，那么退订所有模式）</li>
+</ul>
+<p><strong>其他命令</strong><br>排序-sort</p>
+<blockquote>
+<p> conn.rpush(‘sort-input’, 23, 15, 110, 17)<br>4<br> conn.sort(‘sort-input’)   #升序<br>[b’15’, b’17’, b’23’, b’110’]</p>
+</blockquote>
+<p>降序</p>
+<blockquote>
+<p> conn.sort(‘sort-input’, alpha=True)<br>[b’110’, b’15’, b’17’, b’23’]</p>
+</blockquote>
+<p><strong>键的过期和时间</strong><br>用于处理过期时间的Redis命令</p>
+<ul>
+<li>persist（移除键过期时间）</li>
+<li>ttl（查看给定键距离过期还有多少秒）</li>
+<li>expire（让给定键在指定的秒数之后过期）</li>
+<li>expireat（将给定的过期时间设置为给定的UNIX时间戳）</li>
+<li>pttl（查看给定键距离过期时间还有多少毫秒）</li>
+<li>pexpire（指定的键在指定的毫秒数之后过期）</li>
+<li>pexpireat（将一个毫秒级精度的UNIX时间戳设置为给定键的过期时间）</li>
+</ul>
+<blockquote>
+<p>conn.expire(‘key’, 100); conn.ttl(‘key’)<br>True<br>100</p>
+</blockquote>
+<p><a href="https://github.com/Family-TreeSY" target="_blank" rel="external">GitHub</a><br>欢迎访问博客<a href="https://github.com/Family-TreeSY" target="_blank" rel="external">Treehl的博客</a></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Redis</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/04/01/Redis数据结构/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-MYSQL小结" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/03/01/MYSQL小结/">MySQL学习小结</a>
+    </h1>
+  
+
+        
+        <a href="/2018/03/01/MYSQL小结/" class="archive-article-date">
+  	<time datetime="2018-03-01T12:08:08.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-03-01</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>这一篇最主要是记录下命令，方便以后查找</p>
+<h4 id="使用Mysql"><a href="#使用Mysql" class="headerlink" title="使用Mysql"></a><strong>使用Mysql</strong></h4><p>创建数据库</p>
+<blockquote>
+<p>create database mysql_test;</p>
+</blockquote>
+<p>展示所有数据库</p>
+<blockquote>
+<p>show databases;</p>
+</blockquote>
+<p>选择要使用的数据库</p>
+<blockquote>
+<p>use Typeidea_db</p>
+</blockquote>
+<p>获得表tables</p>
+<blockquote>
+<p>show tables;</p>
+</blockquote>
+<p>显示服务器状信息</p>
+<blockquote>
+<p>show status;</p>
+</blockquote>
+<p>更多show命令查询</p>
+<blockquote>
+<p>help show</p>
+</blockquote>
+<h4 id="检索数据"><a href="#检索数据" class="headerlink" title="检索数据"></a><strong>检索数据</strong></h4><ul>
+<li>select + 列名 from + 表</li>
+<li>selcet、from 都为关键字</li>
+<li>使用select语句从products表中检索一个名为prod_name的列</li>
+</ul>
+<blockquote>
+<p>SELECT prod_name FROM products;</p>
+</blockquote>
+<p>检索多个多个列</p>
+<blockquote>
+<p>select prod_name, prod_id, prod_price from products;</p>
+</blockquote>
+<p>检索所有列</p>
+<blockquote>
+<p>select * from products;</p>
+</blockquote>
+<p>检索不同的行</p>
+<ul>
+<li>DISTINCT关键字 “不同”</li>
+<li>告诉MySQL只返回不同的vend_id行</li>
+</ul>
+<blockquote>
+<p>selcet DISTINCT vend_id from products;</p>
+</blockquote>
+<p>检索限制结果</p>
+<ul>
+<li>limit</li>
+<li>limit 5,5:第一个5开始位置，第二个5要检索的行数;</li>
+<li>limit 4 OFFSET 3 :从行3开始取4行</li>
+<li>返回不多于5行</li>
+</ul>
+<blockquote>
+<p>select prod_name from products LIMIT 5;</p>
+<p>select prod_name from products LIMIT 5,5;</p>
+</blockquote>
+<h3 id="排序检索数据"><a href="#排序检索数据" class="headerlink" title="排序检索数据"></a><strong>排序检索数据</strong></h3><ul>
+<li>order by :排序</li>
+<li>以字母顺序排序数据（A-Z）<blockquote>
+<p>select prod_name from products ORDER BY prod_name;</p>
+</blockquote>
+</li>
+</ul>
+<p>按多个列排序</p>
+<blockquote>
+<p>select prod_name, prod_id, prod_price from products ORDER BY prod_price, prod_name;</p>
+</blockquote>
+<p><img src="http://m.qpic.cn/psb?/V10WDaE22S84Sl/9H1uQjhKa4i3BCbKhBKC4TZfxiBAwiQPuJojsnkeGmM!/b/dAgBAAAAAAAA&amp;bo=ZwOlAQAAAAADB.I!&amp;rf=viewer_4" alt=""></p>
+<p>指定排序方向</p>
+<ul>
+<li>DESC 降序排序</li>
+<li>Z-A</li>
+<li>对产品价格进行排序</li>
+</ul>
+<blockquote>
+<p>select prod_id, prod_price, prod_name from products ORDER BY prod_price DESC;</p>
+</blockquote>
+<ul>
+<li>降序排序产品价格，再对产品名字排序<blockquote>
+<p>select prod_id, prod_price, prod_name from products ORDER BY prod_price DESC, prod_name;</p>
+</blockquote>
+</li>
+</ul>
+<p>使用order by 和limit 找出列中最高或最低的值</p>
+<ul>
+<li>去掉DESC就是最低值</li>
+<li>limit 1 ：仅返回一行</li>
+<li>使用order by 和limit子句时，limit子句必须在order by 子句之后</li>
+</ul>
+<blockquote>
+<p>select prod_price from products ORDER BY prod_price DESC LIMIT 1;</p>
+</blockquote>
+<h3 id="过滤数据"><a href="#过滤数据" class="headerlink" title="过滤数据"></a><strong>过滤数据</strong></h3><p>where子句</p>
+<ul>
+<li>从products表中检索两个列， 过滤（只返回prod_price = 2.5的行）</li>
+<li><strong>使用order by 和 where子句时，order by 必须在where之后</strong><blockquote>
+<p>select prod_name, prod_price from products WHERE prod_price = 2.50;</p>
+</blockquote>
+</li>
+</ul>
+<p><strong>检查单个值</strong></p>
+<p>where字句操作符</p>
+<ul>
+<li>=</li>
+<li>&lt;</li>
+<li>&gt;</li>
+<li>!=</li>
+<li>&lt;=</li>
+<li><blockquote>
+<p>=</p>
+</blockquote>
+</li>
+<li>BETWEEN ：在指定的两个值之间</li>
+</ul>
+<p>检查where prod_name = ‘fuses’，返回prod_name 的值为fuses的一行</p>
+<ul>
+<li><p><strong>值为字符串时需要使用单引号</strong></p>
+<blockquote>
+<p>select prod_name, prod_price from products WHERE prod_name = ‘fuses’;</p>
+</blockquote>
+</li>
+</ul>
+<p>列出小于等于10美金的所有产品</p>
+<blockquote>
+<p>select prod_price, prod_name from products WHERE prod_price &lt;= 10;</p>
+</blockquote>
+<p><strong>不匹配检查</strong></p>
+<p>列出不是由供应商1003制造的所有产品</p>
+<blockquote>
+<p>select vend_id, prod_name from products WHERE vend_id != 1003;</p>
+</blockquote>
+<p><strong>范围值检查</strong></p>
+<p>查询价格在5美金至10美金之间的所有产品</p>
+<ul>
+<li>ADN ：两个值之间必须要使用AND来连接</li>
+<li>BETWEEN</li>
+</ul>
+<blockquote>
+<p>select prod_name, prod_price from products WHERE prod_price BETWEEN 5 AND 10;</p>
+</blockquote>
+<p><strong>空值检查</strong><br>NULL：空值</p>
+<blockquote>
+<p>select prod_name from products WHERE prod_price IS NULL;</p>
+</blockquote>
+<p>文件中没有某位顾客的电子邮件</p>
+<blockquote>
+<p>select cust_id from customers WHERE cust_email IS NULL;</p>
+</blockquote>
+<p><strong>组合WHERE子句</strong><br>AND操作符<br>检索供应商1003制造且价格小于等于10美金的所有产品的价格名称、价格、ID</p>
+<blockquote>
+<p>select prod_id, prod_price, prod_name from products WHERE vend_id = 1003 AND prod_price &lt;=10;</p>
+</blockquote>
+<p>OR操作符</p>
+<ul>
+<li>指示MySQL检索匹配任一条件的行</li>
+<li>检索任一个指定供应商制造的所有产品的名称和价格</li>
+</ul>
+<blockquote>
+<p>select prod_name, prod_price from products WHERE vend_id = 1002 OR vend_id = 1003;</p>
+</blockquote>
+<p><strong>计算次序</strong><br>例子：<br>检索出10美金以上且由1002或者1003制造的所有产品</p>
+<blockquote>
+<p>select prod_name, prod_price from products WHERE vend_id = 1003 OR vend_id = 1002 AND prod_price &gt;= 10;</p>
+</blockquote>
+<p><img src="http://m.qpic.cn/psb?/V10WDaE22S84Sl/kO3IdHsXAOaiXwhu9HFw9PgLwVExDtxDhIzawM8tEAU!/b/dAgBAAAAAAAA&amp;bo=BgQUAQAAAAADFyU!&amp;rf=viewer_4" alt=""></p>
+<ul>
+<li>sql语句理解为：检索1003供应商制造的所有产品或者1002供应商制造的大于10美金的所有产品</li>
+<li>and 在计算次序中优先级更高</li>
+<li>这里应该使用圆括号</li>
+</ul>
+<blockquote>
+<p>select prod_name, prod_price from products WHERE(vend_id = 1002 or vend_id = 1003) AND prod_price &gt;= 10;</p>
+</blockquote>
+<p> IN 操作符<br> IN - 用来指定范围</p>
+<p>检索由1002或1003供应商提供的所有产品的名称和价格，名称以升序排序</p>
+<blockquote>
+<p>select prod_name, prod_price from products WHERE vend_id IN (1002, 1003) ORDER BY prod_name;</p>
+</blockquote>
+<p>NOT操作符</p>
+<ul>
+<li>用来否定它之后的所跟的任何条件</li>
+<li>匹配除开1002和1003外所有的供应商的产品名字和价格，排序以名称升序排序</li>
+</ul>
+<blockquote>
+<p>select prod_name, prod_price from products WHERE vend_id NOT IN (1002, 1003) ORDER BY prod_name;</p>
+</blockquote>
+<p><strong>用通配符进行过滤</strong></p>
+<ul>
+<li>LIKE操作符: 匹配未知值</li>
+<li>%通配符：表示任何字符出现任意次数</li>
+<li>通配符无法匹配以null值作为产品名的行</li>
+</ul>
+<p>查找以’jet’开头的产品</p>
+<blockquote>
+<p> select prod_id, prod_name from products WHERE prod_name LIKE ‘jet%’;</p>
+</blockquote>
+<p>搜索模式‘%anvil%’表示匹配任何位置包含文本anvil的值，无论它之前或之后出现什么字符</p>
+<p>找到以s起头e结尾的所有产品</p>
+<blockquote>
+<p>select prod_name from products WHERE prod_name LIKE ‘s%e’;</p>
+</blockquote>
+<p>下划线（_）通配符</p>
+<ul>
+<li><strong>至匹配单个字符</strong></li>
+<li>下划线后有个空格</li>
+<li>.5 ton anvil没有被匹配，因为搜索模式要求匹配两个匹配符而不是一个”.一个“   ”5一个“</li>
+</ul>
+<blockquote>
+<p>select prod_id, prod_name from products WHERE prod<em>name LIKE ‘</em> ton anvil’;</p>
+</blockquote>
+<p><img src="http://m.qpic.cn/psb?/V10WDaE22S84Sl/jFqz6NjRu5tW5lWomyI1UrwGxFw9zGFAy6mCjj67pR8!/b/dGgBAAAAAAAA&amp;bo=*wKuAAAAAAADB3E!&amp;rf=viewer_4" alt=""></p>
+<h3 id="用正则表达式进行搜索"><a href="#用正则表达式进行搜索" class="headerlink" title="用正则表达式进行搜索"></a><strong>用正则表达式进行搜索</strong></h3><ul>
+<li>REGEXP</li>
+<li>LIKE :如果匹配值在列中被找到将不会返回数据，like匹配未知值</li>
+</ul>
+<p>检索prod_name文本1000的所有行</p>
+<blockquote>
+<p>select prod_name from products WHERE prod_name REGEXP ‘1000’ ORDER BY prod_name;</p>
+</blockquote>
+<p>匹配所有.000</p>
+<blockquote>
+<p>select prod_name from products WHERE prod_name REGEXP ‘.000’ ORDER BY prod_name;</p>
+</blockquote>
+<p>OR匹配</p>
+<ul>
+<li>使用  |  :为正则表达式中的OR操作，表示匹配其中之一<blockquote>
+<p>select prod_name from products WHERE prod_name REGEXP ‘1000|2000’ ORDER BY prod_name;</p>
+</blockquote>
+</li>
+</ul>
+<p>匹配几个字符之一</p>
+<p>[123] Ton</p>
+<ul>
+<li>[123]定义一组字符，匹配1或2或3</li>
+</ul>
+<blockquote>
+<p>select prod_name from products WHERE prod_name REGEXP ‘[123] Ton’ ORDER BY prod_name;</p>
+</blockquote>
+<p>或者这样写</p>
+<blockquote>
+<p>select prod_name from products WHERE prod_name REGEXP ‘[1|2|3] Ton’ ORDER BY prod_name;</p>
+</blockquote>
+<p><strong>匹配范围</strong></p>
+<ul>
+<li>用 - 来匹配</li>
+<li>[1-5]</li>
+<li>[a-z]</li>
+</ul>
+<blockquote>
+<p>select prod_name from products WHERE prod_name REGEXP ‘[1-5] Ton’ ORDER BY prod_name;</p>
+</blockquote>
+<p><strong>匹配特殊字符</strong></p>
+<ul>
+<li>必须使用’\‘   \-     \.    转义<blockquote>
+<p>select vend_name from vendors WHERE vend_name REGEXP ‘\.’ ORDER BY vend_name;</p>
+</blockquote>
+</li>
+</ul>
+<p><strong>匹配多个实例</strong></p>
+<blockquote>
+<p>select prod_name from products WHERE prod_name REGEXP ‘\([0-9]) sticks?\)’ ORDER BY prod_name;</p>
+</blockquote>
+<ul>
+<li>\()</li>
+<li>[0-9]；匹配任意数字</li>
+</ul>
+<blockquote>
+<p>select prod_name from products WHERE prod_name REGEXP ‘[[:digit:]]{4}’ ORDER BY prod_name;</p>
+</blockquote>
+<ul>
+<li>[:digit:]；任意数字集合</li>
+<li>{4}：任意4位数</li>
+</ul>
+<p><strong>定位符</strong></p>
+<ul>
+<li>在集合中[^…..]表示否定该集合或者指定字符的开始处</li>
+</ul>
+<h3 id="创建计算字段"><a href="#创建计算字段" class="headerlink" title="创建计算字段"></a><strong>创建计算字段</strong></h3><p><strong>拼接字段</strong></p>
+<ul>
+<li>concate()函数来实现拼接</li>
+</ul>
+<p>名字和地址拼接起来</p>
+<blockquote>
+<p>select Concat(vend_name, ‘(‘, vend_country, ‘)’) from vendors ORDER BY vend_name;</p>
+</blockquote>
+<p><img src="http://m.qpic.cn/psb?/V10WDaE22S84Sl/2X5hE2XwrYRfHFpKuTP4XBAP*CE5G3JS*LgO8krHWtY!/b/dFYBAAAAAAAA&amp;bo=mgMDAQAAAAADB7k!&amp;rf=viewer_4" alt=""></p>
+<ul>
+<li>删除右侧多余空格</li>
+<li>Concat()</li>
+<li>RTrim()函数</li>
+</ul>
+<blockquote>
+<p> select Concat(RTrim(vend_name), ‘(‘, RTrim(vend_country), ‘)’) from vendors ORDER BY vend_name;</p>
+</blockquote>
+<p><strong>使用别名</strong></p>
+<ul>
+<li>alias 别名 AS</li>
+</ul>
+<blockquote>
+<p>select Concat(RTrim(vend_name), ‘(‘, RTrim(vend_country), ‘)’) AS vend_title from vendors ORDER BY vend_name;</p>
+</blockquote>
+<p><strong>执行算术计算</strong></p>
+<blockquote>
+<p>select prod_id, quantity, item_price from orderitems WHERE order_num = 2005;</p>
+</blockquote>
+<h3 id="使用数据处理函数"><a href="#使用数据处理函数" class="headerlink" title="使用数据处理函数"></a><strong>使用数据处理函数</strong></h3><p><strong>文本处理函数</strong></p>
+<blockquote>
+<p>select vend_name, Upper(vend_name) AS vend_name_upcase from vendors ORDER BY vend_name;</p>
+</blockquote>
+<ul>
+<li>AS(alias) 使用别名</li>
+<li>Upper()函数：将文本转换为大写</li>
+</ul>
+<blockquote>
+<p>select cust_name, cust_contact from customers WHERE Soundex(cust_contact) = Soundex(‘Y Lie’);</p>
+</blockquote>
+<ul>
+<li>Soundex 检索所有发音类似‘Y Lie’的联系名（cust_contact）</li>
+</ul>
+<p><strong>日期和时间处理函数</strong></p>
+<blockquote>
+<p>select cust_id, order_num from orders WHERE order_date = ‘2005-09-01’;</p>
+</blockquote>
+<p>如果要的是日期，就使用Date()</p>
+<blockquote>
+<p>select cust_id, order_num from orders WHERE Date(order_date) = ‘2005-09-01’;</p>
+</blockquote>
+<p>检索2005年9月份下的所有订单</p>
+<ol>
+<li><blockquote>
+<p>select cust_id, order_num from orders WHERE Date(order_date) BETWEEN ‘2005-09-01’ AND ‘2005-09-30’;</p>
+</blockquote>
+</li>
+<li><blockquote>
+<p>select cust_id, order_num from orders WHERE Year(order_date) = 2005 AND Month(order_date) = 9;</p>
+</blockquote>
+</li>
+</ol>
+<h3 id="汇总数据"><a href="#汇总数据" class="headerlink" title="汇总数据"></a><strong>汇总数据</strong></h3><p><strong>AVG（）函数</strong></p>
+<ul>
+<li>AVG（）函数：返回某列的平均值</li>
+<li>AVG（）函数忽略列值为NULL的行</li>
+<li>AVG（）函数只能确定特定数值列的平均值</li>
+</ul>
+<p>使用AVG函数f返回products表中所有产品的平均价格</p>
+<blockquote>
+<p>select AVG(prod_price) AS avg_price from products;</p>
+</blockquote>
+<p>返回特定供应商所提供产品的平均价格</p>
+<ul>
+<li>使用where来过滤出vend_id = 1003的产品</li>
+<li>AS 给prod_price取别名<blockquote>
+<p>select AVG(prod_price) AS avg_price from products WHERE vend_id = 1003;</p>
+</blockquote>
+</li>
+</ul>
+<p><strong>COUNT（）函数</strong></p>
+<ul>
+<li>COUNT(*)对表中数目进行计数，不管表列中包含的是空值还是非空值</li>
+<li>COUNT(column)对特定列中具有值的行进行计数，忽略NULL值</li>
+</ul>
+<p>统计customers表中所有的行，不管各列有什么值</p>
+<blockquote>
+<p>select COUNT(*) AS num_cust from customers;</p>
+</blockquote>
+<p>只对具有电子邮箱地址的客户计数</p>
+<blockquote>
+<p>select COUNT(cust_email) AS num_cust from customers;</p>
+</blockquote>
+<p><strong>MAX函数</strong></p>
+<ul>
+<li>返回指定列中的最大值</li>
+<li>要求指定列名</li>
+</ul>
+<p>检索products表中最贵物品的价格</p>
+<blockquote>
+<p>select MAX(prod_price) AS max_price from products;</p>
+</blockquote>
+<p><strong>MIN函数</strong></p>
+<ul>
+<li>返回指定列的最小值</li>
+</ul>
+<p>检索products表中最便宜i物品的价格</p>
+<blockquote>
+<p>select MIN(prod_price) AS min_price from products;</p>
+</blockquote>
+<p><strong>SUM函数</strong></p>
+<ul>
+<li>返回指定列值的和</li>
+</ul>
+<p>检索所订购物品的总数</p>
+<ul>
+<li>SUM(quantity):返回订单中所有物品数量之和</li>
+<li>WHERE子句保证只统计某个物品订单中的物品</li>
+</ul>
+<blockquote>
+<p>select SUM(quantity) AS items_ordered from orderitems WHERE order_num = 20005;</p>
+</blockquote>
+<p>检索20005订单中所有物品价格之和</p>
+<ul>
+<li>SUM(item_price*quantity)<blockquote>
+<p>select SUM(item_price*quantity) AS total_price from orderitems WHERE order_num = 20005;</p>
+</blockquote>
+</li>
+</ul>
+<p><strong>DISTINCT</strong></p>
+<p>使用distinct后，平均值值考虑各个不同的价格</p>
+<blockquote>
+<p> select AVG(DISTINCT prod_price) AS avg_price from products WHERE vend_id = 1003;</p>
+</blockquote>
+<p><strong>组合聚集函数</strong><br>返回4个值</p>
+<ul>
+<li>物品的所有数目</li>
+<li>最低价格</li>
+<li>最高价格</li>
+<li>平均价格</li>
+</ul>
+<blockquote>
+<p>select COUNT(*) AS num_items,<br>    -&gt; MIN(prod_price) AS price_min,<br>    -&gt; MAX(prod_price) AS price_max,<br>    -&gt; AVG(prod_price) AS price_avg from products;</p>
+</blockquote>
+<h3 id="分组数据"><a href="#分组数据" class="headerlink" title="分组数据"></a><strong>分组数据</strong></h3><ul>
+<li>GROUP BY 子句</li>
+<li>HAVING 子句</li>
+</ul>
+<p><strong>创建分组</strong></p>
+<ul>
+<li>vend_id；包含供应商的ID</li>
+<li>AS 使用别名</li>
+<li>GROUP BY vend-id 对vend_id进行分组</li>
+</ul>
+<blockquote>
+<p>select vend_id, COUNT(*) AS num_prods from products GROUP BY vend_id;</p>
+</blockquote>
+<p><img src="http://m.qpic.cn/psb?/V10WDaE22S84Sl/eayzj17KAnaqB9lHt4teJWT5twIf9YwRGctWoQweZG0!/b/dAgBAAAAAAAA&amp;bo=3gLXAAAAAAADByk!&amp;rf=viewer_4" alt=""></p>
+<p>ROLLUP</p>
+<ul>
+<li>可以得到每个分组以及每个分组汇总级别（针对每个分组）的值</li>
+<li>null 值 也算了进去<blockquote>
+<p>select vend_id, COUNT(*) AS num_prods from products GROUP BY vend_id WITH ROLLUP;</p>
+</blockquote>
+</li>
+</ul>
+<p><img src="http://m.qpic.cn/psb?/V10WDaE22S84Sl/oDZmhl7XCQdPuWtgv0i8vv9DfWjEKQqQEj9it2rcq84!/b/dEQBAAAAAAAA&amp;bo=UQPyAAAAAAADB4I!&amp;rf=viewer_4" alt=""></p>
+<p><strong>过滤分组</strong></p>
+<ul>
+<li>having ：过滤分组</li>
+<li>where ：过滤行</li>
+</ul>
+<p>过滤那些COUNT(<em>)</em>2的那些分组</p>
+<blockquote>
+<p>select cust_id, COUNT(<em>) AS orders from orders GROUP BY cust_id HAVING COUNT(</em>) &gt;=2;</p>
+</blockquote>
+<p>同时使用WHERE和HAVING子句</p>
+<ul>
+<li>价格大于等于10</li>
+<li>vend_id分组</li>
+<li>过滤COUNT(*)&gt;=2分组</li>
+</ul>
+<blockquote>
+<p>select vend_id, COUNT(<em>) AS num_prods from products WHERE prod_price &gt;= 10 GROUP BY vend_id HAVING COUNT(</em>) &gt;= 2;</p>
+</blockquote>
+<p><strong>分组和排序</strong></p>
+<p>检索订总计订单价格大于等于50的订单的订单号和总计订单的价格</p>
+<blockquote>
+<p>SELECT order_num, SUM(quantity<em>item_price) AS ordertotal FROM orderitems GROUP BY order_num HAVING SUM(quantity</em>item_price) &gt;= 50;</p>
+</blockquote>
+<p>按总计订单价格排序输出，需要添加ORDER BY子句</p>
+<blockquote>
+<p> SELECT order_num, SUM(quantity<em>item_price) AS ordertotal FROM orderitems GROUP BY order_num HAVING SUM(quantity</em>item_price) &gt;= 50 ORDER BY ordertotal;</p>
+</blockquote>
+<p><img src="http://m.qpic.cn/psb?/V10WDaE22S84Sl/pleWNPxAdX1TgdGVYB2WeoV.2rZKCoNyli2Wawu*xtQ!/b/dEQBAAAAAAAA&amp;bo=TQT0AAAAAAADB58!&amp;rf=viewer_4" alt=""></p>
+<h3 id="使用子查询"><a href="#使用子查询" class="headerlink" title="使用子查询"></a><strong>使用子查询</strong></h3><p>需要列出订购物品TNT2的所有客户，应该怎样检索？</p>
+<pre><code>1. 检索包含物品TNT的所有订单的编号
+2. 检索具有前一步聚列出的订单编号的所有客户的ID
+3. 检索前一步聚返回的所有客户ID的客户信息
+</code></pre><p>对于prod_id 为TNT2的所有订单物品，从orderitems表中检索其order_num列</p>
+<blockquote>
+<p>SELECT order_num FROM orderitems WHERE prod_id = ‘TNT2’;</p>
+</blockquote>
+<p><img src="http://m.qpic.cn/psb?/V10WDaE22S84Sl/l9LWv2iEbhL50jnqpr.1ifszzDuSh.kLH*4RvpeKlB8!/b/dJEAAAAAAAAA&amp;bo=cgKxAAAAAAADB.M!&amp;rf=viewer_4" alt=""></p>
+<p>查询具有订单20005和20007的客户ID</p>
+<ul>
+<li>IN 范围设定</li>
+</ul>
+<blockquote>
+<p>SELECT cust_id FROM orders WHERE order_num IN (20005, 20007);</p>
+</blockquote>
+<p>把第一步的查询变为<strong>子查询</strong>，组合两个查询<br>mysql实际执行了两个操作</p>
+<ul>
+<li>执行查询：SELECT order_num FROM orderitems WHERE prod_id = ‘TNT2’;  返回20005和20007两个订单号</li>
+<li>IN操作，外部查询变成；SELECT cust_id FROM orders WHERE order_num IN (20005, 20007);</li>
+</ul>
+<blockquote>
+<p> SELECT cust_id FROM orders WHERE order_num IN (SELECT order_num FROM orderitems WHERE prod_id = ‘TNT2’);</p>
+</blockquote>
+<p>检索客户ID信息</p>
+<blockquote>
+<p>SELECT cust_name, cust_contact FROM customers WHERE cust_id IN (10001, 10004);</p>
+</blockquote>
+<p>转换为子查询</p>
+<blockquote>
+<p>SELECT cust_name, cust_contact FROM customers WHERE cust_id IN (SELECT cust_id FROM orders WHERE order_num IN (SELECT order_num FROM orderitems WHERE prod_id = ‘TNT2’));</p>
+</blockquote>
+<p><strong>作为计算字段使用子查询</strong></p>
+<p>对每个客户执行COUNT(<em>)计算，应该将COUNT(</em>)作为一个子查询</p>
+<blockquote>
+<p>SELECT cust_name, cust_state, (SELECT COUNT(*) FROM orders WHERE orders.cust_id = customers.cust_id) AS orders FROM customers ORDER BY cust_name;</p>
+</blockquote>
+<p><strong>联结表</strong></p>
+<ul>
+<li>这里有两张表， vendors和products，这就是联结的两个表的名字</li>
+<li>用WHERE子句正确联结，过滤条件</li>
+<li>WHERE子句指示MYSQL匹配vendors表中的vend_id和products表中的vend_id</li>
+</ul>
+<blockquote>
+<p>SELECT vend_name, prod_name, prod_price<br>    -&gt; FROM vendors, products<br>    -&gt; WHERE vendors.vend_id = products.vend_id<br>    -&gt; ORDER BY vend_name, prod_name;</p>
+</blockquote>
+<p><strong>笛卡儿积</strong></p>
+<ul>
+<li>由没有联结条件的表关系返回的结果为笛卡儿积</li>
+<li>检索出的行的数目将是第一个表中的行数乘以第二个表中的行数</li>
+</ul>
+<p><strong>内部联结</strong></p>
+<ul>
+<li>from子句的的组成由INNER JOIN指定</li>
+<li>联结条件使用ON，而不是WHERE</li>
+</ul>
+<blockquote>
+<p>SELECT vend_name, prod_name, prod_price<br>    -&gt; FROM vendors INNER JOIN products<br>    -&gt; ON vendors.vend_id = products.vend_id;</p>
+</blockquote>
+<p><strong>联结多个表</strong></p>
+<p>显示编号为20005订单中的物品</p>
+<blockquote>
+<p>SELECT prod_name, vend_name, prod_price, quantity<br>    -&gt; FROM orderitems, products, vendors<br>    -&gt; WHERE products.vend_id = vendors.vend_id<br>    -&gt; AND orderitems.prod_id = products.prod_id<br>    -&gt; AND order_num = 20005;</p>
+</blockquote>
+<h3 id="创建高级联结"><a href="#创建高级联结" class="headerlink" title="创建高级联结"></a><strong>创建高级联结</strong></h3><p><strong>使用表别名</strong></p>
+<ul>
+<li>concat :拼接字段</li>
+<li>RTrim :删除右侧多余空格</li>
+<li>AS使用别名</li>
+<li></li>
+</ul>
+<blockquote>
+<p> SELECT Concat(RTrim(vend_name), ‘(‘, RTrim(vend_country), ‘)’) AS<br>    -&gt; vend_title<br>    -&gt; FROM vendors<br>    -&gt; ORDER BY vend_name;</p>
+</blockquote>
+<p><strong>使用不同类型的联结</strong></p>
+<ul>
+<li>自联结</li>
+<li>自然联结</li>
+<li>外部联结</li>
+</ul>
+<p><strong>自联结</strong></p>
+<ul>
+<li>两张相同的表products</li>
+<li>使用别名p1,p2</li>
+<li>联结表</li>
+<li>按p2过滤数据</li>
+</ul>
+<blockquote>
+<p>SELECT p1.prod_id, p1.prod_name<br>    -&gt; FROM products AS p1, products AS p2<br>    -&gt; WHERE p1.vend_id = p2.vend_id<br>    -&gt; AND p2.prod_id = ‘DTNTR’;</p>
+</blockquote>
+<p><strong>自然联结</strong></p>
+<blockquote>
+<p>SELECT c.*, o.order_num, o.order_date, oi.prod_id, oi.quantity, oi.item_price<br>    -&gt; FROM customers AS c, orders AS o, orderitems AS oi<br>    -&gt; WHERE c.cust_id = o.cust_id<br>    -&gt; AND oi.order_num = o.order_num<br>    -&gt; AND prod_id = ‘FB’;</p>
+</blockquote>
+<p><strong>外部联结</strong></p>
+<p>联结包含了那些在相关表中没有关联行的行</p>
+<ul>
+<li>OUTER JOIN: 指定联结类型</li>
+<li>必须使用RIGHT或者LEFT关键字指定包括其所有行的表</li>
+<li>RIGHT :OUTER JOIN右边的表</li>
+<li>LEFT：OUTER JOIN左边的表</li>
+<li>从from子句的左边表(customers)中选择所有行</li>
+<li><blockquote>
+<p> SELECT customers.cust_id, orders.order_num<br>  -&gt; FROM customers LEFT OUTER JOIN orders<br>  -&gt; ON customers.cust_id = orders.cust_id;</p>
+</blockquote>
+</li>
+</ul>
+<p><strong>使用带聚集函数的联结</strong></p>
+<p>检索所有客户及每个客户所下的订单数，使用COUNT（）函数</p>
+<ul>
+<li>INNER JOIN将customers和orders两张表关联起来</li>
+<li>GROUP BY 按客户分组数据</li>
+<li>COUNT(orders.order_num)对每个客户的订单技术</li>
+</ul>
+<blockquote>
+<p> SELECT customers.cust_name, customers.cust_id,<br>    -&gt; COUNT(orders.order_num) AS num_ord<br>    -&gt; FROM customers INNER JOIN orders<br>    -&gt; ON customers.cust_id = orders.cust_id<br>    -&gt; GROUP BY customers.cust_id;</p>
+</blockquote>
+<h3 id="组合查询"><a href="#组合查询" class="headerlink" title="组合查询"></a><strong>组合查询</strong></h3><p><strong>创建组合查询</strong></p>
+<p>需要价格小于等于5的所有物品的一个列表，而且包括供应商1002和1001生产的所有物品      </p>
+<ul>
+<li>union 操作符</li>
+</ul>
+<blockquote>
+<p>SELECT vend_id, prod_id, prod_price FROM products WHERE prod_price &lt;= 5<br>    -&gt; UNION<br>    -&gt; SELECT vend_id, prod_id, prod_price FROM products WHERE vend_id IN (1001, 1002);</p>
+</blockquote>
+<p><strong>包含或取消重复的行</strong></p>
+<p>使用union all不取消重复行</p>
+<blockquote>
+<p>SELECT vend_id, prod_id, prod_price<br>    -&gt; FROM products<br>    -&gt; WHERE prod_price &lt;= 5<br>    -&gt; UNION ALL<br>    -&gt; SELECT vend_id, prod_id, prod_price<br>    -&gt; FROM products<br>    -&gt; WHERE vend_id IN (1001, 1002);</p>
+</blockquote>
+<p><strong>对组合查询结果排序</strong></p>
+<ul>
+<li>ORDER BY 不允许使用多条子句</li>
+<li>组合查询中，虽然ORDER BY放在最后一条语句中，但实际上它可以排序所有SELECT语句</li>
+</ul>
+<blockquote>
+<p> SELECT vend_id, prod_id, prod_price<br>    -&gt; FROM products<br>    -&gt; WHERE prod_price &lt;= 5<br>    -&gt; UNION<br>    -&gt; SELECT vend_id, prod_id, prod_price<br>    -&gt; FROM products<br>    -&gt; WHERE vend_id IN (1001, 1002)<br>    -&gt; ORDER BY vend_id, prod_price;</p>
+</blockquote>
+<h3 id="全文本搜索"><a href="#全文本搜索" class="headerlink" title="全文本搜索"></a><strong>全文本搜索</strong></h3><p> Match()指定被搜索的列<br> Against()指定要使用的搜索表达式</p>
+<ul>
+<li>Match(note_text)： 对note_text列进行搜索</li>
+<li>Against(‘rabbit’)： 指定词rabbit作为搜索文本</li>
+</ul>
+<blockquote>
+<p>SELECT note_text<br>    -&gt; FROM productnotes<br>    -&gt; WHERE Match(note_text) Against(‘rabbit’);</p>
+</blockquote>
+<p><strong>实用查询扩展</strong></p>
+<ul>
+<li>with query expansion</li>
+</ul>
+<blockquote>
+<p> SELECT note_text<br>    -&gt; FROM productnotes<br>    -&gt; WHERE Match(note_text) Against(‘anvils’ WITH QUERY EXPANSION);</p>
+</blockquote>
+<p><strong>布尔文本搜索</strong></p>
+<ul>
+<li>IN BOOLEAN MODE</li>
+</ul>
+<blockquote>
+<p>SELECT note_text FROM productnotes WHERE Match(note_text) Against(‘heavy’ IN BOOLEAN MODE);</p>
+</blockquote>
+<p>匹配包含heavy但不包含以rope开始的行</p>
+<ul>
+<li>-排除一个词</li>
+<li>*截断操作符</li>
+</ul>
+<blockquote>
+<p>SELECT note_text FROM productnotes WHERE Match(note_text) Against(‘heavy -rope*’ IN BOOLEAN MODE);</p>
+</blockquote>
+<h3 id="插入数据"><a href="#插入数据" class="headerlink" title="插入数据"></a><strong>插入数据</strong></h3><p><strong>插入完整的行</strong></p>
+<ul>
+<li>存储到每个列表中的值在VALUES<blockquote>
+<p>INSERT INTO customers<br>  -&gt; VALUES(<br>  -&gt; NULL,<br>  -&gt; ‘Pep E. LaPew’,<br>  -&gt; ‘100 Main Street’,<br>  -&gt; ‘Los Angeles’,<br>  -&gt; ‘CA’,<br>  -&gt; ‘90046’,<br>  -&gt; ‘USA’,<br>  -&gt; NULL,<br>  -&gt; NULL);<br>Query OK, 1 row affected (0.01 sec)</p>
+</blockquote>
+</li>
+</ul>
+<p>编写更加安全的INSERT语句</p>
+<ul>
+<li>插入行时，用VALUES列表中的相应值填入列表中的对应项<blockquote>
+<p> INSERT INTO customers(cust_name,<br>  -&gt; cust_address,<br>  -&gt; cust_city,<br>  -&gt; cust_state.<br>  -&gt; cust_zip,<br>  -&gt; cust_country,<br>  -&gt; cust_contact,<br>  -&gt; cust_email)<br>  -&gt; VALUES(‘Pep E. La Pew’,<br>  -&gt; ‘100 Main Street’,<br>  -&gt; ‘Los Angeles’,<br>  -&gt; ‘CA’,<br>  -&gt; ‘90046’,<br>  -&gt; ‘USA’,<br>  -&gt; NULL,<br>  -&gt; NULL);</p>
+</blockquote>
+</li>
+</ul>
+<p><strong>插入多个行</strong></p>
+<ul>
+<li>列名相同的情况下</li>
+</ul>
+<blockquote>
+<p>INSERT INTO CUSTOMERS(cust_name,<br>    -&gt; cust_address,<br>    -&gt; cust_city,<br>    -&gt; cust_state,<br>    -&gt; cust_zip,<br>    -&gt; cust_country)<br>    -&gt; VALUES(<br>    -&gt; ‘treehl’,<br>    -&gt; ‘baoshan’,<br>    -&gt; ‘shanghai’,<br>    -&gt; ‘sh’,<br>    -&gt; ‘0000’,<br>    -&gt; ‘cn’<br>    -&gt; ),<br>    -&gt; (<br>    -&gt; ‘yang’,<br>    -&gt; ‘baoshan’,<br>    -&gt; ‘shanghai’,<br>    -&gt; ‘sh’,<br>    -&gt; ‘1111’,<br>    -&gt; ‘cn’<br>    -&gt; );</p>
+</blockquote>
+<p><strong>插入检索出的数据</strong></p>
+<p>INSERT SELECT</p>
+<blockquote>
+<p>INSERT INTO customers (cust_id,<br>…………..<br>)<br>SELECT cust_id,<br>……………<br>FROM …;</p>
+</blockquote>
+<h3 id="更新和删除数据"><a href="#更新和删除数据" class="headerlink" title="更新和删除数据"></a><strong>更新和删除数据</strong></h3><p><strong>更新数据</strong></p>
+<p>UODATE</p>
+<ul>
+<li>更新表中所有行</li>
+<li>更新表中特定行</li>
+</ul>
+<p>更新表customers<br>set命令用来将新值赋给被更新的列，set子句设置cust_email为指定的列<br>WHERE子句：告诉MySQL更新哪一行</p>
+<blockquote>
+<p>UPDATE customers<br>    -&gt; SET cust_email = ‘elmer@fudd.com’<br>    -&gt; WHERE cust_id = 10005;</p>
+</blockquote>
+<p><strong>使用NULL来删除某个列的值</strong></p>
+<blockquote>
+<p>UPDATE customers SET cust_email = NULL WHERE cust_id = 10005;</p>
+</blockquote>
+<p><strong>删除数据</strong></p>
+<p>DELETE</p>
+<ul>
+<li>从表中删除特定的行</li>
+<li>从表中删除所有行</li>
+<li>不需要列名或通配符</li>
+<li>删除整行而不是删除列</li>
+</ul>
+<p>DELETE FROM -  指定从哪个表删除<br>WHERE- 子句过滤要删除的行</p>
+<p>从customers表中只删除id为10006的</p>
+<blockquote>
+<p>DELETE FROM customers WHERE cust_id = 10006;</p>
+</blockquote>
+<h3 id="创建和操作表"><a href="#创建和操作表" class="headerlink" title="创建和操作表"></a><strong>创建和操作表</strong></h3><p><strong>表创建基础</strong></p>
+<p>NOT NULL - 阻止插入没有值的列</p>
+<blockquote>
+<p>CREATE TABLE customers<br>    -&gt; (<br>    -&gt;  cust_id         int     NOT NULL AUTO_INCREMENT,<br>    -&gt;  cust_name       char(50)NOT NULL,<br>    -&gt; cust_address     char(50)NOT NULL,<br>    -&gt; cust_city        char(50)NULL,<br>    -&gt; cust_state       char(5) NULL,<br>    -&gt; cust_zip         char(10)NULL,<br>    -&gt; cust_country     char(50)NULL,<br>    -&gt; cust_contact     char(50)NULL,<br>    -&gt; cust_email       char(255)NULL,<br>    -&gt; PRIMARY KEY (cust_id)<br>    -&gt; )ENGINE=InnoDB</p>
+</blockquote>
+<p><strong>使用NULL值</strong></p>
+<p><strong>主键</strong></p>
+<p>定义主键例子</p>
+<blockquote>
+<p>PRIMARY KEY(vend_id)</p>
+</blockquote>
+<p>由多个列组成的主键</p>
+<blockquote>
+<p> CREATE TABLE orderitems<br>    -&gt; (<br>    -&gt;  order_num       int             NOT NULL,<br>    -&gt;  order_item      int             NOT NULL,<br>    -&gt;  prod_id         char(10)        NOT NULL,<br>    -&gt;  quantity        int             NOT NULL,<br>    -&gt;  item_price      decimal(8, 2)   NOT NULL,<br>    -&gt;  PRIMARY KEY     (order_num, order_item)<br>    -&gt; )ENGINE=InnoDB;</p>
+</blockquote>
+<p><strong>AUTO_INCREMENT</strong><br>auto_increment- 自动增量</p>
+<ul>
+<li>auto_increment告诉MySQL，本列每当增加一行时自动增量，执行一个INSERT操作，自动对该列增量</li>
+<li>每个表只允许一个AUTO_INCREMENT</li>
+<li></li>
+</ul>
+<blockquote>
+<p>cust_id           int       NOT NULL   AUTO_INCREMENT</p>
+</blockquote>
+<p><strong>指定默认值</strong></p>
+<ul>
+<li>default ；表示在没有给出数据时，默认就是1</li>
+</ul>
+<blockquote>
+<p>CREATE TABLE orderitems<br>    -&gt; (<br>    -&gt;  order_num       int             NOT NULL,<br>    -&gt;  order_item      int             NOT NULL,<br>    -&gt;  prod_id         char(10)        NOT NULL,<br>    -&gt;  quantity        int             NOT NULL DEFAULT 1,<br>    -&gt;  item_price      decimal(8, 2)   NOT NULL,<br>    -&gt;  PRIMARY KEY (order_num, order_item)<br>    -&gt; )ENGINE=InnoDB;</p>
+</blockquote>
+<p><strong>引擎类型</strong></p>
+<ul>
+<li>InnoDB 一个可靠的事务处理引擎，它不支持全文本搜索</li>
+<li>MyISAM 一个性能极高的引擎，它支持全文本搜索，但不支持事务处理</li>
+<li>MEMORY 功能等同于MyISAM，但由于数据存储在内存中，速度很快（适合临时表）<blockquote>
+<p>ENGINE=InnoDB</p>
+</blockquote>
+</li>
+</ul>
+<p><strong>更新表</strong></p>
+<ul>
+<li>ALTER TABLE + 表名</li>
+</ul>
+<p>给vendors表增加vend_phone列，必须明确其数据char(20)</p>
+<blockquote>
+<p>ALTER TABLE vendors ADD vend_phone CHAR(20);</p>
+</blockquote>
+<p>删除刚刚添加的列</p>
+<ul>
+<li>DROP COLUMN</li>
+</ul>
+<blockquote>
+<p>ALTER TABLE vendors DROP COLUMN vend_phone;</p>
+</blockquote>
+<p><strong>删除表</strong><br>假设有这个表</p>
+<blockquote>
+<p> DROP TABLE customers2;</p>
+</blockquote>
+<p><strong>重命名表</strong></p>
+<blockquote>
+<p>RENAME TABLE customers2 TO customers;</p>
+</blockquote>
+<p>重命名多个表</p>
+<blockquote>
+<p>RENAME TABLE backup_customers TO customers,<br>    -&gt; backup_vendors TO vendors,<br>    -&gt; backup_products TO products;</p>
+</blockquote>
+<h3 id="使用视图"><a href="#使用视图" class="headerlink" title="使用视图"></a><strong>使用视图</strong></h3><ul>
+<li>用CREATE VIEW来创建</li>
+<li>使用SHOW CREATE VIEW viewname 来查看创建视图的语句</li>
+<li>用DROP删除视图</li>
+</ul>
+<p><strong>使用视图简化复杂的联结</strong></p>
+<p>创建了一个名为productcustomers的视图，它联结三个表</p>
+<blockquote>
+<p>CREATE VIEW productcustomers AS<br>    -&gt; SELECT cust_name, cust_contact, prod_id<br>    -&gt; FROM customers, orders, orderitems<br>    -&gt; WHERE customers.cust_id = orders.cust_id<br>    -&gt; AND orderitems.order_num = orders.order_num;</p>
+</blockquote>
+<p>检索订购了产品TNT2的客户</p>
+<ul>
+<li>它将指定的WHERE子句添加到试图查询中的已有的WHERE子句中，以便正确过滤数据</li>
+</ul>
+<blockquote>
+<p>SELECT cust_name, cust_contact FROM productcustomers WHERE prod_id = ‘TNT2’;</p>
+</blockquote>
+<p><strong>用视图重新格式化检索出的数据</strong></p>
+<p>创建视图</p>
+<blockquote>
+<p> CREATE VIEW vendorlocations AS<br>    -&gt; SELECT Concat(RTrim(vend_name), ‘(‘, RTrim(vend_country), ‘)’) AS vend_title<br>    -&gt; FROM vendors<br>    -&gt; ORDER BY vend_name;</p>
+</blockquote>
+<p>检索出以创建所有邮件标签的数据</p>
+<blockquote>
+<p>SELECT * FROM vendorlocations;</p>
+</blockquote>
+<p><strong>用视图过滤不想要的数据</strong></p>
+<p>定义customeremaillist视图，过滤没有邮箱的客户</p>
+<blockquote>
+<p>CREATE VIEW customeremaillist AS<br>    -&gt; SELECT cust_id, cust_name, cust_email<br>    -&gt; FROM customers<br>    -&gt; WHERE cust_email IS NOT NULL;</p>
+</blockquote>
+<p>检索由邮箱的客户</p>
+<blockquote>
+<p>SELECT * FROM customeremaillist;</p>
+</blockquote>
+<p><strong>使用试图与计算字段</strong></p>
+<p>检索某个特定订单中的物品，计算每种物品的总价格</p>
+<blockquote>
+<p> CREATE VIEW orderitemsexpanded AS<br>    -&gt; SELECT order_num, prod_id, quantity, item_price, quantity*item_price AS expanded_orice<br>    -&gt; FROM orderitems;</p>
+</blockquote>
+<p>检索订单20005的详细内容</p>
+<blockquote>
+<p>SELECT * FROM orderitemsexpanded WHERE order_num = 20005;</p>
+</blockquote>
+<h3 id="使用存储过程"><a href="#使用存储过程" class="headerlink" title="使用存储过程"></a><strong>使用存储过程</strong></h3><p><strong>执行存储过程</strong><br>执行名为productpricing的存储过程，它计算并返回产品的最低、最高和平均价格</p>
+<blockquote>
+<p>CALL productpricing(@pricelow,<br>                                    @pricehigh,<br>                                    @priceaverage);</p>
+</blockquote>
+<p><strong>创建存储过程</strong></p>
+<ul>
+<li>存储过程名为productpricing()</li>
+<li>BEGIN END用来限定过程存储体</li>
+<li>这里SELECT语句结束后用分号有可能会报错</li>
+<li>DELIMITER //   分隔符</li>
+</ul>
+<blockquote>
+<p> DELIMITER //<br>mysql&gt; CREATE PROCEDURE productpricing()<br>    -&gt; BEGIN<br>    -&gt;     SELECT Avg(prod_price) AS priceaverage<br>    -&gt;     FROM products;<br>    -&gt; END //<br>Query OK, 0 rows affected (0.00 sec)</p>
+</blockquote>
+<p>使用存储过程</p>
+<ul>
+<li>使用分隔符（DELIMITER // 后需要再输入 DELIMITER ;）</li>
+</ul>
+<blockquote>
+<p>CALL productpricing();</p>
+</blockquote>
+<p><strong>删除存储过程</strong></p>
+<blockquote>
+<p> DROP PROCEDURE productpricing;</p>
+</blockquote>
+<p><strong>使用参数</strong></p>
+<ul>
+<li>decimal 十进制</li>
+<li>pl 存储最低价</li>
+<li>ph 存储最高价</li>
+<li>pa 存储产品平均价</li>
+<li>OUT 指出相应的参数用来从存储过程传出一个值</li>
+<li>存储过程的代码位于BEGIN和END之间</li>
+<li>指定INTO保存到相应的变量</li>
+</ul>
+<blockquote>
+<p>DELIMITER //<br>mysql&gt; CREATE PROCEDURE productpricing(<br>    -&gt;     OUT pl DECIMAL(8,2),<br>    -&gt;     OUT ph DECIMAL(8,2),<br>    -&gt;     OUT pa DECIMAL(8,2)<br>    -&gt; )<br>    -&gt; BEGIN<br>    -&gt;     SELECT Min(prod_price)<br>    -&gt;     INTO pl<br>    -&gt;     FROM products;<br>    -&gt;     SELECT Max(prod_price)<br>    -&gt;     INTO ph<br>    -&gt;     FROM products;<br>    -&gt;     SELECT Avg(prod_price)<br>    -&gt;     INTO pa<br>    -&gt;     FROM products;<br>    -&gt; END //</p>
+</blockquote>
+<p>为调用此修改过的存储过程，必须指定三个变量名</p>
+<ul>
+<li>所有MySQL变量名都必须以@开始</li>
+</ul>
+<blockquote>
+<p> CALL productpricing(@pricelow,<br>    -&gt; @pricehigh,<br>    -&gt; @priceaverage);</p>
+</blockquote>
+<p>检索出产品的平均价格</p>
+<blockquote>
+<p>SELECT @priceaverage;</p>
+</blockquote>
+<p>检索平均价格，最高价格，最低价格</p>
+<blockquote>
+<p>SELECT @pricehigh, @pricelow, @priceaverage;</p>
+</blockquote>
+<p> IN 和OUT参数</p>
+<ul>
+<li>onumber定义为IN</li>
+<li>ototal定义为OUT</li>
+<li>where子句使用onumber选择正确的行</li>
+<li>INTO使用ototal存储计算出来的合计</li>
+</ul>
+<p> ordertotal接受订单并返回该订单的合计</p>
+<ul>
+<li>onumber定义为IN</li>
+<li>ototal定义为OUT</li>
+<li>where子句使用onumber选择正确的行</li>
+<li>INTO使用ototal存储计算出来的合计</li>
+</ul>
+<blockquote>
+<p> CREATE PROCEDURE ordertotal(<br>    -&gt;     IN onumber INT,<br>    -&gt;     OUT ototal DECIMAL(8,2)<br>    -&gt; )<br>    -&gt; BEGIN<br>    -&gt;     SELECT Sum(item_price*quantity)<br>    -&gt;     FROM orderitems<br>    -&gt;     WHERE order_num = onumber<br>    -&gt;     INTO ototal;<br>    -&gt; END //</p>
+</blockquote>
+<p>调用新存储过程</p>
+<ul>
+<li>第一个参数为订单号</li>
+<li>第二个参数为包含计算出来的合计的变量名</li>
+</ul>
+<blockquote>
+<p>CALL ordertotal(20005, @total);</p>
+</blockquote>
+<p>显示合计</p>
+<blockquote>
+<p>SELECT @total;</p>
+</blockquote>
+<p><strong>建立智能存储过程</strong></p>
+<p><strong>检查存储过程</strong></p>
+<ul>
+<li>获得何时、由谁创建等详细信息的存储过程列表</li>
+</ul>
+<blockquote>
+<p> SHOW CREATE PROCEDURE ordertotal;</p>
+</blockquote>
+<h3 id="使用游标"><a href="#使用游标" class="headerlink" title="使用游标"></a><strong>使用游标</strong></h3><p>游标（cursor）：是一个存储在MySQL服务器上的数据库查询</p>
+<p><strong>创建游标</strong><br>定义了ordernumbers的游标</p>
+<ul>
+<li>DECLARE语句定义和命名游标ordernumbers</li>
+<li>存储过程处理完成后，游标就消失（因为它仅限于存储过程）</li>
+</ul>
+<blockquote>
+<p> CREATE PROCEDURE processorders()<br>    -&gt; BEGIN<br>    -&gt;     DECLARE ordernumbers CURSOR<br>    -&gt;     FOR<br>    -&gt;     SELECT order_num FROM orders;<br>    -&gt; END //</p>
+</blockquote>
+<p><strong>打开或关闭游标</strong></p>
+<blockquote>
+<p>OPEN ordernumbers;</p>
+<p>CLOSE ordernumbers;</p>
+</blockquote>
+<p><strong>使用游标数据</strong></p>
+<ul>
+<li>FETCH语句分别访问它的每一行</li>
+</ul>
+<p>从游标中检索单个行</p>
+<blockquote>
+<p>CREATE PROCEDURE</p>
+</blockquote>
+<h3 id="使用触发器"><a href="#使用触发器" class="headerlink" title="使用触发器"></a><strong>使用触发器</strong></h3><p><strong>创建触发器</strong></p>
+<p>CREATE TRIGGER - 建立触发</p>
+<blockquote>
+<p> CREATE TRIGGER newproduct AFTER INSERT ON products<br>    -&gt; FOR EACH ROW SELECT ‘Product added’;</p>
+</blockquote>
+<p><strong>删除触发器</strong></p>
+<blockquote>
+<p> DROP TRIGGER newproduct;</p>
+</blockquote>
+<h3 id="管理事务处理"><a href="#管理事务处理" class="headerlink" title="管理事务处理"></a><strong>管理事务处理</strong></h3><ul>
+<li>InnoDB引擎支持事务处理管理</li>
+</ul>
+<ul>
+<li>transaction 事务处理 指一种SQL语句</li>
+<li>rollback 回退 指撤销指定SQL语句的过程</li>
+<li>commit 提交 指将未存储的SQL语句结果写入数据库表</li>
+<li>savepoint 保留点 指事务处理中设置的临时占位符</li>
+<li>START TRANSACTION 标识事务的开始</li>
+</ul>
+<p><strong>使用ROLLBACK</strong></p>
+<blockquote>
+<p>SELECT <em> FROM ordertotals;<br>START TRANSACTION;<br>DELETE FROM ordertotals;<br>SELECT </em> FROM ordertotals;<br>ROLLBACK;<br>SELECT * FROM ordertotals;</p>
+</blockquote>
+<ol>
+<li>执行一条select语句显示该表不为空</li>
+<li>开始食物处理</li>
+<li>删除表中所有的行</li>
+<li>select 验证表确实为空</li>
+<li>回退到START TRANSACTION之后的所有语句</li>
+<li>最后一条select显示该表不为空</li>
+</ol>
+<p><strong>使用COMMIT</strong></p>
+<p><strong>使用保留点</strong></p>
+<blockquote>
+<p>SAVEPOINT delete1;</p>
+</blockquote>
+<p><strong>更改默认的提交行为</strong></p>
+<ul>
+<li>autocommit 标志决定是否自动提交更改</li>
+</ul>
+<blockquote>
+<p>SET autocommit=0;</p>
+</blockquote>
+<h3 id="全球化和本地化"><a href="#全球化和本地化" class="headerlink" title="全球化和本地化"></a><strong>全球化和本地化</strong></h3><p><strong>使用字符集和校对顺序</strong></p>
+<blockquote>
+<p>SHOW CHARACTER SET;</p>
+</blockquote>
+<p>查看所支持校对的完整列表</p>
+<blockquote>
+<p>SHOW COLLATION</p>
+</blockquote>
+<p>给表指定字符集和校对</p>
+<ul>
+<li>创建一个包含两个列的表</li>
+<li>指定一个字符集</li>
+<li>制定一个校对顺序</li>
+</ul>
+<blockquote>
+<p> CREATE TABLE mytable<br>    -&gt; (<br>    -&gt;     column1    INT,<br>    -&gt;     column2    VARCHAR(10)<br>    -&gt; ) DEFAULT CHARACTER SET hebrew<br>    -&gt;   COLLATE hebrew_general_ci;</p>
+</blockquote>
+<h3 id="安全管理"><a href="#安全管理" class="headerlink" title="安全管理"></a><strong>安全管理</strong></h3><p>获得所有用户账号的列表</p>
+<blockquote>
+<p> USE mysql</p>
+<p> SELECT user FROM user;</p>
+</blockquote>
+<p><strong>创建用户账号</strong></p>
+<ul>
+<li>identified 确定</li>
+</ul>
+<blockquote>
+<p>CREATE USER treehl IDENTIFIED BY ‘密码’;</p>
+</blockquote>
+<p>重新命名一个帐户</p>
+<blockquote>
+<p>RENAME USER treehl TO treehl1;</p>
+</blockquote>
+<p><strong>删除用户账号</strong></p>
+<blockquote>
+<p>DROP USER treehl1;</p>
+</blockquote>
+<p><strong>设置访问权限</strong><br>查询用户权限</p>
+<blockquote>
+<p> SHOW GRANTS FOR treehl;</p>
+</blockquote>
+<p><img src="http://m.qpic.cn/psb?/V10WDaE22S84Sl/z4CNoKaxCQkf3IbWcXEu1C7T.ZneiHUclLVaC088vZU!/b/dDIBAAAAAAAA&amp;bo=qAGPAAAAAAADBwQ!&amp;rf=viewer_4" alt=""></p>
+<p>USAGE表示没有权限</p>
+<p>用GRANT设置权限</p>
+<blockquote>
+<p>GRANT SELECT ON MySQL_test.* TO treehl;</p>
+</blockquote>
+<p>显示更改后的权限</p>
+<blockquote>
+<p>show grants for treehl;</p>
+</blockquote>
+<p>撤销权限</p>
+<blockquote>
+<p> REVOKE SELECT ON MySQL_test.* FROM treehl;</p>
+</blockquote>
+<p>GRANT和REVOKE可在几个层次上控制访问权限</p>
+<ol>
+<li>整个服务器，GRANT ALL REVOKE ALL</li>
+<li>整个数据库 使用ON databases.*</li>
+<li>特定的表 使用ON database.table</li>
+</ol>
+<p><strong>更改口令</strong></p>
+<blockquote>
+<p>SET PASSWORD FOR treehl = Password(‘密码’);</p>
+</blockquote>
+<h3 id="数据库维护"><a href="#数据库维护" class="headerlink" title="数据库维护"></a><strong>数据库维护</strong></h3><p>刷新数据</p>
+<blockquote>
+<p> FLUSH TABLES;</p>
+</blockquote>
+<p><strong>进行数据库维护</strong></p>
+<p>analyze table - 分析表</p>
+<blockquote>
+<p> ANALYZE TABLE orders;</p>
+</blockquote>
+<p>check table - 检查表</p>
+<blockquote>
+<p>CHECK TABLE ORDERS, ORDERITEMS;</p>
+</blockquote>
+<p><strong>争端启动问题</strong></p>
+<p>mysqld</p>
+<h3 id="改善性能"><a href="#改善性能" class="headerlink" title="改善性能"></a><strong>改善性能</strong></h3><p> 查看所有活动进程</p>
+<blockquote>
+<p>SHOW PROCESSLIST;</p>
+</blockquote>
+<p>查看当前设置</p>
+<blockquote>
+<p>SHOW VARIABLES;<br>SHOW STATUS;</p>
+</blockquote>
+<p><a href="https://github.com/Family-TreeSY" target="_blank" rel="external">GitHub</a><br>欢迎访问博客<a href="https://family-treesy.github.io/" target="_blank" rel="external">Treehl的博客</a></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">MySQL</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/03/01/MYSQL小结/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-scrapy-redis(二)" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/01/10/scrapy-redis(二)/">Scrapy-Redis分布式爬取链家上海17个区房源信息（二）</a>
+    </h1>
+  
+
+        
+        <a href="/2018/01/10/scrapy-redis(二)/" class="archive-article-date">
+  	<time datetime="2018-01-10T02:32:23.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-01-10</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>免责声明：本项目旨在学习Scrapy爬虫框架和MongoDB数据库，不可使用于商业和个人其他意图。若使用不当，均由个人承担。</p>
+</blockquote>
+<p>###<strong>简介</strong><br>之前用requests + bs4 抓取过宝山区的房源信息，今天我们用scrapy-redis分布式抓取上海17个区所有的房源信息，这个工程比起上一个<a href="https://family-treesy.github.io/2017/12/23/scrapy-redis(%E4%B8%80" target="_blank" rel="external">scrapy-redis抓取自如网</a>/)，增加了如下功能：</p>
+<ul>
+<li>创建了imagepipeline管道，抓取房型图</li>
+<li>输出csv指定了列顺序</li>
+</ul>
+<p>这次只总结学习以上两点内容，关于scrapy-redis的实现，有兴趣可以看第一篇<a href="https://family-treesy.github.io/2017/12/23/scrapy-redis(%E4%B8%80" target="_blank" rel="external">自如</a>/)</p>
+<p>###<strong>所需要的库</strong></p>
+<ul>
+<li>scrapy</li>
+<li>scrapy-redis</li>
+<li>mongodb</li>
+<li>redis</li>
+</ul>
+<h3 id="使用图片管道"><a href="#使用图片管道" class="headerlink" title="使用图片管道"></a><strong>使用图片管道</strong></h3><p>新建一个imagepipeline来抓取房型图，这里说下流程</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> scrapy.pipelines.images <span class="keyword">import</span> ImagesPipeline</div><div class="line"><span class="keyword">from</span> scrapy.exceptions <span class="keyword">import</span> DropItem</div><div class="line"><span class="keyword">from</span> scrapy <span class="keyword">import</span> Request</div><div class="line"><span class="keyword">import</span> os</div><div class="line"></div><div class="line">PROJECT_DIR = os.path.abspath(os.path.dirname(__file__))</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyImagesPipeline</span><span class="params">(ImagesPipeline)</span>:</span></div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">get_media_requests</span><span class="params">(self, item, info)</span>:</span></div><div class="line">        <span class="keyword">for</span> image_url <span class="keyword">in</span> item[<span class="string">'image_urls'</span>]:</div><div class="line">            <span class="keyword">yield</span> Request(image_url, meta=&#123;<span class="string">'item'</span>:item,<span class="string">'index'</span>:item[<span class="string">'image_urls'</span>].index(image_url)&#125;)</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">item_completed</span><span class="params">(self, results, item, info)</span>:</span></div><div class="line">        image_paths = [x[<span class="string">'path'</span>] <span class="keyword">for</span> ok, x <span class="keyword">in</span> results <span class="keyword">if</span> ok]</div><div class="line">        <span class="comment"># image_paths = os.path.join(PROJECT_DIR,'media/lianjia_image')</span></div><div class="line">        <span class="keyword">if</span> <span class="keyword">not</span> image_paths:</div><div class="line">            <span class="keyword">raise</span> DropItem(<span class="string">"Item contains no images"</span>)</div><div class="line">        item[<span class="string">'image_paths'</span>] = image_paths</div><div class="line">        <span class="keyword">return</span> item</div></pre></td></tr></table></figure>
+<p>在items.py中添加image_urls、image_paths<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">image_urls = scrapy.Field()</div><div class="line"></div><div class="line">image_paths = scrapy.Field()</div></pre></td></tr></table></figure></p>
+<p>在setting.py中设置如下</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line"> 图片尺寸</div><div class="line">IMAGES_THUMBS = &#123;</div><div class="line">    <span class="string">'small'</span>: (<span class="number">50</span>, <span class="number">50</span>),</div><div class="line">    <span class="string">'big'</span>: (<span class="number">270</span>, <span class="number">270</span>),</div><div class="line">&#125;</div><div class="line"></div><div class="line">IMAGES_URLS_FIELD = <span class="string">"image_urls"</span></div><div class="line"></div><div class="line"><span class="comment">#获取当前运行脚本的绝对路径（去掉最后一个路径),获取当前爬虫项目的绝对路径</span></div><div class="line">PROJECT_DIR = os.path.abspath(os.path.dirname(__file__))</div><div class="line"></div><div class="line"></div><div class="line"><span class="comment"># 7天的图片失效期限</span></div><div class="line">IMAGES_EXPIRES = <span class="number">7</span></div><div class="line"></div><div class="line"><span class="comment"># 图片存储路径</span></div><div class="line">IMAGES_STORE = os.path.join(PROJECT_DIR,<span class="string">'media/lianjia_image'</span>)</div><div class="line"></div><div class="line">ITEM_PIPELINES = &#123;</div><div class="line">    <span class="comment"># 'lianjia.pipelines.LianjiaPipeline': 300,</span></div><div class="line">    <span class="string">'lianjia.pipelines.lianjia_image.MyImagesPipeline'</span>: <span class="number">50</span>,</div><div class="line">    ..........</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>这里要注意下要在itempipelines中开启图片管道才可以抓取房型图，我在学习的时候遇到了个问题，在setting中设置了请求头，图片地址和HOST不一样，导致出现502 Bad Gateway</p>
+<h3 id="设置CSV输出列顺序"><a href="#设置CSV输出列顺序" class="headerlink" title="设置CSV输出列顺序"></a><strong>设置CSV输出列顺序</strong></h3><ol>
+<li>我们在spiders文件中新建csv_item_exporter.py</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># -*- coding:utf-8 -*-</span></div><div class="line"></div><div class="line"><span class="keyword">from</span> scrapy.conf <span class="keyword">import</span> settings</div><div class="line"><span class="keyword">from</span> scrapy.contrib.exporter <span class="keyword">import</span> CsvItemExporter</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyProjectCsvItemExporter</span><span class="params">(CsvItemExporter)</span>:</span></div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, *args, **kwargs)</span>:</span></div><div class="line">        delimiter = settings.get(<span class="string">'CSV_DELIMITER'</span>, <span class="string">','</span>)</div><div class="line">        kwargs[<span class="string">'delimiter'</span>] = delimiter</div><div class="line"></div><div class="line">        fields_to_export = settings.get(<span class="string">'FIELDS_TO_EXPORT'</span>, [])</div><div class="line">        <span class="keyword">if</span> fields_to_export :</div><div class="line">            kwargs[<span class="string">'fields_to_export'</span>] = fields_to_export</div><div class="line"></div><div class="line">        super(MyProjectCsvItemExporter, self).__init__(*args, **kwargs)</div></pre></td></tr></table></figure>
+<ol>
+<li>设置setting.py</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># csv设置</span></div><div class="line">FEED_EXPORTERS = &#123;</div><div class="line">    <span class="string">'csv'</span>: <span class="string">'lianjia.spiders.csv_item_exporter.MyProjectCsvItemExporter'</span>,</div><div class="line">&#125;</div><div class="line"></div><div class="line">FEED_EXPORT_ENCODING = <span class="string">'utf-8'</span></div><div class="line"></div><div class="line"><span class="comment"># 按如下名称先后形成列</span></div><div class="line">FIELDS_TO_EXPORT = [</div><div class="line">    <span class="string">'home_community_name'</span>,</div><div class="line">    <span class="string">'home_area'</span>,</div><div class="line">    <span class="string">'home_unit_price'</span>,</div><div class="line">    <span class="string">'home_total_price'</span>,</div><div class="line">    <span class="string">'home_reference_down_payment'</span>,</div><div class="line">    <span class="string">'home_build_time'</span>,</div><div class="line">    <span class="string">'home_decoration'</span>,</div><div class="line">    <span class="string">'home_time'</span>,</div><div class="line">    <span class="string">'home_floor'</span>,</div><div class="line">    <span class="string">'home_location'</span>,</div><div class="line">    <span class="string">'home_type'</span>,</div><div class="line">    <span class="string">'home_tword'</span>,</div><div class="line"></div><div class="line">]</div></pre></td></tr></table></figure>
+<h3 id="待解决问题"><a href="#待解决问题" class="headerlink" title="待解决问题"></a><strong>待解决问题</strong></h3><ul>
+<li>scrapy-redis输出到数据库的数据全部是bytes</li>
+<li>使用scrapy-redis分布式抓取后，CSV文件出现乱码，txt保存格式直接为ANSI，用Scrapy框架爬取无此问题，我觉得两个问题是有关联的，跪谢各路网友指教！！！！！</li>
+</ul>
+<p>欢迎访问<a href="https://family-treesy.github.io/" target="_blank" rel="external">Treehl的博客</a><br>完整代码：<br><a href="https://github.com/Family-TreeSY/Scrapy-Redis-Spider/tree/master/lianjia" target="_blank" rel="external">GitHub</a><br><a href="https://www.jianshu.com/p/2124f1d2c008" target="_blank" rel="external">简书</a></p>
+<p>最后放两个笔者GitHub上的两个项目！！欢迎大家访问！！<br><a href="https://github.com/Family-TreeSY/SpiderList" target="_blank" rel="external">SpiderList</a><br><a href="https://github.com/Family-TreeSY/Scrapy-Redis-Spider" target="_blank" rel="external">Scrapy-redis</a></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">PYTHON</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">MongoDB</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">爬虫</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Scrapy</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Redis</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">Scrapy-Redis</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/01/10/scrapy-redis(二)/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-scrapy-redis(一)" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/12/23/scrapy-redis(一)/">Scrapy-Redis分布式爬取自如网（一）</a>
+    </h1>
+  
+
+        
+        <a href="/2017/12/23/scrapy-redis(一)/" class="archive-article-date">
+  	<time datetime="2017-12-23T09:48:23.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-12-23</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>继上次<a href="https://family-treesy.github.io/2017/12/21/Scrapy%E7%88%AC%E5%8F%96%E7%8C%AB%E7%9C%BC%E7%94%B5%E5%BD%B1/" target="_blank" rel="external">Scrapy爬取猫眼电影</a>之后，这几天学习了Scrapy-Redis分布式来提高爬取效率，也算是停留在舒适圈一段时间后往前走了一步！！</p>
+<p><strong>准备工作</strong><br><a href="https://www.mongodb.com/" target="_blank" rel="external">MongoDB</a><br><a href="https://redis.io/" target="_blank" rel="external">Redis</a><br><a href="https://github.com/rmax/scrapy-redis" target="_blank" rel="external">Scrapy-Redis</a><br><a href="https://github.com/scrapy/scrapy" target="_blank" rel="external">Scrapy</a></p>
+<p>这次爬取的是<a href="http://sh.ziroom.com/z/nl/z2.html?qwd=" target="_blank" rel="external">上海自如租房</a>，相信在魔都生活的小伙伴们如果不是本地人，租房费用占了每月开销很大的一部分，我们来看下租房体验比较好的自如，除了价格贵外 - -！！</p>
+<h4 id="实战应用"><a href="#实战应用" class="headerlink" title="实战应用"></a><strong>实战应用</strong></h4><p>创建一个工程</p>
+<blockquote>
+<p>scrapy startproject ziru</p>
+</blockquote>
+<p><strong>第一步 编辑item.py</strong><br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> scrapy</div><div class="line"></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">ZiruItem</span><span class="params">(scrapy.Item)</span>:</span></div><div class="line">    <span class="comment"># define the fields for your item here like:</span></div><div class="line">    <span class="comment"># name = scrapy.Field()</span></div><div class="line">    ziroom_area = scrapy.Field()</div><div class="line">    ziroom_face = scrapy.Field()</div><div class="line">    ziroom_floor = scrapy.Field()</div><div class="line">    ziroom_label = scrapy.Field()</div><div class="line">    <span class="comment"># ziroom_location = scrapy.Field()</span></div><div class="line">    ziroom_name = scrapy.Field()</div><div class="line">    ziroom_price = scrapy.Field()</div><div class="line">    ziroom_type = scrapy.Field()</div><div class="line">    ziroom_traffic = scrapy.Field()</div><div class="line">    rounding_info = scrapy.Field()</div><div class="line">    traffic_info = scrapy.Field()</div><div class="line">    ziroom_image = scrapy.Field()</div><div class="line">    <span class="keyword">pass</span></div></pre></td></tr></table></figure></p>
+<ul>
+<li>首先，引入Scrapy</li>
+<li>接着，创建一个类，继承自scrapy.item,这个是用来储存要爬下来的数据的存放容器</li>
+</ul>
+<p><strong>第二步 获取网页数据</strong><br>在spider文件下创建spider.py<br> <img src="http://m.qpic.cn/psb?/V10WDaE22S84Sl/vTL5TWP6nxsx3u*xqp2ZyF0SlQj9jH5V*yObgpA6u7Y!/b/dF4BAAAAAAAA&amp;bo=iwWAAgAAAAADBy4!&amp;rf=viewer_4" alt=""></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># -*- coding: utf-8 -*-</span></div><div class="line"></div><div class="line"><span class="keyword">from</span> scrapy.spiders <span class="keyword">import</span> Rule</div><div class="line"><span class="keyword">from</span> scrapy.selector <span class="keyword">import</span> Selector</div><div class="line"><span class="keyword">from</span> scrapy.linkextractors <span class="keyword">import</span> LinkExtractor</div><div class="line"><span class="keyword">from</span> ziru.items <span class="keyword">import</span> ZiruItem</div><div class="line"><span class="keyword">from</span> scrapy_redis.spiders <span class="keyword">import</span> RedisCrawlSpider</div><div class="line"></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">ZiroomSpider</span><span class="params">(RedisCrawlSpider)</span>:</span></div><div class="line">    name = <span class="string">'ziroom'</span></div><div class="line">    <span class="comment"># allowed_domains = ['http://sh.ziroom.com/z/nl/z2.html?qwd=']</span></div><div class="line">    <span class="comment"># start_urls = ['http://sh.ziroom.com/z/nl/z2.html?qwd=']</span></div><div class="line">    redis_key = <span class="string">'ziroomspider:start_urls'</span></div><div class="line">    rules = (</div><div class="line">        Rule(LinkExtractor(allow=(<span class="string">r'http://sh.ziroom.com/z/nl/z2.html\?qwd=\&amp;p=\d+'</span>))),</div><div class="line">        Rule(LinkExtractor(allow=(<span class="string">r'http:\//sh\.ziroom\.com\/z\/vr\/\d+\.html'</span>)), callback=<span class="string">'parse_item'</span>)</div><div class="line">    )</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">parse_item</span><span class="params">(self, response)</span>:</span></div><div class="line">        <span class="comment"># print(response.body)</span></div><div class="line">        sel = Selector(response)</div><div class="line">        </div><div class="line">      ...省略索取元素的代码...</div><div class="line"></div><div class="line">        <span class="keyword">yield</span> item</div></pre></td></tr></table></figure>
+<ul>
+<li>比起Scrapy，又多引入了 from scrapy_redis.spiders import RedisCrawlSpider</li>
+<li>start_urls变为redis_key = ‘ziroomspider:start_urls’ 作为所有链接存储到 redis</li>
+<li>爬取rule还是一个链接为翻页，一个为详情页链接</li>
+</ul>
+<p><strong>第三步 编辑管道pipeline.py</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"></div><div class="line"><span class="keyword">import</span> pymongo</div><div class="line"><span class="keyword">from</span> scrapy.conf <span class="keyword">import</span> settings</div><div class="line"><span class="keyword">from</span> scrapy.exceptions <span class="keyword">import</span> DropItem</div><div class="line"><span class="keyword">from</span> scrapy <span class="keyword">import</span> log</div><div class="line"></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">MongoDBPipeline</span><span class="params">(object)</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self)</span>:</span></div><div class="line">        client = pymongo.MongoClient(settings[<span class="string">'MONGODB_SERVER'</span>], settings[<span class="string">'MONGODB_PORT'</span>])</div><div class="line">        db = client[settings[<span class="string">'MONGODB_DB'</span>]]</div><div class="line">        self.collection = db[settings[<span class="string">'MONGODB_COLLECTION'</span>]]</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">process_item</span><span class="params">(self, item, spider)</span>:</span></div><div class="line">        <span class="comment"># item:  (Item 对象) – 被爬取的item</span></div><div class="line">        <span class="comment"># (Spider 对象) – 爬取该item的spider</span></div><div class="line">        <span class="comment"># 去重，删除重复的数据</span></div><div class="line">        valid = <span class="keyword">True</span></div><div class="line">        <span class="keyword">for</span> data <span class="keyword">in</span> item:</div><div class="line">            <span class="keyword">if</span> <span class="keyword">not</span> data:</div><div class="line">                valid = <span class="keyword">False</span></div><div class="line">                <span class="keyword">raise</span> DropItem(<span class="string">'Missing %s of blogpost from %s'</span> % (data, item[<span class="string">'url'</span>]))</div><div class="line">        <span class="keyword">if</span> valid:</div><div class="line">            homes = [&#123;</div><div class="line">                <span class="string">'ziroom_area'</span>: item[<span class="string">'ziroom_area'</span>],</div><div class="line">                <span class="string">'ziroom_face'</span>: item[<span class="string">'ziroom_face'</span>],</div><div class="line">                <span class="string">'ziroom_floor'</span>: item[<span class="string">'ziroom_floor'</span>],</div><div class="line">                <span class="string">'ziroom_label'</span>: item[<span class="string">'ziroom_label'</span>],</div><div class="line">                <span class="comment"># 'ziroom_location': item['ziroom_location'],</span></div><div class="line">                <span class="string">'ziroom_name'</span> :item[<span class="string">'ziroom_name'</span>],</div><div class="line">                <span class="string">'ziroom_price'</span> : item[<span class="string">'ziroom_price'</span>],</div><div class="line">                <span class="string">'ziroom_type'</span> : item[<span class="string">'ziroom_type'</span>],</div><div class="line">                <span class="string">'ziroom_traffic'</span>: item[<span class="string">'ziroom_traffic'</span>],</div><div class="line">                <span class="string">'rounding_info'</span>: item[<span class="string">'rounding_info'</span>],</div><div class="line">                <span class="string">'traffic_info'</span>: item[<span class="string">'traffic_info'</span>],</div><div class="line">                <span class="string">'ziroom_image'</span>: item[<span class="string">'ziroom_image'</span>],</div><div class="line">            &#125;]</div><div class="line"></div><div class="line">            <span class="comment"># 插入数据库集合中</span></div><div class="line">            self.collection.insert(homes)</div><div class="line">            log.msg(<span class="string">'Item wrote to MongoDB database %s/%s'</span> % (settings[<span class="string">'MONGODB_DB'</span>], settings[<span class="string">'MONGODB_COLLECTION'</span>]),</div><div class="line">                    level=log.DEBUG, spider=spider)</div><div class="line">        <span class="keyword">return</span> item</div></pre></td></tr></table></figure>
+<p>编辑MongoDBpipelines，将获取的数据存入MongoDB数据库中</p>
+<p><strong>第四步 编辑middlewares.py</strong><br>在中间件中写入随机选取伪造请求头来防止spider被封掉</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">RotateUserAgentMiddleware</span><span class="params">(UserAgentMiddleware)</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__int__</span><span class="params">(self, user_agent=<span class="string">''</span>)</span>:</span></div><div class="line">        self.user_agent = user_agent</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">process_request</span><span class="params">(self, request, spider)</span>:</span></div><div class="line">        <span class="comment"># 这句话用于随机选择user-agent</span></div><div class="line">        ua = random.choice(self.user_agent_list)</div><div class="line">        <span class="keyword">if</span> ua:</div><div class="line">            logging.info(ua)</div><div class="line">            request.headers.setdefault(<span class="string">'User-Agent'</span>, ua)</div><div class="line"></div><div class="line">    <span class="comment"># the default user_agent_list composes chrome,I E,firefox,Mozilla,opera,netscape</span></div><div class="line">    <span class="comment"># for more user agent strings,you can find it in http://www.useragentstring.com/pages/useragentstring.php</span></div><div class="line">    user_agent_list = [</div><div class="line">        <span class="string">"Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.1 (KHTML, like Gecko) Chrome/22.0.1207.1 Safari/537.1"</span>,</div><div class="line">        <span class="string">"Mozilla/5.0 (X11; CrOS i686 2268.111.0) AppleWebKit/536.11 (KHTML, like Gecko) Chrome/20.0.1132.57 Safari/536.11"</span>,</div><div class="line">        <span class="string">"Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/536.6 (KHTML, like Gecko) Chrome/20.0.1092.0 Safari/536.6"</span>,</div><div class="line">        <span class="string">"Mozilla/5.0 (Windows NT 6.2) AppleWebKit/536.6 (KHTML, like Gecko) Chrome/20.0.1090.0 Safari/536.6"</span>,</div><div class="line">        <span class="string">"Mozilla/5.0 (Windows NT 6.2; WOW64) AppleWebKit/537.1 (KHTML, like Gecko) Chrome/19.77.34.5 Safari/537.1"</span>,</div><div class="line">        <span class="string">"Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/536.5 (KHTML, like Gecko) Chrome/19.0.1084.9 Safari/536.5"</span>,</div><div class="line">        <span class="string">"Mozilla/5.0 (Windows NT 6.0) AppleWebKit/536.5 (KHTML, like Gecko) Chrome/19.0.1084.36 Safari/536.5"</span>,</div><div class="line">        <span class="string">"Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/536.3 (KHTML, like Gecko) Chrome/19.0.1063.0 Safari/536.3"</span>,</div><div class="line">        <span class="string">"Mozilla/5.0 (Windows NT 5.1) AppleWebKit/536.3 (KHTML, like Gecko) Chrome/19.0.1063.0 Safari/536.3"</span>,</div><div class="line">        <span class="string">"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_8_0) AppleWebKit/536.3 (KHTML, like Gecko) Chrome/19.0.1063.0 Safari/536.3"</span>,</div><div class="line">        <span class="string">"Mozilla/5.0 (Windows NT 6.2) AppleWebKit/536.3 (KHTML, like Gecko) Chrome/19.0.1062.0 Safari/536.3"</span>,</div><div class="line">        <span class="string">"Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/536.3 (KHTML, like Gecko) Chrome/19.0.1062.0 Safari/536.3"</span>,</div><div class="line">        <span class="string">"Mozilla/5.0 (Windows NT 6.2) AppleWebKit/536.3 (KHTML, like Gecko) Chrome/19.0.1061.1 Safari/536.3"</span>,</div><div class="line">        <span class="string">"Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/536.3 (KHTML, like Gecko) Chrome/19.0.1061.1 Safari/536.3"</span>,</div><div class="line">        <span class="string">"Mozilla/5.0 (Windows NT 6.1) AppleWebKit/536.3 (KHTML, like Gecko) Chrome/19.0.1061.1 Safari/536.3"</span>,</div><div class="line">        <span class="string">"Mozilla/5.0 (Windows NT 6.2) AppleWebKit/536.3 (KHTML, like Gecko) Chrome/19.0.1061.0 Safari/536.3"</span>,</div><div class="line">        <span class="string">"Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/535.24 (KHTML, like Gecko) Chrome/19.0.1055.1 Safari/535.24"</span>,</div><div class="line">        <span class="string">"Mozilla/5.0 (Windows NT 6.2; WOW64) AppleWebKit/535.24 (KHTML, like Gecko) Chrome/19.0.1055.1 Safari/535.24"</span>,</div><div class="line">        <span class="string">"Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US) AppleWebKit/531.21.8 (KHTML, like Gecko) Version/4.0.4 Safari/531.21.10"</span>,</div><div class="line">        <span class="string">"Mozilla/5.0 (Windows; U; Windows NT 5.2; en-US) AppleWebKit/533.17.8 (KHTML, like Gecko) Version/5.0.1 Safari/533.17.8"</span>,</div><div class="line">        <span class="string">"Mozilla/5.0 (Windows; U; Windows NT 6.1; en-US) AppleWebKit/533.19.4 (KHTML, like Gecko) Version/5.0.2 Safari/533.18.5"</span>,</div><div class="line">        <span class="string">"Mozilla/5.0 (Windows; U; Windows NT 6.1; en-GB; rv:1.9.1.17) Gecko/20110123 (like Firefox/3.x) SeaMonkey/2.0.12"</span>,</div><div class="line">        <span class="string">"Mozilla/5.0 (Windows NT 5.2; rv:10.0.1) Gecko/20100101 Firefox/10.0.1 SeaMonkey/2.7.1"</span>,</div><div class="line">        <span class="string">"Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10_5_8; en-US) AppleWebKit/532.8 (KHTML, like Gecko) Chrome/4.0.302.2 Safari/532.8"</span>,</div><div class="line">        <span class="string">"Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10_6_4; en-US) AppleWebKit/534.3 (KHTML, like Gecko) Chrome/6.0.464.0 Safari/534.3"</span>,</div><div class="line">        <span class="string">"Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10_6_5; en-US) AppleWebKit/534.13 (KHTML, like Gecko) Chrome/9.0.597.15 Safari/534.13"</span>,</div><div class="line">        <span class="string">"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_7_2) AppleWebKit/535.1 (KHTML, like Gecko) Chrome/14.0.835.186 Safari/535.1"</span>,</div><div class="line">        <span class="string">"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_6_8) AppleWebKit/535.2 (KHTML, like Gecko) Chrome/15.0.874.54 Safari/535.2"</span>,</div><div class="line">        <span class="string">"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_6_8) AppleWebKit/535.7 (KHTML, like Gecko) Chrome/16.0.912.36 Safari/535.7"</span>,</div><div class="line">        <span class="string">"Mozilla/5.0 (Macintosh; U; Mac OS X Mach-O; en-US; rv:2.0a) Gecko/20040614 Firefox/3.0.0 "</span>,</div><div class="line">        <span class="string">"Mozilla/5.0 (Macintosh; U; PPC Mac OS X 10.5; en-US; rv:1.9.0.3) Gecko/2008092414 Firefox/3.0.3"</span>,</div><div class="line">        <span class="string">"Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.5; en-US; rv:1.9.1) Gecko/20090624 Firefox/3.5"</span>,</div><div class="line">        <span class="string">"Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.6; en-US; rv:1.9.2.14) Gecko/20110218 AlexaToolbar/alxf-2.0 Firefox/3.6.14"</span>,</div><div class="line">        <span class="string">"Mozilla/5.0 (Macintosh; U; PPC Mac OS X 10.5; en-US; rv:1.9.2.15) Gecko/20110303 Firefox/3.6.15"</span>,</div><div class="line">        <span class="string">"Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:2.0.1) Gecko/20100101 Firefox/4.0.1"</span></div><div class="line">    ]</div></pre></td></tr></table></figure>
+<p><strong>第五步 设置setting.py</strong></p>
+<p>这一步要修改配置了</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line">DOWNLOADER_MIDDLEWARES = &#123;</div><div class="line">    <span class="comment"># 'ziru.middlewares.MyCustomDownloaderMiddleware': 543,</span></div><div class="line">    <span class="string">'ziru.middlewares.RotateUserAgentMiddleware'</span>:<span class="number">200</span>,</div><div class="line">    <span class="string">'scrapy.downloadermiddlewares.retry.RetryMiddleware'</span>: <span class="number">80</span>,</div><div class="line">    <span class="comment"># 'itjuzi_dis.middlewares.ProxyMiddleware': 90,</span></div><div class="line">    <span class="string">'scrapy.downloadermiddlewares.httpproxy.HttpProxyMiddleware'</span>: <span class="number">100</span>,</div><div class="line">&#125;</div><div class="line"></div><div class="line">ITEM_PIPELINES = &#123;</div><div class="line">    <span class="string">'ziru.pipelines.MongoDBPipeline'</span>: <span class="number">300</span>,</div><div class="line">    <span class="string">'scrapy_redis.pipelines.RedisPipeline'</span>: <span class="number">400</span>,</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">#使用Scrapy-Redis的调度器</span></div><div class="line">SCHEDULER = <span class="string">"scrapy_redis.scheduler.Scheduler"</span></div><div class="line"><span class="comment">#利用Redis的集合实现去重</span></div><div class="line">DUPEFILTER_CLASS = <span class="string">"scrapy_redis.dupefilter.RFPDupeFilter"</span></div><div class="line"><span class="comment">#允许继续爬取</span></div><div class="line">SCHEDULER_PERSIST = <span class="keyword">True</span></div><div class="line"><span class="comment">#设置优先级</span></div><div class="line">SCHEDULER_QUEUE_CLASS = <span class="string">'scrapy_redis.queue.SpiderPriorityQueue'</span></div><div class="line">REDIS_PARAMS = &#123;<span class="string">'host'</span>: <span class="string">'localhost'</span>, <span class="string">'port'</span>: <span class="string">'6379'</span>&#125;</div></pre></td></tr></table></figure>
+<p>好了，所有的配置全部部署完了，现在来启动spider来爬取数据吧！！</p>
+<blockquote>
+<p>scrapy crawl ziroom</p>
+</blockquote>
+<p><img src="http://m.qpic.cn/psb?/V10WDaE22S84Sl/Z4440zj2oYT8nndgHw*D8nneUQyvzidoskXf3zHI9.E!/b/dPMAAAAAAAAA&amp;bo=IAPMAQAAAAARB94!&amp;rf=viewer_4" alt=""></p>
+<p>spider启动，它在等待我们的指令来爬取</p>
+<p>打开redis-cli</p>
+<blockquote>
+<p>lpush ziroomspider:start_urls <a href="http://sh.ziroom.com/z/nl/z2.html?qwd=" target="_blank" rel="external">http://sh.ziroom.com/z/nl/z2.html?qwd=</a></p>
+</blockquote>
+<p><img src="http://m.qpic.cn/psb?/V10WDaE22S84Sl/A6Q6q0FfiRjUjyDCADt4ZOVPO3.BuvLtDyXBZCObz0Y!/b/dD8BAAAAAAAA&amp;bo=KwczAgAAAAADBz8!&amp;rf=viewer_4" alt=""></p>
+<p>我开了六个spider来爬取，电脑CPU有几个处理器就能开几个，我是8核，最多能开8个，接下来准备学习docker来部署spider</p>
+<p><a href="https://github.com/Family-TreeSY/SpiderList/blob/master/ziru/ziru/spiders/ziroom.py" target="_blank" rel="external">完整代码</a><br><a href="https://www.jianshu.com/u/a01bc3ec4f88" target="_blank" rel="external">简书</a><br>[欢迎访问Treehl的博客(<a href="https://family-treesy.github.io/" target="_blank" rel="external">https://family-treesy.github.io/</a>)</p>
+<p>最后放一个爬虫集合，是我最近学习Python写的，喜欢的亲！给个Star呗！！！<br><a href="https://github.com/Family-TreeSY/SpiderList" target="_blank" rel="external">SpiderList</a></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">PYTHON</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">MongoDB</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">爬虫</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Scrapy</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Redis</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">Scrapy-Redis</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2017/12/23/scrapy-redis(一)/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-Scrapy爬取猫眼电影" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -294,872 +2226,9 @@
 
 
   
-    <article id="post-今日头条" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/12/14/今日头条/">Python爬取今日头条江歌案新闻</a>
-    </h1>
-  
-
-        
-        <a href="/2017/12/14/今日头条/" class="archive-article-date">
-  	<time datetime="2017-12-14T10:48:23.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-12-14</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>今天学习总结下爬取今日头条江歌案的新闻，今天头条用到了Ajax技术，所以用传统的索取网页元素的方法是获取不到内容的，之前我写了篇<a href="https://family-treesy.github.io/2017/12/09/%E6%8B%89%E9%92%A9/" target="_blank" rel="external">爬取拉钩上海Python职位信息</a>，有兴趣的可以点开看看！</p>
-<h4 id="第一步"><a href="#第一步" class="headerlink" title="第一步"></a><strong>第一步</strong></h4><p>用Chrome打开网页<a href="https://www.toutiao.com/search/?keyword=%E6%B1%9F%E6%AD%8C，打开开发者工具，红框内的信息是我们需要的，我们要抓取的数据就在data一栏中" target="_blank" rel="external">https://www.toutiao.com/search/?keyword=%E6%B1%9F%E6%AD%8C，打开开发者工具，红框内的信息是我们需要的，我们要抓取的数据就在data一栏中</a><br><img src="http://m.qpic.cn/psb?/V10WDaE22S84Sl/cuuJ8HEBUhxRgk4vsK.cjnY3.5PFgbZdo1IejxzOGmU!/b/dPMAAAAAAAAA&amp;bo=TgWAAgAAAAADB.s!&amp;rf=viewer_4" alt=""></p>
-<p>我们再观察下网页信息，把网页不断的忘下翻，可以看到第一页是offset=0，往下翻过一个节点就是20，40，60这样递增上去<br><img src="http://m.qpic.cn/psb?/V10WDaE22S84Sl/*gmk3rdtCxAOEXEZG5aq5qCZ0em77*nSHYlVhE*.pKs!/b/dD8BAAAAAAAA&amp;bo=KASAAgAAAAADB4w!&amp;rf=viewer_4" alt=""></p>
-<p>好了，基本的分析完了，准备动手写代码</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># -*- coding:utf-8 -*-</span></div><div class="line"><span class="keyword">import</span> requests</div><div class="line"><span class="keyword">from</span> urllib.parse <span class="keyword">import</span> urlencode</div><div class="line"><span class="keyword">from</span> requests.exceptions <span class="keyword">import</span> RequestException</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">get_data</span><span class="params">()</span>:</span></div><div class="line">    data = &#123;</div><div class="line">        <span class="string">'offset'</span>: <span class="number">0</span>,</div><div class="line">        <span class="string">'format'</span>: <span class="string">'json'</span>,</div><div class="line">        <span class="string">'keyword'</span>: <span class="string">'江歌'</span>,</div><div class="line">        <span class="string">'autoload'</span>: <span class="string">'true'</span>,</div><div class="line">        <span class="string">'count'</span>: <span class="string">'20'</span>,</div><div class="line">        <span class="string">'cur_tab'</span>: <span class="number">1</span>,</div><div class="line">        <span class="string">'from'</span>:<span class="string">'search_tab'</span></div><div class="line">    &#125;</div><div class="line">    <span class="comment"># urlencode(data)就是链接的解析</span></div><div class="line">    url = <span class="string">'https://www.toutiao.com/search_content/?'</span> + urlencode(data)</div><div class="line">    response = requests.get(url)</div><div class="line">    <span class="keyword">try</span>:</div><div class="line">        <span class="keyword">if</span> response.status_code == <span class="number">200</span>:</div><div class="line">            <span class="keyword">return</span> response.text</div><div class="line">        <span class="keyword">return</span> <span class="keyword">None</span></div><div class="line">    <span class="keyword">except</span> RequestException:</div><div class="line">        print(<span class="string">'data is error'</span>)</div><div class="line">        <span class="keyword">return</span> <span class="keyword">None</span></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">main</span><span class="params">()</span>:</span></div><div class="line">    html = get_data()</div><div class="line">    print(html)</div><div class="line"></div><div class="line"></div><div class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</div><div class="line">    main()</div></pre></td></tr></table></figure>
-<p>运行下代码，返回了这样的数据</p>
-<p><img src="http://m.qpic.cn/psb?/V10WDaE22S84Sl/j7CnRYOxwXOFjXY49J1XykxO.nCBrQFjaXlJ2x*DQzA!/b/dPMAAAAAAAAA&amp;bo=EwelAQAAAAADB5I!&amp;rf=viewer_4" alt=""></p>
-<h4 id="第二步"><a href="#第二步" class="headerlink" title="第二步"></a><strong>第二步</strong></h4><p><strong>解析数据</strong></p>
-<p>我们可以看下data一栏下的网页数据<br><img src="http://m.qpic.cn/psb?/V10WDaE22S84Sl/a2ezeqiiNJXa4bNyOcz8HGrn2uHmpuZdYkKPJb.ySKg!/b/dPIAAAAAAAAA&amp;bo=5wQSAgAAAAADB9E!&amp;rf=viewer_4" alt=""></p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">parse_data</span><span class="params">(html)</span>:</span></div><div class="line">    data = json.loads(html) <span class="comment"># JSON 字符串解码为 Python 对象</span></div><div class="line">    <span class="keyword">if</span> data <span class="keyword">and</span> <span class="string">'data'</span> <span class="keyword">in</span> data.keys():</div><div class="line">        news_list =[]</div><div class="line">        <span class="keyword">for</span> item <span class="keyword">in</span> data.get(<span class="string">'data'</span>):</div><div class="line">            news = &#123;</div><div class="line">                <span class="string">'title'</span>: item.get(<span class="string">'title'</span>), <span class="comment"># 使用get()方法避免了部分keys不存在时报错</span></div><div class="line">                <span class="string">'url'</span>: item.get(<span class="string">'url'</span>),</div><div class="line">            &#125;</div><div class="line">            news_list.append(news)</div><div class="line">        <span class="keyword">return</span> news_list</div></pre></td></tr></table></figure>
-<p>解析后再次运行代码，这就是我们要的数据了<br><img src="http://m.qpic.cn/psb?/V10WDaE22S84Sl/vsmex9Qh5S8torHI5KrQBPmX25QBmd3eB3KR8ZwMPpI!/b/dPMAAAAAAAAA&amp;bo=FQeAAQAAAAADB7E!&amp;rf=viewer_4" alt=""></p>
-<h4 id="第三步"><a href="#第三步" class="headerlink" title="第三步"></a><strong>第三步</strong></h4><p>可以爬下单页数据了，现在来看下怎么爬取多页面</p>
-<p>第一步网页分析的时候，offset的数据是抓取多页面内容的关键，我们先创建一个配置文件config.py，再创建多进程调用map方法</p>
-<blockquote>
-<p>GROUP_START = 1<br>GROUP_END = 20</p>
-</blockquote>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">groups = [x * <span class="number">2</span> <span class="keyword">for</span> x <span class="keyword">in</span> range(GROUP_START, GROUP_END + <span class="number">1</span>)]</div><div class="line">   pool = Pool(<span class="number">8</span>)</div><div class="line">   pool.map(main, groups)</div><div class="line">   pool.close()</div><div class="line">   pool.join()</div><div class="line">   print(<span class="string">'ALl is done!'</span>)</div></pre></td></tr></table></figure>
-<p>最后运行代码，开启了多进程后爬取的效率可以说是坐了火箭<br><img src="http://m.qpic.cn/psb?/V10WDaE22S84Sl/7CxdZTw7eCtqzcuv2dCH7HQjOGybJyKsdDsLr88ilKg!/b/dPIAAAAAAAAA&amp;bo=HwcuAgAAAAADBxY!&amp;rf=viewer_4" alt=""></p>
-<p>完整代码在GitHub<br><a href="https://github.com/Family-TreeSY/SpiderList/blob/master/toutiao/toutiao_spider.py" target="_blank" rel="external">GitHub</a><br><a href="http://www.jianshu.com/u/a01bc3ec4f88" target="_blank" rel="external">简书</a><br>欢迎访问我的博客<a href="https://family-treesy.github.io/" target="_blank" rel="external">Treehl的博客</a></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">PYTHON</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">MongoDB</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">爬虫</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/12/14/今日头条/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-拉钩" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/12/09/拉钩/">爬取拉钩上海Python职位信息并存入MongoDB数据库</a>
-    </h1>
-  
-
-        
-        <a href="/2017/12/09/拉钩/" class="archive-article-date">
-  	<time datetime="2017-12-09T08:48:23.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-12-09</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>昨天准备爬拉钩的python职位数据，用了老办法bs4+requests发现数据是空的，心情so down！！经过网上的查询才明白，拉钩使用Ajax技术，用bs4查找html元素是找不到数据的。今天我总结下学习过程，也算是巩固自己的知识了！！！</p>
-<h4 id="分析网页"><a href="#分析网页" class="headerlink" title="分析网页"></a><strong>分析网页</strong></h4><p>登陆<a href="https://www.lagou.com/jobs/list_Python?px=default&amp;city=%E4%B8%8A%E6%B5%B7#filterBox" target="_blank" rel="external">拉钩网站</a>，打开开发者功能<br><img src="http://m.qpic.cn/psb?/V10WDaE22S84Sl/55E3RI.cKYuEKspD3Ek08He5MisOZ14cWyuPca.kxCo!/b/dPMAAAAAAAAA&amp;bo=mAaAAgAAAAADBz4!&amp;rf=viewer_4" alt=""></p>
-<p>我们先用requests发送请求并保存一个html，来查看数据</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> requests</div><div class="line"><span class="keyword">import</span> random </div><div class="line"></div><div class="line">user_agents = [</div><div class="line"><span class="string">'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/61.0.3163.100 Safari/537.36'</span>,</div><div class="line">    <span class="string">'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.2995.0 Safari/537.36'</span>,</div><div class="line">    <span class="string">'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/57.0.2986.0 Safari/537.36'</span>,</div><div class="line">    <span class="string">'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.0 Safari/537.36'</span>,</div><div class="line">    <span class="string">'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.0 Safari/537.36'</span>,</div><div class="line">    <span class="string">'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.0 Safari/537.36'</span>,</div><div class="line">    <span class="string">'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.0 Safari/537.36'</span>,</div><div class="line">    <span class="string">'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/52.0.2743.0 Safari/537.36'</span>,</div><div class="line">    <span class="string">'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/51.0.2704.0 Safari/537.36'</span>,</div><div class="line">    <span class="string">'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.0 Safari/537.36'</span>,</div><div class="line">    <span class="string">'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/49.0.2623.0 Safari/537.36'</span>,</div><div class="line">    <span class="string">'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/48.0.2564.0 Safari/537.36'</span></div><div class="line">]</div><div class="line"></div><div class="line">headers = &#123;</div><div class="line">    <span class="string">'Host'</span>: <span class="string">'www.lagou.com'</span>,</div><div class="line">    <span class="string">'Referer'</span>: <span class="string">'https://www.lagou.com/zhaopin/Python/?labelWords=label'</span>,</div><div class="line">    <span class="string">'Upgrade-Insecure-Requests'</span>: <span class="string">'1'</span>,</div><div class="line">    <span class="string">'User-Agent'</span>: random.choice(user_agents)</div><div class="line">&#125;</div><div class="line"></div><div class="line">url = <span class="string">'https://www.lagou.com/jobs/list_Python?px=default&amp;city=%E4%B8%8A%E6%B5%B7#filterBox'</span></div><div class="line">r = requests.get(url, headers=headers)</div><div class="line">result = r.text</div><div class="line"><span class="comment">#print(r.text)</span></div><div class="line"><span class="comment"># 写入logou.html</span></div><div class="line"><span class="keyword">with</span> open(<span class="string">'laogou.html'</span>, <span class="string">'w'</span>, encoding=<span class="string">'utf-8'</span>) <span class="keyword">as</span> f:</div><div class="line">    f.write(result)</div></pre></td></tr></table></figure>
-<p>运行代码试一下，代开<strong>lagou.html</strong>，我们看到职位信息数据是没有的<br><img src="http://a1.qpic.cn/psb?/V10WDaE22S84Sl/uQuWJAg5dAiY2UWEKkJBpK*bagFQwM19Cu2FnF2QNQU!/b/dD4BAAAAAAAA&amp;bo=UQWAAgAAAAADAPM!&amp;rf=viewer_4" alt=""></p>
-<p>接下来，我们再观察下Chrome开发者工具的NetWork一栏，类型选择XHR，找到下面这个链接,我们可以看到有Ajax、Json几个关键字，点击Preview</p>
-<p><img src="http://m.qpic.cn/psb?/V10WDaE22S84Sl/Mpj5Tev3Cwtp7IYHiijrmXv9qOZlAVz1QrZj2HquI8U!/b/dPMAAAAAAAAA&amp;bo=pASZAQAAAAADBxo!&amp;rf=viewer_4" alt=""></p>
-<p>按顺序分别点开红框，就得到我们想要的数据啦</p>
-<p><img src="http://m.qpic.cn/psb?/V10WDaE22S84Sl/1KAkn*zEtrjqo.1Dbq1h9QHce8c5R7FYF*3xiStUOzQ!/b/dPMAAAAAAAAA&amp;bo=PwZlAgAAAAADB3w!&amp;rf=viewer_4" alt=""></p>
-<p>现在来试着写一下，注意这里的请求是post，带上表单，改变请求头的数据</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">data = &#123;</div><div class="line">    <span class="string">'first'</span>: <span class="string">'true'</span>,</div><div class="line">    <span class="string">'pn'</span>: <span class="number">1</span>,</div><div class="line">    <span class="string">'kd'</span>: <span class="string">'Python'</span></div><div class="line">&#125;</div><div class="line"></div><div class="line">r = requests.post(url, headers=headers, data=data).json()</div><div class="line">positions = r[<span class="string">'content'</span>][<span class="string">'positionResult'</span>][<span class="string">'result'</span>]</div><div class="line">print(positions)</div></pre></td></tr></table></figure>
-<p>Run一下，返回的数据就是我们想要的啦！！！</p>
-<p><img src="http://m.qpic.cn/psb?/V10WDaE22S84Sl/VLnBV*h2*U43BwOhXQxAyrDtDU5yWgPc864UKmaD0b4!/b/dPIAAAAAAAAA&amp;bo=9AYYAgAAAAADB8o!&amp;rf=viewer_4" alt=""></p>
-<h3 id="翻页"><a href="#翻页" class="headerlink" title="翻页"></a><strong>翻页</strong></h3><p>我们观察下表单内有一个<strong>pn</strong>参数，这就是页码，大家可以跳转页面来观察下数据的变化</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1</span>, <span class="number">17</span>):</div><div class="line">    data = &#123;</div><div class="line">        <span class="string">'first'</span>: <span class="string">'true'</span>,</div><div class="line">        <span class="string">'pn'</span>: i,</div><div class="line">        <span class="string">'kd'</span>: <span class="string">'Python'</span></div><div class="line">    &#125;</div><div class="line"></div><div class="line">url = <span class="string">'https://www.lagou.com/jobs/positionAjax.json?px=default&amp;city=%E4%B8%8A%E6%B5%B7&amp;needAddtionalResult=false&amp;isSchoolJob=0'</span></div><div class="line"></div><div class="line">r = requests.post(url,  headers=headers, data=data)</div><div class="line">time.sleep(<span class="number">3</span>)</div><div class="line">print(json.url)</div></pre></td></tr></table></figure>
-<p>这样就把16页链接都打印了出来</p>
-<p><img src="http://m.qpic.cn/psb?/V10WDaE22S84Sl/pDUdhhMX7j*HiKhASQdQdnG8s9nBXMPodvVDID.0j4o!/b/dD4BAAAAAAAA&amp;bo=QQSkAQAAAAADB8I!&amp;rf=viewer_4" alt=""></p>
-<p>最后，附上一张爬下来的数据截图<br><img src="http://m.qpic.cn/psb?/V10WDaE22S84Sl/UmfqEZuGM.GPGl.MbGKIs1bRWhdaFJQ6KfGnnDZ3qZk!/b/dPMAAAAAAAAA&amp;bo=cwOAAgAAAAADB9A!&amp;rf=viewer_4" alt=""></p>
-<p>爬取拉钩的思路就是这样，完整代码在GitHub，欢迎大家访问！！！！！！！假如觉得有用点个<strong>Star</strong>噢！！互勉！！！！！！！！！！</p>
-<p>欢迎访问博客<a href="https://family-treesy.github.io/" target="_blank" rel="external">Treehl的博客</a><br><a href="https://github.com/Family-TreeSY/SpiderList/blob/master/lagou/lagou_spider.py" target="_blank" rel="external">GitHub</a><br><a href="http://www.jianshu.com/u/a01bc3ec4f88" target="_blank" rel="external">简书</a></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">PYTHON</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">MongoDB</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">爬虫</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/12/09/拉钩/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-Git小结" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/12/01/Git小结/">Git学习小结</a>
-    </h1>
-  
-
-        
-        <a href="/2017/12/01/Git小结/" class="archive-article-date">
-  	<time datetime="2017-12-01T12:08:08.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-12-01</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>前段时间学习了廖雪峰老师的<a href="https://www.liaoxuefeng.com/wiki/0013739516305929606dd18361248578c67b8067c8c017b000/0013743256916071d599b3aed534aaab22a0db6c4e07fd0000" target="_blank" rel="external">Git教程</a>，今天再来温故下，加深下记忆！</p>
-<p>创建文件夹、文件</p>
-<blockquote>
-<p>mkdir gittest</p>
-<p>touch gittest.txt</p>
-</blockquote>
-<p><strong>创建版本库</strong></p>
-<blockquote>
-<p>git init</p>
-</blockquote>
-<p>编辑文本文件gittest.txt</p>
-<blockquote>
-<p>Git is a version control system.<br>Git is free software.</p>
-</blockquote>
-<p>把文件添加到版本库</p>
-<blockquote>
-<p>git add gittest.txt</p>
-</blockquote>
-<p><strong>提交请求</strong>，-m表示提交的信息</p>
-<blockquote>
-<p>git commit -m ‘第一次提交’</p>
-</blockquote>
-<p>再次编辑gittest.txt</p>
-<blockquote>
-<p>Git is a distributed version control system.<br>Git is free software distributed under the GPL.</p>
-</blockquote>
-<p>再次提交到版本库，重复上面git add git commit指令</p>
-<p><strong>查看git 日志</strong>，看看之前提交了什么(有学到了一个新命令)</p>
-<blockquote>
-<p>git log </p>
-</blockquote>
-<p>返回的数据掩护缭乱，那就来个简洁的,只有简单的两行数据</p>
-<blockquote>
-<p>git log –pretty=oneline</p>
-</blockquote>
-<p><strong>返回上一个版本</strong>(HEAD表示当前版本，HEAD^表示上一个版本)</p>
-<blockquote>
-<p>git reset –hard HEAD^</p>
-</blockquote>
-<p><strong>再次返回上一个版本</strong> 后面那一串数字是版本号</p>
-<blockquote>
-<p>git reset –hard 6f5a174c09469994c2dc59cf6db87ac7012d16c4</p>
-</blockquote>
-<p>我们再来看一下日志最新的请求又出现了</p>
-<p>查看命令历史</p>
-<blockquote>
-<p>git reflog</p>
-</blockquote>
-<p><strong>git操作分两步</strong><br>1、git add file 添加文件到版本库就是添加到暂存区<br>2、git commit 提交请求就是把暂存区的内容提交给master分支</p>
-<p><strong>查看工作区和暂存区版本的区别</strong></p>
-<blockquote>
-<p>git diff HEAD –gittest.txt</p>
-</blockquote>
-<p>修改文件后，再添加到版本库之前(<strong>没有git add)</strong>，想撤销掉这次操作</p>
-<blockquote>
-<p>git checkout – gittest.txt</p>
-</blockquote>
-<p>这一次已经将文件添加到了暂存区(git add file)，可以这样撤销操作</p>
-<blockquote>
-<p>git reset HEAD gittest.txt</p>
-</blockquote>
-<p>这样我们就从暂存区返回了工作区，再把工作区的操作撤回就行了</p>
-<p><strong>删除文件</strong></p>
-<p>删除文件之前新建一个test.txt，再添加到暂存区并提交到分支</p>
-<blockquote>
-<p>git rm test.txt</p>
-<p>git commit -m ‘删除test.txt’</p>
-</blockquote>
-<p>如果是误删的话，返回上一个操作</p>
-<blockquote>
-<p>git checkout test.txt</p>
-</blockquote>
-<p><strong>添加远程仓库</strong></p>
-<blockquote>
-<p>git remote add origin git@github.com:Family-TreeSY/git_test.git</p>
-</blockquote>
-<p><strong>将本地库的内容推送到远程</strong></p>
-<blockquote>
-<p>git push -u origin master</p>
-</blockquote>
-<p><strong>从远程库克隆</strong><br>需要先在github上面创建一个仓库</p>
-<blockquote>
-<p>git clone git@github.com:Family-TreeSY/B-2.git</p>
-</blockquote>
-<p><strong>分支管理</strong></p>
-<p>创建分支，这个之后HEADz指向dev,，-b表示创建并切换分支</p>
-<blockquote>
-<p>git checkout -b dev</p>
-</blockquote>
-<p>这条命令相当于下面两条</p>
-<blockquote>
-<p>git branch dev 创建dev分支<br>git checkout dev 切换到dev分支</p>
-</blockquote>
-<p>查看当前分支</p>
-<blockquote>
-<p>git branch</p>
-</blockquote>
-<p>把dev分支合并到master分支</p>
-<blockquote>
-<p>git merge dev</p>
-</blockquote>
-<p>删除分支</p>
-<blockquote>
-<p>git branch -d dev</p>
-</blockquote>
-<p>查看分支合并图</p>
-<blockquote>
-<p>git log –graph –pretty=oneline –abbrev-commit</p>
-</blockquote>
-<p>分支管理策略</p>
-<blockquote>
-<p>git merge –no-ff -m “merge with no-ff” dev</p>
-</blockquote>
-<p><strong>–no-ff:</strong> 表示禁用Fast-forward，使用–no-ff 可以看到合并后的历史有分支<br>这次创建会提交一个commit 所以带有-m参数</p>
-<p><strong>BUG分支</strong><br>把当前工作藏起来，等恢复现场后再来工作</p>
-<blockquote>
-<p>git stash</p>
-</blockquote>
-<p>创建bug分支修改bug流程</p>
-<p>假如需要在master分支上修复bug，那就在master上创建分支<br>git checkout -b issue-101——–&gt;修改gittest.txt——–&gt;git add gittest.txt ———&gt;git commit -m ‘修复bug’————&gt; 切换回master；git checkout master ————-&gt;合并分支;git merge –no-ff -m “合并分支” issue-101———-&gt;删除issue-101分支; git branch -d issue-101</p>
-<blockquote>
-<p>git checkout -b issue-101</p>
-</blockquote>
-<p>修复bug的工作结束了，我们现在重新回到dev分支工作,，查看刚刚的工作现场</p>
-<blockquote>
-<p>git checkout dev</p>
-</blockquote>
-<p>查看刚刚被隐藏的工作现场</p>
-<blockquote>
-<p>git stash list</p>
-</blockquote>
-<p>回到工作现场</p>
-<blockquote>
-<p>git stash pop</p>
-</blockquote>
-<p><strong>feature分支</strong></p>
-<p>强行删除</p>
-<blockquote>
-<p>git branch -D feature-vulcan</p>
-</blockquote>
-<p><strong>多人协作</strong><br>查看远程库信息</p>
-<blockquote>
-<p>git remote -v<br>推送分支<br>git push origin master</p>
-</blockquote>
-<p>如果是推送dev分支</p>
-<blockquote>
-<p>git push origin dev</p>
-</blockquote>
-<p>多人协作模式<br>先推送自己的：git push origin … ———-&gt; 推送失败，远程库比本地新需要：git pull 合并——-&gt;</p>
-<p>如果有冲突就解决冲突———-&gt;没有冲突或解决冲突后: git push origin 分支</p>
-<p><strong>标签管理</strong></p>
-<p>首先切换到要打标签的分支</p>
-<blockquote>
-<p>git checkout master</p>
-</blockquote>
-<p>打标签</p>
-<blockquote>
-<p>git tag v1.0</p>
-</blockquote>
-<p>查看标签</p>
-<blockquote>
-<p>git tag</p>
-</blockquote>
-<p>默认标签是打在最新的commit上的，我们想在其他commit上打标签就需要查看ID号</p>
-<blockquote>
-<p>git log –pretty=oneline –abbrev-commit</p>
-</blockquote>
-<p>打在指定commit ID上面</p>
-<blockquote>
-<p>git tag v0.9 1555a84</p>
-</blockquote>
-<p>查看标签信息</p>
-<blockquote>
-<p>git show v0.9</p>
-</blockquote>
-<p>创建带有说明的标签，用-a指定标签名，-m指定说明文字</p>
-<blockquote>
-<p>git tag -a v0.1 -m ‘指定标签练习’ c839d68</p>
-</blockquote>
-<p>删除标签</p>
-<blockquote>
-<p>git tag -d v0.1</p>
-</blockquote>
-<p>推送指定标签daoyuancheng</p>
-<blockquote>
-<p>git push origin v0.9</p>
-</blockquote>
-<p>推送所有标签到远程</p>
-<blockquote>
-<p>git push origin –tags</p>
-</blockquote>
-<p>标签已经推送到远程后再删除，先删除本地标签，再删除远程仓库标签</p>
-<blockquote>
-<p>git tag -d v1.0</p>
-<p>git push origin :refs/tags/v1.0</p>
-</blockquote>
-<p>欢迎访问<a href="https://family-treesy.github.io/" target="_blank" rel="external">Treehl的博客</a></p>
-<p><a href="https://github.com/Family-TreeSY" target="_blank" rel="external">GitHub</a></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">Git</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">GitHub</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/12/01/Git小结/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-1. 什么是MongoDB数据库？" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/11/30/1. 什么是MongoDB数据库？/">MongoDB数据库学习</a>
-    </h1>
-  
-
-        
-        <a href="/2017/11/30/1. 什么是MongoDB数据库？/" class="archive-article-date">
-  	<time datetime="2017-11-30T09:00:23.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-11-30</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h5 id="1-什么是MongoDB数据库？"><a href="#1-什么是MongoDB数据库？" class="headerlink" title="1. 什么是MongoDB数据库？"></a><strong>1. 什么是MongoDB数据库？</strong></h5><p><img src="http://m.qpic.cn/psb?/V10WDaE22S84Sl/UOPr3jkXyfGKr.VjNF02tCCUoFH7h7sxSE427VZ0z3Q!/b/dPMAAAAAAAAA&amp;bo=IAMWAQAAAAARBwQ!&amp;rf=viewer_4" alt=""><br>MongoDB 是由C++语言编写的，是一个基于分布式文件存储的开源数据库系统。<br>MongoDB中的一条记录就是一个文档，是一个数据结构，由字段和值对组成。MongoDB文档与JSON对象类似。字段的值有可能包括其它文档、数组以及文档数组。<br><img src="http://www.mongoing.com/docs/_images/crud-annotated-document.png" alt=""></p>
-<h5 id="2-安装与环境"><a href="#2-安装与环境" class="headerlink" title="2. 安装与环境"></a><strong>2. 安装与环境</strong></h5><p><a href="https://www.mongodb.com/download-center?jmp=nav#community" target="_blank" rel="external">MongoDB下载地址</a><br>Windows安装：可以参考<a href="http://www.runoob.com/mongodb/mongodb-window-install.html" target="_blank" rel="external">http://www.runoob.com/mongodb/mongodb-window-install.html</a><br>Linux安装：可以参考<a href="http://www.runoob.com/mongodb/mongodb-linux-install.html" target="_blank" rel="external">http://www.runoob.com/mongodb/mongodb-linux-install.html</a><br>Mac安装：可以参考<a href="http://www.runoob.com/mongodb/mongodb-osx-install.html" target="_blank" rel="external">http://www.runoob.com/mongodb/mongodb-osx-install.html</a></p>
-<h5 id="3-创建数据库、集合-amp-删除数据库、集合"><a href="#3-创建数据库、集合-amp-删除数据库、集合" class="headerlink" title="3. 创建数据库、集合&amp;删除数据库、集合"></a><strong>3. 创建数据库、集合&amp;删除数据库、集合</strong></h5><p>打开Mongo shell</p>
-<blockquote>
-<p>use test</p>
-</blockquote>
-<p>这样就创建了一个叫<strong>test</strong>的数据库，但这个时候数据库还是空的，用下面命令查看</p>
-<blockquote>
-<p>show dbs</p>
-</blockquote>
-<p>可以看到并没有<strong>test</strong>这个数据库（lianjia数据库是我之前创建的，大家忽略，哈哈！！）</p>
-<blockquote>
-<p>admin    0.000GB<br>   lianjia  0.000GB<br>   local    0.000GB</p>
-</blockquote>
-<p> 在数据库中添加一个集合（<strong>collection</strong>）</p>
-<blockquote>
-<p>db.createCollection(‘movies’)<br>{ “ok” : 1 }</p>
-</blockquote>
-<p> 我们再执行<strong>show dbs</strong>，<strong>test</strong>数据库就显示出来啦！！</p>
-<blockquote>
-<p>admin    0.000GB<br>    lianjia  0.000GB<br>    local    0.000GB<br>    test     0.000GB</p>
-</blockquote>
-<p>先暂时不要<strong>movies</strong>这个集合，执行删除命令</p>
-<blockquote>
-<p>db.movies.drop()<br>true</p>
-</blockquote>
-<p>执行<strong>show collections</strong>命令就不会再出现集合啦</p>
-<p>再来执行删除数据库的命令</p>
-<blockquote>
-<p>db.dropDatabase()</p>
-</blockquote>
-<p>shell返回{ “dropped” : “test”, “ok” : 1 }就删除啦！！，再确认下数据库</p>
-<blockquote>
-<p>show dbs</p>
-</blockquote>
-<p><strong>test</strong>数据库就没了</p>
-<blockquote>
-<p>admin    0.000GB<br>    lianjia  0.000GB<br>    local    0.000GB</p>
-</blockquote>
-<h5 id="4-插入文档"><a href="#4-插入文档" class="headerlink" title="4. 插入文档"></a><strong>4. 插入文档</strong></h5><p>先创建数据库和集合，别忘了噢！<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># 创建数据库</span></div><div class="line">use test</div><div class="line"><span class="comment"># 创建集合</span></div><div class="line">db.createCollection(<span class="string">'movies'</span>)</div><div class="line"><span class="comment"># 查看数据库</span></div><div class="line">show dbs</div></pre></td></tr></table></figure></p>
-<p><a href="https://movie.douban.com/subject/1292052/" target="_blank" rel="external">肖申克的救赎</a><br><img src="http://m.qpic.cn/psb?/V10WDaE22S84Sl/dK1GMZZjXdWg.9pszN81pZPSlW7zj6Bv6.ZF6bpHsK8!/b/dPMAAAAAAAAA&amp;bo=ZAQ7AgAAAAADB3s!&amp;rf=viewer_4" alt=""><br>我们以肖申克的救赎为例，把电影信息存储到MongoDB中，电影信息：</p>
-<ul>
-<li>电影名字</li>
-<li>导演</li>
-<li>编剧</li>
-<li>主演</li>
-<li>类型</li>
-<li>制片国家</li>
-<li>语言</li>
-<li>上映时间</li>
-<li>片长</li>
-<li>评分</li>
-</ul>
-<p>插入数据</p>
-<blockquote>
-<p>  db.movies.insert(<br>… {<br>… title: ‘肖申克的救赎’,<br>… directed_by: ‘弗兰克’,<br>… actor: [‘摩根.摩里曼’, ‘罗宾斯’],<br>… type: ‘剧情’,<br>… country: ‘美国’,<br>… language: ‘英语’,<br>… release_time: ‘1994-09-10’,<br>… time: ‘142’,<br>… score: 9.6<br>… }<br>… )</p>
-</blockquote>
-<p><strong>insert操作</strong>有几点需要注意：</p>
-<ul>
-<li>数据是以key:value键值对形式组成，有点类似与JSON</li>
-<li>如果一个key有多个value，value要用[]，现在只有一个value，到后面还要添加可以预先使用[]</li>
-<li>一整个数据块要用花括号{}</li>
-</ul>
-<p>shell对格式要求很高，中英文的逗号都一样，肉眼分辨不出来，大家注意格式，不然不断报错很浪费时间。。。。，看到<strong>WriteResult({ “nInserted” : 1 })</strong>，说明写入成功</p>
-<p>查询数据</p>
-<blockquote>
-<p>db.movies.find().pretty()</p>
-</blockquote>
-<p>返回的数据</p>
-<blockquote>
-<p>{<br>        “_id” : ObjectId(“5a1ff3a6bff1b3cbd8e8f812”),<br>        “title” : “肖申克的救赎”,<br>        “directed_by” : “弗兰克”,<br>        “actor” : [<br>                “摩根.摩里曼”,<br>                “罗宾斯”<br>        ],<br>        “type” : “剧情”,<br>        “country” : “美国”,<br>        “language” : “英语”,<br>        “release_time” : “1994-09-10”,<br>        “time” : “142”,<br>        “score” : 9.6<br>}</p>
-</blockquote>
-<p>这里使用了<strong>pretty()</strong>，它的作用是让美化数据返回，使用<strong>db.movies.find()</strong><br>返回的数据就是一坨一坨的 - -！！！大家可以试一下！</p>
-<blockquote>
-<p>{ “_id” : ObjectId(“5a1fee21bff1b3cbd8e8f80f”), “title” : “肖申克的救赎”, “directed_by” : “弗兰克”, “actor” : [ “摩根.摩里曼”, “罗宾斯” ], “type” : “剧情”, “country” : “美国”, “language” : “英语”, “release_time” : “1994-09-10”, “time” : “142”, “score” : “9.6” }</p>
-</blockquote>
-<p>同时插入多个数据</p>
-<blockquote>
-<p>db.movies.insert([<br>… {<br>… title: ‘肖申克的救赎’,<br>… directed_by: ‘弗兰克’,<br>… actor: [‘摩根.摩里曼’, ‘罗宾斯’],<br>… type: ‘剧情’,<br>… country: ‘美国’,<br>… language: ‘英语’,<br>… release_time: ‘1994-09-10’,<br>… time: ‘142’,<br>… score: 9.6<br>… },<br>… {<br>… title: ‘霸王别姬’,<br>… directed_by: ‘陈凯歌’,<br>… actor: [‘张国荣’, ‘巩俐’],<br>… type: ‘剧情’,<br>… country: ‘中国’,<br>… language: ‘汉语普通法’,<br>… release_time: ‘1993-01-01’,<br>… time: ‘171’,<br>… score: 9.5<br>… }<br>… ])</p>
-</blockquote>
-<p>如果插入成功，就会返回</p>
-<blockquote>
-<p>BulkWriteResult({<br>        “writeErrors” : [ ],<br>        “writeConcernErrors” : [ ],<br>        “nInserted” : 2,<br>        “nUpserted” : 0,<br>        “nMatched” : 0,<br>        “nModified” : 0,<br>        “nRemoved” : 0,<br>        “upserted” : [ ]<br>})</p>
-</blockquote>
-<p>多数据插入模式为：<strong>db.collection.insert([{key1: ‘value1’},{key2: ‘value2’}]</strong></p>
-<h4 id="5-查询数据"><a href="#5-查询数据" class="headerlink" title="5. 查询数据"></a><strong>5. 查询数据</strong></h4><p>以特定条件查询</p>
-<blockquote>
-<p>db.movies.find({‘language’: ‘汉语普通法’}).pretty()</p>
-</blockquote>
-<p>我们看下返回的数据</p>
-<blockquote>
-<p>{<br>        “_id” : ObjectId(“5a1ff19bbff1b3cbd8e8f811”),<br>        “title” : “霸王别姬”,<br>        “directed_by” : “陈凯歌”,<br>        “actor” : [<br>                “张国荣”,<br>                “巩俐”<br>        ],<br>        “type” : “剧情”,<br>        “country” : “中国”,<br>        “language” : “汉语普通法”,<br>        “release_time” : “1993-01-01”,<br>        “time” : “171”,<br>        “score” : 9.5<br>}</p>
-</blockquote>
-<p><strong>AND</strong>条件查询</p>
-<blockquote>
-<p>db.movies.find({‘title’:’霸王别姬’, ‘language’:’汉语普通法’}).pretty()</p>
-</blockquote>
-<p>只有同时满足两个条件的电影才会被查找出来</p>
-<p><strong>OR条件查询</strong></p>
-<blockquote>
-<p>db.movies.find({$or:[{‘title’:’霸王别姬’}, {‘language’:’英语’}]}).pretty()</p>
-</blockquote>
-<p>这里面的括号略显复杂，写的时候要仔细点</p>
-<p><strong>条件操作符</strong><br>大于操作符 - $gt，查找评分大于9的电影</p>
-<blockquote>
-<p>db.movies.find({‘score’:{$gt:9}}).pretty()</p>
-</blockquote>
-<p>小于操作符 - $lt</p>
-<blockquote>
-<p>db.movies.find({‘score’:{$lt:10}}).pretty()</p>
-</blockquote>
-<p>类似操作符还有，大于等于操作符 - $gte，小于等于操作符 - $lte，不等于操作符 - $ne<br>这里就不一一列举了，与上同理</p>
-<p><strong>limit和skip</strong>条件操作符<br>limit()方法接受一个数字参数，该参数指定从MongoDB中读取的记录条数</p>
-<blockquote>
-<p>db.movies.find().limit(1).pretty()</p>
-</blockquote>
-<p>这样就返回一部电影信息</p>
-<blockquote>
-<p> {<br>        “_id” : ObjectId(“5a1feb04bff1b3cbd8e8f80e”),<br>        “title” : “肖申克的救赎”,<br>        “directed_by” : “弗兰克”,<br>        “actor” : “摩根.摩里曼”,<br>        “type” : “剧情”,<br>        “country” : “美国”,<br>        “language” : “英语”,<br>        “release_time” : “1994-09-10”,<br>        “time” : “142”,<br>        “score” : 9.6<br>}</p>
-</blockquote>
-<p>skip()方法来跳过指定数量的数据，skip方法同样接受一个数字参数作为跳过的记录条数</p>
-<blockquote>
-<p>db.movies.find().skip(1).pretty()</p>
-</blockquote>
-<h4 id="6-删除文档"><a href="#6-删除文档" class="headerlink" title="6. 删除文档"></a><strong>6. 删除文档</strong></h4><blockquote>
-<p>db.movies.remove({‘title’: ‘霸王别姬’})</p>
-</blockquote>
-<p> 删除title为霸王别姬的文档，再查询下还剩几条文档</p>
-<blockquote>
-<p>db.movies.find()</p>
-</blockquote>
-<h4 id="7-更新文档"><a href="#7-更新文档" class="headerlink" title="7. 更新文档"></a><strong>7. 更新文档</strong></h4><blockquote>
-<p>db.movies.update({‘title’:’肖申克的救赎’},{$set:{‘title’:’MongoDB_Test’}})</p>
-</blockquote>
-<p>把value改成了MongoDB_Test</p>
-<blockquote>
-<p>{<br>        “_id” : ObjectId(“5a200300bff1b3cbd8e8f813”),<br>        “title” : “MongoDB_Test”,<br>        “directed_by” : “弗兰克”,<br>        “actor” : [<br>                “摩根.摩里曼”,<br>                “罗宾斯”<br>        ],<br>        “type” : “剧情”,<br>        “country” : “美国”,<br>        “language” : “英语”,<br>        “release_time” : “1994-09-10”,<br>        “time” : “142”,<br>        “score” : 9.6<br>}</p>
-</blockquote>
-<p><strong>$set</strong> 操作符表示更新文档中的某一个字段，而不是全部替换<br>{ $set: { <field1>: <value1>, … } }</value1></field1></p>
-<p><strong>修改多条相同的文档，只需要设置 multi 参数为 true</strong></p>
-<blockquote>
-<p>db.movies.update({‘title’:’肖申克的救赎’},{$set:{‘title’:’MongoDB_Test’}},{multi:true})</p>
-</blockquote>
-<p>以上两个操作会把原有数据改掉，如果想在原有值的基础上增加一个值的话需要添加<strong>$push</strong>，比如在actor中添加一个新演员进去</p>
-<blockquote>
-<p>db.movies.update({‘title’:’霸王别姬’}.{$push:{‘actor’:’Treehl’}})</p>
-</blockquote>
-<p>这样actor就有三个演员了</p>
-<blockquote>
-<p>actor” : [<br>                “张国荣”,<br>                “巩俐”,<br>                “Treehl”<br>        ]</p>
-</blockquote>
-<h4 id="8-排序和索引"><a href="#8-排序和索引" class="headerlink" title="8. 排序和索引"></a><strong>8. 排序和索引</strong></h4><p><strong>sort()</strong>方法</p>
-<p>对数据进行排序，sort()方法可以通过参数指定排序的字段，并使用 1 和 -1 来指定排序的方式，其中 1 为升序排列，而-1是用于降序排列<br>举个例子以score电影评分为例</p>
-<blockquote>
-<p>db.movies.find().sort({‘score’:1}).pretty()</p>
-</blockquote>
-<p><strong>ensureIndex()</strong>方法<br>索引通常能够极大的提高查询的效率，如果没有索引，MongoDB在读取数据时必须扫描集合中的每个文件并选取那些符合查询条件的记录。为文档中的一些key加上索引(index)可以加快搜索速度，比如给type电影类型加上索引，这样电影type这个字符串与数字形成了映射，搜索速度会快很多</p>
-<blockquote>
-<p>db.movies.ensureIndex({‘type’:1})</p>
-</blockquote>
-<p>1:升序；-1：降序</p>
-<h4 id="9-聚合"><a href="#9-聚合" class="headerlink" title="9. 聚合"></a><strong>9. 聚合</strong></h4><p>MongoDB中聚合(aggregate)主要用于处理数据(诸如统计平均值,求和等)，并返回计算后的数据结果</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&gt; db.movies.aggregate([&#123;$group:&#123;_id:<span class="string">'$title'</span>,num_movies:&#123;$sum:<span class="number">1</span>&#125;&#125;&#125;])</div></pre></td></tr></table></figure>
-<p>返回</p>
-<blockquote>
-<p>{ “_id” : “霸王别姬”, “num_movies” : 1 }<br>{ “_id” : “MongoDB_Test”, “num_movies” : 1 }</p>
-</blockquote>
-<p>理解一下命令<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">$group: 将集合中的文档分组，可用于统计结果</div><div class="line">$sum:计算总和</div></pre></td></tr></table></figure></p>
-<p>这是建议可以参考菜鸟教程的<a href="http://www.runoob.com/mongodb/mongodb-aggregate.html" target="_blank" rel="external">聚合</a></p>
-<h4 id="10-Python操作MongoDB"><a href="#10-Python操作MongoDB" class="headerlink" title="10. Python操作MongoDB"></a><strong>10. Python操作MongoDB</strong></h4><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> pymongo <span class="keyword">import</span> MongoClient</div><div class="line"></div><div class="line"><span class="comment"># 链接数据库</span></div><div class="line">client = MongoClient(<span class="string">'localhost'</span>, <span class="number">27017</span>)</div><div class="line"><span class="comment"># 建立douban数据库</span></div><div class="line">db = client.douban</div><div class="line"><span class="comment"># 建立movies集合</span></div><div class="line">movies = db.movies</div><div class="line"></div><div class="line">movie_name_list = []</div><div class="line"></div><div class="line">movie_name = &#123;</div><div class="line">    <span class="string">'title'</span>: <span class="string">'肖申克的救赎'</span>,</div><div class="line">    <span class="string">'description'</span>: <span class="string">'小有成就的青年银行家安迪'</span>,</div><div class="line">    <span class="string">'year'</span>: <span class="string">'1991'</span></div><div class="line">&#125;</div><div class="line">movie_name_list.append(movie_name)</div><div class="line"></div><div class="line"><span class="comment"># 使用for循环打印出数据</span></div><div class="line"><span class="keyword">for</span> item <span class="keyword">in</span> movie_name_list:</div><div class="line">    movies.insert(item)</div><div class="line">    </div><div class="line"><span class="comment"># 查找数据</span></div><div class="line"><span class="keyword">for</span> item <span class="keyword">in</span> movies.find():</div><div class="line">    print(item)</div></pre></td></tr></table></figure>
-<p>返回</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&#123;<span class="string">'_id'</span>: ObjectId(<span class="string">'5a20c4f3aa85c109e881c7c7'</span>), <span class="string">'title'</span>: <span class="string">'肖申克的救赎'</span>, <span class="string">'description'</span>: <span class="string">'小有成就的青年银行家安迪'</span>, <span class="string">'year'</span>: <span class="string">'1991'</span>&#125;</div></pre></td></tr></table></figure>
-<p>这是个简单的python操作MongoDB的例子，有兴趣的可以看下我的[Python爬取上海链家房源存入MongoDB数据库(<a href="https://family-treesy.github.io/2017/11/29/lianjia/" target="_blank" rel="external">https://family-treesy.github.io/2017/11/29/lianjia/</a>)</p>
-<p>相信大家看完一遍能对MongoDB有个最基本的认识啦！！！</p>
-<p>参考链接<a href="http://www.runoob.com/mongodb/mongodb-tutorial.html" target="_blank" rel="external">菜鸟教程</a></p>
-<p>欢迎大家访问我的博客<a href="https://family-treesy.github.io/" target="_blank" rel="external">Treehl的博客</a><br><a href="http://www.jianshu.com/u/a01bc3ec4f88" target="_blank" rel="external">简书</a><br><a href="https://github.com/Family-TreeSY" target="_blank" rel="external">GitHub</a></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">PYTHON</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">MongoDB</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/11/30/1. 什么是MongoDB数据库？/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-lianjia" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/11/29/lianjia/">Python爬取上海链家网房源数据并存入MongoDB数据库</a>
-    </h1>
-  
-
-        
-        <a href="/2017/11/29/lianjia/" class="archive-article-date">
-  	<time datetime="2017-11-29T11:40:23.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-11-29</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>以下是我爬取<a href="http://sh.lianjia.com/ershoufang/baoshan" target="_blank" rel="external">上海链家网宝山区</a>房源信息的学习总结</p>
-<h4 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a><strong>准备工作</strong></h4><p>用到的Python模块：</p>
-<ul>
-<li>requests</li>
-<li>bs4</li>
-<li>pymongo</li>
-<li>datetime</li>
-<li>time</li>
-<li>random</li>
-</ul>
-<h4 id="分析网页"><a href="#分析网页" class="headerlink" title="分析网页"></a><strong>分析网页</strong></h4><p>登陆<a href="http://sh.lianjia.com/ershoufang/baoshan" target="_blank" rel="external">http://sh.lianjia.com/ershoufang/baoshan</a> 用Chrome打开开发者工具<br><img src="http://a2.qpic.cn/psb?/V10WDaE22S84Sl/OWX8XXIREtlNyAkBe52YViDpyDxfk5XwFAoUUjx6vso!/b/dD8BAAAAAAAA&amp;bo=eQdpAgAAAAADBzc!&amp;rf=viewer_4" alt=""><br>每条房源信息都在li元素中，我们再来看一下翻页链接<br><img src="http://a1.qpic.cn/psb?/V10WDaE22S84Sl/lDEAd9FQQ79CUtKdVLMJoGolSXELOAqjwFm.nmJ.wkw!/b/dPMAAAAAAAAA&amp;bo=aAdtAQAAAAADByE!&amp;rf=viewer_4" alt=""></p>
-<p>试着点击下一页，我们浏览器上的链接是有规律可循的</p>
-<blockquote>
-<p><a href="http://sh.lianjia.com/ershoufang/baoshan/d1" target="_blank" rel="external">http://sh.lianjia.com/ershoufang/baoshan/d1</a><br><a href="http://sh.lianjia.com/ershoufang/baoshan/d2" target="_blank" rel="external">http://sh.lianjia.com/ershoufang/baoshan/d2</a><br><a href="http://sh.lianjia.com/ershoufang/baoshan/d3" target="_blank" rel="external">http://sh.lianjia.com/ershoufang/baoshan/d3</a><br>………<br><a href="http://sh.lianjia.com/ershoufang/baoshan/100" target="_blank" rel="external">http://sh.lianjia.com/ershoufang/baoshan/100</a></p>
-</blockquote>
-<p>现在我们试着爬取前10页的链接</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> requests</div><div class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1</span>, <span class="number">11</span>):</div><div class="line">    r = requests.get(<span class="string">'http://sh.lianjia.com/ershoufang/baoshan/d'</span> + str(i))</div><div class="line">    print(r.url)</div></pre></td></tr></table></figure>
-<p>爬取结果</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">http://sh.lianjia.com/ershoufang/baoshan/d1</div><div class="line">http://sh.lianjia.com/ershoufang/baoshan/d2</div><div class="line">http://sh.lianjia.com/ershoufang/baoshan/d3</div><div class="line">http://sh.lianjia.com/ershoufang/baoshan/d4</div><div class="line">http://sh.lianjia.com/ershoufang/baoshan/d5</div><div class="line">http://sh.lianjia.com/ershoufang/baoshan/d6</div><div class="line">http://sh.lianjia.com/ershoufang/baoshan/d7</div><div class="line">http://sh.lianjia.com/ershoufang/baoshan/d8</div><div class="line">http://sh.lianjia.com/ershoufang/baoshan/d9</div><div class="line">http://sh.lianjia.com/ershoufang/baoshan/d10</div></pre></td></tr></table></figure>
-<h4 id="解析网页"><a href="#解析网页" class="headerlink" title="解析网页"></a><strong>解析网页</strong></h4><p><img src="http://a3.qpic.cn/psb?/V10WDaE22S84Sl/Yq7DpRZ0c*o0bN6NkHnGoGJx9HzDr2Tpa1xrEng*JnA!/b/dPIAAAAAAAAA&amp;bo=UAT.AAAAAAADB4g!&amp;rf=viewer_4" alt=""></p>
-<p>要抓取的信息如下：</p>
-<ul>
-<li>标题：room_title = room.find(‘div’, attrs={‘class’: ‘prop-title’})</li>
-<li>房屋信息：room_info = room.find(‘span’, attrs={‘class’: ‘info-col row1-text’})</li>
-<li>位置：room_location = room.find(‘span’, attrs={‘class’: ‘info-col row2-text’})</li>
-<li>附加信息：extra_info = room.find(‘div’, attrs={‘class’: ‘property-tag-container’})</li>
-<li>总价：room_price = room.find(‘span’, attrs={‘class’: ‘total-price strong-num’})</li>
-<li>单价：room_unit_price = room.find(‘span’, attrs={‘class’: ‘info-col price-item minor’})</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div></pre></td><td class="code"><pre><div class="line">soup = BeautifulSoup(r.text, <span class="string">'html.parser'</span>)</div><div class="line">rooms = soup.find(<span class="string">'ul'</span>, attrs=&#123;<span class="string">'class'</span>: <span class="string">'js_fang_list'</span>&#125;)</div><div class="line"><span class="keyword">for</span> room <span class="keyword">in</span> rooms.find_all(<span class="string">'li'</span>):</div><div class="line">    room_title = room.find(<span class="string">'div'</span>, attrs=&#123;<span class="string">'class'</span>: <span class="string">'prop-title'</span>&#125;).get_text()</div><div class="line">    room_info = room.find(<span class="string">'span'</span>, attrs=&#123;<span class="string">'class'</span>: <span class="string">'info-col row1-text'</span>&#125;).get_text()</div><div class="line">    room_location = room.find(<span class="string">'span'</span>, attrs=&#123;<span class="string">'class'</span>: <span class="string">'info-col row2-text'</span>&#125;).find(<span class="string">'a'</span>).get_text()</div><div class="line">    room_price = room.find(<span class="string">'span'</span>, attrs=&#123;<span class="string">'class'</span>: <span class="string">'total-price strong-num'</span>&#125;).get_text()</div><div class="line">    room_unit_price = room.find(<span class="string">'span'</span>, attrs=&#123;<span class="string">'class'</span>: <span class="string">'info-col price-item minor'</span>&#125;).get_text()</div><div class="line">    extra_info = room.find(<span class="string">'div'</span>, attrs=&#123;<span class="string">'class'</span>: <span class="string">'property-tag-container'</span>&#125;).get_text()</div><div class="line"></div><div class="line"></div><div class="line">    print(room_title, room_info, room_location, room_price, room_unit_price, extra_info)</div><div class="line"></div><div class="line">``` </div><div class="line"></div><div class="line"></div><div class="line">下面是网页解析下来的一个房源信息</div><div class="line"></div><div class="line"></div><div class="line">``` python</div><div class="line"></div><div class="line">厨卫全明，卧室带阳台，地铁房，高区采光好</div><div class="line"> </div><div class="line">							<span class="number">1</span>室<span class="number">1</span>厅 | <span class="number">44.73</span>平</div><div class="line">							</div><div class="line">								| 高区/<span class="number">6</span>层</div><div class="line">							</div><div class="line">							</div><div class="line">								| 朝南</div><div class="line">							</div><div class="line">						 葑润华庭 <span class="number">255</span> </div><div class="line">							单价<span class="number">57008</span>元/平</div><div class="line">						 </div><div class="line">距离<span class="number">7</span>号线祁华路站<span class="number">698</span>米</div><div class="line">满二</div><div class="line">有钥匙</div></pre></td></tr></table></figure>
-<h4 id="存入MongoDB数据库"><a href="#存入MongoDB数据库" class="headerlink" title="存入MongoDB数据库"></a><strong>存入MongoDB数据库</strong></h4><p>MongoDB数据结构是以键值对{key:value}形式组成，有点类似于JSON<br><img src="http://a1.qpic.cn/psb?/V10WDaE22S84Sl/UddoxaYMkMYW.yttCHnp450QvwYz732SEb0MvRU0Od4!/b/dD4BAAAAAAAA&amp;bo=iQPVAAAAAAADB30!&amp;rf=viewer_4" alt=""></p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># 链接数据库</span></div><div class="line">client = MongoClient(<span class="string">'localhost'</span>, <span class="number">27017</span>)</div><div class="line"><span class="comment"># 建立数据库</span></div><div class="line">db = client.tests</div><div class="line"><span class="comment"># 建立集合</span></div><div class="line">homes = db.homes</div><div class="line"></div><div class="line">rooms_list = []</div><div class="line"></div><div class="line"><span class="comment"># 先将爬下来的数据赋值为字典</span></div><div class="line">rooms_info =&#123;</div><div class="line">                <span class="string">'title'</span>: room_title,</div><div class="line">                <span class="string">'info'</span>: room_info,</div><div class="line">                <span class="string">'location'</span>: room_location,</div><div class="line">                <span class="string">'price'</span>: room_price,</div><div class="line">                <span class="string">'unit_proce'</span>: room_unit_price,</div><div class="line">                <span class="string">'message'</span>: extra_info,</div><div class="line">                <span class="string">'time'</span>: datetime.datetime.now()</div><div class="line">            &#125;</div><div class="line"></div><div class="line">rooms_list.append(rooms_info)</div><div class="line"><span class="comment"># 存入数据库</span></div><div class="line">result = homes.insert_many(rooms_list)</div><div class="line">print(result)</div></pre></td></tr></table></figure>
-<p>运行代码，我们可以看到数据存入了MongoDB</p>
-<pre><code class="python">&lt;pymongo.results.InsertManyResult object at <span class="number">0x00000260C536AB8</span>&gt;
-&lt;pymongo.results.InsertManyResult object at <span class="number">0x00000260C536AAC</span>&gt;
-&lt;pymongo.results.InsertManyResult object at <span class="number">0x00000260C536AA0</span>&gt;
-&lt;pymongo.results.InsertManyResult object at <span class="number">0x00000260C536AB4</span>&gt;
-&lt;pymongo.results.InsertManyResult object at <span class="number">0x00000260C536AB0</span>&gt;
-&lt;pymongo.results.InsertManyResult object at <span class="number">0x00000260C536A28</span>&gt;
-&lt;pymongo.results.InsertManyResult object at <span class="number">0x00000260C536AC8</span>&gt;
-&lt;pymongo.results.InsertManyResult object at <span class="number">0x00000260C536A08</span>&gt;
-&lt;pymongo.results.InsertManyResult object at <span class="number">0x00000260C536A88</span>&gt;
-&lt;pymongo.results.InsertManyResult object at <span class="number">0x00000260C536A88</span>&gt;
-&lt;pymongo.results.InsertManyResult object at <span class="number">0x00000260C536888</span>&gt;
-&lt;pymongo.results.InsertManyResult object at <span class="number">0x00000260C536A08</span>&gt;
-&lt;pymongo.results.InsertManyResult object at <span class="number">0x00000260C536AC8</span>&gt;
-&lt;pymongo.results.InsertManyResult object at <span class="number">0x00000260C536A48</span>&gt;
-&lt;pymongo.results.InsertManyResult object at <span class="number">0x00000260C536A88</span>&gt;
-</code></pre>
-<p>可以下载一个MongoDB可视化工具，我用的是Robo3T，数据就这样存入了</p>
-<p><img src="http://a1.qpic.cn/psb?/V10WDaE22S84Sl/VSPcQXPsEyWxVdgnsXKjSMUznFRMd6H*9kjsdbfcuI8!/b/dPMAAAAAAAAA&amp;bo=AAWAAgAAAAADB6U!&amp;rf=viewer_4" alt=""></p>
-<p>总共有100页的数据，用time.sleep()来控制速度防止被封掉，但爬取效率实在很低，这两天准备学习pandas</p>
-<p>完整代码在<a href="https://github.com/Family-TreeSY/LianjiaSpider/blob/master/lianjia.py" target="_blank" rel="external">GitHub</a><br><a href="http://www.jianshu.com/u/a01bc3ec4f88" target="_blank" rel="external">简书</a><br>欢迎访问博客<a href="https://family-treesy.github.io/" target="_blank" rel="external">Treehl的博客</a></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">PYTHON</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">MongoDB</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">爬虫</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/11/29/lianjia/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/3/">Next &raquo;</a>
+      <a class="extend prev" rel="prev" href="/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/3/">Next &raquo;</a>
     </nav>
   
 
@@ -1254,6 +2323,14 @@ getOwnMetadataKeys:function(t){return o(i(t),arguments.length<2?void 0:u(argumen
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">PYTHON</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">MongoDB</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">Git</a>
               </li>
              
@@ -1262,27 +2339,7 @@ getOwnMetadataKeys:function(t){return o(i(t),arguments.length<2?void 0:u(argumen
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">MySQL</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">PYTHON</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">DailyQuestion</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">MongoDB</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">爬虫</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Scrapy</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1290,11 +2347,23 @@ getOwnMetadataKeys:function(t){return o(i(t),arguments.length<2?void 0:u(argumen
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">爬虫</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">BeautifulSoup</a>
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Scrapy</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">Redis</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">MySQL</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1306,11 +2375,47 @@ getOwnMetadataKeys:function(t){return o(i(t),arguments.length<2?void 0:u(argumen
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Django</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">Unittest</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Django</a>
+                <a href="javascript:void(0)" class="js-tag color2">DJANGO</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">Silk</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Cache</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">Autocomplete-light</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">Ckeditor</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">Rest-Framework</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">Debug-Toolbar</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">BootStrap</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">DJango</a>
               </li>
             
             <div class="clearfix"></div>
