@@ -173,6 +173,123 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-FirstQuestion" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/10/31/FirstQuestion/">Python每日一题：第一题</a>
+    </h1>
+  
+
+        
+        <a href="/2017/10/31/FirstQuestion/" class="archive-article-date">
+  	<time datetime="2017-10-31T04:02:31.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-10-31</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>最近加入了<a href="https://foofish.net/" target="_blank" rel="external">Python之禅</a>的知识星球<a href="https://wx.xiaomiquan.com/mweb/views/joingroup/join_group.html?group_id=518855855524&amp;secret=meqx22a2blf4c1ae3ucbgpui4somnpwa&amp;user_id=1152122252" target="_blank" rel="external">Python之禅和他朋友们</a><br>军哥在星球内分享干货，组织交流，让我这个编程小白获益良多。今天我们来学习一下星球内的第一道题目，也算是我学习第一道题后的总结</p>
+<h3 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h3><blockquote>
+<p>在使用 for 循环迭代一个列表时，有时我们需要获取列表中每个元素所在的下标位置是多少，例如 numbers = [10, 29, 30, 41]，要求输出 (0, 10)，(1, 29)，(2, 30)，(3, 41)</p>
+</blockquote>
+<p>在解题前我们需要了解下面几点知识</p>
+<ul>
+<li>range()函数</li>
+<li>len()函数</li>
+<li>for循环</li>
+<li>字符串格式化表达式</li>
+<li>字符串格式化方法</li>
+<li>enumerate()函数</li>
+</ul>
+<p><strong>range()函数</strong><br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">&gt;&gt;&gt;range(<span class="number">10</span>)        <span class="comment"># 从 0 开始到 10</span></div><div class="line">[<span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span>, <span class="number">9</span>]</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>range(<span class="number">1</span>, <span class="number">11</span>)     <span class="comment"># 从 1 开始到 11</span></div><div class="line">[<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span>, <span class="number">9</span>, <span class="number">10</span>]</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>range(<span class="number">0</span>, <span class="number">30</span>, <span class="number">5</span>)  <span class="comment"># 步长为 5</span></div><div class="line">[<span class="number">0</span>, <span class="number">5</span>, <span class="number">10</span>, <span class="number">15</span>, <span class="number">20</span>, <span class="number">25</span>]</div></pre></td></tr></table></figure></p>
+<p><strong>len()函数</strong><br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">&gt;&gt;&gt;l = <span class="string">"Treehl"</span></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>len(l)             <span class="comment"># 字符串长度</span></div><div class="line"><span class="number">6</span></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>m = [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>]</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>len(m)               <span class="comment"># 列表元素个数</span></div><div class="line"><span class="number">5</span></div></pre></td></tr></table></figure></p>
+<p><strong>for循环</strong><br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">&gt;&gt;&gt;names = [<span class="string">'a'</span>, <span class="string">'b'</span>, <span class="string">'c'</span>]</div><div class="line">&gt;&gt;&gt;<span class="keyword">for</span> name <span class="keyword">in</span> names:</div><div class="line">        print(name)</div><div class="line">a</div><div class="line">b</div><div class="line">c</div></pre></td></tr></table></figure></p>
+<p><strong>字符串格式化表达式</strong><br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&gt;&gt;&gt; </span><span class="string">'That is %d %s bird!'</span> % (<span class="number">1</span>, <span class="string">'dead'</span>)</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>That <span class="keyword">is</span> <span class="number">1</span> dead bird!</div></pre></td></tr></table></figure></p>
+<p><strong>字符串格式化方法</strong><br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&gt;&gt;&gt; </span><span class="string">'That is &#123;0&#125; &#123;1&#125; bird!'</span>.format(<span class="number">1</span>, <span class="string">'dead'</span>)</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>That <span class="keyword">is</span> <span class="number">1</span> dead bird!</div></pre></td></tr></table></figure></p>
+<p><strong>enumerate()函数</strong></p>
+<blockquote>
+<p>enumerate(sequence, [start=0])</p>
+<ul>
+<li>sequence – 一个序列、迭代器或其他支持迭代对象</li>
+<li>start – 下标起始位置</li>
+</ul>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">&gt;&gt;&gt;numbers = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>]</div><div class="line">&gt;&gt;&gt;list(enumerate(numbers))</div><div class="line">&gt;&gt;&gt;[(<span class="number">0</span>, <span class="number">1</span>), (<span class="number">1</span>, <span class="number">2</span>), (<span class="number">2</span>, <span class="number">3</span>), (<span class="number">3</span>, <span class="number">4</span>)]</div><div class="line">&gt;&gt;&gt;list(enumerate(numbers, start=<span class="number">1</span>))<span class="comment"># 下标从1开始</span></div><div class="line">&gt;&gt;&gt;[(<span class="number">1</span>, <span class="number">1</span>), (<span class="number">2</span>, <span class="number">2</span>), (<span class="number">3</span>, <span class="number">3</span>), (<span class="number">4</span>, <span class="number">4</span>)]</div></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># enumerate() 函数用于将一个可遍历的数据对象(如列表、元组或字符串)组合为一个索引序列，同时列出数据和数据下标，一般用在 for 循环当中。</span></div><div class="line">&gt;&gt;&gt;n = numbers</div><div class="line">&gt;&gt;&gt;<span class="keyword">for</span> index, value <span class="keyword">in</span> enumerate(n):</div><div class="line">		print(index, value)</div><div class="line"><span class="number">0</span> <span class="number">1</span></div><div class="line"><span class="number">1</span> <span class="number">2</span></div><div class="line"><span class="number">2</span> <span class="number">3</span></div><div class="line"><span class="number">3</span> <span class="number">4</span></div></pre></td></tr></table></figure>
+<p>到这一步解题的基础知识都了解完了，开始做题吧</p>
+<pre><code class="python"><span class="comment"># answer 1</span>
+numbers = [<span class="number">10</span>, <span class="number">29</span>, <span class="number">30</span>, <span class="number">41</span>]
+<span class="keyword">for</span> i <span class="keyword">in</span> range(len(numbers)):
+    print(<span class="string">'{0}, {1}'</span>.format(i, numbers[i]))
+</code></pre>
+<pre><code class="python"><span class="comment"># answer 2</span>
+numbers = [<span class="number">10</span>, <span class="number">29</span>, <span class="number">30</span>, <span class="number">41</span>]
+<span class="keyword">for</span> index, value <span class="keyword">in</span> enumerate(numbers):
+    print(index, value)
+</code></pre>
+<p>欢迎访问我的博客<a href="https://family-treesy.github.io/" target="_blank" rel="external">Treehl的博客</a><br><a href="https://github.com/Family-TreeSY" target="_blank" rel="external">GitHub</a></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">PYTHON</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">DailyQuestion</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2017/10/31/FirstQuestion/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-login-douban" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -243,11 +360,11 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">PYTHON</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">爬虫</a>
         		</li>
       		 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">爬虫</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">PYTHON</a>
         		</li>
       		
 		</ul>
@@ -349,11 +466,11 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">PYTHON</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">爬虫</a>
         		</li>
       		 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">爬虫</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">PYTHON</a>
         		</li>
       		
 		</ul>
@@ -451,11 +568,11 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">PYTHON</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">爬虫</a>
         		</li>
       		 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">爬虫</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">PYTHON</a>
         		</li>
       		 
         		<li class="article-tag-list-item">
@@ -596,23 +713,11 @@ getOwnMetadataKeys:function(t){return o(i(t),arguments.length<2?void 0:u(argumen
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">PYTHON</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">MongoDB</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">Git</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">GitHub</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">DailyQuestion</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -628,7 +733,15 @@ getOwnMetadataKeys:function(t){return o(i(t),arguments.length<2?void 0:u(argumen
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Scrapy</a>
+                <a href="javascript:void(0)" class="js-tag color2">PYTHON</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">DailyQuestion</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">MongoDB</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -637,6 +750,10 @@ getOwnMetadataKeys:function(t){return o(i(t),arguments.length<2?void 0:u(argumen
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">MySQL</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Scrapy</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -653,42 +770,6 @@ getOwnMetadataKeys:function(t){return o(i(t),arguments.length<2?void 0:u(argumen
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">Unittest</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">DJANGO</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Silk</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Cache</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">Autocomplete-light</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">Ckeditor</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Rest-Framework</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">Debug-Toolbar</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">BootStrap</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">DJango</a>
               </li>
             
             <div class="clearfix"></div>

@@ -718,6 +718,156 @@
 
 
   
+    <article id="post-简介" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/03/31/简介/">Django博客搭建</a>
+    </h1>
+  
+
+        
+        <a href="/2018/03/31/简介/" class="archive-article-date">
+  	<time datetime="2018-03-31T15:08:08.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-03-31</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>用Django搭建博客</p>
+</blockquote>
+<p><img src="https://img.shields.io/badge/Python-2.7-brightgreen.svg" alt=""> <img src="https://img.shields.io/badge/Django-1.11.3-green.svg" alt=""> <img src="https://img.shields.io/badge/xadmin-0.6.1-yellowgreen.svg" alt=""> <img src="https://img.shields.io/badge/ckedior-4.7.1-yellow.svg" alt=""> <img src="https://img.shields.io/badge/Django--debug--toolbar-2.0-orange.svg" alt=""><br><img src="https://img.shields.io/badge/Django--silk-2.0-red.svg" alt=""> <img src="https://img.shields.io/badge/Redis-4.0.9-lightgrey.svg" alt=""> <img src="https://img.shields.io/badge/MySQL-5.7.21-blue.svg" alt=""> <img src="https://img.shields.io/badge/Bootstrap-4.1.0-brown.svg" alt=""></p>
+<h3 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h3><ul>
+<li>项目主要是记录学习Django的过程</li>
+<li>前端使用Bootstrap框架并没有套模板，自己画页面会丑点，最主要是简单学习下前端，在W3SCHOOL上学习了HTML和CSS的可以练练手</li>
+<li>后台管理一开始先开发Django自带的admin到后面会转到Xadmin上</li>
+<li>视图先用FunctionView来写逻辑，后面再使用ClassBasedView</li>
+<li>数据库在开发环境中先使用SQLITE，最后准备上线前替换为MySQL数据库</li>
+<li>文本编辑使用Ckeditor富文本编辑</li>
+<li>使用Django-Rest-Framework来构建Web API</li>
+<li>使用Django-debug-toolbar和silk来分析检查</li>
+<li>配置MySQL和开发环境</li>
+<li>配置Redis</li>
+<li>使用Nginx和Gunicorn部署网站</li>
+<li>使用Fabric自动化部署</li>
+</ul>
+<h3 id="环境"><a href="#环境" class="headerlink" title="环境"></a>环境</h3><ul>
+<li>开发语言：Python2.7</li>
+<li>开发环境:Ubuntu16.04</li>
+<li>IDE:Pycharm</li>
+<li>数据库:MySQL、Redis</li>
+</ul>
+<h3 id="代码风格"><a href="#代码风格" class="headerlink" title="代码风格"></a>代码风格</h3><ul>
+<li><a href="http://zh-google-styleguide.readthedocs.io/en/latest/google-python-styleguide/contents/" target="_blank" rel="external">谷歌开源项目风格</a></li>
+<li>用flake8来检测代码</li>
+</ul>
+<h3 id="项目分四大块"><a href="#项目分四大块" class="headerlink" title="项目分四大块"></a>项目分四大块</h3><ul>
+<li>后台admin开发</li>
+<li>前台开发</li>
+<li>增加功能插件</li>
+<li>部署项目</li>
+</ul>
+<p><strong>一、后台admin开发</strong></p>
+<ol>
+<li><a href="https://github.com/Family-TreeSY/Myblog/blob/master/Doc/%E4%B8%80%E3%80%81%E6%90%AD%E5%BB%BA%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83.md" target="_blank" rel="external">搭建开发环境</a></li>
+<li><a href="https://github.com/Family-TreeSY/Myblog/blob/master/Doc/%E4%BA%8C%E3%80%81%E5%BB%BA%E7%AB%8B%E5%8D%9A%E5%AE%A2%E5%BA%94%E7%94%A8.md" target="_blank" rel="external">建立博客应用</a></li>
+<li><a href="https://github.com/Family-TreeSY/Myblog/blob/master/Doc/%E4%B8%89%E3%80%81%E5%88%9B%E5%BB%BA%E6%95%B0%E6%8D%AE%E5%BA%93%E6%A8%A1%E5%9E%8BModel.md" target="_blank" rel="external">创建数据库模型Model</a></li>
+<li><a href="https://github.com/Family-TreeSY/Myblog/blob/master/Doc/%E5%9B%9B%E3%80%81%E5%88%9B%E5%BB%BA%E5%90%8E%E5%8F%B0%E7%AE%A1%E7%90%86%E8%B4%A6%E5%8F%B7%E3%80%81%E8%BF%81%E7%A7%BB%E6%95%B0%E6%8D%AE%E5%BA%93.md" target="_blank" rel="external">创建后台管理账号、迁移数据库</a></li>
+<li><a href="https://github.com/Family-TreeSY/Myblog/blob/master/Doc/%E4%BA%94%E3%80%81%E5%BC%80%E5%8F%91%E5%90%8E%E5%8F%B0%E7%AE%A1%E7%90%86%EF%BC%88%E4%B8%80%EF%BC%89.md" target="_blank" rel="external">开发后台管理（一）</a></li>
+<li><a href="https://github.com/Family-TreeSY/Myblog/blob/master/Doc/%E5%85%AD%E3%80%81%E5%BC%80%E5%8F%91%E5%90%8E%E5%8F%B0%E7%AE%A1%E7%90%86%EF%BC%88%E4%BA%8C%EF%BC%89.md" target="_blank" rel="external">开发后台管理（二）</a></li>
+</ol>
+<p><strong>二、前台开发</strong></p>
+<ol>
+<li><a href="https://github.com/Family-TreeSY/Myblog/blob/master/Doc/%E4%B8%83%E3%80%81FunctionView.md" target="_blank" rel="external">FunctionView</a></li>
+<li><a href="https://github.com/Family-TreeSY/Myblog/blob/master/Doc/%E5%85%AB%E3%80%81%E5%88%86%E9%A1%B5%E8%AE%BE%E7%BD%AE.md" target="_blank" rel="external">分页设置</a></li>
+<li><a href="https://github.com/Family-TreeSY/Myblog/blob/master/Doc/%E4%B9%9D%E3%80%81%E8%AE%BE%E7%BD%AE%E5%88%86%E7%B1%BB%E5%AF%BC%E8%88%AA%E6%A0%8F.md" target="_blank" rel="external">设置分类导航栏</a></li>
+<li><a href="https://github.com/Family-TreeSY/Myblog/blob/master/Doc/%E5%8D%81%E3%80%81%E8%AE%BE%E7%BD%AE%E4%BE%A7%E8%BE%B9%E6%A0%8F.md" target="_blank" rel="external">设置侧边栏</a></li>
+<li><a href="https://github.com/Family-TreeSY/Myblog/blob/master/Doc/%E5%8D%81%E4%B8%80%E3%80%81%E5%AE%8C%E6%88%90%E6%AD%A3%E6%96%87%E3%80%81%E9%85%8D%E7%BD%AE%E9%80%9A%E7%94%A8%E4%BB%A3%E7%A0%81.md" target="_blank" rel="external">完成正文、配置通用代码</a></li>
+<li><a href="https://github.com/Family-TreeSY/Myblog/blob/master/Doc/%E5%8D%81%E4%BA%8C%E3%80%81ClassBasedView.md" target="_blank" rel="external">ClassBasedView</a></li>
+<li><a href="https://github.com/Family-TreeSY/Myblog/blob/master/Doc/%E5%8D%81%E4%B8%89%E3%80%81%E4%BD%BF%E7%94%A8BootStrap%E6%A1%86%E6%9E%B6.md" target="_blank" rel="external">使用BootStrap框架</a></li>
+<li><a href="https://github.com/Family-TreeSY/Myblog/blob/master/Doc/%E5%8D%81%E5%9B%9B%E3%80%81%E6%8A%BD%E5%8F%96%E9%9D%99%E6%80%81%E8%B5%84%E6%BA%90.md" target="_blank" rel="external">抽取静态资源</a></li>
+<li><a href="https://github.com/Family-TreeSY/Myblog/blob/master/Doc/%E5%8D%81%E4%BA%94%E3%80%81%E5%A2%9E%E5%8A%A0%E6%90%9C%E7%B4%A2%E5%8A%9F%E8%83%BD.md" target="_blank" rel="external">增加搜索功能</a></li>
+<li><a href="https://github.com/Family-TreeSY/Myblog/blob/master/Doc/%E5%8D%81%E5%85%AD%E3%80%81%E5%A2%9E%E5%8A%A0%E4%BD%9C%E8%80%85%E6%96%87%E7%AB%A0%E5%88%97%E8%A1%A8.md" target="_blank" rel="external">增加作者文章列表</a></li>
+<li><a href="https://github.com/Family-TreeSY/Myblog/blob/master/Doc/%E5%8D%81%E4%B8%83%E3%80%81%E5%A2%9E%E5%8A%A0%E5%8F%8B%E9%93%BE.md" target="_blank" rel="external">增加友链</a></li>
+<li><a href="https://github.com/Family-TreeSY/Myblog/blob/master/Doc/%E5%8D%81%E5%85%AB%E3%80%81%E5%A2%9E%E5%8A%A0%E7%95%99%E8%A8%80%E6%9D%BF%E6%A8%A1%E5%9D%97%EF%BC%88%E4%B8%80%EF%BC%89.md" target="_blank" rel="external">增加留言板模块（一）</a></li>
+<li><a href="https://github.com/Family-TreeSY/Myblog/blob/master/Doc/%E5%8D%81%E4%B9%9D%E3%80%81%E5%A2%9E%E5%8A%A0%E7%95%99%E8%A8%80%E6%9D%BF%E6%A8%A1%E5%9D%97%EF%BC%88%E4%BA%8C%EF%BC%89.md" target="_blank" rel="external">增加留言板模块（二）</a></li>
+<li><a href="https://github.com/Family-TreeSY/Myblog/blob/master/Doc/%E4%BA%8C%E5%8D%81%E3%80%81%E5%A2%9E%E5%8A%A0Markdown%E7%BC%96%E8%BE%91.md" target="_blank" rel="external">增加Markdown编辑</a></li>
+<li><a href="https://github.com/Family-TreeSY/Myblog/blob/master/Doc/%E4%BA%8C%E5%8D%81%E4%B8%80%E3%80%81%E5%A2%9E%E5%8A%A0PV%E3%80%81UV%E6%A8%A1%E5%9D%97.md" target="_blank" rel="external">增加PV、UV功能</a></li>
+</ol>
+<p><strong>三、增加插件</strong></p>
+<ol>
+<li><a href="https://github.com/Family-TreeSY/Myblog/blob/master/Doc/%E4%BA%8C%E5%8D%81%E4%BA%8C%E3%80%81admin%E6%9B%BF%E6%8D%A2%E4%B8%BAxadmin.md" target="_blank" rel="external">admin替换为xadmin</a></li>
+<li><a href="https://github.com/Family-TreeSY/Myblog/blob/master/Doc/%E4%BA%8C%E5%8D%81%E4%B8%89%E3%80%81%E9%85%8D%E7%BD%AEautocomplete-light.md" target="_blank" rel="external">配置autocomplete-light</a></li>
+<li><a href="https://github.com/Family-TreeSY/Myblog/blob/master/Doc/%E4%BA%8C%E5%8D%81%E5%9B%9B%E3%80%81%E9%85%8D%E7%BD%AEckeditor.md" target="_blank" rel="external">配置ckeditor</a></li>
+<li><a href="https://github.com/Family-TreeSY/Myblog/blob/master/Doc/%E4%BA%8C%E5%8D%81%E4%BA%94%E3%80%81%E9%85%8D%E7%BD%AEDjango-Rest-Framework.md" target="_blank" rel="external">配置Django-Rest-Framework</a></li>
+<li><a href="https://github.com/Family-TreeSY/Myblog/blob/master/Doc/%E4%BA%8C%E5%8D%81%E5%85%AD%E3%80%81%E9%85%8D%E7%BD%AEDjango-Debug-ToolBar.md" target="_blank" rel="external">配置Django-Debug-ToolBar</a></li>
+<li><a href="https://github.com/Family-TreeSY/Myblog/blob/master/Doc/%E4%BA%8C%E5%8D%81%E4%B8%83%E3%80%81%E9%85%8D%E7%BD%AEDjango-Silk.md" target="_blank" rel="external">配置Django-Silk</a></li>
+<li><a href="https://github.com/Family-TreeSY/Myblog/blob/master/Doc/%E4%BA%8C%E5%8D%81%E5%85%AB%E3%80%81%E9%85%8D%E7%BD%AEMySQL.md" target="_blank" rel="external">配置MySQL</a></li>
+<li><a href="https://github.com/Family-TreeSY/Myblog/blob/master/Doc/%E4%BA%8C%E5%8D%81%E4%B9%9D%E3%80%81%E9%85%8D%E7%BD%AECache%20Redis.md" target="_blank" rel="external">配置Cache Redis</a></li>
+</ol>
+<p><strong>四、部署项目</strong></p>
+<ol>
+<li><a href="https://github.com/Family-TreeSY/Myblog/blob/master/Doc/%E4%B8%89%E5%8D%81%E3%80%81%E4%BD%BF%E7%94%A8Nginx%E5%92%8CGunicorn%E9%83%A8%E7%BD%B2%E7%BD%91%E7%AB%99.md" target="_blank" rel="external">使用nginx和gunicorn部署网站</a></li>
+<li><a href="">使用Fabric自动部署</a></li>
+</ol>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Django</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/03/31/简介/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-MYSQL小结" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -1911,6 +2061,10 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">爬虫</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
         			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">PYTHON</a>
         		</li>
       		 
@@ -1919,15 +2073,11 @@
         		</li>
       		 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">爬虫</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Redis</a>
         		</li>
       		 
         		<li class="article-tag-list-item">
         			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Scrapy</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Redis</a>
         		</li>
       		 
         		<li class="article-tag-list-item">
@@ -2045,6 +2195,10 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">爬虫</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
         			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">PYTHON</a>
         		</li>
       		 
@@ -2053,15 +2207,11 @@
         		</li>
       		 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">爬虫</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Redis</a>
         		</li>
       		 
         		<li class="article-tag-list-item">
         			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Scrapy</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Redis</a>
         		</li>
       		 
         		<li class="article-tag-list-item">
@@ -2076,127 +2226,6 @@
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2017/12/23/scrapy-redis(一)/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-Scrapy爬取猫眼电影" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/12/21/Scrapy爬取猫眼电影/">Scrapy爬取猫眼电影并存入MongoDB数据库</a>
-    </h1>
-  
-
-        
-        <a href="/2017/12/21/Scrapy爬取猫眼电影/" class="archive-article-date">
-  	<time datetime="2017-12-21T11:48:23.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-12-21</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>之前入门了Scrapy，用Scrapy框架爬取了<a href="https://family-treesy.github.io/2017/11/07/Scrapy%E7%AE%80%E4%BB%8B/" target="_blank" rel="external">豆瓣电影TOP250</a>，最近打算学习下scrapy-redis分布式爬虫，学习之前再重新温故下Scrapy，这个总结我缩写了很多内容，很多介绍可以看下我之前写的<strong>豆瓣movie</strong></p>
-<h3 id="实战应用"><a href="#实战应用" class="headerlink" title="实战应用"></a><strong>实战应用</strong></h3><p>打开CMD输入</p>
-<blockquote>
-<p>scrapy startproject maoyan</p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">C:.</div><div class="line">│  scrapy.cfg</div><div class="line">│</div><div class="line">└─maoyan</div><div class="line">    │  items.py</div><div class="line">    │  middlewares.py</div><div class="line">    │  pipelines.py</div><div class="line">    │  settings.py</div><div class="line">    │  __init__.py</div><div class="line">    │</div><div class="line">    └─spiders</div><div class="line">            __init__.py</div></pre></td></tr></table></figure>
-<p><strong>编辑 item.py</strong><br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> scrapy</div><div class="line"></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">MaoyanItem</span><span class="params">(scrapy.Item)</span>:</span></div><div class="line">    <span class="comment"># define the fields for your item here like:</span></div><div class="line">    <span class="comment"># name = scrapy.Field()</span></div><div class="line">    movie_name = scrapy.Field()</div><div class="line">    movie_ename = scrapy.Field()</div><div class="line">    movie_type = scrapy.Field()</div><div class="line">    movie_publish = scrapy.Field()</div><div class="line">    movie_time = scrapy.Field()</div><div class="line">    movie_star = scrapy.Field()</div><div class="line">    movie_total_price = scrapy.Field()</div><div class="line">    <span class="keyword">pass</span></div></pre></td></tr></table></figure></p>
-<ul>
-<li>首先，引入Scrapy</li>
-<li>接着，创建一个类，继承自scrapy.item,这个是用来储存要爬下来的数据的存放容器，类似orm的写法</li>
-<li>我们要记录的是：电影的名字、电影的评分、电影的上映时间、电影类型、电影英文名</li>
-</ul>
-<p><strong>获取网页数据</strong></p>
-<p>网页数据使用Xpath来索取元素非常方便，附上<a href="http://www.w3school.com.cn/xpath/index.asp" target="_blank" rel="external">W3SCHOOL xpath学习</a> 接下来，我们定义一下url的爬取规则</p>
-<p><img src="http://m.qpic.cn/psb?/V10WDaE22S84Sl/ybohO8MjJpOKgGJ2Ye4zF5PReVISEU3PJrWuyP4BaEE!/b/dFsBAAAAAAAA&amp;bo=HAWAAgAAAAADB7k!&amp;rf=viewer_4" alt=""></p>
-<blockquote>
-<p><a href="http://maoyan.com/films?offset=30" target="_blank" rel="external">http://maoyan.com/films?offset=30</a><br>用正则表达式定义下一页链接<br>r’<a href="http://maoyan.com/films\?offset=\d+" target="_blank" rel="external">http://maoyan.com/films\?offset=\d+</a>‘</p>
-</blockquote>
-<p><img src="http://m.qpic.cn/psb?/V10WDaE22S84Sl/5aQGmcvhgUtKmLkjVkF0e9ntCSBGQbkyOmon3E9bJ9Y!/b/dPIAAAAAAAAA&amp;bo=zQSAAgAAAAADN1k!&amp;rf=viewer_4" alt=""><br>我们真正要抓取电影详情页的是这个链接 <a href="http://maoyan.com/films/1170264" target="_blank" rel="external">http://maoyan.com/films/1170264</a></p>
-<blockquote>
-<p>正则定义链接<br>r’<a href="http://maoyan.com/films/\d+" target="_blank" rel="external">http://maoyan.com/films/\d+</a>‘</p>
-</blockquote>
-<p>好了，到这一步编辑spider</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="keyword">from</span> scrapy.spiders <span class="keyword">import</span> Rule, CrawlSpider</div><div class="line"><span class="keyword">from</span> scrapy.selector <span class="keyword">import</span> Selector</div><div class="line"><span class="keyword">from</span> scrapy.linkextractors <span class="keyword">import</span> LinkExtractor</div><div class="line"><span class="keyword">from</span> maoyan.items <span class="keyword">import</span> MaoyanItem</div><div class="line"></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">MaoyanmovieSpider</span><span class="params">(CrawlSpider)</span>:</span></div><div class="line">    name = <span class="string">'my'</span></div><div class="line">    <span class="comment"># allowed_domains = ['http://maoyan.com/']</span></div><div class="line">    start_urls = [<span class="string">'http://maoyan.com/films'</span>]</div><div class="line">    rules = (</div><div class="line">        Rule(LinkExtractor(allow=(<span class="string">r'http://maoyan.com/films\?offset=\d+'</span>))),</div><div class="line">        Rule(LinkExtractor(allow=(<span class="string">r'http://maoyan.com/films/\d+'</span>)), callback=<span class="string">'parse_item'</span>)</div><div class="line">    )</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">parse_item</span><span class="params">(self, response)</span>:</span></div><div class="line">        <span class="comment"># print(response.body)</span></div><div class="line">        sel = Selector(response)</div><div class="line">        movie_name = sel.xpath(<span class="string">'/html/body/div[3]/div/div[2]/div[1]/h3/text()'</span>).extract()</div><div class="line">        movie_ename = sel.xpath(<span class="string">'/html/body/div[3]/div/div[2]/div[1]/div/text()'</span>).extract()</div><div class="line">        movie_type = sel.xpath(<span class="string">'/html/body/div[3]/div/div[2]/div[1]/ul/li[1]/text()'</span>).extract()</div><div class="line">        movie_publish = sel.xpath(<span class="string">'/html/body/div[3]/div/div[2]/div[1]/ul/li[2]/text()'</span>).extract()</div><div class="line">        movie_time = sel.xpath(<span class="string">'/html/body/div[3]/div/div[2]/div[1]/ul/li[3]/text()'</span>).extract()</div><div class="line">        movie_star = sel.xpath(<span class="string">'/html/body/div[3]/div/div[2]/div[3]/div[1]/div/span/span/text()'</span>).extract()</div><div class="line">        <span class="comment"># movie_total_price = sel.xpath('/html/body/div[3]/div/div[2]/div[3]/div[2]/div/span[1]/text()').extract()</span></div><div class="line">        <span class="comment"># movie_introd = sel.xpath('//*[@id="app"]/div/div[1]/div/div[2]/div[1]/div[1]/div[2]/span/text()').extract()</span></div><div class="line">        <span class="comment"># print(movie_name)</span></div><div class="line">        <span class="comment"># print(movie_ename)</span></div><div class="line">        <span class="comment"># print(movie_type)</span></div><div class="line">        <span class="comment"># print(movie_publish)</span></div><div class="line">        <span class="comment"># print(movie_time)</span></div><div class="line">        <span class="comment"># print(movie_star)</span></div><div class="line">        <span class="comment"># print(movie_total_price)</span></div><div class="line"></div><div class="line">        item = MaoyanItem()</div><div class="line">        item[<span class="string">'movie_name'</span>] = movie_name</div><div class="line">        item[<span class="string">'movie_ename'</span>] = movie_ename</div><div class="line">        item[<span class="string">'movie_type'</span>] = movie_type</div><div class="line">        item[<span class="string">'movie_publish'</span>] = movie_publish</div><div class="line">        item[<span class="string">'movie_time'</span>] = movie_time</div><div class="line">        item[<span class="string">'movie_star'</span>] = movie_star</div><div class="line">        <span class="comment"># item['movie_total_price'] = movie_total_price</span></div><div class="line">        <span class="comment"># item['movie_introd'] = movie_introd</span></div><div class="line"></div><div class="line">        <span class="keyword">yield</span> item</div></pre></td></tr></table></figure>
-<p>spider写完后我们要将数据存进MongoDB数据库内，编辑pipeline.py</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> pymongo</div><div class="line"><span class="keyword">from</span> scrapy.conf <span class="keyword">import</span> settings</div><div class="line"><span class="keyword">from</span> scrapy.exceptions <span class="keyword">import</span> DropItem</div><div class="line"><span class="keyword">from</span> scrapy <span class="keyword">import</span> log</div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">MongoDBPipeline</span><span class="params">(object)</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self)</span>:</span></div><div class="line">        client = pymongo.MongoClient(settings[<span class="string">'MONGODB_SERVER'</span>], settings[<span class="string">'MONGODB_PORT'</span>])</div><div class="line">        db = client[settings[<span class="string">'MONGODB_DB'</span>]]</div><div class="line">        self.collection = db[settings[<span class="string">'MONGODB_COLLECTION'</span>]]</div><div class="line"></div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">process_item</span><span class="params">(self, item, spider)</span>:</span></div><div class="line">        <span class="comment"># item:  (Item 对象) – 被爬取的item</span></div><div class="line">        <span class="comment"># (Spider 对象) – 爬取该item的spider</span></div><div class="line">        <span class="comment"># 去重，删除重复的数据</span></div><div class="line">        valid = <span class="keyword">True</span></div><div class="line">        <span class="keyword">for</span> data <span class="keyword">in</span> item:</div><div class="line">            <span class="keyword">if</span> <span class="keyword">not</span> data:</div><div class="line">                valid = <span class="keyword">False</span></div><div class="line">                <span class="keyword">raise</span> DropItem(<span class="string">'Missing %s of blogpost from %s'</span> % (data, item[<span class="string">'url'</span>]))</div><div class="line">        <span class="keyword">if</span> valid:</div><div class="line">            movies = [&#123;</div><div class="line">                <span class="string">'movie_name'</span>: item[<span class="string">'movie_name'</span>],</div><div class="line">                <span class="string">'movie_ename'</span>: item[<span class="string">'movie_ename'</span>],</div><div class="line">                <span class="string">'movie_type'</span>: item[<span class="string">'movie_type'</span>],</div><div class="line">                <span class="string">'movie_publish'</span>: item[<span class="string">'movie_publish'</span>],</div><div class="line">                <span class="string">'movie_time'</span>: item[<span class="string">'movie_time'</span>],</div><div class="line">                <span class="string">'movie_star'</span>: item[<span class="string">'movie_star'</span>]</div><div class="line">            &#125;]</div><div class="line">            <span class="comment"># 插入数据库集合中</span></div><div class="line">            self.collection.insert(movies)</div><div class="line">            log.msg(<span class="string">'Item wrote to MongoDB database %s/%s'</span> % (settings[<span class="string">'MONGODB_DB'</span>], settings[<span class="string">'MONGODB_COLLECTION'</span>]),</div><div class="line">                    level=log.DEBUG, spider=spider)</div><div class="line">        <span class="keyword">return</span> item</div></pre></td></tr></table></figure>
-<p><strong>配置文件</strong><br>打开setting.py</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line">BOT_NAME = <span class="string">'maoyan'</span></div><div class="line"></div><div class="line">SPIDER_MODULES = [<span class="string">'maoyan.spiders'</span>]</div><div class="line">NEWSPIDER_MODULE = <span class="string">'maoyan.spiders'</span></div><div class="line">ROBOTSTXT_OBEY = <span class="keyword">False</span></div><div class="line">COOKIES_ENABLED = <span class="keyword">True</span></div><div class="line">DOWNLOAD_DELAY = <span class="number">3</span></div><div class="line">LOG_LEVEL = <span class="string">'DEBUG'</span></div><div class="line">RANDOMIZE_DOWNLOAD_DELAY = <span class="keyword">True</span></div><div class="line"><span class="comment"># 关闭重定向</span></div><div class="line">REDIRECT_ENABLED = <span class="keyword">False</span></div><div class="line"><span class="comment"># 返回302时,按正常返回对待,可以正常写入cookie</span></div><div class="line">HTTPERROR_ALLOWED_CODES = [<span class="number">302</span>,]</div><div class="line"></div><div class="line">ITEM_PIPELINES = &#123;</div><div class="line">    <span class="string">'maoyan.pipelines.MongoDBPipeline'</span>: <span class="number">300</span>,</div><div class="line">&#125;</div><div class="line"></div><div class="line">MONGODB_SERVER = <span class="string">'localhost'</span></div><div class="line">MONGODB_PORT = <span class="number">27017</span></div><div class="line">MONGODB_DB = <span class="string">'maoyan'</span></div><div class="line">MONGODB_COLLECTION = <span class="string">'movies'</span></div></pre></td></tr></table></figure>
-<p>好了，现在开启爬虫</p>
-<blockquote>
-<p>scrapy crawl my</p>
-</blockquote>
-<p><img src="http://m.qpic.cn/psb?/V10WDaE22S84Sl/ZGQvfhm1J30h318e*BGb2i1aeXvouHHPxfXirkEcxh0!/b/dPIAAAAAAAAA&amp;bo=wwSAAgAAAAADB2c!&amp;rf=viewer_4" alt=""></p>
-<p>写这个爬虫应该会遇到302重定向或者被网站发现是机器人操作，建议延长delay时间，不过爬取效率会非常低！！总共有23110页，每页有30条数据，总共693300条数据，就算不被ban掉，那得爬到猴年马月……………………………………………………<br>不说了，赶紧学习分布式爬虫！！！！</p>
-<p><img src="http://m.qpic.cn/psb?/V10WDaE22S84Sl/YpE56Kh92bW7VYgfxOKF0xXwbjliiubEHdpLd3NizM8!/b/dPMAAAAAAAAA&amp;bo=5AJ5AQAAAAADB7w!&amp;rf=viewer_4" alt=""></p>
-<p>欢迎访问博客<a href="https://family-treesy.github.io/" target="_blank" rel="external">Treehl的博客</a><br>完整代码<a href="https://github.com/Family-TreeSY/SpiderList/blob/master/maoyan/maoyan/spiders/maoyanmovie.py" target="_blank" rel="external">GitHub</a><br><a href="http://www.jianshu.com/u/a01bc3ec4f88" target="_blank" rel="external">简书</a><br>最后放一个爬虫集合，是我最近学习Python写的，喜欢的亲！给个Star呗！！！<br><a href="https://github.com/Family-TreeSY/SpiderList" target="_blank" rel="external">SpiderList</a></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">PYTHON</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">MongoDB</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">爬虫</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Scrapy</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/12/21/Scrapy爬取猫眼电影/">展开全文 >></a>
         </p>
       
 
@@ -2323,23 +2352,11 @@ getOwnMetadataKeys:function(t){return o(i(t),arguments.length<2?void 0:u(argumen
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">PYTHON</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">MongoDB</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">Git</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">GitHub</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">DailyQuestion</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2355,7 +2372,15 @@ getOwnMetadataKeys:function(t){return o(i(t),arguments.length<2?void 0:u(argumen
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Scrapy</a>
+                <a href="javascript:void(0)" class="js-tag color2">PYTHON</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">DailyQuestion</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">MongoDB</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2364,6 +2389,10 @@ getOwnMetadataKeys:function(t){return o(i(t),arguments.length<2?void 0:u(argumen
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">MySQL</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Scrapy</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2380,42 +2409,6 @@ getOwnMetadataKeys:function(t){return o(i(t),arguments.length<2?void 0:u(argumen
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">Unittest</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">DJANGO</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Silk</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Cache</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">Autocomplete-light</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">Ckeditor</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Rest-Framework</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">Debug-Toolbar</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">BootStrap</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">DJango</a>
               </li>
             
             <div class="clearfix"></div>
