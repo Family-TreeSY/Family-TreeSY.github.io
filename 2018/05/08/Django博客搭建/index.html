@@ -6,26 +6,31 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="//Family-TreeSY.github.io">
-  <title>Python爬取上海链家网房源数据并存入MongoDB数据库 | Treehl的博客</title>
+  <title>Treehl的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="以下是我爬取上海链家网宝山区房源信息的学习总结 准备工作用到的Python模块：  requests bs4 pymongo datetime time random  分析网页登陆http://sh.lianjia.com/ershoufang/baoshan 用Chrome打开开发者工具每条房源信息都在li元素中，我们再来看一下翻页链接 试着点击下一页，我们浏览器上的链接是有规律可循的  ht">
-<meta name="keywords" content="PYTHON,MongoDB,爬虫">
+  <meta name="description" content="用Django搭建博客          欢迎访问   www.treehl.top ，此博客仅作为项目展示 简介 项目主要是记录学习Django的过程 前端使用Bootstrap框架并没有套模板，自己画页面会丑点，最主要是简单学习下前端，在W3SCHOOL上学习了HTML和CSS的可以练练手 后台管理一开始先开发Django自带的admin到后面会转到Xadmin上 视图先用FunctionV">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Python爬取上海链家网房源数据并存入MongoDB数据库">
-<meta property="og:url" content="//Family-TreeSY.github.io/2017/11/29/lianjia/index.html">
+<meta property="og:title" content="Treehl的博客">
+<meta property="og:url" content="//Family-TreeSY.github.io/2018/05/08/Django博客搭建/index.html">
 <meta property="og:site_name" content="Treehl的博客">
-<meta property="og:description" content="以下是我爬取上海链家网宝山区房源信息的学习总结 准备工作用到的Python模块：  requests bs4 pymongo datetime time random  分析网页登陆http://sh.lianjia.com/ershoufang/baoshan 用Chrome打开开发者工具每条房源信息都在li元素中，我们再来看一下翻页链接 试着点击下一页，我们浏览器上的链接是有规律可循的  ht">
+<meta property="og:description" content="用Django搭建博客          欢迎访问   www.treehl.top ，此博客仅作为项目展示 简介 项目主要是记录学习Django的过程 前端使用Bootstrap框架并没有套模板，自己画页面会丑点，最主要是简单学习下前端，在W3SCHOOL上学习了HTML和CSS的可以练练手 后台管理一开始先开发Django自带的admin到后面会转到Xadmin上 视图先用FunctionV">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://a2.qpic.cn/psb?/V10WDaE22S84Sl/OWX8XXIREtlNyAkBe52YViDpyDxfk5XwFAoUUjx6vso!/b/dD8BAAAAAAAA&bo=eQdpAgAAAAADBzc!&rf=viewer_4">
-<meta property="og:image" content="http://a1.qpic.cn/psb?/V10WDaE22S84Sl/lDEAd9FQQ79CUtKdVLMJoGolSXELOAqjwFm.nmJ.wkw!/b/dPMAAAAAAAAA&bo=aAdtAQAAAAADByE!&rf=viewer_4">
-<meta property="og:image" content="http://a3.qpic.cn/psb?/V10WDaE22S84Sl/Yq7DpRZ0c*o0bN6NkHnGoGJx9HzDr2Tpa1xrEng*JnA!/b/dPIAAAAAAAAA&bo=UAT.AAAAAAADB4g!&rf=viewer_4">
-<meta property="og:image" content="http://a1.qpic.cn/psb?/V10WDaE22S84Sl/UddoxaYMkMYW.yttCHnp450QvwYz732SEb0MvRU0Od4!/b/dD4BAAAAAAAA&bo=iQPVAAAAAAADB30!&rf=viewer_4">
-<meta property="og:image" content="http://a1.qpic.cn/psb?/V10WDaE22S84Sl/VSPcQXPsEyWxVdgnsXKjSMUznFRMd6H*9kjsdbfcuI8!/b/dPMAAAAAAAAA&bo=AAWAAgAAAAADB6U!&rf=viewer_4">
-<meta property="og:updated_time" content="2017-11-30T07:57:38.000Z">
+<meta property="og:image" content="https://img.shields.io/badge/Python-2.7-brightgreen.svg">
+<meta property="og:image" content="https://img.shields.io/badge/Django-1.11.3-green.svg">
+<meta property="og:image" content="https://img.shields.io/badge/xadmin-0.6.1-yellowgreen.svg">
+<meta property="og:image" content="https://img.shields.io/badge/ckedior-4.7.1-yellow.svg">
+<meta property="og:image" content="https://img.shields.io/badge/Django--debug--toolbar-2.0-orange.svg">
+<meta property="og:image" content="https://img.shields.io/badge/Django--silk-2.0-red.svg">
+<meta property="og:image" content="https://img.shields.io/badge/Redis-4.0.9-lightgrey.svg">
+<meta property="og:image" content="https://img.shields.io/badge/MySQL-5.7.21-blue.svg">
+<meta property="og:image" content="https://img.shields.io/badge/Bootstrap-4.1.0-brown.svg">
+<meta property="og:image" content="http://m.qpic.cn/psb?/V10WDaE22S84Sl/lo3NpqcqxHdKcuVWjkli046pkO.2rwCqK4SwzlHJEFA!/b/dEIBAAAAAAAA&bo=0AbbAwAAAAADByw!&rf=viewer_4">
+<meta property="og:image" content="http://m.qpic.cn/psb?/V10WDaE22S84Sl/3F6v9R5npPuBjVNAmW0A2HSxphxtwJ2fu8T7Ekwk9Ds!/b/dFYBAAAAAAAA&bo=TgeNAwAAAAADJ8U!&rf=viewer_4">
+<meta property="og:updated_time" content="2018-05-08T02:56:40.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Python爬取上海链家网房源数据并存入MongoDB数据库">
-<meta name="twitter:description" content="以下是我爬取上海链家网宝山区房源信息的学习总结 准备工作用到的Python模块：  requests bs4 pymongo datetime time random  分析网页登陆http://sh.lianjia.com/ershoufang/baoshan 用Chrome打开开发者工具每条房源信息都在li元素中，我们再来看一下翻页链接 试着点击下一页，我们浏览器上的链接是有规律可循的  ht">
-<meta name="twitter:image" content="http://a2.qpic.cn/psb?/V10WDaE22S84Sl/OWX8XXIREtlNyAkBe52YViDpyDxfk5XwFAoUUjx6vso!/b/dD8BAAAAAAAA&bo=eQdpAgAAAAADBzc!&rf=viewer_4">
+<meta name="twitter:title" content="Treehl的博客">
+<meta name="twitter:description" content="用Django搭建博客          欢迎访问   www.treehl.top ，此博客仅作为项目展示 简介 项目主要是记录学习Django的过程 前端使用Bootstrap框架并没有套模板，自己画页面会丑点，最主要是简单学习下前端，在W3SCHOOL上学习了HTML和CSS的可以练练手 后台管理一开始先开发Django自带的admin到后面会转到Xadmin上 视图先用FunctionV">
+<meta name="twitter:image" content="https://img.shields.io/badge/Python-2.7-brightgreen.svg">
   
     <link rel="alternative" href="/atom.xml" title="Treehl的博客" type="application/atom+xml">
   
@@ -179,79 +184,91 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-lianjia" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-Django博客搭建" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 class="article-title" itemprop="name">
-      Python爬取上海链家网房源数据并存入MongoDB数据库
-    </h1>
-  
-
-        
-        <a href="/2017/11/29/lianjia/" class="archive-article-date">
-  	<time datetime="2017-11-29T11:40:23.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-11-29</time>
-</a>
-        
-      </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>以下是我爬取<a href="http://sh.lianjia.com/ershoufang/baoshan" target="_blank" rel="external">上海链家网宝山区</a>房源信息的学习总结</p>
-<h4 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a><strong>准备工作</strong></h4><p>用到的Python模块：</p>
-<ul>
-<li>requests</li>
-<li>bs4</li>
-<li>pymongo</li>
-<li>datetime</li>
-<li>time</li>
-<li>random</li>
-</ul>
-<h4 id="分析网页"><a href="#分析网页" class="headerlink" title="分析网页"></a><strong>分析网页</strong></h4><p>登陆<a href="http://sh.lianjia.com/ershoufang/baoshan" target="_blank" rel="external">http://sh.lianjia.com/ershoufang/baoshan</a> 用Chrome打开开发者工具<br><img src="http://a2.qpic.cn/psb?/V10WDaE22S84Sl/OWX8XXIREtlNyAkBe52YViDpyDxfk5XwFAoUUjx6vso!/b/dD8BAAAAAAAA&amp;bo=eQdpAgAAAAADBzc!&amp;rf=viewer_4" alt=""><br>每条房源信息都在li元素中，我们再来看一下翻页链接<br><img src="http://a1.qpic.cn/psb?/V10WDaE22S84Sl/lDEAd9FQQ79CUtKdVLMJoGolSXELOAqjwFm.nmJ.wkw!/b/dPMAAAAAAAAA&amp;bo=aAdtAQAAAAADByE!&amp;rf=viewer_4" alt=""></p>
-<p>试着点击下一页，我们浏览器上的链接是有规律可循的</p>
-<blockquote>
-<p><a href="http://sh.lianjia.com/ershoufang/baoshan/d1" target="_blank" rel="external">http://sh.lianjia.com/ershoufang/baoshan/d1</a><br><a href="http://sh.lianjia.com/ershoufang/baoshan/d2" target="_blank" rel="external">http://sh.lianjia.com/ershoufang/baoshan/d2</a><br><a href="http://sh.lianjia.com/ershoufang/baoshan/d3" target="_blank" rel="external">http://sh.lianjia.com/ershoufang/baoshan/d3</a><br>………<br><a href="http://sh.lianjia.com/ershoufang/baoshan/100" target="_blank" rel="external">http://sh.lianjia.com/ershoufang/baoshan/100</a></p>
+        <blockquote>
+<p>用Django搭建博客</p>
 </blockquote>
-<p>现在我们试着爬取前10页的链接</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> requests</div><div class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1</span>, <span class="number">11</span>):</div><div class="line">    r = requests.get(<span class="string">'http://sh.lianjia.com/ershoufang/baoshan/d'</span> + str(i))</div><div class="line">    print(r.url)</div></pre></td></tr></table></figure>
-<p>爬取结果</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">http://sh.lianjia.com/ershoufang/baoshan/d1</div><div class="line">http://sh.lianjia.com/ershoufang/baoshan/d2</div><div class="line">http://sh.lianjia.com/ershoufang/baoshan/d3</div><div class="line">http://sh.lianjia.com/ershoufang/baoshan/d4</div><div class="line">http://sh.lianjia.com/ershoufang/baoshan/d5</div><div class="line">http://sh.lianjia.com/ershoufang/baoshan/d6</div><div class="line">http://sh.lianjia.com/ershoufang/baoshan/d7</div><div class="line">http://sh.lianjia.com/ershoufang/baoshan/d8</div><div class="line">http://sh.lianjia.com/ershoufang/baoshan/d9</div><div class="line">http://sh.lianjia.com/ershoufang/baoshan/d10</div></pre></td></tr></table></figure>
-<h4 id="解析网页"><a href="#解析网页" class="headerlink" title="解析网页"></a><strong>解析网页</strong></h4><p><img src="http://a3.qpic.cn/psb?/V10WDaE22S84Sl/Yq7DpRZ0c*o0bN6NkHnGoGJx9HzDr2Tpa1xrEng*JnA!/b/dPIAAAAAAAAA&amp;bo=UAT.AAAAAAADB4g!&amp;rf=viewer_4" alt=""></p>
-<p>要抓取的信息如下：</p>
-<ul>
-<li>标题：room_title = room.find(‘div’, attrs={‘class’: ‘prop-title’})</li>
-<li>房屋信息：room_info = room.find(‘span’, attrs={‘class’: ‘info-col row1-text’})</li>
-<li>位置：room_location = room.find(‘span’, attrs={‘class’: ‘info-col row2-text’})</li>
-<li>附加信息：extra_info = room.find(‘div’, attrs={‘class’: ‘property-tag-container’})</li>
-<li>总价：room_price = room.find(‘span’, attrs={‘class’: ‘total-price strong-num’})</li>
-<li>单价：room_unit_price = room.find(‘span’, attrs={‘class’: ‘info-col price-item minor’})</li>
+<p><img src="https://img.shields.io/badge/Python-2.7-brightgreen.svg" alt=""> <img src="https://img.shields.io/badge/Django-1.11.3-green.svg" alt=""> <img src="https://img.shields.io/badge/xadmin-0.6.1-yellowgreen.svg" alt=""> <img src="https://img.shields.io/badge/ckedior-4.7.1-yellow.svg" alt=""> <img src="https://img.shields.io/badge/Django--debug--toolbar-2.0-orange.svg" alt=""><br><img src="https://img.shields.io/badge/Django--silk-2.0-red.svg" alt=""> <img src="https://img.shields.io/badge/Redis-4.0.9-lightgrey.svg" alt=""> <img src="https://img.shields.io/badge/MySQL-5.7.21-blue.svg" alt=""> <img src="https://img.shields.io/badge/Bootstrap-4.1.0-brown.svg" alt=""></p>
+<p><strong>欢迎访问</strong>   <a href="http://treehl.top/" target="_blank" rel="external">www.treehl.top</a> ，此博客仅作为项目展示</p>
+<h3 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h3><ul>
+<li>项目主要是记录学习Django的过程</li>
+<li>前端使用Bootstrap框架并没有套模板，自己画页面会丑点，最主要是简单学习下前端，在W3SCHOOL上学习了HTML和CSS的可以练练手</li>
+<li>后台管理一开始先开发Django自带的admin到后面会转到Xadmin上</li>
+<li>视图先用FunctionView来写逻辑，后面再使用ClassBasedView</li>
+<li>数据库在开发环境中先使用SQLITE，最后准备上线前替换为MySQL数据库</li>
+<li>文本编辑使用Ckeditor富文本编辑</li>
+<li>使用Django-Rest-Framework来构建Web API</li>
+<li>使用Django-debug-toolbar和silk来分析检查</li>
+<li>配置MySQL和开发环境</li>
+<li>配置Redis</li>
+<li>使用Nginx和Gunicorn部署网站</li>
+<li>使用Fabric自动化部署</li>
 </ul>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div></pre></td><td class="code"><pre><div class="line">soup = BeautifulSoup(r.text, <span class="string">'html.parser'</span>)</div><div class="line">rooms = soup.find(<span class="string">'ul'</span>, attrs=&#123;<span class="string">'class'</span>: <span class="string">'js_fang_list'</span>&#125;)</div><div class="line"><span class="keyword">for</span> room <span class="keyword">in</span> rooms.find_all(<span class="string">'li'</span>):</div><div class="line">    room_title = room.find(<span class="string">'div'</span>, attrs=&#123;<span class="string">'class'</span>: <span class="string">'prop-title'</span>&#125;).get_text()</div><div class="line">    room_info = room.find(<span class="string">'span'</span>, attrs=&#123;<span class="string">'class'</span>: <span class="string">'info-col row1-text'</span>&#125;).get_text()</div><div class="line">    room_location = room.find(<span class="string">'span'</span>, attrs=&#123;<span class="string">'class'</span>: <span class="string">'info-col row2-text'</span>&#125;).find(<span class="string">'a'</span>).get_text()</div><div class="line">    room_price = room.find(<span class="string">'span'</span>, attrs=&#123;<span class="string">'class'</span>: <span class="string">'total-price strong-num'</span>&#125;).get_text()</div><div class="line">    room_unit_price = room.find(<span class="string">'span'</span>, attrs=&#123;<span class="string">'class'</span>: <span class="string">'info-col price-item minor'</span>&#125;).get_text()</div><div class="line">    extra_info = room.find(<span class="string">'div'</span>, attrs=&#123;<span class="string">'class'</span>: <span class="string">'property-tag-container'</span>&#125;).get_text()</div><div class="line"></div><div class="line"></div><div class="line">    print(room_title, room_info, room_location, room_price, room_unit_price, extra_info)</div><div class="line"></div><div class="line">``` </div><div class="line"></div><div class="line"></div><div class="line">下面是网页解析下来的一个房源信息</div><div class="line"></div><div class="line"></div><div class="line">``` python</div><div class="line"></div><div class="line">厨卫全明，卧室带阳台，地铁房，高区采光好</div><div class="line"> </div><div class="line">							<span class="number">1</span>室<span class="number">1</span>厅 | <span class="number">44.73</span>平</div><div class="line">							</div><div class="line">								| 高区/<span class="number">6</span>层</div><div class="line">							</div><div class="line">							</div><div class="line">								| 朝南</div><div class="line">							</div><div class="line">						 葑润华庭 <span class="number">255</span> </div><div class="line">							单价<span class="number">57008</span>元/平</div><div class="line">						 </div><div class="line">距离<span class="number">7</span>号线祁华路站<span class="number">698</span>米</div><div class="line">满二</div><div class="line">有钥匙</div></pre></td></tr></table></figure>
-<h4 id="存入MongoDB数据库"><a href="#存入MongoDB数据库" class="headerlink" title="存入MongoDB数据库"></a><strong>存入MongoDB数据库</strong></h4><p>MongoDB数据结构是以键值对{key:value}形式组成，有点类似于JSON<br><img src="http://a1.qpic.cn/psb?/V10WDaE22S84Sl/UddoxaYMkMYW.yttCHnp450QvwYz732SEb0MvRU0Od4!/b/dD4BAAAAAAAA&amp;bo=iQPVAAAAAAADB30!&amp;rf=viewer_4" alt=""></p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># 链接数据库</span></div><div class="line">client = MongoClient(<span class="string">'localhost'</span>, <span class="number">27017</span>)</div><div class="line"><span class="comment"># 建立数据库</span></div><div class="line">db = client.tests</div><div class="line"><span class="comment"># 建立集合</span></div><div class="line">homes = db.homes</div><div class="line"></div><div class="line">rooms_list = []</div><div class="line"></div><div class="line"><span class="comment"># 先将爬下来的数据赋值为字典</span></div><div class="line">rooms_info =&#123;</div><div class="line">                <span class="string">'title'</span>: room_title,</div><div class="line">                <span class="string">'info'</span>: room_info,</div><div class="line">                <span class="string">'location'</span>: room_location,</div><div class="line">                <span class="string">'price'</span>: room_price,</div><div class="line">                <span class="string">'unit_proce'</span>: room_unit_price,</div><div class="line">                <span class="string">'message'</span>: extra_info,</div><div class="line">                <span class="string">'time'</span>: datetime.datetime.now()</div><div class="line">            &#125;</div><div class="line"></div><div class="line">rooms_list.append(rooms_info)</div><div class="line"><span class="comment"># 存入数据库</span></div><div class="line">result = homes.insert_many(rooms_list)</div><div class="line">print(result)</div></pre></td></tr></table></figure>
-<p>运行代码，我们可以看到数据存入了MongoDB</p>
-<pre><code class="python">&lt;pymongo.results.InsertManyResult object at <span class="number">0x00000260C536AB8</span>&gt;
-&lt;pymongo.results.InsertManyResult object at <span class="number">0x00000260C536AAC</span>&gt;
-&lt;pymongo.results.InsertManyResult object at <span class="number">0x00000260C536AA0</span>&gt;
-&lt;pymongo.results.InsertManyResult object at <span class="number">0x00000260C536AB4</span>&gt;
-&lt;pymongo.results.InsertManyResult object at <span class="number">0x00000260C536AB0</span>&gt;
-&lt;pymongo.results.InsertManyResult object at <span class="number">0x00000260C536A28</span>&gt;
-&lt;pymongo.results.InsertManyResult object at <span class="number">0x00000260C536AC8</span>&gt;
-&lt;pymongo.results.InsertManyResult object at <span class="number">0x00000260C536A08</span>&gt;
-&lt;pymongo.results.InsertManyResult object at <span class="number">0x00000260C536A88</span>&gt;
-&lt;pymongo.results.InsertManyResult object at <span class="number">0x00000260C536A88</span>&gt;
-&lt;pymongo.results.InsertManyResult object at <span class="number">0x00000260C536888</span>&gt;
-&lt;pymongo.results.InsertManyResult object at <span class="number">0x00000260C536A08</span>&gt;
-&lt;pymongo.results.InsertManyResult object at <span class="number">0x00000260C536AC8</span>&gt;
-&lt;pymongo.results.InsertManyResult object at <span class="number">0x00000260C536A48</span>&gt;
-&lt;pymongo.results.InsertManyResult object at <span class="number">0x00000260C536A88</span>&gt;
-</code></pre>
-<p>可以下载一个MongoDB可视化工具，我用的是Robo3T，数据就这样存入了</p>
-<p><img src="http://a1.qpic.cn/psb?/V10WDaE22S84Sl/VSPcQXPsEyWxVdgnsXKjSMUznFRMd6H*9kjsdbfcuI8!/b/dPMAAAAAAAAA&amp;bo=AAWAAgAAAAADB6U!&amp;rf=viewer_4" alt=""></p>
-<p>总共有100页的数据，用time.sleep()来控制速度防止被封掉，但爬取效率实在很低，这两天准备学习pandas</p>
-<p>完整代码在<a href="https://github.com/Family-TreeSY/LianjiaSpider/blob/master/lianjia.py" target="_blank" rel="external">GitHub</a><br><a href="http://www.jianshu.com/u/a01bc3ec4f88" target="_blank" rel="external">简书</a><br>欢迎访问博客<a href="https://family-treesy.github.io/" target="_blank" rel="external">Treehl的博客</a></p>
+<h3 id="环境"><a href="#环境" class="headerlink" title="环境"></a>环境</h3><ul>
+<li>开发语言：Python2.7</li>
+<li>开发环境:Ubuntu16.04</li>
+<li>IDE:Pycharm</li>
+<li>数据库:MySQL、Redis</li>
+</ul>
+<h3 id="代码风格"><a href="#代码风格" class="headerlink" title="代码风格"></a>代码风格</h3><ul>
+<li><a href="http://zh-google-styleguide.readthedocs.io/en/latest/google-python-styleguide/contents/" target="_blank" rel="external">谷歌开源项目风格</a></li>
+<li>用flake8来检测代码</li>
+</ul>
+<h3 id="项目分四大块"><a href="#项目分四大块" class="headerlink" title="项目分四大块"></a>项目分四大块</h3><ul>
+<li>后台admin开发</li>
+<li>前台开发</li>
+<li>增加功能插件</li>
+<li>部署项目</li>
+</ul>
+<p><strong>一、后台admin开发</strong></p>
+<ol>
+<li><a href="https://github.com/Family-TreeSY/Myblog/blob/master/Doc/%E4%B8%80%E3%80%81%E6%90%AD%E5%BB%BA%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83.md" target="_blank" rel="external">搭建开发环境</a></li>
+<li><a href="https://github.com/Family-TreeSY/Myblog/blob/master/Doc/%E4%BA%8C%E3%80%81%E5%BB%BA%E7%AB%8B%E5%8D%9A%E5%AE%A2%E5%BA%94%E7%94%A8.md" target="_blank" rel="external">建立博客应用</a></li>
+<li><a href="https://github.com/Family-TreeSY/Myblog/blob/master/Doc/%E4%B8%89%E3%80%81%E5%88%9B%E5%BB%BA%E6%95%B0%E6%8D%AE%E5%BA%93%E6%A8%A1%E5%9E%8BModel.md" target="_blank" rel="external">创建数据库模型Model</a></li>
+<li><a href="https://github.com/Family-TreeSY/Myblog/blob/master/Doc/%E5%9B%9B%E3%80%81%E5%88%9B%E5%BB%BA%E5%90%8E%E5%8F%B0%E7%AE%A1%E7%90%86%E8%B4%A6%E5%8F%B7%E3%80%81%E8%BF%81%E7%A7%BB%E6%95%B0%E6%8D%AE%E5%BA%93.md" target="_blank" rel="external">创建后台管理账号、迁移数据库</a></li>
+<li><a href="https://github.com/Family-TreeSY/Myblog/blob/master/Doc/%E4%BA%94%E3%80%81%E5%BC%80%E5%8F%91%E5%90%8E%E5%8F%B0%E7%AE%A1%E7%90%86%EF%BC%88%E4%B8%80%EF%BC%89.md" target="_blank" rel="external">开发后台管理（一）</a></li>
+<li><a href="https://github.com/Family-TreeSY/Myblog/blob/master/Doc/%E5%85%AD%E3%80%81%E5%BC%80%E5%8F%91%E5%90%8E%E5%8F%B0%E7%AE%A1%E7%90%86%EF%BC%88%E4%BA%8C%EF%BC%89.md" target="_blank" rel="external">开发后台管理（二）</a></li>
+</ol>
+<p><strong>二、前台开发</strong></p>
+<ol>
+<li><a href="https://github.com/Family-TreeSY/Myblog/blob/master/Doc/%E4%B8%83%E3%80%81FunctionView.md" target="_blank" rel="external">FunctionView</a></li>
+<li><a href="https://github.com/Family-TreeSY/Myblog/blob/master/Doc/%E5%85%AB%E3%80%81%E5%88%86%E9%A1%B5%E8%AE%BE%E7%BD%AE.md" target="_blank" rel="external">分页设置</a></li>
+<li><a href="https://github.com/Family-TreeSY/Myblog/blob/master/Doc/%E4%B9%9D%E3%80%81%E8%AE%BE%E7%BD%AE%E5%88%86%E7%B1%BB%E5%AF%BC%E8%88%AA%E6%A0%8F.md" target="_blank" rel="external">设置分类导航栏</a></li>
+<li><a href="https://github.com/Family-TreeSY/Myblog/blob/master/Doc/%E5%8D%81%E3%80%81%E8%AE%BE%E7%BD%AE%E4%BE%A7%E8%BE%B9%E6%A0%8F.md" target="_blank" rel="external">设置侧边栏</a></li>
+<li><a href="https://github.com/Family-TreeSY/Myblog/blob/master/Doc/%E5%8D%81%E4%B8%80%E3%80%81%E5%AE%8C%E6%88%90%E6%AD%A3%E6%96%87%E3%80%81%E9%85%8D%E7%BD%AE%E9%80%9A%E7%94%A8%E4%BB%A3%E7%A0%81.md" target="_blank" rel="external">完成正文、配置通用代码</a></li>
+<li><a href="https://github.com/Family-TreeSY/Myblog/blob/master/Doc/%E5%8D%81%E4%BA%8C%E3%80%81ClassBasedView.md" target="_blank" rel="external">ClassBasedView</a></li>
+<li><a href="https://github.com/Family-TreeSY/Myblog/blob/master/Doc/%E5%8D%81%E4%B8%89%E3%80%81%E4%BD%BF%E7%94%A8BootStrap%E6%A1%86%E6%9E%B6.md" target="_blank" rel="external">使用BootStrap框架</a></li>
+<li><a href="https://github.com/Family-TreeSY/Myblog/blob/master/Doc/%E5%8D%81%E5%9B%9B%E3%80%81%E6%8A%BD%E5%8F%96%E9%9D%99%E6%80%81%E8%B5%84%E6%BA%90.md" target="_blank" rel="external">抽取静态资源</a></li>
+<li><a href="https://github.com/Family-TreeSY/Myblog/blob/master/Doc/%E5%8D%81%E4%BA%94%E3%80%81%E5%A2%9E%E5%8A%A0%E6%90%9C%E7%B4%A2%E5%8A%9F%E8%83%BD.md" target="_blank" rel="external">增加搜索功能</a></li>
+<li><a href="https://github.com/Family-TreeSY/Myblog/blob/master/Doc/%E5%8D%81%E5%85%AD%E3%80%81%E5%A2%9E%E5%8A%A0%E4%BD%9C%E8%80%85%E6%96%87%E7%AB%A0%E5%88%97%E8%A1%A8.md" target="_blank" rel="external">增加作者文章列表</a></li>
+<li><a href="https://github.com/Family-TreeSY/Myblog/blob/master/Doc/%E5%8D%81%E4%B8%83%E3%80%81%E5%A2%9E%E5%8A%A0%E5%8F%8B%E9%93%BE.md" target="_blank" rel="external">增加友链</a></li>
+<li><a href="https://github.com/Family-TreeSY/Myblog/blob/master/Doc/%E5%8D%81%E5%85%AB%E3%80%81%E5%A2%9E%E5%8A%A0%E7%95%99%E8%A8%80%E6%9D%BF%E6%A8%A1%E5%9D%97%EF%BC%88%E4%B8%80%EF%BC%89.md" target="_blank" rel="external">增加留言板模块（一）</a></li>
+<li><a href="https://github.com/Family-TreeSY/Myblog/blob/master/Doc/%E5%8D%81%E4%B9%9D%E3%80%81%E5%A2%9E%E5%8A%A0%E7%95%99%E8%A8%80%E6%9D%BF%E6%A8%A1%E5%9D%97%EF%BC%88%E4%BA%8C%EF%BC%89.md" target="_blank" rel="external">增加留言板模块（二）</a></li>
+<li><a href="https://github.com/Family-TreeSY/Myblog/blob/master/Doc/%E4%BA%8C%E5%8D%81%E3%80%81%E5%A2%9E%E5%8A%A0Markdown%E7%BC%96%E8%BE%91.md" target="_blank" rel="external">增加Markdown编辑</a></li>
+<li><a href="https://github.com/Family-TreeSY/Myblog/blob/master/Doc/%E4%BA%8C%E5%8D%81%E4%B8%80%E3%80%81%E5%A2%9E%E5%8A%A0PV%E3%80%81UV%E6%A8%A1%E5%9D%97.md" target="_blank" rel="external">增加PV、UV功能</a></li>
+</ol>
+<p><strong>三、增加插件</strong></p>
+<ol>
+<li><a href="https://github.com/Family-TreeSY/Myblog/blob/master/Doc/%E4%BA%8C%E5%8D%81%E4%BA%8C%E3%80%81admin%E6%9B%BF%E6%8D%A2%E4%B8%BAxadmin.md" target="_blank" rel="external">admin替换为xadmin</a></li>
+<li><a href="https://github.com/Family-TreeSY/Myblog/blob/master/Doc/%E4%BA%8C%E5%8D%81%E4%B8%89%E3%80%81%E9%85%8D%E7%BD%AEautocomplete-light.md" target="_blank" rel="external">配置autocomplete-light</a></li>
+<li><a href="https://github.com/Family-TreeSY/Myblog/blob/master/Doc/%E4%BA%8C%E5%8D%81%E5%9B%9B%E3%80%81%E9%85%8D%E7%BD%AEckeditor.md" target="_blank" rel="external">配置ckeditor</a></li>
+<li><a href="https://github.com/Family-TreeSY/Myblog/blob/master/Doc/%E4%BA%8C%E5%8D%81%E4%BA%94%E3%80%81%E9%85%8D%E7%BD%AEDjango-Rest-Framework.md" target="_blank" rel="external">配置Django-Rest-Framework</a></li>
+<li><a href="https://github.com/Family-TreeSY/Myblog/blob/master/Doc/%E4%BA%8C%E5%8D%81%E5%85%AD%E3%80%81%E9%85%8D%E7%BD%AEDjango-Debug-ToolBar.md" target="_blank" rel="external">配置Django-Debug-ToolBar</a></li>
+<li><a href="https://github.com/Family-TreeSY/Myblog/blob/master/Doc/%E4%BA%8C%E5%8D%81%E4%B8%83%E3%80%81%E9%85%8D%E7%BD%AEDjango-Silk.md" target="_blank" rel="external">配置Django-Silk</a></li>
+<li><a href="https://github.com/Family-TreeSY/Myblog/blob/master/Doc/%E4%BA%8C%E5%8D%81%E5%85%AB%E3%80%81%E9%85%8D%E7%BD%AEMySQL.md" target="_blank" rel="external">配置MySQL</a></li>
+<li><a href="https://github.com/Family-TreeSY/Myblog/blob/master/Doc/%E4%BA%8C%E5%8D%81%E4%B9%9D%E3%80%81%E9%85%8D%E7%BD%AECache%20Redis.md" target="_blank" rel="external">配置Cache Redis</a></li>
+</ol>
+<p><strong>四、部署项目</strong></p>
+<ol>
+<li><a href="https://github.com/Family-TreeSY/Myblog/blob/master/Doc/%E4%B8%89%E5%8D%81%E3%80%81%E4%BD%BF%E7%94%A8Nginx%E5%92%8CGunicorn%E9%83%A8%E7%BD%B2%E7%BD%91%E7%AB%99.md" target="_blank" rel="external">使用nginx和gunicorn部署网站</a></li>
+<li><a href="">使用Fabric自动部署</a></li>
+</ol>
+<h3 id="展示"><a href="#展示" class="headerlink" title="展示"></a>展示</h3><p><img src="http://m.qpic.cn/psb?/V10WDaE22S84Sl/lo3NpqcqxHdKcuVWjkli046pkO.2rwCqK4SwzlHJEFA!/b/dEIBAAAAAAAA&amp;bo=0AbbAwAAAAADByw!&amp;rf=viewer_4" alt="列表页"></p>
+<p><img src="http://m.qpic.cn/psb?/V10WDaE22S84Sl/3F6v9R5npPuBjVNAmW0A2HSxphxtwJ2fu8T7Ekwk9Ds!/b/dFYBAAAAAAAA&amp;bo=TgeNAwAAAAADJ8U!&amp;rf=viewer_4" alt="正文页"></p>
 
       
 
@@ -291,25 +308,6 @@
     <div class="article-info article-info-index">
       
       
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">PYTHON</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">MongoDB</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">爬虫</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
       
 
       
@@ -360,7 +358,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="http://s.jiathis.com/qrcode.php?url=http://Family-TreeSY.github.io/2017/11/29/lianjia/" alt="微信分享二维码">
+      <img src="http://s.jiathis.com/qrcode.php?url=http://Family-TreeSY.github.io/2018/05/08/Django博客搭建/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -374,18 +372,9 @@
   
 <nav id="article-nav">
   
-    <a href="/2017/11/30/1. 什么是MongoDB数据库？/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          MongoDB数据库学习
-        
-      </div>
-    </a>
   
-  
-    <a href="/2017/11/22/Sixth/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">Python每日一题：第六题</div>
+    <a href="/2018/04/10/代码测试/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">代码测试</div>
       <i class="icon-circle-right"></i>
     </a>
   
