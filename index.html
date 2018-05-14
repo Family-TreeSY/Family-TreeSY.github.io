@@ -173,6 +173,90 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-Python学习笔记" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/05/14/Python学习笔记/">Python学习笔记</a>
+    </h1>
+  
+
+        
+        <a href="/2018/05/14/Python学习笔记/" class="archive-article-date">
+  	<time datetime="2018-05-14T15:20:08.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-05-14</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="Python学习笔记"><a href="#Python学习笔记" class="headerlink" title="Python学习笔记"></a><strong>Python学习笔记</strong></h3><blockquote>
+<p>之前学习Python七零八碎的笔记，主要是记录下方便以后翻阅</p>
+</blockquote>
+<hr>
+<ol>
+<li><a href="https://github.com/Family-TreeSY/Python-Study-Notes/blob/master/Git%E5%B0%8F%E7%BB%93.md" target="_blank" rel="external">Git小结</a>，当时学习廖雪峰的Git教程记录的笔记</li>
+<li><a href="https://github.com/Family-TreeSY/Python-Study-Notes/blob/master/MYSQL%E5%B0%8F%E7%BB%93.md" target="_blank" rel="external">MySQL小结</a>，看MySQL必知应会后写的命令小结</li>
+<li><a href="https://github.com/Family-TreeSY/Python-Study-Notes/blob/master/MongoDB%E5%B0%8F%E7%BB%93.md" target="_blank" rel="external">MongoDB小结</a>，入门Python学习爬虫时候写的</li>
+<li><a href="https://github.com/Family-TreeSY/Python-Study-Notes/blob/master/Redis%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84.md" target="_blank" rel="external">Redis五种数据命令小结</a>，看Redis实战这本书边看边记录的小结</li>
+<li><a href="https://github.com/Family-TreeSY/Python-Study-Notes/blob/master/%E4%BB%A3%E7%A0%81%E6%B5%8B%E8%AF%95.md" target="_blank" rel="external">单元测试</a>，之前看《Python编程从入门到实践》这本书的时候，记录的单测笔记</li>
+</ol>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Python</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/05/14/Python学习笔记/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-Django博客搭建" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -704,93 +788,6 @@
 
 
   
-    <article id="post-三、创建数据库模型Model" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/04/02/三、创建数据库模型Model/">创建数据库模型Model</a>
-    </h1>
-  
-
-        
-        <a href="/2018/04/02/三、创建数据库模型Model/" class="archive-article-date">
-  	<time datetime="2018-04-02T14:08:08.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-04-02</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="三、创建数据库模型Model"><a href="#三、创建数据库模型Model" class="headerlink" title="三、创建数据库模型Model"></a>三、创建数据库模型Model</h3><ul>
-<li>blog </li>
-<li>config</li>
-<li>comment</li>
-</ul>
-<p><strong>blog</strong></p>
-<blockquote>
-<p>author、category都有外键（foreignkey一对多关系），每篇文章只有一个分类，而一个分类下可以有多篇文章</p>
-<p>tag的ManyToManyField字段是多对多关系，一篇文章可以有多个标签，一个标签下也可以有多篇文章</p>
-</blockquote>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div><div class="line">125</div><div class="line">126</div><div class="line">127</div><div class="line">128</div><div class="line">129</div><div class="line">130</div><div class="line">131</div><div class="line">132</div><div class="line">133</div><div class="line">134</div><div class="line">135</div><div class="line">136</div><div class="line">137</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># blog/models.py</span></div><div class="line"><span class="comment"># -*- coding: utf-8 -*-</span></div><div class="line"><span class="keyword">from</span> __future__ <span class="keyword">import</span> unicode_literals</div><div class="line"></div><div class="line"><span class="keyword">from</span> django.db <span class="keyword">import</span> models</div><div class="line"><span class="keyword">from</span> django.contrib.auth.models <span class="keyword">import</span> User</div><div class="line"></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Category</span><span class="params">(models.Model)</span>:</span></div><div class="line">    STATUS_ITEMS = (</div><div class="line">        (<span class="number">1</span>, <span class="string">"正常"</span>),</div><div class="line">        (<span class="number">2</span>, <span class="string">"删除"</span>),</div><div class="line">    )</div><div class="line">    name = models.CharField(max_length=<span class="number">50</span>, verbose_name=<span class="string">"名城"</span>)</div><div class="line">    status = models.PositiveIntegerField(</div><div class="line">        default=<span class="number">1</span>, choices=STATUS_ITEMS, verbose_name=<span class="string">"状态"</span></div><div class="line">    )</div><div class="line">    is_nav = models.BooleanField(default=<span class="keyword">False</span>, verbose_name=<span class="string">"是否为导航"</span>)</div><div class="line">    author = models.ForeignKey(User, verbose_name=<span class="string">"作者"</span>)</div><div class="line">    created_time = models.DateTimeField(auto_now_add=<span class="keyword">True</span>, verbose_name=<span class="string">"创建时间"</span>)</div><div class="line"></div><div class="line">    <span class="class"><span class="keyword">class</span> <span class="title">Meta</span>:</span></div><div class="line">        verbose_name = verbose_name_plural = <span class="string">'分类'</span></div><div class="line"></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Tag</span><span class="params">(models.Model)</span>:</span></div><div class="line">    STATUS_ITEMS = (</div><div class="line">        (<span class="number">1</span>, <span class="string">"正常"</span>),</div><div class="line">        (<span class="number">2</span>, <span class="string">"删除"</span>),</div><div class="line">    )</div><div class="line">    name = models.CharField(max_length=<span class="number">50</span>, verbose_name=<span class="string">"名称"</span>)</div><div class="line">    status = models.PositiveIntegerField(</div><div class="line">        default=<span class="number">1</span>, choices=STATUS_ITEMS, verbose_name=<span class="string">"状态"</span></div><div class="line">    )</div><div class="line">    author = models.ForeignKey(User, verbose_name=<span class="string">"作者"</span>)</div><div class="line">    created_time = models.DateTimeField(auto_now_add=<span class="keyword">True</span>, verbose_name=<span class="string">"创建时间"</span>)</div><div class="line"></div><div class="line">    <span class="class"><span class="keyword">class</span> <span class="title">Meta</span>:</span></div><div class="line">        verbose_name = verbose_name_plural = <span class="string">"标签"</span></div><div class="line"></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Post</span><span class="params">(models.Model)</span>:</span></div><div class="line">    <span class="string">"""</span></div><div class="line"><span class="string">    1、指定title字段类型为字符（charfield）</span></div><div class="line"><span class="string">    2、max_length指定字符长度</span></div><div class="line"><span class="string">    3、verbose_name可以理解为注释</span></div><div class="line"><span class="string">    4、Textfild因为是正文内容，输入会非常长</span></div><div class="line"><span class="string">    5、status默认为1,意思是文章默认状态是上线状态</span></div><div class="line"><span class="string">    6、auto_now_add为创建时使用</span></div><div class="line"><span class="string">    7、auto_now为更新时使用</span></div><div class="line"><span class="string">    """</span></div><div class="line">    STATUS_ITEM = (</div><div class="line">        (<span class="number">1</span>, <span class="string">"上线"</span>),</div><div class="line">        (<span class="number">2</span>, <span class="string">"删除"</span>),</div><div class="line">    )</div><div class="line">    title = models.CharField(max_length=<span class="number">50</span>, verbose_name=<span class="string">"标题"</span>)</div><div class="line">    desc = models.CharField(max_length=<span class="number">255</span>, blank=<span class="keyword">True</span>, verbose_name=<span class="string">"摘要"</span>)</div><div class="line">    content = models.TextField(verbose_name=<span class="string">"正文内容"</span>, help_text=<span class="string">"正文必须为markdown"</span>)</div><div class="line">    status = models.PositiveIntegerField(</div><div class="line">        default=<span class="number">1</span>, choices=STATUS_ITEM, verbose_name=<span class="string">"状态"</span></div><div class="line">    )</div><div class="line">    category = models.ForeignKey(Category, verbose_name=<span class="string">"分类"</span>)</div><div class="line">    tag = models.ManyToManyField(Tag, verbose_name=<span class="string">"标签"</span>)</div><div class="line">    author = models.ForeignKey(User, verbose_name=<span class="string">"作者"</span>)</div><div class="line">    created_time = models.DateTimeField(auto_now_add=<span class="keyword">True</span>, verbose_name=<span class="string">"创建时间"</span>)</div><div class="line">    last_update_time = models.DateTimeField(auto_now=<span class="keyword">True</span>, verbose_name=<span class="string">"更新时间"</span>)</div><div class="line"></div><div class="line">    <span class="class"><span class="keyword">class</span> <span class="title">Meta</span>:</span></div><div class="line">        verbose_name = verbose_name_plural = <span class="string">"文章"</span></div><div class="line"><span class="comment"># -*- coding: utf-8 -*-</span></div><div class="line"><span class="keyword">from</span> __future__ <span class="keyword">import</span> unicode_literals</div><div class="line"></div><div class="line"><span class="keyword">from</span> django.db <span class="keyword">import</span> models</div><div class="line"><span class="keyword">from</span> django.contrib.auth.models <span class="keyword">import</span> User</div><div class="line"></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Category</span><span class="params">(models.Model)</span>:</span></div><div class="line">    STATUS_ITEMS = (</div><div class="line">        (<span class="number">1</span>, <span class="string">"正常"</span>),</div><div class="line">        (<span class="number">2</span>, <span class="string">"删除"</span>),</div><div class="line">    )</div><div class="line">    name = models.CharField(max_length=<span class="number">50</span>, verbose_name=<span class="string">"名城"</span>)</div><div class="line">    status = models.PositiveIntegerField(</div><div class="line">        default=<span class="number">1</span>, choices=STATUS_ITEMS, verbose_name=<span class="string">"状态"</span></div><div class="line">    )</div><div class="line">    is_nav = models.BooleanField(default=<span class="keyword">False</span>, verbose_name=<span class="string">"是否为导航"</span>)</div><div class="line">    author = models.ForeignKey(User, verbose_name=<span class="string">"作者"</span>)</div><div class="line">    created_time = models.DateTimeField(auto_now_add=<span class="keyword">True</span>, verbose_name=<span class="string">"创建时间"</span>)</div><div class="line"></div><div class="line">    <span class="class"><span class="keyword">class</span> <span class="title">Meta</span>:</span></div><div class="line">        verbose_name = verbose_name_plural = <span class="string">'分类'</span></div><div class="line"></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Tag</span><span class="params">(models.Model)</span>:</span></div><div class="line">    STATUS_ITEMS = (</div><div class="line">        (<span class="number">1</span>, <span class="string">"正常"</span>),</div><div class="line">        (<span class="number">2</span>, <span class="string">"删除"</span>),</div><div class="line">    )</div><div class="line">    name = models.CharField(max_length=<span class="number">50</span>, verbose_name=<span class="string">"名称"</span>)</div><div class="line">    status = models.PositiveIntegerField(</div><div class="line">        default=<span class="number">1</span>, choices=STATUS_ITEMS, verbose_name=<span class="string">"状态"</span></div><div class="line">    )</div><div class="line">    author = models.ForeignKey(User, verbose_name=<span class="string">"作者"</span>)</div><div class="line">    created_time = models.DateTimeField(auto_now_add=<span class="keyword">True</span>, verbose_name=<span class="string">"创建时间"</span>)</div><div class="line"></div><div class="line">    <span class="class"><span class="keyword">class</span> <span class="title">Meta</span>:</span></div><div class="line">        verbose_name = verbose_name_plural = <span class="string">"标签"</span></div><div class="line"></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Post</span><span class="params">(models.Model)</span>:</span></div><div class="line">    <span class="string">"""</span></div><div class="line"><span class="string">    1、指定title字段类型为字符（charfield）</span></div><div class="line"><span class="string">    2、max_length指定字符长度</span></div><div class="line"><span class="string">    3、verbose_name可以理解为注释</span></div><div class="line"><span class="string">    4、Textfild因为是正文内容，输入会非常长</span></div><div class="line"><span class="string">    5、status默认为1,意思是文章默认状态是上线状态</span></div><div class="line"><span class="string">    6、auto_now_add为创建时使用</span></div><div class="line"><span class="string">    7、auto_now为更新时使用</span></div><div class="line"><span class="string">    """</span></div><div class="line">    STATUS_ITEM = (</div><div class="line">        (<span class="number">1</span>, <span class="string">"上线"</span>),</div><div class="line">        (<span class="number">2</span>, <span class="string">"删除"</span>),</div><div class="line">    )</div><div class="line">    title = models.CharField(max_length=<span class="number">50</span>, verbose_name=<span class="string">"标题"</span>)</div><div class="line">    desc = models.CharField(max_length=<span class="number">255</span>, blank=<span class="keyword">True</span>, verbose_name=<span class="string">"摘要"</span>)</div><div class="line">    content = models.TextField(verbose_name=<span class="string">"正文内容"</span>, help_text=<span class="string">"正文必须为markdown"</span>)</div><div class="line">    status = models.PositiveIntegerField(</div><div class="line">        default=<span class="number">1</span>, choices=STATUS_ITEM, verbose_name=<span class="string">"状态"</span></div><div class="line">    )</div><div class="line">    category = models.ForeignKey(Category, verbose_name=<span class="string">"分类"</span>)</div><div class="line">    tag = models.ManyToManyField(Tag, verbose_name=<span class="string">"标签"</span>)</div><div class="line">    author = models.ForeignKey(User, verbose_name=<span class="string">"作者"</span>)</div><div class="line">    created_time = models.DateTimeField(auto_now_add=<span class="keyword">True</span>, verbose_name=<span class="string">"创建时间"</span>)</div><div class="line">    last_update_time = models.DateTimeField(auto_now=<span class="keyword">True</span>, verbose_name=<span class="string">"更新时间"</span>)</div><div class="line"></div><div class="line">    <span class="class"><span class="keyword">class</span> <span class="title">Meta</span>:</span></div><div class="line">        verbose_name = verbose_name_plural = <span class="string">"文章"</span></div></pre></td></tr></table></figure>
-<p><strong>config</strong><br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># -*- coding: utf-8 -*-</span></div><div class="line"><span class="keyword">from</span> __future__ <span class="keyword">import</span> unicode_literals</div><div class="line"></div><div class="line"><span class="keyword">from</span> django.db <span class="keyword">import</span> models</div><div class="line"><span class="keyword">from</span> django.contrib.auth.models <span class="keyword">import</span> User</div><div class="line"></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Link</span><span class="params">(models.Model)</span>:</span></div><div class="line">    <span class="string">"""友链"""</span></div><div class="line">    STATUS_ITEMS = (</div><div class="line">        (<span class="number">1</span>, <span class="string">"正常"</span>),</div><div class="line">        (<span class="number">2</span>, <span class="string">"删除"</span>),</div><div class="line">    )</div><div class="line">    title = models.CharField(max_length=<span class="number">50</span>, verbose_name=<span class="string">"名称"</span>)</div><div class="line">    href = models.URLField(verbose_name=<span class="string">"链接"</span>)</div><div class="line">    status = models.PositiveIntegerField(</div><div class="line">        default=<span class="number">1</span>, choices=STATUS_ITEMS, verbose_name=<span class="string">"状态"</span></div><div class="line">    )</div><div class="line">    weight = models.PositiveIntegerField(</div><div class="line">        default=<span class="number">1</span>, choices=zip(</div><div class="line">            range(<span class="number">1</span>, <span class="number">6</span>), range(<span class="number">1</span>, <span class="number">6</span>),</div><div class="line">        ), verbose_name=<span class="string">"权重"</span>, help_text=<span class="string">"权重越高展示顺序越靠前"</span></div><div class="line">    )</div><div class="line">    author = models.ForeignKey(User, verbose_name=<span class="string">"作者"</span>)</div><div class="line">    created_time = models.DateTimeField(auto_now_add=<span class="keyword">True</span>, verbose_name=<span class="string">"创建时间"</span>)</div><div class="line"></div><div class="line">    <span class="class"><span class="keyword">class</span> <span class="title">Meta</span>:</span></div><div class="line">        verbose_name = verbose_name_plural = <span class="string">"友链"</span></div><div class="line"></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">SideBar</span><span class="params">(models.Model)</span>:</span></div><div class="line">    <span class="string">"""侧边栏"""</span></div><div class="line">    STATUS_ITEMS = (</div><div class="line">        (<span class="number">1</span>, <span class="string">"展示"</span>),</div><div class="line">        (<span class="number">2</span>, <span class="string">"下线"</span>)</div><div class="line">    )</div><div class="line">    SIDE_TYPE = (</div><div class="line">        (<span class="number">1</span>, <span class="string">"HTML"</span>),</div><div class="line">        (<span class="number">2</span>, <span class="string">"最新文章"</span>),</div><div class="line">        (<span class="number">3</span>, <span class="string">"最热文章"</span>),</div><div class="line">        (<span class="number">4</span>, <span class="string">"最热评论"</span>),</div><div class="line">    )</div><div class="line">    title = models.CharField(max_length=<span class="number">50</span>, verbose_name=<span class="string">"标题"</span>)</div><div class="line">    status = models.PositiveIntegerField(</div><div class="line">        default=<span class="number">1</span>, choices=STATUS_ITEMS, verbose_name=<span class="string">"状态"</span></div><div class="line">    )</div><div class="line">    display_type = models.PositiveIntegerField(</div><div class="line">        default=<span class="number">1</span>, choices=SIDE_TYPE, verbose_name=<span class="string">"展示类型"</span></div><div class="line">    )</div><div class="line">    content = models.CharField(</div><div class="line">        max_length=<span class="number">100</span>,</div><div class="line">        blank=<span class="keyword">True</span>,</div><div class="line">        verbose_name=<span class="string">"内容"</span>,</div><div class="line">        help_text=<span class="string">"如果设置的不是HTML类型，可为空"</span></div><div class="line">    )</div><div class="line">    author = models.ForeignKey(User, verbose_name=<span class="string">"作者"</span>)</div><div class="line">    created_time = models.DateTimeField(auto_now_add=<span class="keyword">True</span>, verbose_name=<span class="string">"创建时间"</span>)</div><div class="line"></div><div class="line">    <span class="class"><span class="keyword">class</span> <span class="title">Meta</span>:</span></div><div class="line">        verbose_name = verbose_name_plural = <span class="string">"侧边栏"</span></div></pre></td></tr></table></figure></p>
-<p><strong>comment</strong><br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># -*- coding: utf-8 -*-</span></div><div class="line"><span class="keyword">from</span> __future__ <span class="keyword">import</span> unicode_literals</div><div class="line"></div><div class="line"><span class="keyword">from</span> django.db <span class="keyword">import</span> models</div><div class="line"></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Comment</span><span class="params">(models.Model)</span>:</span></div><div class="line">    STATUS_ITEMS = (</div><div class="line">        (<span class="number">1</span>, <span class="string">'正常'</span>),</div><div class="line">        (<span class="number">2</span>, <span class="string">'删除'</span>),</div><div class="line">    )</div><div class="line">    target = models.CharField(max_length=<span class="number">200</span>, null=<span class="keyword">True</span>, verbose_name=<span class="string">'评论目标'</span>)</div><div class="line">    content = models.CharField(max_length=<span class="number">2000</span>, verbose_name=<span class="string">'内容'</span>)</div><div class="line">    nickname = models.CharField(max_length=<span class="number">50</span>, verbose_name=<span class="string">'昵称'</span>)</div><div class="line">    status = models.PositiveIntegerField(</div><div class="line">        default=<span class="number">1</span>, choices=STATUS_ITEMS, verbose_name=<span class="string">'状态'</span></div><div class="line">    )</div><div class="line">    website = models.URLField(verbose_name=<span class="string">'网站'</span>)</div><div class="line">    email = models.EmailField(verbose_name=<span class="string">'邮箱'</span>)</div><div class="line">    created_time = models.DateTimeField(auto_now_add=<span class="keyword">True</span>, verbose_name=<span class="string">'创建时间'</span>)</div><div class="line"></div><div class="line">    <span class="class"><span class="keyword">class</span> <span class="title">Meta</span>:</span></div><div class="line">        verbose_name = verbose_name_plural = <span class="string">'评论'</span></div></pre></td></tr></table></figure></p>
-<p><a href="https://github.com/Family-TreeSY/Myblog" target="_blank" rel="external">GitHub</a><br>欢迎访问<a href="https://family-treesy.github.io/" target="_blank" rel="external">Treehl的博客</a></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Django</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/04/02/三、创建数据库模型Model/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
       <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
@@ -892,23 +889,7 @@ getOwnMetadataKeys:function(t){return o(i(t),arguments.length<2?void 0:u(argumen
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">DailyQuestion</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">MongoDB</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Python</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">爬虫</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">BeautifulSoup</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -924,15 +905,31 @@ getOwnMetadataKeys:function(t){return o(i(t),arguments.length<2?void 0:u(argumen
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Scrapy</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">Redis</a>
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Python</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">DailyQuestion</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">爬虫</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Scrapy</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">豆瓣</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">BeautifulSoup</a>
               </li>
              
               <li class="article-tag-list-item">

@@ -173,6 +173,93 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-三、创建数据库模型Model" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/04/02/三、创建数据库模型Model/">创建数据库模型Model</a>
+    </h1>
+  
+
+        
+        <a href="/2018/04/02/三、创建数据库模型Model/" class="archive-article-date">
+  	<time datetime="2018-04-02T14:08:08.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-04-02</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="三、创建数据库模型Model"><a href="#三、创建数据库模型Model" class="headerlink" title="三、创建数据库模型Model"></a>三、创建数据库模型Model</h3><ul>
+<li>blog </li>
+<li>config</li>
+<li>comment</li>
+</ul>
+<p><strong>blog</strong></p>
+<blockquote>
+<p>author、category都有外键（foreignkey一对多关系），每篇文章只有一个分类，而一个分类下可以有多篇文章</p>
+<p>tag的ManyToManyField字段是多对多关系，一篇文章可以有多个标签，一个标签下也可以有多篇文章</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div><div class="line">125</div><div class="line">126</div><div class="line">127</div><div class="line">128</div><div class="line">129</div><div class="line">130</div><div class="line">131</div><div class="line">132</div><div class="line">133</div><div class="line">134</div><div class="line">135</div><div class="line">136</div><div class="line">137</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># blog/models.py</span></div><div class="line"><span class="comment"># -*- coding: utf-8 -*-</span></div><div class="line"><span class="keyword">from</span> __future__ <span class="keyword">import</span> unicode_literals</div><div class="line"></div><div class="line"><span class="keyword">from</span> django.db <span class="keyword">import</span> models</div><div class="line"><span class="keyword">from</span> django.contrib.auth.models <span class="keyword">import</span> User</div><div class="line"></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Category</span><span class="params">(models.Model)</span>:</span></div><div class="line">    STATUS_ITEMS = (</div><div class="line">        (<span class="number">1</span>, <span class="string">"正常"</span>),</div><div class="line">        (<span class="number">2</span>, <span class="string">"删除"</span>),</div><div class="line">    )</div><div class="line">    name = models.CharField(max_length=<span class="number">50</span>, verbose_name=<span class="string">"名城"</span>)</div><div class="line">    status = models.PositiveIntegerField(</div><div class="line">        default=<span class="number">1</span>, choices=STATUS_ITEMS, verbose_name=<span class="string">"状态"</span></div><div class="line">    )</div><div class="line">    is_nav = models.BooleanField(default=<span class="keyword">False</span>, verbose_name=<span class="string">"是否为导航"</span>)</div><div class="line">    author = models.ForeignKey(User, verbose_name=<span class="string">"作者"</span>)</div><div class="line">    created_time = models.DateTimeField(auto_now_add=<span class="keyword">True</span>, verbose_name=<span class="string">"创建时间"</span>)</div><div class="line"></div><div class="line">    <span class="class"><span class="keyword">class</span> <span class="title">Meta</span>:</span></div><div class="line">        verbose_name = verbose_name_plural = <span class="string">'分类'</span></div><div class="line"></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Tag</span><span class="params">(models.Model)</span>:</span></div><div class="line">    STATUS_ITEMS = (</div><div class="line">        (<span class="number">1</span>, <span class="string">"正常"</span>),</div><div class="line">        (<span class="number">2</span>, <span class="string">"删除"</span>),</div><div class="line">    )</div><div class="line">    name = models.CharField(max_length=<span class="number">50</span>, verbose_name=<span class="string">"名称"</span>)</div><div class="line">    status = models.PositiveIntegerField(</div><div class="line">        default=<span class="number">1</span>, choices=STATUS_ITEMS, verbose_name=<span class="string">"状态"</span></div><div class="line">    )</div><div class="line">    author = models.ForeignKey(User, verbose_name=<span class="string">"作者"</span>)</div><div class="line">    created_time = models.DateTimeField(auto_now_add=<span class="keyword">True</span>, verbose_name=<span class="string">"创建时间"</span>)</div><div class="line"></div><div class="line">    <span class="class"><span class="keyword">class</span> <span class="title">Meta</span>:</span></div><div class="line">        verbose_name = verbose_name_plural = <span class="string">"标签"</span></div><div class="line"></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Post</span><span class="params">(models.Model)</span>:</span></div><div class="line">    <span class="string">"""</span></div><div class="line"><span class="string">    1、指定title字段类型为字符（charfield）</span></div><div class="line"><span class="string">    2、max_length指定字符长度</span></div><div class="line"><span class="string">    3、verbose_name可以理解为注释</span></div><div class="line"><span class="string">    4、Textfild因为是正文内容，输入会非常长</span></div><div class="line"><span class="string">    5、status默认为1,意思是文章默认状态是上线状态</span></div><div class="line"><span class="string">    6、auto_now_add为创建时使用</span></div><div class="line"><span class="string">    7、auto_now为更新时使用</span></div><div class="line"><span class="string">    """</span></div><div class="line">    STATUS_ITEM = (</div><div class="line">        (<span class="number">1</span>, <span class="string">"上线"</span>),</div><div class="line">        (<span class="number">2</span>, <span class="string">"删除"</span>),</div><div class="line">    )</div><div class="line">    title = models.CharField(max_length=<span class="number">50</span>, verbose_name=<span class="string">"标题"</span>)</div><div class="line">    desc = models.CharField(max_length=<span class="number">255</span>, blank=<span class="keyword">True</span>, verbose_name=<span class="string">"摘要"</span>)</div><div class="line">    content = models.TextField(verbose_name=<span class="string">"正文内容"</span>, help_text=<span class="string">"正文必须为markdown"</span>)</div><div class="line">    status = models.PositiveIntegerField(</div><div class="line">        default=<span class="number">1</span>, choices=STATUS_ITEM, verbose_name=<span class="string">"状态"</span></div><div class="line">    )</div><div class="line">    category = models.ForeignKey(Category, verbose_name=<span class="string">"分类"</span>)</div><div class="line">    tag = models.ManyToManyField(Tag, verbose_name=<span class="string">"标签"</span>)</div><div class="line">    author = models.ForeignKey(User, verbose_name=<span class="string">"作者"</span>)</div><div class="line">    created_time = models.DateTimeField(auto_now_add=<span class="keyword">True</span>, verbose_name=<span class="string">"创建时间"</span>)</div><div class="line">    last_update_time = models.DateTimeField(auto_now=<span class="keyword">True</span>, verbose_name=<span class="string">"更新时间"</span>)</div><div class="line"></div><div class="line">    <span class="class"><span class="keyword">class</span> <span class="title">Meta</span>:</span></div><div class="line">        verbose_name = verbose_name_plural = <span class="string">"文章"</span></div><div class="line"><span class="comment"># -*- coding: utf-8 -*-</span></div><div class="line"><span class="keyword">from</span> __future__ <span class="keyword">import</span> unicode_literals</div><div class="line"></div><div class="line"><span class="keyword">from</span> django.db <span class="keyword">import</span> models</div><div class="line"><span class="keyword">from</span> django.contrib.auth.models <span class="keyword">import</span> User</div><div class="line"></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Category</span><span class="params">(models.Model)</span>:</span></div><div class="line">    STATUS_ITEMS = (</div><div class="line">        (<span class="number">1</span>, <span class="string">"正常"</span>),</div><div class="line">        (<span class="number">2</span>, <span class="string">"删除"</span>),</div><div class="line">    )</div><div class="line">    name = models.CharField(max_length=<span class="number">50</span>, verbose_name=<span class="string">"名城"</span>)</div><div class="line">    status = models.PositiveIntegerField(</div><div class="line">        default=<span class="number">1</span>, choices=STATUS_ITEMS, verbose_name=<span class="string">"状态"</span></div><div class="line">    )</div><div class="line">    is_nav = models.BooleanField(default=<span class="keyword">False</span>, verbose_name=<span class="string">"是否为导航"</span>)</div><div class="line">    author = models.ForeignKey(User, verbose_name=<span class="string">"作者"</span>)</div><div class="line">    created_time = models.DateTimeField(auto_now_add=<span class="keyword">True</span>, verbose_name=<span class="string">"创建时间"</span>)</div><div class="line"></div><div class="line">    <span class="class"><span class="keyword">class</span> <span class="title">Meta</span>:</span></div><div class="line">        verbose_name = verbose_name_plural = <span class="string">'分类'</span></div><div class="line"></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Tag</span><span class="params">(models.Model)</span>:</span></div><div class="line">    STATUS_ITEMS = (</div><div class="line">        (<span class="number">1</span>, <span class="string">"正常"</span>),</div><div class="line">        (<span class="number">2</span>, <span class="string">"删除"</span>),</div><div class="line">    )</div><div class="line">    name = models.CharField(max_length=<span class="number">50</span>, verbose_name=<span class="string">"名称"</span>)</div><div class="line">    status = models.PositiveIntegerField(</div><div class="line">        default=<span class="number">1</span>, choices=STATUS_ITEMS, verbose_name=<span class="string">"状态"</span></div><div class="line">    )</div><div class="line">    author = models.ForeignKey(User, verbose_name=<span class="string">"作者"</span>)</div><div class="line">    created_time = models.DateTimeField(auto_now_add=<span class="keyword">True</span>, verbose_name=<span class="string">"创建时间"</span>)</div><div class="line"></div><div class="line">    <span class="class"><span class="keyword">class</span> <span class="title">Meta</span>:</span></div><div class="line">        verbose_name = verbose_name_plural = <span class="string">"标签"</span></div><div class="line"></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Post</span><span class="params">(models.Model)</span>:</span></div><div class="line">    <span class="string">"""</span></div><div class="line"><span class="string">    1、指定title字段类型为字符（charfield）</span></div><div class="line"><span class="string">    2、max_length指定字符长度</span></div><div class="line"><span class="string">    3、verbose_name可以理解为注释</span></div><div class="line"><span class="string">    4、Textfild因为是正文内容，输入会非常长</span></div><div class="line"><span class="string">    5、status默认为1,意思是文章默认状态是上线状态</span></div><div class="line"><span class="string">    6、auto_now_add为创建时使用</span></div><div class="line"><span class="string">    7、auto_now为更新时使用</span></div><div class="line"><span class="string">    """</span></div><div class="line">    STATUS_ITEM = (</div><div class="line">        (<span class="number">1</span>, <span class="string">"上线"</span>),</div><div class="line">        (<span class="number">2</span>, <span class="string">"删除"</span>),</div><div class="line">    )</div><div class="line">    title = models.CharField(max_length=<span class="number">50</span>, verbose_name=<span class="string">"标题"</span>)</div><div class="line">    desc = models.CharField(max_length=<span class="number">255</span>, blank=<span class="keyword">True</span>, verbose_name=<span class="string">"摘要"</span>)</div><div class="line">    content = models.TextField(verbose_name=<span class="string">"正文内容"</span>, help_text=<span class="string">"正文必须为markdown"</span>)</div><div class="line">    status = models.PositiveIntegerField(</div><div class="line">        default=<span class="number">1</span>, choices=STATUS_ITEM, verbose_name=<span class="string">"状态"</span></div><div class="line">    )</div><div class="line">    category = models.ForeignKey(Category, verbose_name=<span class="string">"分类"</span>)</div><div class="line">    tag = models.ManyToManyField(Tag, verbose_name=<span class="string">"标签"</span>)</div><div class="line">    author = models.ForeignKey(User, verbose_name=<span class="string">"作者"</span>)</div><div class="line">    created_time = models.DateTimeField(auto_now_add=<span class="keyword">True</span>, verbose_name=<span class="string">"创建时间"</span>)</div><div class="line">    last_update_time = models.DateTimeField(auto_now=<span class="keyword">True</span>, verbose_name=<span class="string">"更新时间"</span>)</div><div class="line"></div><div class="line">    <span class="class"><span class="keyword">class</span> <span class="title">Meta</span>:</span></div><div class="line">        verbose_name = verbose_name_plural = <span class="string">"文章"</span></div></pre></td></tr></table></figure>
+<p><strong>config</strong><br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># -*- coding: utf-8 -*-</span></div><div class="line"><span class="keyword">from</span> __future__ <span class="keyword">import</span> unicode_literals</div><div class="line"></div><div class="line"><span class="keyword">from</span> django.db <span class="keyword">import</span> models</div><div class="line"><span class="keyword">from</span> django.contrib.auth.models <span class="keyword">import</span> User</div><div class="line"></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Link</span><span class="params">(models.Model)</span>:</span></div><div class="line">    <span class="string">"""友链"""</span></div><div class="line">    STATUS_ITEMS = (</div><div class="line">        (<span class="number">1</span>, <span class="string">"正常"</span>),</div><div class="line">        (<span class="number">2</span>, <span class="string">"删除"</span>),</div><div class="line">    )</div><div class="line">    title = models.CharField(max_length=<span class="number">50</span>, verbose_name=<span class="string">"名称"</span>)</div><div class="line">    href = models.URLField(verbose_name=<span class="string">"链接"</span>)</div><div class="line">    status = models.PositiveIntegerField(</div><div class="line">        default=<span class="number">1</span>, choices=STATUS_ITEMS, verbose_name=<span class="string">"状态"</span></div><div class="line">    )</div><div class="line">    weight = models.PositiveIntegerField(</div><div class="line">        default=<span class="number">1</span>, choices=zip(</div><div class="line">            range(<span class="number">1</span>, <span class="number">6</span>), range(<span class="number">1</span>, <span class="number">6</span>),</div><div class="line">        ), verbose_name=<span class="string">"权重"</span>, help_text=<span class="string">"权重越高展示顺序越靠前"</span></div><div class="line">    )</div><div class="line">    author = models.ForeignKey(User, verbose_name=<span class="string">"作者"</span>)</div><div class="line">    created_time = models.DateTimeField(auto_now_add=<span class="keyword">True</span>, verbose_name=<span class="string">"创建时间"</span>)</div><div class="line"></div><div class="line">    <span class="class"><span class="keyword">class</span> <span class="title">Meta</span>:</span></div><div class="line">        verbose_name = verbose_name_plural = <span class="string">"友链"</span></div><div class="line"></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">SideBar</span><span class="params">(models.Model)</span>:</span></div><div class="line">    <span class="string">"""侧边栏"""</span></div><div class="line">    STATUS_ITEMS = (</div><div class="line">        (<span class="number">1</span>, <span class="string">"展示"</span>),</div><div class="line">        (<span class="number">2</span>, <span class="string">"下线"</span>)</div><div class="line">    )</div><div class="line">    SIDE_TYPE = (</div><div class="line">        (<span class="number">1</span>, <span class="string">"HTML"</span>),</div><div class="line">        (<span class="number">2</span>, <span class="string">"最新文章"</span>),</div><div class="line">        (<span class="number">3</span>, <span class="string">"最热文章"</span>),</div><div class="line">        (<span class="number">4</span>, <span class="string">"最热评论"</span>),</div><div class="line">    )</div><div class="line">    title = models.CharField(max_length=<span class="number">50</span>, verbose_name=<span class="string">"标题"</span>)</div><div class="line">    status = models.PositiveIntegerField(</div><div class="line">        default=<span class="number">1</span>, choices=STATUS_ITEMS, verbose_name=<span class="string">"状态"</span></div><div class="line">    )</div><div class="line">    display_type = models.PositiveIntegerField(</div><div class="line">        default=<span class="number">1</span>, choices=SIDE_TYPE, verbose_name=<span class="string">"展示类型"</span></div><div class="line">    )</div><div class="line">    content = models.CharField(</div><div class="line">        max_length=<span class="number">100</span>,</div><div class="line">        blank=<span class="keyword">True</span>,</div><div class="line">        verbose_name=<span class="string">"内容"</span>,</div><div class="line">        help_text=<span class="string">"如果设置的不是HTML类型，可为空"</span></div><div class="line">    )</div><div class="line">    author = models.ForeignKey(User, verbose_name=<span class="string">"作者"</span>)</div><div class="line">    created_time = models.DateTimeField(auto_now_add=<span class="keyword">True</span>, verbose_name=<span class="string">"创建时间"</span>)</div><div class="line"></div><div class="line">    <span class="class"><span class="keyword">class</span> <span class="title">Meta</span>:</span></div><div class="line">        verbose_name = verbose_name_plural = <span class="string">"侧边栏"</span></div></pre></td></tr></table></figure></p>
+<p><strong>comment</strong><br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># -*- coding: utf-8 -*-</span></div><div class="line"><span class="keyword">from</span> __future__ <span class="keyword">import</span> unicode_literals</div><div class="line"></div><div class="line"><span class="keyword">from</span> django.db <span class="keyword">import</span> models</div><div class="line"></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Comment</span><span class="params">(models.Model)</span>:</span></div><div class="line">    STATUS_ITEMS = (</div><div class="line">        (<span class="number">1</span>, <span class="string">'正常'</span>),</div><div class="line">        (<span class="number">2</span>, <span class="string">'删除'</span>),</div><div class="line">    )</div><div class="line">    target = models.CharField(max_length=<span class="number">200</span>, null=<span class="keyword">True</span>, verbose_name=<span class="string">'评论目标'</span>)</div><div class="line">    content = models.CharField(max_length=<span class="number">2000</span>, verbose_name=<span class="string">'内容'</span>)</div><div class="line">    nickname = models.CharField(max_length=<span class="number">50</span>, verbose_name=<span class="string">'昵称'</span>)</div><div class="line">    status = models.PositiveIntegerField(</div><div class="line">        default=<span class="number">1</span>, choices=STATUS_ITEMS, verbose_name=<span class="string">'状态'</span></div><div class="line">    )</div><div class="line">    website = models.URLField(verbose_name=<span class="string">'网站'</span>)</div><div class="line">    email = models.EmailField(verbose_name=<span class="string">'邮箱'</span>)</div><div class="line">    created_time = models.DateTimeField(auto_now_add=<span class="keyword">True</span>, verbose_name=<span class="string">'创建时间'</span>)</div><div class="line"></div><div class="line">    <span class="class"><span class="keyword">class</span> <span class="title">Meta</span>:</span></div><div class="line">        verbose_name = verbose_name_plural = <span class="string">'评论'</span></div></pre></td></tr></table></figure></p>
+<p><a href="https://github.com/Family-TreeSY/Myblog" target="_blank" rel="external">GitHub</a><br>欢迎访问<a href="https://family-treesy.github.io/" target="_blank" rel="external">Treehl的博客</a></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Django</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/04/02/三、创建数据库模型Model/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-一、搭建开发环境" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -2020,15 +2107,15 @@
         		</li>
       		 
         		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Redis</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
         			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">爬虫</a>
         		</li>
       		 
         		<li class="article-tag-list-item">
         			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Scrapy</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Redis</a>
         		</li>
       		 
         		<li class="article-tag-list-item">
@@ -2043,140 +2130,6 @@
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2018/01/10/scrapy-redis(二)/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-scrapy-redis(一)" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/12/23/scrapy-redis(一)/">Scrapy-Redis分布式爬取自如网（一）</a>
-    </h1>
-  
-
-        
-        <a href="/2017/12/23/scrapy-redis(一)/" class="archive-article-date">
-  	<time datetime="2017-12-23T09:48:23.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-12-23</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>继上次<a href="https://family-treesy.github.io/2017/12/21/Scrapy%E7%88%AC%E5%8F%96%E7%8C%AB%E7%9C%BC%E7%94%B5%E5%BD%B1/" target="_blank" rel="external">Scrapy爬取猫眼电影</a>之后，这几天学习了Scrapy-Redis分布式来提高爬取效率，也算是停留在舒适圈一段时间后往前走了一步！！</p>
-<p><strong>准备工作</strong><br><a href="https://www.mongodb.com/" target="_blank" rel="external">MongoDB</a><br><a href="https://redis.io/" target="_blank" rel="external">Redis</a><br><a href="https://github.com/rmax/scrapy-redis" target="_blank" rel="external">Scrapy-Redis</a><br><a href="https://github.com/scrapy/scrapy" target="_blank" rel="external">Scrapy</a></p>
-<p>这次爬取的是<a href="http://sh.ziroom.com/z/nl/z2.html?qwd=" target="_blank" rel="external">上海自如租房</a>，相信在魔都生活的小伙伴们如果不是本地人，租房费用占了每月开销很大的一部分，我们来看下租房体验比较好的自如，除了价格贵外 - -！！</p>
-<h4 id="实战应用"><a href="#实战应用" class="headerlink" title="实战应用"></a><strong>实战应用</strong></h4><p>创建一个工程</p>
-<blockquote>
-<p>scrapy startproject ziru</p>
-</blockquote>
-<p><strong>第一步 编辑item.py</strong><br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> scrapy</div><div class="line"></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">ZiruItem</span><span class="params">(scrapy.Item)</span>:</span></div><div class="line">    <span class="comment"># define the fields for your item here like:</span></div><div class="line">    <span class="comment"># name = scrapy.Field()</span></div><div class="line">    ziroom_area = scrapy.Field()</div><div class="line">    ziroom_face = scrapy.Field()</div><div class="line">    ziroom_floor = scrapy.Field()</div><div class="line">    ziroom_label = scrapy.Field()</div><div class="line">    <span class="comment"># ziroom_location = scrapy.Field()</span></div><div class="line">    ziroom_name = scrapy.Field()</div><div class="line">    ziroom_price = scrapy.Field()</div><div class="line">    ziroom_type = scrapy.Field()</div><div class="line">    ziroom_traffic = scrapy.Field()</div><div class="line">    rounding_info = scrapy.Field()</div><div class="line">    traffic_info = scrapy.Field()</div><div class="line">    ziroom_image = scrapy.Field()</div><div class="line">    <span class="keyword">pass</span></div></pre></td></tr></table></figure></p>
-<ul>
-<li>首先，引入Scrapy</li>
-<li>接着，创建一个类，继承自scrapy.item,这个是用来储存要爬下来的数据的存放容器</li>
-</ul>
-<p><strong>第二步 获取网页数据</strong><br>在spider文件下创建spider.py<br> <img src="http://m.qpic.cn/psb?/V10WDaE22S84Sl/vTL5TWP6nxsx3u*xqp2ZyF0SlQj9jH5V*yObgpA6u7Y!/b/dF4BAAAAAAAA&amp;bo=iwWAAgAAAAADBy4!&amp;rf=viewer_4" alt=""></p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># -*- coding: utf-8 -*-</span></div><div class="line"></div><div class="line"><span class="keyword">from</span> scrapy.spiders <span class="keyword">import</span> Rule</div><div class="line"><span class="keyword">from</span> scrapy.selector <span class="keyword">import</span> Selector</div><div class="line"><span class="keyword">from</span> scrapy.linkextractors <span class="keyword">import</span> LinkExtractor</div><div class="line"><span class="keyword">from</span> ziru.items <span class="keyword">import</span> ZiruItem</div><div class="line"><span class="keyword">from</span> scrapy_redis.spiders <span class="keyword">import</span> RedisCrawlSpider</div><div class="line"></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">ZiroomSpider</span><span class="params">(RedisCrawlSpider)</span>:</span></div><div class="line">    name = <span class="string">'ziroom'</span></div><div class="line">    <span class="comment"># allowed_domains = ['http://sh.ziroom.com/z/nl/z2.html?qwd=']</span></div><div class="line">    <span class="comment"># start_urls = ['http://sh.ziroom.com/z/nl/z2.html?qwd=']</span></div><div class="line">    redis_key = <span class="string">'ziroomspider:start_urls'</span></div><div class="line">    rules = (</div><div class="line">        Rule(LinkExtractor(allow=(<span class="string">r'http://sh.ziroom.com/z/nl/z2.html\?qwd=\&amp;p=\d+'</span>))),</div><div class="line">        Rule(LinkExtractor(allow=(<span class="string">r'http:\//sh\.ziroom\.com\/z\/vr\/\d+\.html'</span>)), callback=<span class="string">'parse_item'</span>)</div><div class="line">    )</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">parse_item</span><span class="params">(self, response)</span>:</span></div><div class="line">        <span class="comment"># print(response.body)</span></div><div class="line">        sel = Selector(response)</div><div class="line">        </div><div class="line">      ...省略索取元素的代码...</div><div class="line"></div><div class="line">        <span class="keyword">yield</span> item</div></pre></td></tr></table></figure>
-<ul>
-<li>比起Scrapy，又多引入了 from scrapy_redis.spiders import RedisCrawlSpider</li>
-<li>start_urls变为redis_key = ‘ziroomspider:start_urls’ 作为所有链接存储到 redis</li>
-<li>爬取rule还是一个链接为翻页，一个为详情页链接</li>
-</ul>
-<p><strong>第三步 编辑管道pipeline.py</strong></p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"></div><div class="line"><span class="keyword">import</span> pymongo</div><div class="line"><span class="keyword">from</span> scrapy.conf <span class="keyword">import</span> settings</div><div class="line"><span class="keyword">from</span> scrapy.exceptions <span class="keyword">import</span> DropItem</div><div class="line"><span class="keyword">from</span> scrapy <span class="keyword">import</span> log</div><div class="line"></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">MongoDBPipeline</span><span class="params">(object)</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self)</span>:</span></div><div class="line">        client = pymongo.MongoClient(settings[<span class="string">'MONGODB_SERVER'</span>], settings[<span class="string">'MONGODB_PORT'</span>])</div><div class="line">        db = client[settings[<span class="string">'MONGODB_DB'</span>]]</div><div class="line">        self.collection = db[settings[<span class="string">'MONGODB_COLLECTION'</span>]]</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">process_item</span><span class="params">(self, item, spider)</span>:</span></div><div class="line">        <span class="comment"># item:  (Item 对象) – 被爬取的item</span></div><div class="line">        <span class="comment"># (Spider 对象) – 爬取该item的spider</span></div><div class="line">        <span class="comment"># 去重，删除重复的数据</span></div><div class="line">        valid = <span class="keyword">True</span></div><div class="line">        <span class="keyword">for</span> data <span class="keyword">in</span> item:</div><div class="line">            <span class="keyword">if</span> <span class="keyword">not</span> data:</div><div class="line">                valid = <span class="keyword">False</span></div><div class="line">                <span class="keyword">raise</span> DropItem(<span class="string">'Missing %s of blogpost from %s'</span> % (data, item[<span class="string">'url'</span>]))</div><div class="line">        <span class="keyword">if</span> valid:</div><div class="line">            homes = [&#123;</div><div class="line">                <span class="string">'ziroom_area'</span>: item[<span class="string">'ziroom_area'</span>],</div><div class="line">                <span class="string">'ziroom_face'</span>: item[<span class="string">'ziroom_face'</span>],</div><div class="line">                <span class="string">'ziroom_floor'</span>: item[<span class="string">'ziroom_floor'</span>],</div><div class="line">                <span class="string">'ziroom_label'</span>: item[<span class="string">'ziroom_label'</span>],</div><div class="line">                <span class="comment"># 'ziroom_location': item['ziroom_location'],</span></div><div class="line">                <span class="string">'ziroom_name'</span> :item[<span class="string">'ziroom_name'</span>],</div><div class="line">                <span class="string">'ziroom_price'</span> : item[<span class="string">'ziroom_price'</span>],</div><div class="line">                <span class="string">'ziroom_type'</span> : item[<span class="string">'ziroom_type'</span>],</div><div class="line">                <span class="string">'ziroom_traffic'</span>: item[<span class="string">'ziroom_traffic'</span>],</div><div class="line">                <span class="string">'rounding_info'</span>: item[<span class="string">'rounding_info'</span>],</div><div class="line">                <span class="string">'traffic_info'</span>: item[<span class="string">'traffic_info'</span>],</div><div class="line">                <span class="string">'ziroom_image'</span>: item[<span class="string">'ziroom_image'</span>],</div><div class="line">            &#125;]</div><div class="line"></div><div class="line">            <span class="comment"># 插入数据库集合中</span></div><div class="line">            self.collection.insert(homes)</div><div class="line">            log.msg(<span class="string">'Item wrote to MongoDB database %s/%s'</span> % (settings[<span class="string">'MONGODB_DB'</span>], settings[<span class="string">'MONGODB_COLLECTION'</span>]),</div><div class="line">                    level=log.DEBUG, spider=spider)</div><div class="line">        <span class="keyword">return</span> item</div></pre></td></tr></table></figure>
-<p>编辑MongoDBpipelines，将获取的数据存入MongoDB数据库中</p>
-<p><strong>第四步 编辑middlewares.py</strong><br>在中间件中写入随机选取伪造请求头来防止spider被封掉</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">RotateUserAgentMiddleware</span><span class="params">(UserAgentMiddleware)</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__int__</span><span class="params">(self, user_agent=<span class="string">''</span>)</span>:</span></div><div class="line">        self.user_agent = user_agent</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">process_request</span><span class="params">(self, request, spider)</span>:</span></div><div class="line">        <span class="comment"># 这句话用于随机选择user-agent</span></div><div class="line">        ua = random.choice(self.user_agent_list)</div><div class="line">        <span class="keyword">if</span> ua:</div><div class="line">            logging.info(ua)</div><div class="line">            request.headers.setdefault(<span class="string">'User-Agent'</span>, ua)</div><div class="line"></div><div class="line">    <span class="comment"># the default user_agent_list composes chrome,I E,firefox,Mozilla,opera,netscape</span></div><div class="line">    <span class="comment"># for more user agent strings,you can find it in http://www.useragentstring.com/pages/useragentstring.php</span></div><div class="line">    user_agent_list = [</div><div class="line">        <span class="string">"Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.1 (KHTML, like Gecko) Chrome/22.0.1207.1 Safari/537.1"</span>,</div><div class="line">        <span class="string">"Mozilla/5.0 (X11; CrOS i686 2268.111.0) AppleWebKit/536.11 (KHTML, like Gecko) Chrome/20.0.1132.57 Safari/536.11"</span>,</div><div class="line">        <span class="string">"Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/536.6 (KHTML, like Gecko) Chrome/20.0.1092.0 Safari/536.6"</span>,</div><div class="line">        <span class="string">"Mozilla/5.0 (Windows NT 6.2) AppleWebKit/536.6 (KHTML, like Gecko) Chrome/20.0.1090.0 Safari/536.6"</span>,</div><div class="line">        <span class="string">"Mozilla/5.0 (Windows NT 6.2; WOW64) AppleWebKit/537.1 (KHTML, like Gecko) Chrome/19.77.34.5 Safari/537.1"</span>,</div><div class="line">        <span class="string">"Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/536.5 (KHTML, like Gecko) Chrome/19.0.1084.9 Safari/536.5"</span>,</div><div class="line">        <span class="string">"Mozilla/5.0 (Windows NT 6.0) AppleWebKit/536.5 (KHTML, like Gecko) Chrome/19.0.1084.36 Safari/536.5"</span>,</div><div class="line">        <span class="string">"Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/536.3 (KHTML, like Gecko) Chrome/19.0.1063.0 Safari/536.3"</span>,</div><div class="line">        <span class="string">"Mozilla/5.0 (Windows NT 5.1) AppleWebKit/536.3 (KHTML, like Gecko) Chrome/19.0.1063.0 Safari/536.3"</span>,</div><div class="line">        <span class="string">"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_8_0) AppleWebKit/536.3 (KHTML, like Gecko) Chrome/19.0.1063.0 Safari/536.3"</span>,</div><div class="line">        <span class="string">"Mozilla/5.0 (Windows NT 6.2) AppleWebKit/536.3 (KHTML, like Gecko) Chrome/19.0.1062.0 Safari/536.3"</span>,</div><div class="line">        <span class="string">"Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/536.3 (KHTML, like Gecko) Chrome/19.0.1062.0 Safari/536.3"</span>,</div><div class="line">        <span class="string">"Mozilla/5.0 (Windows NT 6.2) AppleWebKit/536.3 (KHTML, like Gecko) Chrome/19.0.1061.1 Safari/536.3"</span>,</div><div class="line">        <span class="string">"Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/536.3 (KHTML, like Gecko) Chrome/19.0.1061.1 Safari/536.3"</span>,</div><div class="line">        <span class="string">"Mozilla/5.0 (Windows NT 6.1) AppleWebKit/536.3 (KHTML, like Gecko) Chrome/19.0.1061.1 Safari/536.3"</span>,</div><div class="line">        <span class="string">"Mozilla/5.0 (Windows NT 6.2) AppleWebKit/536.3 (KHTML, like Gecko) Chrome/19.0.1061.0 Safari/536.3"</span>,</div><div class="line">        <span class="string">"Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/535.24 (KHTML, like Gecko) Chrome/19.0.1055.1 Safari/535.24"</span>,</div><div class="line">        <span class="string">"Mozilla/5.0 (Windows NT 6.2; WOW64) AppleWebKit/535.24 (KHTML, like Gecko) Chrome/19.0.1055.1 Safari/535.24"</span>,</div><div class="line">        <span class="string">"Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US) AppleWebKit/531.21.8 (KHTML, like Gecko) Version/4.0.4 Safari/531.21.10"</span>,</div><div class="line">        <span class="string">"Mozilla/5.0 (Windows; U; Windows NT 5.2; en-US) AppleWebKit/533.17.8 (KHTML, like Gecko) Version/5.0.1 Safari/533.17.8"</span>,</div><div class="line">        <span class="string">"Mozilla/5.0 (Windows; U; Windows NT 6.1; en-US) AppleWebKit/533.19.4 (KHTML, like Gecko) Version/5.0.2 Safari/533.18.5"</span>,</div><div class="line">        <span class="string">"Mozilla/5.0 (Windows; U; Windows NT 6.1; en-GB; rv:1.9.1.17) Gecko/20110123 (like Firefox/3.x) SeaMonkey/2.0.12"</span>,</div><div class="line">        <span class="string">"Mozilla/5.0 (Windows NT 5.2; rv:10.0.1) Gecko/20100101 Firefox/10.0.1 SeaMonkey/2.7.1"</span>,</div><div class="line">        <span class="string">"Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10_5_8; en-US) AppleWebKit/532.8 (KHTML, like Gecko) Chrome/4.0.302.2 Safari/532.8"</span>,</div><div class="line">        <span class="string">"Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10_6_4; en-US) AppleWebKit/534.3 (KHTML, like Gecko) Chrome/6.0.464.0 Safari/534.3"</span>,</div><div class="line">        <span class="string">"Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10_6_5; en-US) AppleWebKit/534.13 (KHTML, like Gecko) Chrome/9.0.597.15 Safari/534.13"</span>,</div><div class="line">        <span class="string">"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_7_2) AppleWebKit/535.1 (KHTML, like Gecko) Chrome/14.0.835.186 Safari/535.1"</span>,</div><div class="line">        <span class="string">"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_6_8) AppleWebKit/535.2 (KHTML, like Gecko) Chrome/15.0.874.54 Safari/535.2"</span>,</div><div class="line">        <span class="string">"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_6_8) AppleWebKit/535.7 (KHTML, like Gecko) Chrome/16.0.912.36 Safari/535.7"</span>,</div><div class="line">        <span class="string">"Mozilla/5.0 (Macintosh; U; Mac OS X Mach-O; en-US; rv:2.0a) Gecko/20040614 Firefox/3.0.0 "</span>,</div><div class="line">        <span class="string">"Mozilla/5.0 (Macintosh; U; PPC Mac OS X 10.5; en-US; rv:1.9.0.3) Gecko/2008092414 Firefox/3.0.3"</span>,</div><div class="line">        <span class="string">"Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.5; en-US; rv:1.9.1) Gecko/20090624 Firefox/3.5"</span>,</div><div class="line">        <span class="string">"Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.6; en-US; rv:1.9.2.14) Gecko/20110218 AlexaToolbar/alxf-2.0 Firefox/3.6.14"</span>,</div><div class="line">        <span class="string">"Mozilla/5.0 (Macintosh; U; PPC Mac OS X 10.5; en-US; rv:1.9.2.15) Gecko/20110303 Firefox/3.6.15"</span>,</div><div class="line">        <span class="string">"Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:2.0.1) Gecko/20100101 Firefox/4.0.1"</span></div><div class="line">    ]</div></pre></td></tr></table></figure>
-<p><strong>第五步 设置setting.py</strong></p>
-<p>这一步要修改配置了</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line">DOWNLOADER_MIDDLEWARES = &#123;</div><div class="line">    <span class="comment"># 'ziru.middlewares.MyCustomDownloaderMiddleware': 543,</span></div><div class="line">    <span class="string">'ziru.middlewares.RotateUserAgentMiddleware'</span>:<span class="number">200</span>,</div><div class="line">    <span class="string">'scrapy.downloadermiddlewares.retry.RetryMiddleware'</span>: <span class="number">80</span>,</div><div class="line">    <span class="comment"># 'itjuzi_dis.middlewares.ProxyMiddleware': 90,</span></div><div class="line">    <span class="string">'scrapy.downloadermiddlewares.httpproxy.HttpProxyMiddleware'</span>: <span class="number">100</span>,</div><div class="line">&#125;</div><div class="line"></div><div class="line">ITEM_PIPELINES = &#123;</div><div class="line">    <span class="string">'ziru.pipelines.MongoDBPipeline'</span>: <span class="number">300</span>,</div><div class="line">    <span class="string">'scrapy_redis.pipelines.RedisPipeline'</span>: <span class="number">400</span>,</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">#使用Scrapy-Redis的调度器</span></div><div class="line">SCHEDULER = <span class="string">"scrapy_redis.scheduler.Scheduler"</span></div><div class="line"><span class="comment">#利用Redis的集合实现去重</span></div><div class="line">DUPEFILTER_CLASS = <span class="string">"scrapy_redis.dupefilter.RFPDupeFilter"</span></div><div class="line"><span class="comment">#允许继续爬取</span></div><div class="line">SCHEDULER_PERSIST = <span class="keyword">True</span></div><div class="line"><span class="comment">#设置优先级</span></div><div class="line">SCHEDULER_QUEUE_CLASS = <span class="string">'scrapy_redis.queue.SpiderPriorityQueue'</span></div><div class="line">REDIS_PARAMS = &#123;<span class="string">'host'</span>: <span class="string">'localhost'</span>, <span class="string">'port'</span>: <span class="string">'6379'</span>&#125;</div></pre></td></tr></table></figure>
-<p>好了，所有的配置全部部署完了，现在来启动spider来爬取数据吧！！</p>
-<blockquote>
-<p>scrapy crawl ziroom</p>
-</blockquote>
-<p><img src="http://m.qpic.cn/psb?/V10WDaE22S84Sl/Z4440zj2oYT8nndgHw*D8nneUQyvzidoskXf3zHI9.E!/b/dPMAAAAAAAAA&amp;bo=IAPMAQAAAAARB94!&amp;rf=viewer_4" alt=""></p>
-<p>spider启动，它在等待我们的指令来爬取</p>
-<p>打开redis-cli</p>
-<blockquote>
-<p>lpush ziroomspider:start_urls <a href="http://sh.ziroom.com/z/nl/z2.html?qwd=" target="_blank" rel="external">http://sh.ziroom.com/z/nl/z2.html?qwd=</a></p>
-</blockquote>
-<p><img src="http://m.qpic.cn/psb?/V10WDaE22S84Sl/A6Q6q0FfiRjUjyDCADt4ZOVPO3.BuvLtDyXBZCObz0Y!/b/dD8BAAAAAAAA&amp;bo=KwczAgAAAAADBz8!&amp;rf=viewer_4" alt=""></p>
-<p>我开了六个spider来爬取，电脑CPU有几个处理器就能开几个，我是8核，最多能开8个，接下来准备学习docker来部署spider</p>
-<p><a href="https://github.com/Family-TreeSY/SpiderList/blob/master/ziru/ziru/spiders/ziroom.py" target="_blank" rel="external">完整代码</a><br><a href="https://www.jianshu.com/u/a01bc3ec4f88" target="_blank" rel="external">简书</a><br>[欢迎访问Treehl的博客(<a href="https://family-treesy.github.io/" target="_blank" rel="external">https://family-treesy.github.io/</a>)</p>
-<p>最后放一个爬虫集合，是我最近学习Python写的，喜欢的亲！给个Star呗！！！<br><a href="https://github.com/Family-TreeSY/SpiderList" target="_blank" rel="external">SpiderList</a></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">PYTHON</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">MongoDB</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">爬虫</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Scrapy</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Redis</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">Scrapy-Redis</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/12/23/scrapy-redis(一)/">展开全文 >></a>
         </p>
       
 
@@ -2307,23 +2260,7 @@ getOwnMetadataKeys:function(t){return o(i(t),arguments.length<2?void 0:u(argumen
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">DailyQuestion</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">MongoDB</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Python</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">爬虫</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">BeautifulSoup</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2339,15 +2276,31 @@ getOwnMetadataKeys:function(t){return o(i(t),arguments.length<2?void 0:u(argumen
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Scrapy</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">Redis</a>
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Python</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">DailyQuestion</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">爬虫</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Scrapy</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">豆瓣</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">BeautifulSoup</a>
               </li>
              
               <li class="article-tag-list-item">
