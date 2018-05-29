@@ -173,459 +173,6 @@
           <div id="js-content" class="content-ll">
             
   
-    <article id="post-Redis数据结构" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/04/01/Redis数据结构/">Redis五种数据命令小结</a>
-    </h1>
-  
-
-        
-        <a href="/2018/04/01/Redis数据结构/" class="archive-article-date">
-  	<time datetime="2018-04-01T12:08:08.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-04-01</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="Redis数据结构"><a href="#Redis数据结构" class="headerlink" title="Redis数据结构"></a><strong>Redis数据结构</strong></h3><p>结构类型</p>
-<ol>
-<li>STRING</li>
-<li>LIST</li>
-<li>SET</li>
-<li>HASH</li>
-<li>ZSET（有序集合）</li>
-</ol>
-<p><strong>STRING</strong></p>
-<ol>
-<li>字符串存储一下3种类型的值<br>字符串<br>整数<br>浮点数</li>
-</ol>
-<ul>
-<li>GET（获取值）</li>
-<li>SET（设置值）</li>
-<li>DEL（删除值）</li>
-</ul>
-<p>redis的自增和自减命令</p>
-<ul>
-<li>INCR incr key-name —-将键存储的值加上1</li>
-<li>DECR decr key-name—-将键存储的值减去1</li>
-<li>INCRBY incrby key-name amount 将键存储的值加上整数amount</li>
-<li>DECRBY decrby key-name amount 将键存储的值减去整数amount</li>
-<li>INCRBYFLOAT incrby key-name amount 将键存储的值加上浮点数amount</li>
-</ul>
-<p>redis处理子串和二进制位的命令</p>
-<ul>
-<li>append（append key-name value——–将值value追加到给定键key-name当前存储的值的末尾）</li>
-<li>getrange（getrange key-name value———-获取一个由偏移量start至偏移量end范围内所有字符串组成的子串，包括start和end在内）</li>
-<li>setrange（setrange key-name offset value—–将从start偏移量开始的子串设置为给定值）</li>
-<li>getbit（getbit key-name offset 将字符串看作是二进制位串，并返回位串中偏移量位offset的二进制位的值）</li>
-<li>setbit（setbit key-name offset value———将字符串看作是二进制位串，并将位串中偏移量为offset的二进制位的值设置为value）</li>
-<li>bitcount</li>
-<li>bitop</li>
-</ul>
-<p>打开redis-cli</p>
-<p>设置键hello的值为world</p>
-<blockquote>
-<p>set hello world</p>
-</blockquote>
-<p>获取键hello的值</p>
-<blockquote>
-<p>get hello</p>
-</blockquote>
-<p><img src="http://m.qpic.cn/psb?/V10WDaE22S84Sl/HWteMrVannnp4EOqWJ1WJevzQA1zvpmyWP7uYFsT4NY!/b/dDABAAAAAAAA&amp;bo=LALjAAAAAAADB.8!&amp;rf=viewer_4" alt=""></p>
-<p>将键存储的值+1</p>
-<blockquote>
-<p>import redis<br> conn = redis.Redis()<br> conn.get(‘key’)<br>conn.incr(‘key’)<br>1<br> conn.incr(‘key’, 15)<br>16</p>
-</blockquote>
-<p><img src="http://m.qpic.cn/psb?/V10WDaE22S84Sl/HkAVFsObaaHGJcC.F2iDE60rQHyzcztXrTUJ1dJn8oo!/b/dDIBAAAAAAAA&amp;bo=XwHCAAAAAAADB74!&amp;rf=viewer_4" alt=""></p>
-<p>将键存储的值减去5</p>
-<blockquote>
-<p>conn.decr(‘key’, 5)<br>11</p>
-</blockquote>
-<p>先设置一个键,key=13，然后再incr自增</p>
-<blockquote>
-<p>conn.set(‘key’, ‘13’)<br>True<br>conn.incr(‘key’)<br>14</p>
-</blockquote>
-<p>将value追加到给出的键当前存储的值的末尾</p>
-<blockquote>
-<p> conn.append(‘new-string-key’, ‘hello’)<br>5<br> conn.append(‘new-string-key’, ‘world’)<br>10</p>
-</blockquote>
-<p>getrange获取从2开始到6结束范围内的所有子串</p>
-<blockquote>
-<p>conn.getrange(‘new-string-key’, 2, 6)<br>b’llowo’</p>
-</blockquote>
-<p>setrange 范围设置操作，在start索引位置替换字符串中已有的内容</p>
-<ul>
-<li>10表示当前字符串总长度<blockquote>
-<p>conn.setrange(‘new-string-key’, 0, ‘H’)<br>conn.setrange(‘new-string-key’, 6, ‘W’)<br>10</p>
-</blockquote>
-</li>
-</ul>
-<p>增长字符串长度</p>
-<blockquote>
-<p> conn.setrange(‘new-string-key’, 11, ‘, how are you?’)<br>25</p>
-</blockquote>
-<p>setbit<br>setbit key-name offset value</p>
-<blockquote>
-<p>conn.setbit(‘another-key’, 2, 1)<br>0<br>conn.setbit(‘another-key’, 7, 1)<br>0<br>conn.get(‘another-key’)<br>b’!’</p>
-</blockquote>
-<p><strong>LIST</strong></p>
-<ul>
-<li>RPUSH（将给定值推入列表的右端）</li>
-<li>LRANGE（获取列表在给定范围上的所有值）</li>
-<li>LINDEX（获取列表在给定位置上的单个元素）</li>
-<li>LPOP（从列表的左端删除一个值，并返回被删除的值）</li>
-<li>LTRIM （对列表进行修剪，只保留从start偏移量到end偏移量范围内的元素）</li>
-</ul>
-<p>阻塞式的列表弹出命令以及在列表之间移动元素的命令</p>
-<ul>
-<li>blpop </li>
-<li>brpop</li>
-<li>rpoplpush</li>
-<li>brpoplpush</li>
-</ul>
-<p>将键为list_key的值推入列表的右端</p>
-<blockquote>
-<p>rpush list_key treehl</p>
-</blockquote>
-<p>获取指定范围内的值</p>
-<ul>
-<li>使用0为范围的起始索引，-1为范围的结束索引，可以取出列表包含的所有元素<blockquote>
-<p>lrange list_key 0 -1</p>
-</blockquote>
-</li>
-</ul>
-<p>从列表中获取单个元素</p>
-<ul>
-<li>1 key后面的数字是索引，从0开始<blockquote>
-<p>lindex list_key 1</p>
-</blockquote>
-</li>
-</ul>
-<p>从列表中删除元素</p>
-<blockquote>
-<p>lpop list_key</p>
-</blockquote>
-<p>只保留起始索引到结束索引之间的元素</p>
-<blockquote>
-<p> conn.lrange(‘list-key’, 0, -1)<br>[b’a’, b’b’, b’c’]</p>
-</blockquote>
-<p>将一个元素从一个列表移动到另一个列表，并返回被移动的元素</p>
-<ul>
-<li>1表示timeout</li>
-</ul>
-<blockquote>
-<p>conn.brpoplpush(‘list2’, ‘list’, 1)<br>b’item6’</p>
-</blockquote>
-<p><strong>SET</strong></p>
-<ul>
-<li>SADD（将给定元素添加到集合）</li>
-<li>SMEMBER（返回集合包含的所有元素）</li>
-<li>SISMEMBER（检查给定元素是否存在于集合中）</li>
-<li>SREM（如果给定元素存在于集合中，那么移除这个元素）</li>
-<li>SCARD （返回集合包含的元素）</li>
-<li>SRANDMEMBER （从集合里面随机地返回一个或多个元素）</li>
-<li>SPOP （随机地移除集合中的一个元素，并返回被移除的元素）</li>
-<li>SMOVE smove source-key dest-key item</li>
-</ul>
-<p>用于组合和处理多个集合的Redis命令</p>
-<ul>
-<li>sdiff（差集）</li>
-<li>sdiffstore（差集，存储到dest-key中）</li>
-<li>sinter（交集）</li>
-<li>sinterstore （交集，存储到dest-key）</li>
-<li>sunion（并集）</li>
-<li>sunionstore（并集，存储到dest-key中）</li>
-</ul>
-<p>将键set-key值为item,item2……添加到集合</p>
-<blockquote>
-<p>sadd set-key item<br>sadd set-key item2<br>sadd set-key item3</p>
-</blockquote>
-<p>添加同样的值会添加不进去</p>
-<blockquote>
-<p>sadd set-key item2<br>(integer) 0</p>
-</blockquote>
-<p>返回集合包含的所有元素</p>
-<blockquote>
-<p>smembers set-key</p>
-</blockquote>
-<p>检查给出的元素是否存在集合中</p>
-<ul>
-<li><p>1代表元素在集合中</p>
-<blockquote>
-<p> sismember set-key item<br>(integer) 1</p>
-</blockquote>
-</li>
-<li><p>0代表所查找的元素不在集合中</p>
-<blockquote>
-<p> sismember set-key item5<br>(integer) 0</p>
-</blockquote>
-</li>
-</ul>
-<p>移除元素</p>
-<ul>
-<li>只有这个元素存在才会被移除</li>
-</ul>
-<blockquote>
-<p>srem set-key item2<br>(integer) 1</p>
-</blockquote>
-<p>将一个元素从一个集合移动到另一个集合</p>
-<ul>
-<li>将a元素从set-key中移动到set-key2中<blockquote>
-<p>conn.smove(‘set-key’, ‘set-key2’, ‘a’)</p>
-</blockquote>
-</li>
-</ul>
-<p>交集、并集、差集<br><img src="http://m.qpic.cn/psb?/V10WDaE22S84Sl/BNKB4kSo4wqOf1VBwCGgvn5wlVvfdkopcRnqBUT4128!/b/dEABAAAAAAAA&amp;bo=5wbdAAAAAAADBx4!&amp;rf=viewer_4" alt=""></p>
-<p><strong>HASH</strong></p>
-<ul>
-<li>可以存储多个键值对之间的映射</li>
-<li>存储值既可以是字符串也可以是数字值</li>
-</ul>
-<ol>
-<li>HSET 在散列里关联给出的键值对</li>
-<li>HGET 获取指定散列键的值</li>
-<li>HGETALL 获取散列包含的所有键值对</li>
-</ol>
-<p>添加和删除键值对的HASH操作</p>
-<ol>
-<li>HDEL 如果指定的键存在于散列中，那么删除这个键</li>
-<li>HLEN 返回散列包含的键值对数量</li>
-<li>HMGET 从散列里面获取一个或者多个键</li>
-<li>HMSET 为散列里面的一个或多个键设置值 </li>
-</ol>
-<p>redis散列的更高级特性</p>
-<ol>
-<li>hexists (检查给定键是否存在于散列中)</li>
-<li>hkeys （获取散列包含的所有键）</li>
-<li>hvals（获取散列包含的所有值）</li>
-<li>hgetall （获取散列包含的所有键值对）</li>
-<li>hincrby（将键key保存的值加上整数increment）</li>
-<li>hincrbyfloat（将键key保存的值加上浮点数）<br>关联给出的键值对</li>
-</ol>
-<blockquote>
-<p>hset hash-key shen 25<br>(integer) 1</p>
-<p>hset hash-key yang 25<br>(integer) </p>
-</blockquote>
-<p>获取所有键值对</p>
-<blockquote>
-<p>hgetall hash-key<br>1) “shen”<br>2) “25”<br>3) “yang”<br>4) “25”</p>
-</blockquote>
-<p>获取指定键的值</p>
-<blockquote>
-<p>hget hash-key yang<br>“25”</p>
-</blockquote>
-<p>将多个键值对添加到散列里面</p>
-<blockquote>
-<p>conn.hmset(‘hash-key’, {‘k1’:’v1’, ‘k2’: ‘v2’, ‘k3’: ‘v3’})</p>
-</blockquote>
-<p>获取多个键值对</p>
-<blockquote>
-<p> conn.hmget(‘hash-key’, [‘k2’, ‘k3’])</p>
-</blockquote>
-<p>获取键值对数量</p>
-<blockquote>
-<p>conn.hlen(‘hash-key’)</p>
-</blockquote>
-<p>获取散列包含的所有键</p>
-<blockquote>
-<p> conn.hkeys(‘hash-key2’)<br>[b’long’, b’short’]</p>
-</blockquote>
-<p>检查指定的键是否存在于散列中</p>
-<blockquote>
-<p> conn.hexists(‘hash-key2’, ‘num’)<br>False</p>
-</blockquote>
-<p>将键key保存的值加上整数increment</p>
-<blockquote>
-<p>conn.hincrby(‘hash-key2’, ‘num’)<br>1<br> conn.hexists(‘hash-key2’, ‘num’)<br>True</p>
-</blockquote>
-<p><strong>ZSET（有序集合）</strong></p>
-<ul>
-<li>有序集合和hash一样都是存储键值对（key:value）</li>
-<li>键被称为member，每一个都是独一无二的</li>
-<li>值被称为分值（SCORE），且必须为浮点数</li>
-</ul>
-<ol>
-<li>ZADD 将一个带有分值的成员添加到有序集合里面</li>
-<li>ZRANGE 根据元素在有序排列中所处的位置，从有序集合里面获取多个元素</li>
-<li>ZRANGEBYSCORE 获取有序集合在给定的分值范围内的所有元素</li>
-<li>ZREM 如果指定的成员存在于有序集合中，那么移除这个成员</li>
-<li>ZCARD 返回有序集合包含的成员数量</li>
-<li>ZINCRBY 将member成员的分值加上increment</li>
-<li>ZCOUNT 返回分值介于min和max之间的成员数量</li>
-<li>ZRANK 返回成员member在有序集合中的排名</li>
-<li>ZSCORE 返回成员member的分值</li>
-</ol>
-<p>有序集合的范围型数据获取命令和范围型数据删除命令以及并集和交集</p>
-<ol>
-<li>zrevrank（返回成员member所处的位置，成员按照分值从大到小排列）</li>
-<li>zrevrange（返回给定范围内的成员，成员按照分值从大到小排列）</li>
-<li>zrangebyscore（返回分值介于min和max之间的所有成员）</li>
-<li>zrevrangebyscore（获取分值介于min和max之间的所有成员，并按照分值从大到小的顺序来返回它们）</li>
-<li>zremrangebyrank（移除有序集合中排名介于start和stop之间的所有成员）</li>
-<li>zremrangebyscore（移除有序集合中分值介于min和max之间的所有成员）</li>
-<li>zinterstore（交集）</li>
-<li>zunionstore（并集）</li>
-</ol>
-<p>将几个带有分值的成员添加到有序集合中</p>
-<blockquote>
-<p>zadd zset-key 888 treehl<br>(integer) 1</p>
-</blockquote>
-<p>获取有序集合中的元素</p>
-<ul>
-<li>0 -1 表示获取所有元素</li>
-<li>withcores表示获取分值并按分值大小进行排序</li>
-</ul>
-<blockquote>
-<p> zrange zset-key 0 -1 withscores<br>1) “hao”<br>2) “666”<br>3) “treehl”<br>4) “888”<br>5) “yang”<br>6) “999”</p>
-</blockquote>
-<p>获取给定的分支范围内的元素</p>
-<blockquote>
-<p>zrangebyscore zset-key 0 889 withscores</p>
-</blockquote>
-<ul>
-<li>hao 999 就包含在内了</li>
-</ul>
-<p>1) “hao”<br>2) “666”<br>3) “treehl”<br>4) “888”</p>
-<p>删除成员</p>
-<blockquote>
-<p> zrem zset-key hao<br>(integer) 1</p>
-</blockquote>
-<hr>
-<p>在python客户端输入有序集合应该写输入成员再输入分值与redis-cli上的输入是有区别的</p>
-<blockquote>
-<p>conn.zadd(‘zset-key’, ‘a’, 3, ‘b’, 2, ‘c’, 1)<br>3</p>
-</blockquote>
-<p>查看成员数量</p>
-<blockquote>
-<p>conn.zcard(‘zset-key’)<br>3</p>
-</blockquote>
-<p>自增操作</p>
-<blockquote>
-<p> conn.zincrby(‘zset-key’, ‘c’, 3)<br>4.0</p>
-</blockquote>
-<p>返回成员分值</p>
-<blockquote>
-<p>conn.zscore(‘zset-key’, ‘b’)<br>3.0</p>
-</blockquote>
-<p>返回成员的排名</p>
-<blockquote>
-<p>conn.zrank(‘zset-key’, ‘c’)<br>2</p>
-</blockquote>
-<p>返回介于min 和 max之间的成员数量</p>
-<blockquote>
-<p> conn.zcount(‘zset-key’, 0, 3)<br>2</p>
-</blockquote>
-<p>移除指定成员</p>
-<blockquote>
-<p> conn.zrem(‘zset-key’, ‘b’)<br>1</p>
-</blockquote>
-<p>返回start和stop之间的成员</p>
-<blockquote>
-<p>conn.zrange(‘zset-key’, 0, -1, withscores=True)<br>[(b’a’, 3.0), (b’c’, 4.0)]</p>
-</blockquote>
-<hr>
-<p> 对集合做交集</p>
-<blockquote>
-<p> conn.zinterstore(‘zset-i’, [‘zset-1’, ‘zset-2’])<br>2</p>
-</blockquote>
-<p> 根据元素在有序排列中所处的位置，从有序集合里面获取多个元素</p>
-<blockquote>
-<p>conn.zrange(‘zset-i’, 0, -1, withscores=True)<br>[(b’c’, 4.0), (b’b’, 6.0)]</p>
-</blockquote>
-<p>对集合做并集</p>
-<blockquote>
-<p>conn.zunionstore(‘zset-u’, [‘zset-1’, ‘zset-2’], aggregate=’min’)<br>4</p>
-<p>conn.zrange(‘zset-u’, 0, -1, withscores=True)<br>[(b’d’, 0.0), (b’a’, 1.0), (b’c’, 1.0), (b’b’, 2.0)]</p>
-</blockquote>
-<p><strong>发布与订阅</strong><br>发布与订阅的命令</p>
-<ul>
-<li>subscribe （订阅给定的一个或多个频道）</li>
-<li>unsubscribe（退订给定的一个或多个频道，如果执行时没有给定任何频道，那么退订所有频道）</li>
-<li>publish（像给定的频道发送消息）</li>
-<li>psubscribe （订阅与给定模式相匹配的所有频道）</li>
-<li>pubsubscribe（退订给定的模式，如果执行时没有给定任何模式，那么退订所有模式）</li>
-</ul>
-<p><strong>其他命令</strong><br>排序-sort</p>
-<blockquote>
-<p> conn.rpush(‘sort-input’, 23, 15, 110, 17)<br>4<br> conn.sort(‘sort-input’)   #升序<br>[b’15’, b’17’, b’23’, b’110’]</p>
-</blockquote>
-<p>降序</p>
-<blockquote>
-<p> conn.sort(‘sort-input’, alpha=True)<br>[b’110’, b’15’, b’17’, b’23’]</p>
-</blockquote>
-<p><strong>键的过期和时间</strong><br>用于处理过期时间的Redis命令</p>
-<ul>
-<li>persist（移除键过期时间）</li>
-<li>ttl（查看给定键距离过期还有多少秒）</li>
-<li>expire（让给定键在指定的秒数之后过期）</li>
-<li>expireat（将给定的过期时间设置为给定的UNIX时间戳）</li>
-<li>pttl（查看给定键距离过期时间还有多少毫秒）</li>
-<li>pexpire（指定的键在指定的毫秒数之后过期）</li>
-<li>pexpireat（将一个毫秒级精度的UNIX时间戳设置为给定键的过期时间）</li>
-</ul>
-<blockquote>
-<p>conn.expire(‘key’, 100); conn.ttl(‘key’)<br>True<br>100</p>
-</blockquote>
-<p><a href="https://github.com/Family-TreeSY" target="_blank" rel="external">GitHub</a><br>欢迎访问博客<a href="https://github.com/Family-TreeSY" target="_blank" rel="external">Treehl的博客</a></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Redis</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/04/01/Redis数据结构/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
     <article id="post-MYSQL小结" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -1827,15 +1374,15 @@
         		</li>
       		 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Redis</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
         			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">爬虫</a>
         		</li>
       		 
         		<li class="article-tag-list-item">
         			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Scrapy</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Redis</a>
         		</li>
       		 
         		<li class="article-tag-list-item">
@@ -1961,15 +1508,15 @@
         		</li>
       		 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Redis</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
         			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">爬虫</a>
         		</li>
       		 
         		<li class="article-tag-list-item">
         			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Scrapy</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Redis</a>
         		</li>
       		 
         		<li class="article-tag-list-item">
@@ -2234,6 +1781,107 @@
 
 
   
+    <article id="post-拉钩" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/12/09/拉钩/">爬取拉钩上海Python职位信息并存入MongoDB数据库</a>
+    </h1>
+  
+
+        
+        <a href="/2017/12/09/拉钩/" class="archive-article-date">
+  	<time datetime="2017-12-09T08:48:23.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-12-09</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>昨天准备爬拉钩的python职位数据，用了老办法bs4+requests发现数据是空的，心情so down！！经过网上的查询才明白，拉钩使用Ajax技术，用bs4查找html元素是找不到数据的。今天我总结下学习过程，也算是巩固自己的知识了！！！</p>
+<h4 id="分析网页"><a href="#分析网页" class="headerlink" title="分析网页"></a><strong>分析网页</strong></h4><p>登陆<a href="https://www.lagou.com/jobs/list_Python?px=default&amp;city=%E4%B8%8A%E6%B5%B7#filterBox" target="_blank" rel="external">拉钩网站</a>，打开开发者功能<br><img src="http://m.qpic.cn/psb?/V10WDaE22S84Sl/55E3RI.cKYuEKspD3Ek08He5MisOZ14cWyuPca.kxCo!/b/dPMAAAAAAAAA&amp;bo=mAaAAgAAAAADBz4!&amp;rf=viewer_4" alt=""></p>
+<p>我们先用requests发送请求并保存一个html，来查看数据</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> requests</div><div class="line"><span class="keyword">import</span> random </div><div class="line"></div><div class="line">user_agents = [</div><div class="line"><span class="string">'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/61.0.3163.100 Safari/537.36'</span>,</div><div class="line">    <span class="string">'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.2995.0 Safari/537.36'</span>,</div><div class="line">    <span class="string">'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/57.0.2986.0 Safari/537.36'</span>,</div><div class="line">    <span class="string">'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.0 Safari/537.36'</span>,</div><div class="line">    <span class="string">'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.0 Safari/537.36'</span>,</div><div class="line">    <span class="string">'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.0 Safari/537.36'</span>,</div><div class="line">    <span class="string">'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.0 Safari/537.36'</span>,</div><div class="line">    <span class="string">'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/52.0.2743.0 Safari/537.36'</span>,</div><div class="line">    <span class="string">'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/51.0.2704.0 Safari/537.36'</span>,</div><div class="line">    <span class="string">'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.0 Safari/537.36'</span>,</div><div class="line">    <span class="string">'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/49.0.2623.0 Safari/537.36'</span>,</div><div class="line">    <span class="string">'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/48.0.2564.0 Safari/537.36'</span></div><div class="line">]</div><div class="line"></div><div class="line">headers = &#123;</div><div class="line">    <span class="string">'Host'</span>: <span class="string">'www.lagou.com'</span>,</div><div class="line">    <span class="string">'Referer'</span>: <span class="string">'https://www.lagou.com/zhaopin/Python/?labelWords=label'</span>,</div><div class="line">    <span class="string">'Upgrade-Insecure-Requests'</span>: <span class="string">'1'</span>,</div><div class="line">    <span class="string">'User-Agent'</span>: random.choice(user_agents)</div><div class="line">&#125;</div><div class="line"></div><div class="line">url = <span class="string">'https://www.lagou.com/jobs/list_Python?px=default&amp;city=%E4%B8%8A%E6%B5%B7#filterBox'</span></div><div class="line">r = requests.get(url, headers=headers)</div><div class="line">result = r.text</div><div class="line"><span class="comment">#print(r.text)</span></div><div class="line"><span class="comment"># 写入logou.html</span></div><div class="line"><span class="keyword">with</span> open(<span class="string">'laogou.html'</span>, <span class="string">'w'</span>, encoding=<span class="string">'utf-8'</span>) <span class="keyword">as</span> f:</div><div class="line">    f.write(result)</div></pre></td></tr></table></figure>
+<p>运行代码试一下，代开<strong>lagou.html</strong>，我们看到职位信息数据是没有的<br><img src="http://a1.qpic.cn/psb?/V10WDaE22S84Sl/uQuWJAg5dAiY2UWEKkJBpK*bagFQwM19Cu2FnF2QNQU!/b/dD4BAAAAAAAA&amp;bo=UQWAAgAAAAADAPM!&amp;rf=viewer_4" alt=""></p>
+<p>接下来，我们再观察下Chrome开发者工具的NetWork一栏，类型选择XHR，找到下面这个链接,我们可以看到有Ajax、Json几个关键字，点击Preview</p>
+<p><img src="http://m.qpic.cn/psb?/V10WDaE22S84Sl/Mpj5Tev3Cwtp7IYHiijrmXv9qOZlAVz1QrZj2HquI8U!/b/dPMAAAAAAAAA&amp;bo=pASZAQAAAAADBxo!&amp;rf=viewer_4" alt=""></p>
+<p>按顺序分别点开红框，就得到我们想要的数据啦</p>
+<p><img src="http://m.qpic.cn/psb?/V10WDaE22S84Sl/1KAkn*zEtrjqo.1Dbq1h9QHce8c5R7FYF*3xiStUOzQ!/b/dPMAAAAAAAAA&amp;bo=PwZlAgAAAAADB3w!&amp;rf=viewer_4" alt=""></p>
+<p>现在来试着写一下，注意这里的请求是post，带上表单，改变请求头的数据</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">data = &#123;</div><div class="line">    <span class="string">'first'</span>: <span class="string">'true'</span>,</div><div class="line">    <span class="string">'pn'</span>: <span class="number">1</span>,</div><div class="line">    <span class="string">'kd'</span>: <span class="string">'Python'</span></div><div class="line">&#125;</div><div class="line"></div><div class="line">r = requests.post(url, headers=headers, data=data).json()</div><div class="line">positions = r[<span class="string">'content'</span>][<span class="string">'positionResult'</span>][<span class="string">'result'</span>]</div><div class="line">print(positions)</div></pre></td></tr></table></figure>
+<p>Run一下，返回的数据就是我们想要的啦！！！</p>
+<p><img src="http://m.qpic.cn/psb?/V10WDaE22S84Sl/VLnBV*h2*U43BwOhXQxAyrDtDU5yWgPc864UKmaD0b4!/b/dPIAAAAAAAAA&amp;bo=9AYYAgAAAAADB8o!&amp;rf=viewer_4" alt=""></p>
+<h3 id="翻页"><a href="#翻页" class="headerlink" title="翻页"></a><strong>翻页</strong></h3><p>我们观察下表单内有一个<strong>pn</strong>参数，这就是页码，大家可以跳转页面来观察下数据的变化</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1</span>, <span class="number">17</span>):</div><div class="line">    data = &#123;</div><div class="line">        <span class="string">'first'</span>: <span class="string">'true'</span>,</div><div class="line">        <span class="string">'pn'</span>: i,</div><div class="line">        <span class="string">'kd'</span>: <span class="string">'Python'</span></div><div class="line">    &#125;</div><div class="line"></div><div class="line">url = <span class="string">'https://www.lagou.com/jobs/positionAjax.json?px=default&amp;city=%E4%B8%8A%E6%B5%B7&amp;needAddtionalResult=false&amp;isSchoolJob=0'</span></div><div class="line"></div><div class="line">r = requests.post(url,  headers=headers, data=data)</div><div class="line">time.sleep(<span class="number">3</span>)</div><div class="line">print(json.url)</div></pre></td></tr></table></figure>
+<p>这样就把16页链接都打印了出来</p>
+<p><img src="http://m.qpic.cn/psb?/V10WDaE22S84Sl/pDUdhhMX7j*HiKhASQdQdnG8s9nBXMPodvVDID.0j4o!/b/dD4BAAAAAAAA&amp;bo=QQSkAQAAAAADB8I!&amp;rf=viewer_4" alt=""></p>
+<p>最后，附上一张爬下来的数据截图<br><img src="http://m.qpic.cn/psb?/V10WDaE22S84Sl/UmfqEZuGM.GPGl.MbGKIs1bRWhdaFJQ6KfGnnDZ3qZk!/b/dPMAAAAAAAAA&amp;bo=cwOAAgAAAAADB9A!&amp;rf=viewer_4" alt=""></p>
+<p>爬取拉钩的思路就是这样，完整代码在GitHub，欢迎大家访问！！！！！！！假如觉得有用点个<strong>Star</strong>噢！！互勉！！！！！！！！！！</p>
+<p>欢迎访问博客<a href="https://family-treesy.github.io/" target="_blank" rel="external">Treehl的博客</a><br><a href="https://github.com/Family-TreeSY/SpiderList/blob/master/lagou/lagou_spider.py" target="_blank" rel="external">GitHub</a><br><a href="http://www.jianshu.com/u/a01bc3ec4f88" target="_blank" rel="external">简书</a></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">PYTHON</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">MongoDB</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">爬虫</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2017/12/09/拉钩/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
   
     <nav id="page-nav">
       <a class="extend prev" rel="prev" href="/page/2/">&laquo; Prev</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><a class="page-number" href="/page/5/">5</a><a class="page-number" href="/page/6/">6</a><a class="extend next" rel="next" href="/page/4/">Next &raquo;</a>
@@ -2331,22 +1979,6 @@ getOwnMetadataKeys:function(t){return o(i(t),arguments.length<2?void 0:u(argumen
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Python</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">PYTHON</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">MongoDB</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">DailyQuestion</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">Git</a>
               </li>
              
@@ -2355,11 +1987,23 @@ getOwnMetadataKeys:function(t){return o(i(t),arguments.length<2?void 0:u(argumen
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">PYTHON</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">DailyQuestion</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">MongoDB</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">MySQL</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Redis</a>
+                <a href="javascript:void(0)" class="js-tag color2">Python</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2375,11 +2019,15 @@ getOwnMetadataKeys:function(t){return o(i(t),arguments.length<2?void 0:u(argumen
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">豆瓣</a>
+                <a href="javascript:void(0)" class="js-tag color1">Redis</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">Scrapy-Redis</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">豆瓣</a>
               </li>
              
               <li class="article-tag-list-item">
