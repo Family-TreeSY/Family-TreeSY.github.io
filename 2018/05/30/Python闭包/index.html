@@ -8,18 +8,18 @@
   <link rel="dns-prefetch" href="//Family-TreeSY.github.io">
   <title>闭包 | Treehl的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="Changing &amp; Building">
+  <meta name="description" content="Python闭包 参考自廖雪峰的Python教程  在理解闭包之前，我们需要先理解 变量是可以指向函数的，同时函数也是变量。这里我们使用绝对值函数作为示例，我们把abs函数赋值给变量f，f也就有了abs函数的功能 12345678910111213In [40]: abs(-10)Out[40]: 10In [41]: absOut[41]: &amp;lt;function abs&amp;gt;In [42]">
 <meta name="keywords" content="Python">
 <meta property="og:type" content="article">
 <meta property="og:title" content="闭包">
-<meta property="og:url" content="//Family-TreeSY.github.io/2018/05/30/闭包/index.html">
+<meta property="og:url" content="//Family-TreeSY.github.io/2018/05/30/Python闭包/index.html">
 <meta property="og:site_name" content="Treehl的博客">
-<meta property="og:description" content="Changing &amp; Building">
+<meta property="og:description" content="Python闭包 参考自廖雪峰的Python教程  在理解闭包之前，我们需要先理解 变量是可以指向函数的，同时函数也是变量。这里我们使用绝对值函数作为示例，我们把abs函数赋值给变量f，f也就有了abs函数的功能 12345678910111213In [40]: abs(-10)Out[40]: 10In [41]: absOut[41]: &amp;lt;function abs&amp;gt;In [42]">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-05-30T13:25:09.973Z">
+<meta property="og:updated_time" content="2018-05-31T01:59:49.526Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="闭包">
-<meta name="twitter:description" content="Changing &amp; Building">
+<meta name="twitter:description" content="Python闭包 参考自廖雪峰的Python教程  在理解闭包之前，我们需要先理解 变量是可以指向函数的，同时函数也是变量。这里我们使用绝对值函数作为示例，我们把abs函数赋值给变量f，f也就有了abs函数的功能 12345678910111213In [40]: abs(-10)Out[40]: 10In [41]: absOut[41]: &amp;lt;function abs&amp;gt;In [42]">
   
     <link rel="alternative" href="/atom.xml" title="Treehl的博客" type="application/atom+xml">
   
@@ -173,7 +173,7 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-闭包" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-Python闭包" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
@@ -185,7 +185,7 @@
   
 
         
-        <a href="/2018/05/30/闭包/" class="archive-article-date">
+        <a href="/2018/05/30/Python闭包/" class="archive-article-date">
   	<time datetime="2018-05-30T13:24:50.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-05-30</time>
 </a>
         
@@ -193,7 +193,28 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        
+        <h4 id="Python闭包"><a href="#Python闭包" class="headerlink" title="Python闭包"></a><strong>Python闭包</strong></h4><blockquote>
+<p>参考自廖雪峰的Python教程</p>
+</blockquote>
+<p>在理解闭包之前，我们需要先理解 <strong>变量是可以指向函数的，同时函数也是变量</strong>。<br>这里我们使用绝对值函数作为示例，我们把abs函数赋值给变量f，f也就有了abs函数的功能</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">In [<span class="number">40</span>]: abs(<span class="number">-10</span>)</div><div class="line">Out[<span class="number">40</span>]: <span class="number">10</span></div><div class="line"></div><div class="line">In [<span class="number">41</span>]: abs</div><div class="line">Out[<span class="number">41</span>]: &lt;function abs&gt;</div><div class="line"></div><div class="line">In [<span class="number">42</span>]: f = abs</div><div class="line"></div><div class="line">In [<span class="number">43</span>]: f(<span class="number">-10</span>)</div><div class="line">Out[<span class="number">43</span>]: <span class="number">10</span></div><div class="line"></div><div class="line">In [<span class="number">44</span>]: f</div><div class="line">Out[<span class="number">44</span>]: &lt;function abs&gt;</div></pre></td></tr></table></figure>
+<p>再写一个示例</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">In [<span class="number">45</span>]: <span class="function"><span class="keyword">def</span> <span class="title">example</span><span class="params">(x)</span>:</span></div><div class="line">    ...:     <span class="keyword">return</span> x * x</div><div class="line">    ...:</div><div class="line"></div><div class="line">In [<span class="number">46</span>]: f = example</div><div class="line"></div><div class="line">In [<span class="number">47</span>]: f</div><div class="line">Out[<span class="number">47</span>]: &lt;function __main__.example&gt;</div><div class="line"></div><div class="line">In [<span class="number">48</span>]: f(<span class="number">10</span>)</div><div class="line">Out[<span class="number">48</span>]: <span class="number">100</span></div></pre></td></tr></table></figure>
+<p><strong>函数也可以作为结果值返回</strong></p>
+<p>这里以一个求和函数为例子</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">In [<span class="number">1</span>]: <span class="function"><span class="keyword">def</span> <span class="title">add_sum</span><span class="params">(*args)</span>:</span></div><div class="line">   ...:     x = <span class="number">0</span></div><div class="line">   ...:     <span class="keyword">for</span> n <span class="keyword">in</span> args:</div><div class="line">   ...:         x = x + n</div><div class="line">   ...:     <span class="keyword">return</span> x</div><div class="line">   ...:</div><div class="line"></div><div class="line">In [<span class="number">2</span>]: add_sum(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>)</div><div class="line">Out[<span class="number">2</span>]: <span class="number">21</span></div></pre></td></tr></table></figure>
+<p>这里写个函数它不马上返回求和结果，而是返回求和函数！外部函数add_sum有内嵌函数sum，内嵌函数sum使用了外部函数add_sum的参数args，外部函数的返回值是内嵌函数sum，当我们调用add_sum的时候返回的不是求和结果而是求和函数，调用函数f()时候才是求和结果！！！这种就是闭包（Closure）</p>
+<p>创建闭包必须满足以下三点：</p>
+<ul>
+<li>必须有一个内嵌函数</li>
+<li>内嵌函数必须引用外部函数的参数和变量</li>
+<li>外部函数的返回值必须是内嵌函数</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">In [<span class="number">4</span>]: <span class="function"><span class="keyword">def</span> <span class="title">add_sum</span><span class="params">(*args)</span>:</span></div><div class="line">   ...:     <span class="function"><span class="keyword">def</span> <span class="title">sum</span><span class="params">()</span>:</span></div><div class="line">   ...:         x = <span class="number">0</span></div><div class="line">   ...:         <span class="keyword">for</span> n <span class="keyword">in</span> args:</div><div class="line">   ...:             x = x + n</div><div class="line">   ...:         <span class="keyword">return</span> x</div><div class="line">   ...:     <span class="keyword">return</span> sum</div><div class="line">   ...:</div><div class="line"></div><div class="line">In [<span class="number">5</span>]: add_sum(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>)</div><div class="line">Out[<span class="number">5</span>]: &lt;function __main__.add_sum.&lt;locals&gt;.sum&gt;</div><div class="line"></div><div class="line">In [<span class="number">6</span>]: f = add_sum(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>)</div><div class="line"></div><div class="line">In [<span class="number">7</span>]: f</div><div class="line">Out[<span class="number">7</span>]: &lt;function __main__.add_sum.&lt;locals&gt;.sum&gt;</div><div class="line"></div><div class="line">In [<span class="number">8</span>]: f()</div><div class="line">Out[<span class="number">8</span>]: <span class="number">21</span></div></pre></td></tr></table></figure>
+<p>当我们调用add_sum时每次返回的都是一个新的函数，f1和f2的调用结果互不影响</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">In [<span class="number">15</span>]: f1 = add_sum(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>,)</div><div class="line"></div><div class="line">In [<span class="number">16</span>]: f2 = add_sum(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>)</div><div class="line"></div><div class="line">In [<span class="number">17</span>]: f1 == f2</div><div class="line">Out[<span class="number">17</span>]: <span class="keyword">False</span></div><div class="line"></div><div class="line">In [<span class="number">18</span>]: f1()</div><div class="line">Out[<span class="number">18</span>]: <span class="number">21</span></div><div class="line"></div><div class="line">In [<span class="number">19</span>]: f2()</div><div class="line">Out[<span class="number">19</span>]: <span class="number">21</span></div></pre></td></tr></table></figure>
+<p>欢迎访问<a href="https://family-treesy.github.io/" target="_blank" rel="external">Treehl的博客</a><br><a href="https://github.com/Family-TreeSY/Python-Study-Notes" target="_blank" rel="external">Github</a></p>
+
       
 
       
@@ -293,7 +314,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="http://s.jiathis.com/qrcode.php?url=http://Family-TreeSY.github.io/2018/05/30/闭包/" alt="微信分享二维码">
+      <img src="http://s.jiathis.com/qrcode.php?url=http://Family-TreeSY.github.io/2018/05/30/Python闭包/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -307,9 +328,18 @@
   
 <nav id="article-nav">
   
+    <a href="/2018/05/30/装饰器/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          什么是装饰器
+        
+      </div>
+    </a>
   
-    <a href="/2018/05/30/什么是装饰器/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">什么是装饰器</div>
+  
+    <a href="/2018/05/30/函数式编程/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">函数式编程工具</div>
       <i class="icon-circle-right"></i>
     </a>
   
@@ -446,11 +476,11 @@ getOwnMetadataKeys:function(t){return o(i(t),arguments.length<2?void 0:u(argumen
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">MongoDB</a>
+                <a href="javascript:void(0)" class="js-tag color4">DailyQuestion</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">DailyQuestion</a>
+                <a href="javascript:void(0)" class="js-tag color3">MongoDB</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -478,11 +508,11 @@ getOwnMetadataKeys:function(t){return o(i(t),arguments.length<2?void 0:u(argumen
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Scrapy</a>
+                <a href="javascript:void(0)" class="js-tag color1">Redis</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Redis</a>
+                <a href="javascript:void(0)" class="js-tag color2">Scrapy</a>
               </li>
              
               <li class="article-tag-list-item">
