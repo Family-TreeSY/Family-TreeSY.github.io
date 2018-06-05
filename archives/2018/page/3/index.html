@@ -6,20 +6,18 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="//Family-TreeSY.github.io">
-  <title>Scrapy-Redis分布式爬取链家上海17个区房源信息（二） | Treehl的博客</title>
+  <title>Archives: 2018 | Treehl的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="免责声明：本项目旨在学习Scrapy爬虫框架和MongoDB数据库，不可使用于商业和个人其他意图。若使用不当，均由个人承担。  ###简介之前用requests + bs4 抓取过宝山区的房源信息，今天我们用scrapy-redis分布式抓取上海17个区所有的房源信息，这个工程比起上一个scrapy-redis抓取自如网/)，增加了如下功能：  创建了imagepipeline管道，抓取房型图">
-<meta name="keywords" content="PYTHON,MongoDB,爬虫,Scrapy,Redis,Scrapy-Redis">
-<meta property="og:type" content="article">
-<meta property="og:title" content="Scrapy-Redis分布式爬取链家上海17个区房源信息（二）">
-<meta property="og:url" content="//Family-TreeSY.github.io/2018/01/10/scrapy-redis(二)/index.html">
+  <meta name="description" content="Changing &amp; Building">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Treehl的博客">
+<meta property="og:url" content="//Family-TreeSY.github.io/archives/2018/page/3/index.html">
 <meta property="og:site_name" content="Treehl的博客">
-<meta property="og:description" content="免责声明：本项目旨在学习Scrapy爬虫框架和MongoDB数据库，不可使用于商业和个人其他意图。若使用不当，均由个人承担。  ###简介之前用requests + bs4 抓取过宝山区的房源信息，今天我们用scrapy-redis分布式抓取上海17个区所有的房源信息，这个工程比起上一个scrapy-redis抓取自如网/)，增加了如下功能：  创建了imagepipeline管道，抓取房型图">
+<meta property="og:description" content="Changing &amp; Building">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-01-10T04:33:43.177Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Scrapy-Redis分布式爬取链家上海17个区房源信息（二）">
-<meta name="twitter:description" content="免责声明：本项目旨在学习Scrapy爬虫框架和MongoDB数据库，不可使用于商业和个人其他意图。若使用不当，均由个人承担。  ###简介之前用requests + bs4 抓取过宝山区的房源信息，今天我们用scrapy-redis分布式抓取上海17个区所有的房源信息，这个工程比起上一个scrapy-redis抓取自如网/)，增加了如下功能：  创建了imagepipeline管道，抓取房型图">
+<meta name="twitter:title" content="Treehl的博客">
+<meta name="twitter:description" content="Changing &amp; Building">
   
     <link rel="alternative" href="/atom.xml" title="Treehl的博客" type="application/atom+xml">
   
@@ -173,101 +171,36 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-scrapy-redis(二)" class="article article-type-post " itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
+            
   
-    <h1 class="article-title" itemprop="name">
-      Scrapy-Redis分布式爬取链家上海17个区房源信息（二）
+  
+    
+    
+      
+      
+      <section class="archives-wrap">
+        <div class="archive-year-wrap">
+          <a href="/archives/2018" class="archive-year">2018</a>
+        </div>
+        <div class="archives">
+    
+    <article class="archive-article archive-type-post">
+  <div class="archive-article-inner">
+    <header class="archive-article-header">
+      	<div class="article-meta">
+	      	<a href="/2018/01/10/scrapy-redis(二)/" class="archive-article-date">
+  	<time datetime="2018-01-10T02:32:23.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-01-10</time>
+</a>
+        </div>
+    	 
+  
+    <h1 itemprop="name">
+      <a class="archive-article-title" href="/2018/01/10/scrapy-redis(二)/">Scrapy-Redis分布式爬取链家上海17个区房源信息（二）</a>
     </h1>
   
 
-        
-        <a href="/2018/01/10/scrapy-redis(二)/" class="archive-article-date">
-  	<time datetime="2018-01-10T02:32:23.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-01-10</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <blockquote>
-<p>免责声明：本项目旨在学习Scrapy爬虫框架和MongoDB数据库，不可使用于商业和个人其他意图。若使用不当，均由个人承担。</p>
-</blockquote>
-<p>###<strong>简介</strong><br>之前用requests + bs4 抓取过宝山区的房源信息，今天我们用scrapy-redis分布式抓取上海17个区所有的房源信息，这个工程比起上一个<a href="https://family-treesy.github.io/2017/12/23/scrapy-redis(%E4%B8%80" target="_blank" rel="external">scrapy-redis抓取自如网</a>/)，增加了如下功能：</p>
-<ul>
-<li>创建了imagepipeline管道，抓取房型图</li>
-<li>输出csv指定了列顺序</li>
-</ul>
-<p>这次只总结学习以上两点内容，关于scrapy-redis的实现，有兴趣可以看第一篇<a href="https://family-treesy.github.io/2017/12/23/scrapy-redis(%E4%B8%80" target="_blank" rel="external">自如</a>/)</p>
-<p>###<strong>所需要的库</strong></p>
-<ul>
-<li>scrapy</li>
-<li>scrapy-redis</li>
-<li>mongodb</li>
-<li>redis</li>
-</ul>
-<h3 id="使用图片管道"><a href="#使用图片管道" class="headerlink" title="使用图片管道"></a><strong>使用图片管道</strong></h3><p>新建一个imagepipeline来抓取房型图，这里说下流程</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> scrapy.pipelines.images <span class="keyword">import</span> ImagesPipeline</div><div class="line"><span class="keyword">from</span> scrapy.exceptions <span class="keyword">import</span> DropItem</div><div class="line"><span class="keyword">from</span> scrapy <span class="keyword">import</span> Request</div><div class="line"><span class="keyword">import</span> os</div><div class="line"></div><div class="line">PROJECT_DIR = os.path.abspath(os.path.dirname(__file__))</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyImagesPipeline</span><span class="params">(ImagesPipeline)</span>:</span></div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">get_media_requests</span><span class="params">(self, item, info)</span>:</span></div><div class="line">        <span class="keyword">for</span> image_url <span class="keyword">in</span> item[<span class="string">'image_urls'</span>]:</div><div class="line">            <span class="keyword">yield</span> Request(image_url, meta=&#123;<span class="string">'item'</span>:item,<span class="string">'index'</span>:item[<span class="string">'image_urls'</span>].index(image_url)&#125;)</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">item_completed</span><span class="params">(self, results, item, info)</span>:</span></div><div class="line">        image_paths = [x[<span class="string">'path'</span>] <span class="keyword">for</span> ok, x <span class="keyword">in</span> results <span class="keyword">if</span> ok]</div><div class="line">        <span class="comment"># image_paths = os.path.join(PROJECT_DIR,'media/lianjia_image')</span></div><div class="line">        <span class="keyword">if</span> <span class="keyword">not</span> image_paths:</div><div class="line">            <span class="keyword">raise</span> DropItem(<span class="string">"Item contains no images"</span>)</div><div class="line">        item[<span class="string">'image_paths'</span>] = image_paths</div><div class="line">        <span class="keyword">return</span> item</div></pre></td></tr></table></figure>
-<p>在items.py中添加image_urls、image_paths<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">image_urls = scrapy.Field()</div><div class="line"></div><div class="line">image_paths = scrapy.Field()</div></pre></td></tr></table></figure></p>
-<p>在setting.py中设置如下</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line"> 图片尺寸</div><div class="line">IMAGES_THUMBS = &#123;</div><div class="line">    <span class="string">'small'</span>: (<span class="number">50</span>, <span class="number">50</span>),</div><div class="line">    <span class="string">'big'</span>: (<span class="number">270</span>, <span class="number">270</span>),</div><div class="line">&#125;</div><div class="line"></div><div class="line">IMAGES_URLS_FIELD = <span class="string">"image_urls"</span></div><div class="line"></div><div class="line"><span class="comment">#获取当前运行脚本的绝对路径（去掉最后一个路径),获取当前爬虫项目的绝对路径</span></div><div class="line">PROJECT_DIR = os.path.abspath(os.path.dirname(__file__))</div><div class="line"></div><div class="line"></div><div class="line"><span class="comment"># 7天的图片失效期限</span></div><div class="line">IMAGES_EXPIRES = <span class="number">7</span></div><div class="line"></div><div class="line"><span class="comment"># 图片存储路径</span></div><div class="line">IMAGES_STORE = os.path.join(PROJECT_DIR,<span class="string">'media/lianjia_image'</span>)</div><div class="line"></div><div class="line">ITEM_PIPELINES = &#123;</div><div class="line">    <span class="comment"># 'lianjia.pipelines.LianjiaPipeline': 300,</span></div><div class="line">    <span class="string">'lianjia.pipelines.lianjia_image.MyImagesPipeline'</span>: <span class="number">50</span>,</div><div class="line">    ..........</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>这里要注意下要在itempipelines中开启图片管道才可以抓取房型图，我在学习的时候遇到了个问题，在setting中设置了请求头，图片地址和HOST不一样，导致出现502 Bad Gateway</p>
-<h3 id="设置CSV输出列顺序"><a href="#设置CSV输出列顺序" class="headerlink" title="设置CSV输出列顺序"></a><strong>设置CSV输出列顺序</strong></h3><ol>
-<li>我们在spiders文件中新建csv_item_exporter.py</li>
-</ol>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># -*- coding:utf-8 -*-</span></div><div class="line"></div><div class="line"><span class="keyword">from</span> scrapy.conf <span class="keyword">import</span> settings</div><div class="line"><span class="keyword">from</span> scrapy.contrib.exporter <span class="keyword">import</span> CsvItemExporter</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyProjectCsvItemExporter</span><span class="params">(CsvItemExporter)</span>:</span></div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, *args, **kwargs)</span>:</span></div><div class="line">        delimiter = settings.get(<span class="string">'CSV_DELIMITER'</span>, <span class="string">','</span>)</div><div class="line">        kwargs[<span class="string">'delimiter'</span>] = delimiter</div><div class="line"></div><div class="line">        fields_to_export = settings.get(<span class="string">'FIELDS_TO_EXPORT'</span>, [])</div><div class="line">        <span class="keyword">if</span> fields_to_export :</div><div class="line">            kwargs[<span class="string">'fields_to_export'</span>] = fields_to_export</div><div class="line"></div><div class="line">        super(MyProjectCsvItemExporter, self).__init__(*args, **kwargs)</div></pre></td></tr></table></figure>
-<ol>
-<li>设置setting.py</li>
-</ol>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># csv设置</span></div><div class="line">FEED_EXPORTERS = &#123;</div><div class="line">    <span class="string">'csv'</span>: <span class="string">'lianjia.spiders.csv_item_exporter.MyProjectCsvItemExporter'</span>,</div><div class="line">&#125;</div><div class="line"></div><div class="line">FEED_EXPORT_ENCODING = <span class="string">'utf-8'</span></div><div class="line"></div><div class="line"><span class="comment"># 按如下名称先后形成列</span></div><div class="line">FIELDS_TO_EXPORT = [</div><div class="line">    <span class="string">'home_community_name'</span>,</div><div class="line">    <span class="string">'home_area'</span>,</div><div class="line">    <span class="string">'home_unit_price'</span>,</div><div class="line">    <span class="string">'home_total_price'</span>,</div><div class="line">    <span class="string">'home_reference_down_payment'</span>,</div><div class="line">    <span class="string">'home_build_time'</span>,</div><div class="line">    <span class="string">'home_decoration'</span>,</div><div class="line">    <span class="string">'home_time'</span>,</div><div class="line">    <span class="string">'home_floor'</span>,</div><div class="line">    <span class="string">'home_location'</span>,</div><div class="line">    <span class="string">'home_type'</span>,</div><div class="line">    <span class="string">'home_tword'</span>,</div><div class="line"></div><div class="line">]</div></pre></td></tr></table></figure>
-<h3 id="待解决问题"><a href="#待解决问题" class="headerlink" title="待解决问题"></a><strong>待解决问题</strong></h3><ul>
-<li>scrapy-redis输出到数据库的数据全部是bytes</li>
-<li>使用scrapy-redis分布式抓取后，CSV文件出现乱码，txt保存格式直接为ANSI，用Scrapy框架爬取无此问题，我觉得两个问题是有关联的，跪谢各路网友指教！！！！！</li>
-</ul>
-<p>欢迎访问<a href="https://family-treesy.github.io/" target="_blank" rel="external">Treehl的博客</a><br>完整代码：<br><a href="https://github.com/Family-TreeSY/Scrapy-Redis-Spider/tree/master/lianjia" target="_blank" rel="external">GitHub</a><br><a href="https://www.jianshu.com/p/2124f1d2c008" target="_blank" rel="external">简书</a></p>
-<p>最后放两个笔者GitHub上的两个项目！！欢迎大家访问！！<br><a href="https://github.com/Family-TreeSY/SpiderList" target="_blank" rel="external">SpiderList</a><br><a href="https://github.com/Family-TreeSY/Scrapy-Redis-Spider" target="_blank" rel="external">Scrapy-redis</a></p>
-
-      
-
-      
-        <div class="page-reward">
-          <a href="javascript:;" class="page-reward-btn tooltip-top">
-            <div class="tooltip tooltip-east">
-            <span class="tooltip-item">
-              赏
-            </span>
-            <span class="tooltip-content">
-              <span class="tooltip-text">
-                <span class="tooltip-inner">
-                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
-                  <div class="reward-box">
-                    
-                    <div class="reward-box-item">
-                      <img class="reward-img" src="/img/alipay.jpg">
-                      <span class="reward-type">支付宝</span>
-                    </div>
-                    
-                    
-                    <div class="reward-box-item">
-                      <img class="reward-img" src="/img/wechat.jpg">
-                      <span class="reward-type">微信</span>
-                    </div>
-                    
-                  </div>
-                </span>
-              </span>
-            </span>
-          </div>
-          </a>
-        </div>
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
+        <div class="article-info info-on-right">
+          
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
@@ -299,121 +232,22 @@
 		</ul>
 	</div>
 
-      
+          
 
-      
-
-      
-        
-<div class="share-btn share-icons tooltip-left">
-  <div class="tooltip tooltip-east">
-    <span class="tooltip-item">
-      <a href="javascript:;" class="share-sns share-outer">
-        <i class="icon icon-share"></i>
-      </a>
-    </span>
-    <span class="tooltip-content">
-      <div class="share-wrap">
-        <div class="share-icons">
-          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
-            <i class="icon icon-weibo"></i>
-          </a>
-          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
-            <i class="icon icon-weixin"></i>
-          </a>
-          <a class="qq share-sns" href="javascript:;" data-type="qq">
-            <i class="icon icon-qq"></i>
-          </a>
-          <a class="douban share-sns" href="javascript:;" data-type="douban">
-            <i class="icon icon-douban"></i>
-          </a>
-          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
-            <i class="icon icon-qzone"></i>
-          </a>
-          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
-            <i class="icon icon-facebook"></i>
-          </a>
-          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
-            <i class="icon icon-twitter"></i>
-          </a>
-          <a class="google share-sns" href="javascript:;" data-type="google">
-            <i class="icon icon-google"></i>
-          </a>
         </div>
-      </div>
-    </span>
-  </div>
-</div>
-
-<div class="page-modal wx-share js-wx-box">
-    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
-    <p>扫一扫，分享到微信</p>
-    <div class="wx-qrcode">
-      <img src="http://s.jiathis.com/qrcode.php?url=http://Family-TreeSY.github.io/2018/01/10/scrapy-redis(二)/" alt="微信分享二维码">
-    </div>
-</div>
-
-<div class="mask js-mask"></div>
-      
-      <div class="clearfix"></div>
-    </div>
+        <div class="clearfix"></div>
+    </header>
   </div>
 </article>
-
-  
-<nav id="article-nav">
-  
-    <a href="/2018/03/01/MYSQL小结/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          MySQL学习小结
-        
-      </div>
-    </a>
   
   
-    <a href="/2017/12/23/scrapy-redis(一)/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">Scrapy-Redis分布式爬取自如网（一）</div>
-      <i class="icon-circle-right"></i>
-    </a>
-  
-</nav>
-
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-  
-  <!-- UY BEGIN -->
-<div id="uyan_frame"></div>
-<script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=2147729"></script>
-<!-- UY END -->
+    </div></section>
   
 
-  
-  
-  
-
-  
-
-  
-
+    
+    <nav id="page-nav">
+      <a class="extend prev" rel="prev" href="/archives/2018/page/2/">&laquo; Prev</a><a class="page-number" href="/archives/2018/">1</a><a class="page-number" href="/archives/2018/page/2/">2</a><span class="page-number current">3</span>
+    </nav>
   
 
 
@@ -437,8 +271,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: true,
-		isArchive: false,
+		isPost: false,
+		isArchive: true,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,

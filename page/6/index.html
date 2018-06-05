@@ -173,6 +173,100 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-fourth" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/11/09/fourth/">python每日一题：第四题</a>
+    </h1>
+  
+
+        
+        <a href="/2017/11/09/fourth/" class="archive-article-date">
+  	<time datetime="2017-11-09T02:36:16.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-11-09</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>今天来学一下<a href="https://wx.xiaomiquan.com/mweb/views/joingroup/join_group.html?group_id=518855855524&amp;secret=meqx22a2blf4c1ae3ucbgpui4somnpwa&amp;user_id=1152122252" target="_blank" rel="external">Python之禅和他朋友们</a>的第四题</p>
+<h3 id="题目"><a href="#题目" class="headerlink" title="题目"></a><strong>题目</strong></h3><p><img src="https://foofish.net/images/fn.png" alt=""></p>
+<blockquote>
+<p>数列从0和1开始，之后的斐波那契系数由之前的两数相加而得出，例如斐波那契数列的前10个数是：0, 1, 1, 2, 3, 5, 8, 13, 21, 34。用 Python 实现斐波那契数列常见的写法有三种，各算法的执行效率也有很大差别。</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"><span class="string">'''</span></div><div class="line"><span class="string">用Python实现斐波那契数列(Fibonacci sequence)</span></div><div class="line"><span class="string">除第一个和第二个数外，任意一个数都可由前两个数相加得到:</span></div><div class="line"><span class="string">1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144, ...</span></div><div class="line"><span class="string">'''</span></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">fib</span><span class="params">(max)</span>:</span></div><div class="line">    <span class="comment">#n=0, a=0, b=1</span></div><div class="line">    n, a, b = <span class="number">0</span>, <span class="number">0</span>, <span class="number">1</span></div><div class="line">    <span class="comment">#条件满足 n &lt; max 就循环,n &gt; max 就停止</span></div><div class="line">    <span class="keyword">while</span> n &lt; max:</div><div class="line">        print(b)</div><div class="line">        <span class="comment">#不等于a=b, b=a + b</span></div><div class="line">        a, b = b, a + b</div><div class="line">        n = n + <span class="number">1</span></div><div class="line">    <span class="keyword">return</span> <span class="string">'done'</span></div><div class="line"><span class="comment">#调用函数</span></div><div class="line">f= fib(<span class="number">9</span>)</div><div class="line">print(f)</div><div class="line"></div><div class="line">&gt; <span class="number">1</span> <span class="number">1</span> <span class="number">2</span> <span class="number">3</span> <span class="number">5</span> <span class="number">8</span> <span class="number">13</span> <span class="number">21</span> <span class="number">34</span> done</div></pre></td></tr></table></figure>
+<p>这里再来看下<a href="https://foofish.net/daily-question4.html" target="_blank" rel="external">Python之禅</a>递推法讲解</p>
+<pre><code class="python"><span class="function"><span class="keyword">def</span> <span class="title">fib_loop</span><span class="params">(n)</span>:</span>
+    a, b = <span class="number">0</span>, <span class="number">1</span>
+    <span class="keyword">for</span> i <span class="keyword">in</span> range(n):
+        a, b = b, a + b
+    <span class="keyword">return</span> a
+
+<span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">20</span>):
+    print(fib_loop(i), end=<span class="string">" "</span>)
+</code></pre>
+<p>显然代码更加简洁易懂<br>欢迎访问我的博客<a href="https://family-treesy.github.io/" target="_blank" rel="external">Treehl的博客</a><br><a href="https://github.com/Family-TreeSY" target="_blank" rel="external">GitHub</a></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">DailyQuestion</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Python</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2017/11/09/fourth/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-Scrapy简介" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -823,112 +917,6 @@ numbers = [<span class="number">10</span>, <span class="number">29</span>, <span
 
 
   
-    <article id="post-Xpath模拟登陆GitHub" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/10/24/Xpath模拟登陆GitHub/">Xpath模拟登陆GitHub</a>
-    </h1>
-  
-
-        
-        <a href="/2017/10/24/Xpath模拟登陆GitHub/" class="archive-article-date">
-  	<time datetime="2017-10-24T01:52:13.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-10-24</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="这是我用python2-7写的简单教程"><a href="#这是我用python2-7写的简单教程" class="headerlink" title="这是我用python2.7写的简单教程"></a><strong>这是我用python2.7写的简单教程</strong></h3><p><strong>准备工作</strong><br>安装requests lxml模块</p>
-<blockquote>
-<p>pip install requests<br>pip install lxml</p>
-</blockquote>
-<p><a href="http://docs.python-requests.org/zh_CN/latest/user/quickstart.html#id11" target="_blank" rel="external">requests文档</a><br><a href="http://lxml.de/" target="_blank" rel="external">lxml文档</a><br><a href="http://www.w3school.com.cn/xpath/index.asp" target="_blank" rel="external">Xpath教程</a></p>
-<hr>
-<p><strong>实战应用</strong><br><img src="http://a1.qpic.cn/psb?/V10WDaE22S84Sl/kgIbyAqyVUEboZyCcWApTA1d9qxLDmjowHvebGpA628!/b/dIkBAAAAAAAA&amp;bo=FQIVAwAAAAADACQ!&amp;rf=viewer_4" alt=""><br>首先进入GitHub登陆页面<a href="https://github.com/login" target="_blank" rel="external">https://github.com/login</a>, 打开Chrome的开发者工具(F12)，先尝试输入错误的密码观察浏览器是如何发送请求的。</p>
-<p><img src="http://a3.qpic.cn/psb?/V10WDaE22S84Sl/r6CPmdb8CMkCI768tbnd9.vdR4XpkQVsnnfse7k.sD4!/b/dD0BAAAAAAAA&amp;bo=ngSAAgAAAAADAD0!&amp;rf=viewer_4" alt=""></p>
-<p><strong>从浏览器的请求可以看到几个关键信息</strong></p>
-<ul>
-<li>登陆的URL地址是<a href="https://github.com/session" target="_blank" rel="external">https://github.com/session</a></li>
-<li>登陆需要提供的表单数据有5个</li>
-<li>commit:Sign in</li>
-<li>utf8:✓</li>
-<li>authenticity_token: #这是一种防范CSRF攻击的方式，在请求地址中添加 token 并验证</li>
-<li>login:Family-TreeSY</li>
-<li>password:123456</li>
-</ul>
-<p>然后按<strong>ctrl+u</strong>打开源代码页面，再按下<strong>ctrl+f</strong>打开搜索栏，查找<strong>authenticity_token</strong></p>
-<p><img src="http://a1.qpic.cn/psb?/V10WDaE22S84Sl/OuzcCKxwb26otA2kbCvX1tQn7s45Lp632HU1QzKeShY!/b/dGkAAAAAAAAA&amp;bo=PgccAQAAAAADAAE!&amp;rf=viewer_4" alt=""></p>
-<p>可以看到 name=”authenticity_token” 这也是Xpath需要查找的元素</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">xpath(‘//input[@name=”authenticity_token”]’)</div></pre></td></tr></table></figure>
-<p>理解了浏览器登陆时所需的数据获取方式后，就可以开始写代码用Python来模拟登陆了。</p>
-<p><strong>解析网页使用Xpath查找所需要的元素</strong></p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> requests</div><div class="line"><span class="keyword">from</span> lxml <span class="keyword">import</span> etree</div><div class="line"></div><div class="line">LOGIN_URL = <span class="string">'https://github.com/login'</span></div><div class="line">SESSION_URL = <span class="string">'https://github.com/session'</span></div><div class="line"></div><div class="line">s = requests.session()</div><div class="line">y = s.get(LOGIN_URL)</div><div class="line">tree = etree.HTML(y.text)</div><div class="line">ele = tree.xpath(<span class="string">'//input[@name="authenticity_token"]'</span>)[<span class="number">0</span>]</div></pre></td></tr></table></figure>
-<p><strong>写入表单数据</strong><br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">data = &#123;</div><div class="line">    <span class="string">'commit'</span>: <span class="string">'Sign in'</span>,</div><div class="line">    <span class="string">'utf8'</span>: <span class="string">'✓'</span>,</div><div class="line">    <span class="string">'authenticity_token'</span>: <span class="string">'fwuV3HbD15A9BKiEJVtsEYEqzDv+r+yG9rj0uuFKLPtKjeK00ubWkbmKqQ6VJp9worJ5BVGMz3ZJV9Feyg9IKw=='</span>,</div><div class="line">    <span class="string">'login'</span>: <span class="string">'用户名'</span>,</div><div class="line">    <span class="string">'password'</span>: <span class="string">'xxxxx'</span></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p><strong>使用POST请求</strong><br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">y = s.post(SESSION_URL, data=data)</div></pre></td></tr></table></figure></p>
-<p><strong>登陆成功</strong><br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">y.url</div><div class="line">Out[<span class="number">4</span>]: <span class="string">u'https://github.com/session'</span></div></pre></td></tr></table></figure></p>
-<p><a href="https://github.com/Family-TreeSY/Spider/blob/master/github.py" target="_blank" rel="external">源码地址</a></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">PYTHON</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">爬虫</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/10/24/Xpath模拟登陆GitHub/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
       <a class="extend prev" rel="prev" href="/page/5/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><a class="page-number" href="/page/5/">5</a><span class="page-number current">6</span><a class="page-number" href="/page/7/">7</a><a class="extend next" rel="next" href="/page/7/">Next &raquo;</a>
@@ -1026,14 +1014,6 @@ getOwnMetadataKeys:function(t){return o(i(t),arguments.length<2?void 0:u(argumen
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">Git</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">GitHub</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">PYTHON</a>
               </li>
              
@@ -1042,19 +1022,23 @@ getOwnMetadataKeys:function(t){return o(i(t),arguments.length<2?void 0:u(argumen
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">MongoDB</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Python</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">Django</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">MySQL</a>
+                <a href="javascript:void(0)" class="js-tag color3">MongoDB</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">Git</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">GitHub</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Python</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1071,6 +1055,10 @@ getOwnMetadataKeys:function(t){return o(i(t),arguments.length<2?void 0:u(argumen
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">Redis</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">MySQL</a>
               </li>
              
               <li class="article-tag-list-item">
