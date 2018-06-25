@@ -173,6 +173,189 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-Sixth" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/11/22/Sixth/">Python每日一题：第六题</a>
+    </h1>
+  
+
+        
+        <a href="/2017/11/22/Sixth/" class="archive-article-date">
+  	<time datetime="2017-11-22T02:47:16.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-11-22</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>今天来学一下<a href="https://wx.xiaomiquan.com/mweb/views/joingroup/join_group.html?group_id=518855855524&amp;secret=meqx22a2blf4c1ae3ucbgpui4somnpwa&amp;user_id=1152122252" target="_blank" rel="external">Python之禅和他朋友们</a>的第四题，原总结<a href="https://foofish.net/how-to-count-code.html" target="_blank" rel="external">Python之禅</a></p>
+<h3 id="题目"><a href="#题目" class="headerlink" title="题目"></a><strong>题目</strong></h3><blockquote>
+<p>如何设计一个代码统计工具?<br>设计一个程序，用于统计一个项目中的代码行数，包括文件个数，代码行数，注释行数，空行行数。尽量设计灵活一点可以通过输入不同参数来统计不同语言的项目，例如：</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># type用于指定文件类型</span></div><div class="line">python counter.py --type python</div></pre></td></tr></table></figure>
+<p>输出<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">files:<span class="number">10</span></div><div class="line">code_lines:<span class="number">200</span></div><div class="line">comments:<span class="number">100</span></div><div class="line">blanks:<span class="number">20</span></div></pre></td></tr></table></figure></p>
+<h3 id="分析"><a href="#分析" class="headerlink" title="分析"></a><strong>分析</strong></h3><p>先来学习下三种注释方式</p>
+<ol>
+<li><p>已#开头的单行注释</p>
+<blockquote>
+<p>单行注释</p>
+</blockquote>
+</li>
+<li><p>多行注释符在同一行的情况</p>
+<blockquote>
+<p>“””这是多行注释”””<br>‘’’这也是多行注释’’’ </p>
+</blockquote>
+</li>
+<li><p>多行注释符</p>
+<blockquote>
+<p>“””<br>这3行都是注释符<br>“”” </p>
+</blockquote>
+</li>
+</ol>
+<p>多行注释需要一个额外的标识符in_multi_comment 来标识当前行是不是处于多行注释符当中，默认为 False，多行注释开始时，置为 True，遇到下一个多行注释符时置为 False。从多行注释开始符号直到下一个结束符号之间的代码都应该属于注释行。遇到多行注释符号时，in_multi_comment 标识符进行取反操作是关键操作，而不是单纯地置为 False 或 True，第一次遇到 “”” 时为True，第二次遇到 “”” 就是多行注释的结束符，取反为False，以此类推，第三次又是开始，取反又是True。</p>
+<p>好了，现在来学习下军哥的代码，代码我写了注释以此来弄明白每一行的意义<br><strong>单行注释</strong><br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># -*- coding:utf-8 -*-</span></div><div class="line"><span class="string">'''</span></div><div class="line"><span class="string">只能统计单行注释的py文件</span></div><div class="line"><span class="string">'''</span></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">parse</span><span class="params">(path)</span>:</span></div><div class="line">    <span class="comment"># 注释</span></div><div class="line">    comments = <span class="number">0</span></div><div class="line">    <span class="comment"># 空行</span></div><div class="line">    blanks = <span class="number">0</span></div><div class="line">    <span class="comment"># 代码</span></div><div class="line">    codes = <span class="number">0</span></div><div class="line">    <span class="comment"># 用encoding='utf-8'是因为注释有中文</span></div><div class="line">    <span class="keyword">with</span> open(path, encoding=<span class="string">'utf-8'</span>) <span class="keyword">as</span> f:</div><div class="line">        <span class="comment"># 一次性读取所以行</span></div><div class="line">        <span class="keyword">for</span> line <span class="keyword">in</span> f.readlines():</div><div class="line">            <span class="comment"># strip()方法:移除字符串头尾指定的字符（默认为空格）</span></div><div class="line">            line = line.strip()</div><div class="line">            <span class="comment"># 调用if...elif...else...</span></div><div class="line">            <span class="comment"># 判断空行</span></div><div class="line">            <span class="keyword">if</span> line == <span class="string">''</span>:</div><div class="line">                blanks += <span class="number">1</span></div><div class="line">            <span class="comment"># startswith() 方法用于检查字符串是否是以指定子字符串开头</span></div><div class="line">            <span class="comment"># 判断注释行</span></div><div class="line">            <span class="keyword">elif</span> line.startswith(<span class="string">'#'</span>):</div><div class="line">                comments += <span class="number">1</span></div><div class="line">            <span class="comment"># 上面两个条件过滤下来就是代码行</span></div><div class="line">            <span class="keyword">else</span>:</div><div class="line">                codes += <span class="number">1</span></div><div class="line"></div><div class="line">    <span class="keyword">return</span> &#123;<span class="string">"comments"</span>:comments, <span class="string">"blanks"</span>: blanks, <span class="string">"codes"</span>: codes&#125;</div><div class="line"></div><div class="line"></div><div class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</div><div class="line">    print(parse(<span class="string">"jd_iphone8.py"</span>))</div></pre></td></tr></table></figure></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&#123;<span class="string">'comments'</span>: <span class="number">4</span>, <span class="string">'blanks'</span>: <span class="number">6</span>, <span class="string">'codes'</span>: <span class="number">22</span>&#125;</div></pre></td></tr></table></figure>
+<p>补充一下return，假如有不理解return语句的可以参考一下这个回答<a href="https://www.zhihu.com/question/23765556" target="_blank" rel="external">Python的return如何理解</a>，很简单易懂</p>
+<p><strong>多行注释</strong><br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># -*- coding: utf-8 -*-</span></div><div class="line"><span class="string">"""</span></div><div class="line"><span class="string">可以统计包含有多行注释的py文件</span></div><div class="line"><span class="string">"""</span></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">parse</span><span class="params">(path)</span>:</span></div><div class="line">    in_multi_comment = <span class="keyword">False</span>  <span class="comment"># 多行注释符标识符号</span></div><div class="line">    comments = <span class="number">0</span></div><div class="line">    blanks = <span class="number">0</span></div><div class="line">    codes = <span class="number">0</span></div><div class="line">    <span class="keyword">with</span> open(path, encoding=<span class="string">"utf-8"</span>) <span class="keyword">as</span> f:</div><div class="line">        <span class="keyword">for</span> line <span class="keyword">in</span> f.readlines():</div><div class="line">            line = line.strip()</div><div class="line"></div><div class="line">            <span class="string">'''</span></div><div class="line"><span class="string">            多行注释中的空行当做注释处理</span></div><div class="line"><span class="string">            运用布尔值逻辑运算</span></div><div class="line"><span class="string">            '''</span></div><div class="line">            <span class="keyword">if</span> line == <span class="string">""</span> <span class="keyword">and</span> <span class="keyword">not</span> in_multi_comment:</div><div class="line">                blanks += <span class="number">1</span></div><div class="line">            <span class="comment"># 注释有4种</span></div><div class="line">            <span class="comment"># 1. # 井号开头的单行注释</span></div><div class="line">            <span class="comment"># 2. 多行注释符在同一行的情况</span></div><div class="line">            <span class="comment"># 3. 多行注释之间的行</span></div><div class="line">            <span class="comment"># \ 是转义字符</span></div><div class="line">            <span class="keyword">elif</span> line.startswith(<span class="string">"#"</span>) <span class="keyword">or</span> \</div><div class="line">                (line.startswith(<span class="string">'"""'</span>) <span class="keyword">and</span> line.endswith(<span class="string">'"""'</span>) <span class="keyword">and</span> len(line)) &gt; <span class="number">3</span> <span class="keyword">or</span> \</div><div class="line">                (line.startswith(<span class="string">"'''"</span>) <span class="keyword">and</span> line.endswith(<span class="string">"'''"</span>) <span class="keyword">and</span> len(line) &gt; <span class="number">3</span>) <span class="keyword">or</span> \</div><div class="line">                (in_multi_comment <span class="keyword">and</span> <span class="keyword">not</span> (line.startswith(<span class="string">'"""'</span>) <span class="keyword">or</span> line.startswith(<span class="string">"'''"</span>))):</div><div class="line">                comments += <span class="number">1</span></div><div class="line"></div><div class="line">            <span class="comment"># 4. 多行指示符的开始行和结束行</span></div><div class="line">            <span class="keyword">elif</span> line.startswith(<span class="string">'"""'</span>) <span class="keyword">or</span> line.startswith(<span class="string">"'''"</span>):</div><div class="line">                in_multi_comment = <span class="keyword">not</span> in_multi_comment</div><div class="line">                comments += <span class="number">1</span></div><div class="line">            <span class="keyword">else</span>:</div><div class="line">                codes += <span class="number">1</span></div><div class="line"></div><div class="line">    <span class="keyword">return</span> &#123;<span class="string">"comments"</span>: comments, <span class="string">"blanks"</span>: blanks, <span class="string">"codes"</span>: codes&#125;</div><div class="line"></div><div class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</div><div class="line">    print(parse(<span class="string">"jd_iphone8.py"</span>))</div></pre></td></tr></table></figure></p>
+<p>这段代码也运用到了布尔值逻辑运算，有兴趣的可以参考<a href="https://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/001431658624177ea4f8fcb06bc4d0e8aab2fd7aa65dd95000" target="_blank" rel="external">廖雪峰的Python教程</a></p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">Not</th>
+<th style="text-align:right">真假</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">not False</td>
+<td style="text-align:right">True</td>
+</tr>
+<tr>
+<td style="text-align:left">not True</td>
+<td style="text-align:right">False</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">OR</th>
+<th style="text-align:right">真假</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">True or False</td>
+<td style="text-align:right">True</td>
+</tr>
+<tr>
+<td style="text-align:left">True or True</td>
+<td style="text-align:right">True</td>
+</tr>
+<tr>
+<td style="text-align:left">False or True</td>
+<td style="text-align:right">True</td>
+</tr>
+<tr>
+<td style="text-align:left">False or False</td>
+<td style="text-align:right">False</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">AND</th>
+<th style="text-align:right">真假</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">True and False</td>
+<td style="text-align:right">False</td>
+</tr>
+<tr>
+<td style="text-align:left">True and True</td>
+<td style="text-align:right">True</td>
+</tr>
+<tr>
+<td style="text-align:left">False and True</td>
+<td style="text-align:right">False</td>
+</tr>
+<tr>
+<td style="text-align:left">False and False</td>
+<td style="text-align:right">False</td>
+</tr>
+</tbody>
+</table>
+<p><strong>统计目录、注释、代码行</strong><br>这是我自己的代码，水平待提高，多见谅！！<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># _*_ coding:utf-8 _*_</span></div><div class="line"></div><div class="line"><span class="keyword">import</span> os</div><div class="line"></div><div class="line">path = <span class="string">'/Users/ssaw/PycharmProjects/untitled/DailyQuestion/'</span></div><div class="line"><span class="comment"># 列出指定目录的文件</span></div><div class="line">files = os.listdir(path)</div><div class="line"><span class="comment"># 打印files</span></div><div class="line"><span class="comment"># print(files)</span></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">count</span><span class="params">(file)</span>:</span></div><div class="line">    codes, comments, blanks = <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span></div><div class="line">    <span class="keyword">with</span> open(file, encoding=<span class="string">'utf-8'</span>) <span class="keyword">as</span> f:</div><div class="line">        <span class="keyword">for</span> line <span class="keyword">in</span> f.readlines():</div><div class="line">            line = line.strip()</div><div class="line">            <span class="keyword">if</span> line == <span class="string">''</span>:</div><div class="line">                blanks += <span class="number">1</span></div><div class="line">            <span class="keyword">elif</span> line == <span class="string">"#"</span>:</div><div class="line">                comments += <span class="number">1</span></div><div class="line">            <span class="keyword">else</span>:</div><div class="line">                codes += <span class="number">1</span></div><div class="line"></div><div class="line">    <span class="keyword">return</span> &#123;<span class="string">"comments"</span>:comments, <span class="string">"blanks"</span>: blanks, <span class="string">"codes"</span>: codes&#125;</div><div class="line"></div><div class="line"></div><div class="line"><span class="keyword">if</span> __name__ == <span class="string">"__main__"</span>:</div><div class="line">    <span class="keyword">for</span> f <span class="keyword">in</span> files:</div><div class="line">        print(f)</div><div class="line">        print(count(f))</div></pre></td></tr></table></figure></p>
+<p>输出结果：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">Fifth.py</div><div class="line">&#123;<span class="string">'comments'</span>: <span class="number">0</span>, <span class="string">'blanks'</span>: <span class="number">8</span>, <span class="string">'codes'</span>: <span class="number">26</span>&#125;</div><div class="line">First.py</div><div class="line">&#123;<span class="string">'comments'</span>: <span class="number">0</span>, <span class="string">'blanks'</span>: <span class="number">4</span>, <span class="string">'codes'</span>: <span class="number">16</span>&#125;</div><div class="line">Fourth.py</div><div class="line">&#123;<span class="string">'comments'</span>: <span class="number">0</span>, <span class="string">'blanks'</span>: <span class="number">4</span>, <span class="string">'codes'</span>: <span class="number">26</span>&#125;</div><div class="line">importthis.txt</div><div class="line">&#123;<span class="string">'comments'</span>: <span class="number">0</span>, <span class="string">'blanks'</span>: <span class="number">1</span>, <span class="string">'codes'</span>: <span class="number">20</span>&#125;</div><div class="line">Second.py</div><div class="line">&#123;<span class="string">'comments'</span>: <span class="number">0</span>, <span class="string">'blanks'</span>: <span class="number">8</span>, <span class="string">'codes'</span>: <span class="number">37</span>&#125;</div><div class="line">Sixth.py</div><div class="line">&#123;<span class="string">'comments'</span>: <span class="number">0</span>, <span class="string">'blanks'</span>: <span class="number">9</span>, <span class="string">'codes'</span>: <span class="number">47</span>&#125;</div><div class="line">Third.py</div><div class="line">&#123;<span class="string">'comments'</span>: <span class="number">0</span>, <span class="string">'blanks'</span>: <span class="number">4</span>, <span class="string">'codes'</span>: <span class="number">34</span>&#125;</div><div class="line">__init__.py</div><div class="line">&#123;<span class="string">'comments'</span>: <span class="number">0</span>, <span class="string">'blanks'</span>: <span class="number">0</span>, <span class="string">'codes'</span>: <span class="number">0</span>&#125;</div></pre></td></tr></table></figure>
+<p>这里要了解下OS模块</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#os.remove() 删除文件</span></div><div class="line"><span class="comment">#os.rename() 重命名文件</span></div><div class="line"><span class="comment">#os.walk() 生成目录树下的所有文件名</span></div><div class="line"><span class="comment">#os.chdir() 改变目录</span></div><div class="line"><span class="comment">#os.mkdir/makedirs 创建目录/多层目录</span></div><div class="line"><span class="comment">#os.rmdir/removedirs 删除目录/多层目录</span></div><div class="line"><span class="comment">#os.listdir() 列出指定目录的文件</span></div><div class="line"><span class="comment">#os.getcwd() 取得当前工作目录</span></div><div class="line"><span class="comment">#os.chmod() 改变目录权限</span></div><div class="line"><span class="comment">#os.path.basename() 去掉目录路径，返回文件名</span></div><div class="line"><span class="comment">#os.path.dirname() 去掉文件名，返回目录路径</span></div><div class="line"><span class="comment">#os.path.join() 将分离的各部分组合成一个路径名</span></div><div class="line"><span class="comment">#os.path.split() 返回( dirname(), basename())元组</span></div><div class="line"><span class="comment">#os.path.splitext() 返回 (filename, extension) 元组</span></div><div class="line"><span class="comment">#os.path.getatime\ctime\mtime 分别返回最近访问、创建、修改时间</span></div><div class="line"><span class="comment">#os.path.getsize() 返回文件大小</span></div><div class="line"><span class="comment">#os.path.exists() 是否存在</span></div><div class="line"><span class="comment">#os.path.isabs() 是否为绝对路径</span></div><div class="line"><span class="comment">#os.path.isdir() 是否为目录</span></div><div class="line"><span class="comment">#os.path.isfile() 是否为文件</span></div></pre></td></tr></table></figure>
+<p>欢迎大家访问我的博客<a href="https://family-treesy.github.io/" target="_blank" rel="external">Treehl的博客</a><br><a href="https://github.com/Family-TreeSY" target="_blank" rel="external">GitHub</a><br><a href="http://www.jianshu.com/u/a01bc3ec4f88" target="_blank" rel="external">简书</a></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">PYTHON</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">DailyQuestion</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2017/11/22/Sixth/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-Python爬取豆瓣电影TOP250" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -784,123 +967,6 @@
 
 
   
-    <article id="post-FirstQuestion" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/10/31/FirstQuestion/">Python每日一题：第一题</a>
-    </h1>
-  
-
-        
-        <a href="/2017/10/31/FirstQuestion/" class="archive-article-date">
-  	<time datetime="2017-10-31T04:02:31.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-10-31</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>最近加入了<a href="https://foofish.net/" target="_blank" rel="external">Python之禅</a>的知识星球<a href="https://wx.xiaomiquan.com/mweb/views/joingroup/join_group.html?group_id=518855855524&amp;secret=meqx22a2blf4c1ae3ucbgpui4somnpwa&amp;user_id=1152122252" target="_blank" rel="external">Python之禅和他朋友们</a><br>军哥在星球内分享干货，组织交流，让我这个编程小白获益良多。今天我们来学习一下星球内的第一道题目，也算是我学习第一道题后的总结</p>
-<h3 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h3><blockquote>
-<p>在使用 for 循环迭代一个列表时，有时我们需要获取列表中每个元素所在的下标位置是多少，例如 numbers = [10, 29, 30, 41]，要求输出 (0, 10)，(1, 29)，(2, 30)，(3, 41)</p>
-</blockquote>
-<p>在解题前我们需要了解下面几点知识</p>
-<ul>
-<li>range()函数</li>
-<li>len()函数</li>
-<li>for循环</li>
-<li>字符串格式化表达式</li>
-<li>字符串格式化方法</li>
-<li>enumerate()函数</li>
-</ul>
-<p><strong>range()函数</strong><br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">&gt;&gt;&gt;range(<span class="number">10</span>)        <span class="comment"># 从 0 开始到 10</span></div><div class="line">[<span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span>, <span class="number">9</span>]</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>range(<span class="number">1</span>, <span class="number">11</span>)     <span class="comment"># 从 1 开始到 11</span></div><div class="line">[<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span>, <span class="number">9</span>, <span class="number">10</span>]</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>range(<span class="number">0</span>, <span class="number">30</span>, <span class="number">5</span>)  <span class="comment"># 步长为 5</span></div><div class="line">[<span class="number">0</span>, <span class="number">5</span>, <span class="number">10</span>, <span class="number">15</span>, <span class="number">20</span>, <span class="number">25</span>]</div></pre></td></tr></table></figure></p>
-<p><strong>len()函数</strong><br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">&gt;&gt;&gt;l = <span class="string">"Treehl"</span></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>len(l)             <span class="comment"># 字符串长度</span></div><div class="line"><span class="number">6</span></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>m = [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>]</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>len(m)               <span class="comment"># 列表元素个数</span></div><div class="line"><span class="number">5</span></div></pre></td></tr></table></figure></p>
-<p><strong>for循环</strong><br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">&gt;&gt;&gt;names = [<span class="string">'a'</span>, <span class="string">'b'</span>, <span class="string">'c'</span>]</div><div class="line">&gt;&gt;&gt;<span class="keyword">for</span> name <span class="keyword">in</span> names:</div><div class="line">        print(name)</div><div class="line">a</div><div class="line">b</div><div class="line">c</div></pre></td></tr></table></figure></p>
-<p><strong>字符串格式化表达式</strong><br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&gt;&gt;&gt; </span><span class="string">'That is %d %s bird!'</span> % (<span class="number">1</span>, <span class="string">'dead'</span>)</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>That <span class="keyword">is</span> <span class="number">1</span> dead bird!</div></pre></td></tr></table></figure></p>
-<p><strong>字符串格式化方法</strong><br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&gt;&gt;&gt; </span><span class="string">'That is &#123;0&#125; &#123;1&#125; bird!'</span>.format(<span class="number">1</span>, <span class="string">'dead'</span>)</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>That <span class="keyword">is</span> <span class="number">1</span> dead bird!</div></pre></td></tr></table></figure></p>
-<p><strong>enumerate()函数</strong></p>
-<blockquote>
-<p>enumerate(sequence, [start=0])</p>
-<ul>
-<li>sequence – 一个序列、迭代器或其他支持迭代对象</li>
-<li>start – 下标起始位置</li>
-</ul>
-</blockquote>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">&gt;&gt;&gt;numbers = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>]</div><div class="line">&gt;&gt;&gt;list(enumerate(numbers))</div><div class="line">&gt;&gt;&gt;[(<span class="number">0</span>, <span class="number">1</span>), (<span class="number">1</span>, <span class="number">2</span>), (<span class="number">2</span>, <span class="number">3</span>), (<span class="number">3</span>, <span class="number">4</span>)]</div><div class="line">&gt;&gt;&gt;list(enumerate(numbers, start=<span class="number">1</span>))<span class="comment"># 下标从1开始</span></div><div class="line">&gt;&gt;&gt;[(<span class="number">1</span>, <span class="number">1</span>), (<span class="number">2</span>, <span class="number">2</span>), (<span class="number">3</span>, <span class="number">3</span>), (<span class="number">4</span>, <span class="number">4</span>)]</div></pre></td></tr></table></figure>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># enumerate() 函数用于将一个可遍历的数据对象(如列表、元组或字符串)组合为一个索引序列，同时列出数据和数据下标，一般用在 for 循环当中。</span></div><div class="line">&gt;&gt;&gt;n = numbers</div><div class="line">&gt;&gt;&gt;<span class="keyword">for</span> index, value <span class="keyword">in</span> enumerate(n):</div><div class="line">		print(index, value)</div><div class="line"><span class="number">0</span> <span class="number">1</span></div><div class="line"><span class="number">1</span> <span class="number">2</span></div><div class="line"><span class="number">2</span> <span class="number">3</span></div><div class="line"><span class="number">3</span> <span class="number">4</span></div></pre></td></tr></table></figure>
-<p>到这一步解题的基础知识都了解完了，开始做题吧</p>
-<pre><code class="python"><span class="comment"># answer 1</span>
-numbers = [<span class="number">10</span>, <span class="number">29</span>, <span class="number">30</span>, <span class="number">41</span>]
-<span class="keyword">for</span> i <span class="keyword">in</span> range(len(numbers)):
-    print(<span class="string">'{0}, {1}'</span>.format(i, numbers[i]))
-</code></pre>
-<pre><code class="python"><span class="comment"># answer 2</span>
-numbers = [<span class="number">10</span>, <span class="number">29</span>, <span class="number">30</span>, <span class="number">41</span>]
-<span class="keyword">for</span> index, value <span class="keyword">in</span> enumerate(numbers):
-    print(index, value)
-</code></pre>
-<p>欢迎访问我的博客<a href="https://family-treesy.github.io/" target="_blank" rel="external">Treehl的博客</a><br><a href="https://github.com/Family-TreeSY" target="_blank" rel="external">GitHub</a></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">PYTHON</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">DailyQuestion</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/10/31/FirstQuestion/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
       <a class="extend prev" rel="prev" href="/page/5/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><a class="page-number" href="/page/5/">5</a><span class="page-number current">6</span><a class="page-number" href="/page/7/">7</a><a class="extend next" rel="next" href="/page/7/">Next &raquo;</a>
@@ -998,11 +1064,19 @@ getOwnMetadataKeys:function(t){return o(i(t),arguments.length<2?void 0:u(argumen
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Python</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">PYTHON</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">MongoDB</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">DailyQuestion</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1018,14 +1092,6 @@ getOwnMetadataKeys:function(t){return o(i(t),arguments.length<2?void 0:u(argumen
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Python</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">DailyQuestion</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">Django</a>
               </li>
              
@@ -1038,11 +1104,11 @@ getOwnMetadataKeys:function(t){return o(i(t),arguments.length<2?void 0:u(argumen
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Scrapy</a>
+                <a href="javascript:void(0)" class="js-tag color1">Redis</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Redis</a>
+                <a href="javascript:void(0)" class="js-tag color2">Scrapy</a>
               </li>
              
               <li class="article-tag-list-item">

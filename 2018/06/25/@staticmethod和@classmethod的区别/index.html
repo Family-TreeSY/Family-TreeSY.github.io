@@ -6,20 +6,20 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="//Family-TreeSY.github.io">
-  <title>开发后台管理（一） | Treehl的博客</title>
+  <title>2classmethod和2classmethod的区别 | Treehl的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="五、开发后台管理（一）第四节中迁移了数据库并且创建了后台管理员，登录后台发现三个应用还没有注册进入后台，这一节记录了后台开发，到后面我们会使用xadmin来替换比较简陋的admin后台 先编辑blog/admin.py1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950">
-<meta name="keywords" content="Django">
+  <meta name="description" content="@staticmethod和@classmethod的区别 class 类 @staticmethod @classmethod   首先创建一个类，如果想要调用Student类中的方法get_score()，就需要先创建类的实例，然后再用类的对象再去调用方法 12345678910111213In [3]: class Student():   ...:     def __init__(sel">
+<meta name="keywords" content="Python">
 <meta property="og:type" content="article">
-<meta property="og:title" content="开发后台管理（一）">
-<meta property="og:url" content="//Family-TreeSY.github.io/2018/04/03/五、开发后台管理（一）/index.html">
+<meta property="og:title" content="2classmethod和2classmethod的区别">
+<meta property="og:url" content="//Family-TreeSY.github.io/2018/06/25/@staticmethod和@classmethod的区别/index.html">
 <meta property="og:site_name" content="Treehl的博客">
-<meta property="og:description" content="五、开发后台管理（一）第四节中迁移了数据库并且创建了后台管理员，登录后台发现三个应用还没有注册进入后台，这一节记录了后台开发，到后面我们会使用xadmin来替换比较简陋的admin后台 先编辑blog/admin.py1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950">
+<meta property="og:description" content="@staticmethod和@classmethod的区别 class 类 @staticmethod @classmethod   首先创建一个类，如果想要调用Student类中的方法get_score()，就需要先创建类的实例，然后再用类的对象再去调用方法 12345678910111213In [3]: class Student():   ...:     def __init__(sel">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-05-03T08:28:07.469Z">
+<meta property="og:updated_time" content="2018-06-25T14:35:55.472Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="开发后台管理（一）">
-<meta name="twitter:description" content="五、开发后台管理（一）第四节中迁移了数据库并且创建了后台管理员，登录后台发现三个应用还没有注册进入后台，这一节记录了后台开发，到后面我们会使用xadmin来替换比较简陋的admin后台 先编辑blog/admin.py1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950">
+<meta name="twitter:title" content="2classmethod和2classmethod的区别">
+<meta name="twitter:description" content="@staticmethod和@classmethod的区别 class 类 @staticmethod @classmethod   首先创建一个类，如果想要调用Student类中的方法get_score()，就需要先创建类的实例，然后再用类的对象再去调用方法 12345678910111213In [3]: class Student():   ...:     def __init__(sel">
   
     <link rel="alternative" href="/atom.xml" title="Treehl的博客" type="application/atom+xml">
   
@@ -173,32 +173,44 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-五、开发后台管理（一）" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-@staticmethod和@classmethod的区别" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      开发后台管理（一）
+      2classmethod和2classmethod的区别
     </h1>
   
 
         
-        <a href="/2018/04/03/五、开发后台管理（一）/" class="archive-article-date">
-  	<time datetime="2018-04-03T00:08:08.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-04-03</time>
+        <a href="/2018/06/25/@staticmethod和@classmethod的区别/" class="archive-article-date">
+  	<time datetime="2018-06-25T13:53:20.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-06-25</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h3 id="五、开发后台管理（一）"><a href="#五、开发后台管理（一）" class="headerlink" title="五、开发后台管理（一）"></a><strong>五、开发后台管理（一）</strong></h3><p>第四节中迁移了数据库并且创建了后台管理员，登录后台发现三个应用还没有注册进入后台，这一节记录了后台开发，到后面我们会使用xadmin来替换比较简陋的admin后台</p>
-<p>先编辑blog/admin.py<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># -*- coding: utf-8 -*-</span></div><div class="line"><span class="keyword">from</span> __future__ <span class="keyword">import</span> unicode_literals</div><div class="line"></div><div class="line"><span class="keyword">from</span> django.contrib <span class="keyword">import</span> admin</div><div class="line"></div><div class="line"><span class="keyword">from</span> .models <span class="keyword">import</span> Post, Category, Tag</div><div class="line"></div><div class="line"></div><div class="line"><span class="meta">@admin.register(Post)</span></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">PostAdmin</span><span class="params">(admin.ModelAdmin)</span>:</span></div><div class="line">    list_display = [</div><div class="line">        <span class="string">"title"</span>,</div><div class="line">        <span class="string">"status"</span>,</div><div class="line">        <span class="string">"category"</span>,</div><div class="line">        <span class="string">"author"</span>,</div><div class="line">        <span class="string">"created_time"</span>,</div><div class="line">    ]</div><div class="line">    list_filter = (</div><div class="line">        <span class="string">"author"</span>,</div><div class="line">    )</div><div class="line">    date_hierarchy = <span class="string">"created_time"</span></div><div class="line">    <span class="comment"># 编辑页面</span></div><div class="line">    fields = (</div><div class="line">        (<span class="string">"title"</span>, <span class="string">'category'</span>),</div><div class="line">        <span class="string">"tag"</span>,</div><div class="line">        <span class="string">"author"</span>,</div><div class="line">        <span class="string">"desc"</span>,</div><div class="line">        <span class="string">"status"</span>,</div><div class="line">        <span class="string">"content"</span>,</div><div class="line">    )</div><div class="line"></div><div class="line"></div><div class="line"><span class="meta">@admin.register(Category)</span></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">CategoryAdmin</span><span class="params">(admin.ModelAdmin)</span>:</span></div><div class="line">    list_display = [</div><div class="line">        <span class="string">"name"</span>,</div><div class="line">        <span class="string">"status"</span>,</div><div class="line">        <span class="string">"is_nav"</span>,</div><div class="line">        <span class="string">"author"</span>,</div><div class="line">        <span class="string">"created_time"</span>,</div><div class="line">    ]</div><div class="line">    fields = (</div><div class="line">        <span class="string">"name"</span>,</div><div class="line">        <span class="string">"status"</span>,</div><div class="line">        <span class="string">"is_nav"</span>,</div><div class="line">        <span class="string">"author"</span>,</div><div class="line">    )</div><div class="line"></div><div class="line"></div><div class="line"><span class="meta">@admin.register(Tag)</span></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">TagAdmin</span><span class="params">(admin.ModelAdmin)</span>:</span></div><div class="line">    list_display = [</div><div class="line">        <span class="string">"name"</span>,</div><div class="line">        <span class="string">"status"</span>,</div><div class="line">        <span class="string">"author"</span>,</div><div class="line">        <span class="string">"created_time"</span>,</div><div class="line">    ]</div><div class="line">    fields = (</div><div class="line">        <span class="string">"name"</span>,</div><div class="line">        <span class="string">"status"</span>,</div><div class="line">        <span class="string">"author"</span>,</div><div class="line">    )</div></pre></td></tr></table></figure></p>
-<p>进入后台，我们先新增一篇文章，可以看到标签和分类是object，这里需要在models.py中增加定制类</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Tag</span><span class="params">(models.Model)</span>:</span></div><div class="line">	............</div><div class="line">	</div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__unicode__</span><span class="params">(self)</span>:</span></div><div class="line">        <span class="keyword">return</span> self.name</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Category</span><span class="params">(models.Model)</span>:</span></div><div class="line">	................</div><div class="line">	<span class="function"><span class="keyword">def</span> <span class="title">__unicode__</span><span class="params">(self)</span>:</span></div><div class="line">        <span class="keyword">return</span> self.name</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Post</span><span class="params">(models.Model)</span>:</span></div><div class="line">	.................</div><div class="line"></div><div class="line"></div><div class="line">	<span class="function"><span class="keyword">def</span> <span class="title">__unicode__</span><span class="params">(self)</span>:</span></div><div class="line">        <span class="keyword">return</span> self.name</div></pre></td></tr></table></figure>
-<p>config和comment应用也是这样开发后台，具体代码可以去github查看</p>
-<p><a href="https://github.com/Family-TreeSY/Myblog" target="_blank" rel="external">GitHub</a><br>欢迎访问<a href="https://family-treesy.github.io/" target="_blank" rel="external">Treehl的博客</a></p>
+        <h4 id="staticmethod和-classmethod的区别"><a href="#staticmethod和-classmethod的区别" class="headerlink" title="@staticmethod和@classmethod的区别"></a><strong>@staticmethod和@classmethod的区别</strong></h4><ul>
+<li>class 类</li>
+<li>@staticmethod</li>
+<li>@classmethod</li>
+</ul>
+<hr>
+<p>首先创建一个类，如果想要调用Student类中的方法get_score()，就需要先创建类的实例，然后再用类的对象再去调用方法</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">In [<span class="number">3</span>]: <span class="class"><span class="keyword">class</span> <span class="title">Student</span><span class="params">()</span>:</span></div><div class="line">   ...:     <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, name, score)</span>:</span></div><div class="line">   ...:         self.name = name</div><div class="line">   ...:         self.score = score</div><div class="line">   ...:     <span class="function"><span class="keyword">def</span> <span class="title">get_score</span><span class="params">(self)</span>:</span></div><div class="line">   ...:         print(<span class="string">'%s get %s '</span> % (self.name, self.score))</div><div class="line">   ...:</div><div class="line">   ...:</div><div class="line"></div><div class="line">In [<span class="number">4</span>]: student = Student(<span class="string">'treehl'</span>, <span class="number">100</span>)</div><div class="line"></div><div class="line">In [<span class="number">5</span>]: student.get_score()</div><div class="line">treehl get <span class="number">100</span></div></pre></td></tr></table></figure>
+<hr>
+<p>@staticmethod和@classmethod一个是静态方法，另一个是类的方法，两个装饰器的作用都可以使类不必再创建实例，直接用类来调用方法（类名.方法（））</p>
+<p>它们使用上的区别</p>
+<ul>
+<li>@staticmethod不需要传递self，也不需要cls参数，就跟使用函数一样（类名.方法（）或类名.属性名）</li>
+<li>@classmethod也不需要像实例方法一样要传递self，但它需要cls参数（cls.类名（）或cls.方法（）或cls.属性（））</li>
+</ul>
+<p>要理解这些，首先需要理解<a href="https://github.com/Family-TreeSY/Python-Study-Notes/blob/master/Python%E5%AE%9E%E4%BE%8B%E5%8F%98%E9%87%8F%E5%92%8C%E7%B1%BB%E5%8F%98%E9%87%8F.md" target="_blank" rel="external">类属性和实例属性的区别</a></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">In [<span class="number">6</span>]: <span class="class"><span class="keyword">class</span> <span class="title">A</span><span class="params">()</span>:</span></div><div class="line">   ...:     bar = <span class="number">1</span></div><div class="line">   ...:     <span class="function"><span class="keyword">def</span> <span class="title">foo</span><span class="params">(self)</span>:</span></div><div class="line">   ...:         <span class="keyword">print</span> <span class="string">'foo'</span></div><div class="line">   ...:     @staticmethod</div><div class="line">   ...:     <span class="function"><span class="keyword">def</span> <span class="title">static_foo</span><span class="params">()</span>:</span></div><div class="line">   ...:         <span class="keyword">print</span> <span class="string">'static_foo'</span></div><div class="line">   ...:         <span class="keyword">print</span> A.bar</div><div class="line">   ...:     @classmethod</div><div class="line">   ...:     <span class="function"><span class="keyword">def</span> <span class="title">class_foo</span><span class="params">(cls)</span>:</span></div><div class="line">   ...:         <span class="keyword">print</span> <span class="string">'class_foo'</span></div><div class="line">   ...:         <span class="keyword">print</span> cls.bar</div><div class="line">   ...:         cls().foo()</div><div class="line">   ...:</div><div class="line"></div><div class="line">In [<span class="number">7</span>]: A.static_foo()</div><div class="line">static_foo</div><div class="line"><span class="number">1</span></div><div class="line"></div><div class="line">In [<span class="number">8</span>]: A.class_foo()</div><div class="line">class_foo</div><div class="line"><span class="number">1</span></div><div class="line">foo</div></pre></td></tr></table></figure>
+<p>欢迎访问<a href="https://family-treesy.github.io/" target="_blank" rel="external">Treehl的博客</a><br><a href="https://github.com/Family-TreeSY/Python-Study-Notes" target="_blank" rel="external">Github</a></p>
 
       
 
@@ -243,7 +255,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Django</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Python</a>
         		</li>
       		
 		</ul>
@@ -299,7 +311,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="http://s.jiathis.com/qrcode.php?url=http://Family-TreeSY.github.io/2018/04/03/五、开发后台管理（一）/" alt="微信分享二维码">
+      <img src="http://s.jiathis.com/qrcode.php?url=http://Family-TreeSY.github.io/2018/06/25/@staticmethod和@classmethod的区别/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -313,18 +325,9 @@
   
 <nav id="article-nav">
   
-    <a href="/2018/04/03/六、开发后台管理（二）/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          开发后台管理（二）
-        
-      </div>
-    </a>
   
-  
-    <a href="/2018/04/03/四、创建后台管理账号、迁移数据库/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">创建后台管理账号、迁移数据库</div>
+    <a href="/2018/06/25/进程（Process）/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Python多进程.md</div>
       <i class="icon-circle-right"></i>
     </a>
   
