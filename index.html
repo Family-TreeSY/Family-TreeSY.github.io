@@ -173,6 +173,87 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-Python进程-md" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/06/25/Python进程-md/">Python进程.md</a>
+    </h1>
+  
+
+        
+        <a href="/2018/06/25/Python进程-md/" class="archive-article-date">
+  	<time datetime="2018-06-25T08:59:52.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-06-25</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>对于操作系统来说，一个任务就是一个进程（Process），比如打开一个word就是启动一个word进程。它不止干同一件事情，可以同时进行打字、打印等子任务操作，这些进程内子任务就是线程（Thread）</p>
+</blockquote>
+<ul>
+<li>单核CPU也可以执行多任务，操作系统轮流</li>
+<li>让各个任务交替，Task1执行0.01秒，切换到Task2，Task2执行0.01秒，再切换到Task3，执行0.01秒……..这样反复执行下去</li>
+<li>真正的并行执行多任务只能在多核CPU上实现</li>
+</ul>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Python</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/06/25/Python进程-md/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-QuerySet" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -683,89 +764,6 @@
 
 
   
-    <article id="post-sort()和sorted()的区别" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/05/30/sort()和sorted()的区别/">sort()和sorted()的区别</a>
-    </h1>
-  
-
-        
-        <a href="/2018/05/30/sort()和sorted()的区别/" class="archive-article-date">
-  	<time datetime="2018-05-30T02:10:33.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-05-30</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="sort-和sorted-的区别"><a href="#sort-和sorted-的区别" class="headerlink" title="sort()和sorted()的区别"></a><strong>sort()和sorted()的区别</strong></h3><p>上周面试问的一个问题，瞬间懵了！我想不就是排序么。。。。。非常简单的问题，居然没有说清楚！！！今天写个小结，加深下印象！！！！</p>
-<p><strong>1、sort()</strong></p>
-<p>sort()是python列表内置的方法，它会对列表进行永久性排序，无法恢复到原来的排序列表，看代码</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">In [<span class="number">11</span>]: l = [<span class="number">3</span>, <span class="number">1</span>, <span class="number">5</span>, <span class="number">2</span>, <span class="number">9</span>, <span class="string">'c'</span>, <span class="string">'a'</span>]</div><div class="line"></div><div class="line">In [<span class="number">12</span>]: l.sort()</div><div class="line"></div><div class="line">In [<span class="number">13</span>]: l</div><div class="line">Out[<span class="number">13</span>]: [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">5</span>, <span class="number">9</span>, <span class="string">'a'</span>, <span class="string">'c'</span>]</div></pre></td></tr></table></figure>
-<p>也可以已反方向排序</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">In [<span class="number">14</span>]: l.sort(reverse=<span class="keyword">True</span>)</div><div class="line"></div><div class="line">In [<span class="number">15</span>]: l</div><div class="line">Out[<span class="number">15</span>]: [<span class="string">'c'</span>, <span class="string">'a'</span>, <span class="number">9</span>, <span class="number">5</span>, <span class="number">3</span>, <span class="number">2</span>, <span class="number">1</span>]</div></pre></td></tr></table></figure>
-<p><strong>2、sorted()函数</strong></p>
-<p>sorted()函数对列表进行临时性排序，l列表被排序后改变了原列表顺序，再输入l，列表依旧是原来的样子</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">In [<span class="number">20</span>]:  l = [<span class="number">3</span>, <span class="number">1</span>, <span class="number">5</span>, <span class="number">2</span>, <span class="number">9</span>, <span class="string">'c'</span>, <span class="string">'a'</span>]</div><div class="line"></div><div class="line">In [<span class="number">21</span>]: sorted(l)</div><div class="line">Out[<span class="number">21</span>]: [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">5</span>, <span class="number">9</span>, <span class="string">'a'</span>, <span class="string">'c'</span>]</div><div class="line"></div><div class="line">In [<span class="number">22</span>]: l</div><div class="line">Out[<span class="number">22</span>]: [<span class="number">3</span>, <span class="number">1</span>, <span class="number">5</span>, <span class="number">2</span>, <span class="number">9</span>, <span class="string">'c'</span>, <span class="string">'a'</span>]</div></pre></td></tr></table></figure>
-<p>欢迎访问<a href="https://family-treesy.github.io/" target="_blank" rel="external">Treehl的博客</a><br><a href="https://github.com/Family-TreeSY/Python-Study-Notes" target="_blank" rel="external">Github</a></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Python</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/05/30/sort()和sorted()的区别/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
       <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/7/">7</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
@@ -867,15 +865,19 @@ getOwnMetadataKeys:function(t){return o(i(t),arguments.length<2?void 0:u(argumen
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">MongoDB</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">DailyQuestion</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Django</a>
+                <a href="javascript:void(0)" class="js-tag color2">Python</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">MongoDB</a>
+                <a href="javascript:void(0)" class="js-tag color1">MySQL</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -887,10 +889,6 @@ getOwnMetadataKeys:function(t){return o(i(t),arguments.length<2?void 0:u(argumen
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Python</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">爬虫</a>
               </li>
              
@@ -899,15 +897,15 @@ getOwnMetadataKeys:function(t){return o(i(t),arguments.length<2?void 0:u(argumen
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Django</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">Scrapy</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">Redis</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">MySQL</a>
               </li>
              
               <li class="article-tag-list-item">
