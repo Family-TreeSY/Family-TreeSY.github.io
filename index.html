@@ -173,19 +173,19 @@
           <div id="js-content" class="content-ll">
             
   
-    <article id="post-Python进程-md" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-进程（Process）" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2018/06/25/Python进程-md/">Python进程.md</a>
+      <a class="article-title" href="/2018/06/25/进程（Process）/">Python多进程.md</a>
     </h1>
   
 
         
-        <a href="/2018/06/25/Python进程-md/" class="archive-article-date">
+        <a href="/2018/06/25/进程（Process）/" class="archive-article-date">
   	<time datetime="2018-06-25T08:59:52.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-06-25</time>
 </a>
         
@@ -193,14 +193,54 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <blockquote>
-<p>对于操作系统来说，一个任务就是一个进程（Process），比如打开一个word就是启动一个word进程。它不止干同一件事情，可以同时进行打字、打印等子任务操作，这些进程内子任务就是线程（Thread）</p>
+        <p><strong>参考自：</strong></p>
+<blockquote>
+<p><a href="https://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/001431927781401bb47ccf187b24c3b955157bb12c5882d000" target="_blank" rel="external">廖雪峰的Python教程</a><br><a href="http://www.dongwm.com/archives/%E4%BD%BF%E7%94%A8Python%E8%BF%9B%E8%A1%8C%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B-%E8%BF%9B%E7%A8%8B%E7%AF%87/" target="_blank" rel="external">董伟明的博客</a></p>
+</blockquote>
+<p><strong>知识点：</strong></p>
+<ul>
+<li>Process</li>
+<li>Pool</li>
+<li><p>进程间通信</p>
+<hr>
+</li>
+</ul>
+<h4 id="进程（Process）"><a href="#进程（Process）" class="headerlink" title="进程（Process）"></a><strong>进程（Process）</strong></h4><blockquote>
+<p>对于操作系统来说，一个任务就是一个进程（Process），比如打开一个word就是启动一个word进程。它不止干同一件事情，可以同时进行打字、打印等子任务操作，这些进程内的子任务就是线程（Thread）</p>
 </blockquote>
 <ul>
 <li>单核CPU也可以执行多任务，操作系统轮流</li>
 <li>让各个任务交替，Task1执行0.01秒，切换到Task2，Task2执行0.01秒，再切换到Task3，执行0.01秒……..这样反复执行下去</li>
 <li>真正的并行执行多任务只能在多核CPU上实现</li>
 </ul>
+<p><strong>多进程（Multiprocessing）</strong></p>
+<p>Multiprocessing模块提供了一个Process类来代表一个进程对象，下面代码演示了创建一个子进程，并等待其结束</p>
+<ul>
+<li>os.getpid()  获取父进程的ID</li>
+<li>创建子进程时，首先创建Process类的实例，再传入一个函数和它的参数</li>
+<li>用start()来启动子进程</li>
+<li>jion()  等待子进程结束后再继续运行下去，用于进程之间的同步</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="comment"># -*- coding:utf-8 -*-</span></div><div class="line"><span class="keyword">import</span> os</div><div class="line"><span class="keyword">from</span> multiprocessing <span class="keyword">import</span> Process</div><div class="line"></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">run_process</span><span class="params">(name)</span>:</span></div><div class="line">    print(<span class="string">'Run child process %s(%s)'</span> % (name, os.getpid()))</div><div class="line"></div><div class="line"></div><div class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</div><div class="line">    print(<span class="string">'Run parent process %s'</span> % os.getpid())</div><div class="line">    <span class="comment"># 创建子进程（创建Process类的实例p），传入一个函数和函数的参数</span></div><div class="line">    p = Process(target=run_process, args=(<span class="string">'test'</span>, ))</div><div class="line">    print(<span class="string">'Child process will start!'</span>)</div><div class="line">    <span class="comment"># 启动子进程</span></div><div class="line">    p.start()</div><div class="line">    <span class="comment"># 等待子进程结束后再运行下去，用于进程间的同步</span></div><div class="line">    p.join()</div><div class="line">    print(<span class="string">'Child process end!'</span>)</div></pre></td></tr></table></figure>
+<p>执行结果如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">Run parent process <span class="number">9156</span></div><div class="line">Child process will start!</div><div class="line">Run child process test(<span class="number">1564</span>)</div><div class="line">Child process end!</div><div class="line"></div><div class="line">Process finished <span class="keyword">with</span> exit code <span class="number">0</span></div></pre></td></tr></table></figure>
+<hr>
+<h4 id="Pool"><a href="#Pool" class="headerlink" title="Pool"></a><strong>Pool</strong></h4><p>如果要启动大量的子进程，可以使用进程池（Pool）。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="comment"># -*- coding:utf-8 -*-</span></div><div class="line"><span class="keyword">import</span> os</div><div class="line"><span class="keyword">import</span> time</div><div class="line"><span class="keyword">import</span> random</div><div class="line"><span class="keyword">from</span> multiprocessing <span class="keyword">import</span> Pool</div><div class="line"></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">long_time_task</span><span class="params">(name)</span>:</span></div><div class="line">    print(<span class="string">'Run task %s()%s'</span> % (name, os.getpid()))</div><div class="line">    start = time.time()</div><div class="line">    <span class="comment"># random.random()：随机生成0~1之间的浮点数</span></div><div class="line">    time.sleep(random.random() * <span class="number">3</span>)</div><div class="line">    end = time.time()</div><div class="line">    print(<span class="string">'Task %s run %0.2f seconds'</span> % (name, end - start))</div><div class="line"></div><div class="line"></div><div class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</div><div class="line">    print(<span class="string">'Parent process %s'</span> % os.getpid())</div><div class="line">    <span class="comment"># 创建进程池，大小是4，创建Pool类的实例p，不写子进程数量，默认开到CPU最大</span></div><div class="line">    p = Pool(<span class="number">4</span>)</div><div class="line">    <span class="comment"># 创建5个子进程，apply_async传入一个函数和它的参数</span></div><div class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">5</span>):</div><div class="line">        p.apply_async(long_time_task, args=(i, ))</div><div class="line">    print(<span class="string">'Waiting all subprocess done!'</span>)</div><div class="line">    <span class="comment"># join()之前必须先调用close()，调用close()后就不能再添加新的subprocess了</span></div><div class="line">    p.close()</div><div class="line">    <span class="comment"># 等待所有子进程执行完毕</span></div><div class="line">    p.join()</div><div class="line">    print(<span class="string">'All subprocess done!'</span>)</div></pre></td></tr></table></figure>
+<p>执行结果如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">Parent process <span class="number">13524</span></div><div class="line">Waiting all subprocess done!</div><div class="line">Run task <span class="number">0</span>()<span class="number">14440</span></div><div class="line">Run task <span class="number">1</span>()<span class="number">15016</span></div><div class="line">Run task <span class="number">2</span>()<span class="number">8072</span></div><div class="line">Run task <span class="number">3</span>()<span class="number">3268</span></div><div class="line">Task <span class="number">0</span> run <span class="number">0.28</span> seconds</div><div class="line">Run task <span class="number">4</span>()<span class="number">14440</span></div><div class="line">Task <span class="number">3</span> run <span class="number">1.14</span> seconds</div><div class="line">Task <span class="number">2</span> run <span class="number">1.54</span> seconds</div><div class="line">Task <span class="number">1</span> run <span class="number">2.11</span> seconds</div><div class="line">Task <span class="number">4</span> run <span class="number">2.82</span> seconds</div><div class="line">All subprocess done!</div></pre></td></tr></table></figure>
+<p>Pool对象需要调用join()方法会等待所有subprocess执行完毕，调用join()方法之前必须要先调用close()方法，调用close()方法后就不能再添加新的subprocess了</p>
+<p>我们看到输出是task0, 1, 2, 3执行了，而task4需要等待某个task执行完毕才能运行，这是因为我们设置了进程池大小为4，它只能同时执行4个子进程，如果不设置进程池大小，就是默认电脑的CPU最大核数</p>
+<p>之前用Multiprocess写过多进程爬虫，抓取速度极快，数据量小的甚至可以做到秒抓</p>
+<hr>
+<h4 id="进程间通信"><a href="#进程间通信" class="headerlink" title="进程间通信"></a><strong>进程间通信</strong></h4><p>Process之间都需要通信，Multiprocessing提供了Queue（队列）Pipe（管道）来进行数据的交换</p>
+<p>这里是Queue（队列）为例子，创建两个子进程，一个写数据，一个读数据。创建Queue的实例q，父进程创建队列，分别传递给write和read两个子进程</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="comment"># -*- coding:utf-8 -*-</span></div><div class="line"><span class="keyword">import</span> os</div><div class="line"><span class="keyword">import</span> time</div><div class="line"><span class="keyword">import</span> random</div><div class="line"><span class="keyword">from</span> multiprocessing <span class="keyword">import</span> Process, Queue</div><div class="line"></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">write</span><span class="params">(q)</span>:</span></div><div class="line">    print(<span class="string">'Process write to: %s'</span> % os.getpid())</div><div class="line">    <span class="keyword">for</span> value <span class="keyword">in</span> [<span class="string">'A'</span>, <span class="string">'B'</span>, <span class="string">'C'</span>]:</div><div class="line">        print(<span class="string">'Put %s to queue...'</span> % value)</div><div class="line">        <span class="comment"># 调用put将value放置队列当中</span></div><div class="line">        q.put(value)</div><div class="line">        time.sleep(random.random())</div><div class="line"></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">read</span><span class="params">(q)</span>:</span></div><div class="line">    print(<span class="string">'Proecss to read: %s'</span> % os.getpid())</div><div class="line">    <span class="keyword">while</span> <span class="keyword">True</span>:</div><div class="line">        <span class="comment"># 将数据从队列中取出</span></div><div class="line">        value = q.get(<span class="keyword">True</span>)</div><div class="line">        print(<span class="string">'Get %s from queue'</span> % value)</div><div class="line"></div><div class="line"></div><div class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</div><div class="line">    <span class="comment"># 父进程创建队列，并传递给各个子进程</span></div><div class="line">    q = Queue()</div><div class="line">    <span class="comment"># 创建write子进程</span></div><div class="line">    pw = Process(target=write, args=(q, ))</div><div class="line">    <span class="comment"># 创建read子进程</span></div><div class="line">    pr = Process(target=read, args=(q, ))</div><div class="line">    <span class="comment"># 开启write子进程</span></div><div class="line">    pw.start()</div><div class="line">    <span class="comment"># 开启read子进程</span></div><div class="line">    pr.start()</div><div class="line">    <span class="comment"># 等待write子进程结束</span></div><div class="line">    pw.join()</div><div class="line">    <span class="comment"># read子进程是死循环，需要强制关闭</span></div><div class="line">    pr.terminate()</div></pre></td></tr></table></figure>
+<p><strong>执行结果如下：</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">Process write to: <span class="number">868</span></div><div class="line">Put A to queue...</div><div class="line">Proecss to read: <span class="number">9844</span></div><div class="line">Get A <span class="keyword">from</span> queue</div><div class="line">Put B to queue...</div><div class="line">Get B <span class="keyword">from</span> queue</div><div class="line">Put C to queue...</div><div class="line">Get C <span class="keyword">from</span> queue</div><div class="line"></div><div class="line">Process finished <span class="keyword">with</span> exit code <span class="number">0</span></div></pre></td></tr></table></figure>
+<hr>
+<p>董伟明老师写的多进程教程明显难度要高于廖老师的，用了很多Python的语法糖，需要额外去理解闭包、装饰器、递归，但廖老师的更容易理解</p>
+<p>欢迎访问<a href="https://family-treesy.github.io/" target="_blank" rel="external">Treehl的博客</a><br><a href="https://github.com/Family-TreeSY/Python-Study-Notes" target="_blank" rel="external">Github</a></p>
 
       
 
@@ -224,7 +264,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2018/06/25/Python进程-md/">展开全文 >></a>
+          <a class="article-more-a" href="/2018/06/25/进程（Process）/">展开全文 >></a>
         </p>
       
 
@@ -869,18 +909,6 @@ getOwnMetadataKeys:function(t){return o(i(t),arguments.length<2?void 0:u(argumen
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">DailyQuestion</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Python</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">MySQL</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">Git</a>
               </li>
              
@@ -889,15 +917,27 @@ getOwnMetadataKeys:function(t){return o(i(t),arguments.length<2?void 0:u(argumen
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">MySQL</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Python</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">DailyQuestion</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Django</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">爬虫</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">BeautifulSoup</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Django</a>
               </li>
              
               <li class="article-tag-list-item">
