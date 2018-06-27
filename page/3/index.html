@@ -173,6 +173,127 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-面向对象编程" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/05/28/面向对象编程/">面向对象编程</a>
+    </h1>
+  
+
+        
+        <a href="/2018/05/28/面向对象编程/" class="archive-article-date">
+  	<time datetime="2018-05-28T11:15:36.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-05-28</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h4 id="面向对象编程"><a href="#面向对象编程" class="headerlink" title="面向对象编程"></a><strong>面向对象编程</strong></h4><blockquote>
+<p>参考<a href="https://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/0014318645694388f1f10473d7f416e9291616be8367ab5000" target="_blank" rel="external">廖雪峰的Python教程</a></p>
+</blockquote>
+<p>面向对象编程——-Object Oriented Programming（OOP）</p>
+<p>Python面向对象编程三大特点：</p>
+<ul>
+<li>数据封装</li>
+<li>继承</li>
+<li>多态</li>
+<li>鸭子类型</li>
+</ul>
+<p><strong>1、数据封装</strong></p>
+<p>这里我们定义一个Cat类，每个实例都可以拥有name和age属性，我们可以调用内部方法来访问这些数据，这样就把数据封装起来了，这些封装数据的函数本身是与Cat类相关联的，我们称之为“类的方法”</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># -*- coding:utf-8 -*-</span></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Cat</span><span class="params">(object)</span>:</span></div><div class="line">    <span class="string">"""数据封装</span></div><div class="line"><span class="string">    1、每个Cat实例都有name、age属性，我们可以通过函数来访问这些数据</span></div><div class="line"><span class="string">    2、__init__()方法：根据Cat类创建实例时都会调用它，并初始化实例的属性</span></div><div class="line"><span class="string">    3、self就是实例本身</span></div><div class="line"><span class="string">    """</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, name, age)</span>:</span></div><div class="line">        self.name = name</div><div class="line">        self.age = age</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">play</span><span class="params">(self)</span>:</span></div><div class="line">        print(<span class="string">'%s is %s years old and he is playing with another cat!'</span> % (self.name, self.age))</div><div class="line"></div><div class="line"></div><div class="line"><span class="comment"># 创建实例</span></div><div class="line">c = Cat(<span class="string">'fat'</span>, <span class="number">2</span>)</div><div class="line"><span class="comment"># 实例调用play方法</span></div><div class="line">c.play()</div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>fat <span class="keyword">is</span> <span class="number">2</span> years old <span class="keyword">and</span> he <span class="keyword">is</span> playing <span class="keyword">with</span> another cat!</div></pre></td></tr></table></figure>
+<p>封装的另外一个好处就是可以给Cat类再增加一个新的方法</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">  <span class="function"><span class="keyword">def</span> <span class="title">sleep</span><span class="params">(self)</span>:</span></div><div class="line">        print(<span class="string">'%s is tired, he want to sleep!'</span> % (self.name.title(),))</div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>Fat <span class="keyword">is</span> tired, he want to sleep!</div></pre></td></tr></table></figure>
+<p><strong>2、继承</strong></p>
+<p> 继承的好处时子类获得父类所有的功能，这里先定义一个Animal类</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># -*- coding:utf-8 -*-</span></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Animal</span><span class="params">(object)</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">run</span><span class="params">(self)</span>:</span></div><div class="line">        print(<span class="string">'Animal is running!'</span>)</div><div class="line"></div><div class="line"></div><div class="line">a = Animal()</div><div class="line">a.run()</div><div class="line"></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>Animal <span class="keyword">is</span> running!</div></pre></td></tr></table></figure>
+<p>这里再定义Cat类和Dog类，它们都继承自Animal，Animal是Cat和Dog的父类（超类或基类），而Cat和Dog是Animal的子类。<strong>Cat和Dog继承Animal后自动获得了Animal类的run方法</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># -*- coding:utf-8 -*-</span></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Animal</span><span class="params">(object)</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">run</span><span class="params">(self)</span>:</span></div><div class="line">        print(<span class="string">'Animal is running!'</span>)</div><div class="line"></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Cat</span><span class="params">(Animal)</span>:</span></div><div class="line">    <span class="keyword">pass</span></div><div class="line"></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Dog</span><span class="params">(Animal)</span>:</span></div><div class="line">    <span class="keyword">pass</span></div><div class="line"></div><div class="line"></div><div class="line">c = Cat()</div><div class="line">d = Dog()</div><div class="line">c.run()</div><div class="line">d.run()</div></pre></td></tr></table></figure>
+<p>这里我们给子类增加run方法，当子类和父类都存在run方法时，子类覆盖掉父类方法，所以输出是<br>Cat is running!<br>Dog is running!</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># -*- coding:utf-8 -*-</span></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Animal</span><span class="params">(object)</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">run</span><span class="params">(self)</span>:</span></div><div class="line">        print(<span class="string">'Animal is running!'</span>)</div><div class="line"></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Cat</span><span class="params">(Animal)</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">run</span><span class="params">(self)</span>:</span></div><div class="line">        print(<span class="string">'Cat is running!'</span>)</div><div class="line"></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Dog</span><span class="params">(Animal)</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">run</span><span class="params">(self)</span>:</span></div><div class="line">        print(<span class="string">'Dog is running!'</span>)</div><div class="line"></div><div class="line"></div><div class="line">c = Cat()</div><div class="line">d = Dog()</div><div class="line">c.run()</div><div class="line">d.run()</div><div class="line"></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>Cat <span class="keyword">is</span> running!</div><div class="line">	Dog <span class="keyword">is</span> running!</div></pre></td></tr></table></figure>
+<p><strong>3、多态</strong></p>
+<p>当我们定义class的时候就定义了一种数据类型，这里用isinstance()函数来判断对象是否是已知的类型</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">a = list()</div><div class="line">b = Animal()</div><div class="line">c = Cat()</div><div class="line"></div><div class="line">print(isinstance(a, list))</div><div class="line">print(isinstance(b, Animal))</div><div class="line">print(isinstance(c, Cat))</div><div class="line"></div><div class="line"></div><div class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">True</span></div><div class="line">	<span class="keyword">True</span></div><div class="line">	<span class="keyword">True</span></div></pre></td></tr></table></figure>
+<p>判断都为True，这里可以试下isinstance(c, Animal)是什么结果，Cat的实例c继承自Animal，所以c也是Animal类型</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">print(isinstance(c, Animal))</div><div class="line"></div><div class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">True</span></div></pre></td></tr></table></figure>
+<p>在继承关系中，如果一个实例的数据类型是某个子类，那它的数据类型也可以被看做是父类。但是，反过来就不行</p>
+<p>Cat可以被看成Animal，但Animal不能被看成Cat</p>
+<blockquote>
+<p>isinstance(c, Cat)</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">b = Animal()</div><div class="line"></div><div class="line">print(isinstance(b, Cat))</div><div class="line"></div><div class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">False</span></div></pre></td></tr></table></figure>
+<p>再编写一个函数来来理解多态，每当我们传入实例，就打印出各个类相应的结果</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">run_twice</span><span class="params">(animal)</span>:</span></div><div class="line">    animal.run()</div><div class="line">    animal.run()</div><div class="line"></div><div class="line"></div><div class="line">run_twice(Animal())</div><div class="line">run_twice(Cat())</div><div class="line">run_twice(Dog())</div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>Animal <span class="keyword">is</span> running!</div><div class="line">	Animal <span class="keyword">is</span> running!</div><div class="line">	Cat <span class="keyword">is</span> running!</div><div class="line">	Cat <span class="keyword">is</span> running!</div><div class="line">	Dog <span class="keyword">is</span> running!</div><div class="line">	Dog <span class="keyword">is</span> running!</div></pre></td></tr></table></figure>
+<p>这里我们再增加Lion子类</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Lion</span><span class="params">(Animal)</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">run</span><span class="params">(self)</span>:</span></div><div class="line">        print(<span class="string">'Lion is running！'</span>)</div><div class="line"></div><div class="line"></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>Lion <span class="keyword">is</span> running！</div><div class="line">	Lion <span class="keyword">is</span> running！</div></pre></td></tr></table></figure>
+<p>Animal类型有run方法，只要传入的任意类型是animal类或者子类就会自动调用自己的run方法</p>
+<p><strong>鸭子类型</strong></p>
+<ul>
+<li>一个对象只要“看起来像鸭子，走起路来像鸭子”，那它就可以被看做是鸭子。也可以这样理解，并不关心对象是什么类型，到底是不是鸭子，只关心行为</li>
+</ul>
+<p>我们再增加一个子类，它不是animal类型，只要它有一个run()方法就可以了（只关心它的行为，而不关心它到底是不是animal）</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Timer</span><span class="params">(object)</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">run</span><span class="params">(self)</span>:</span></div><div class="line">        print(<span class="string">'Start........'</span>)</div><div class="line"></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>Start........</div><div class="line">	Start........</div></pre></td></tr></table></figure>
+<p>完整代码</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="comment"># -*- coding:utf-8 -*-</span></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Animal</span><span class="params">(object)</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">run</span><span class="params">(self)</span>:</span></div><div class="line">        print(<span class="string">'Animal is running!'</span>)</div><div class="line"></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Cat</span><span class="params">(Animal)</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">run</span><span class="params">(self)</span>:</span></div><div class="line">        print(<span class="string">'Cat is running!'</span>)</div><div class="line"></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Dog</span><span class="params">(Animal)</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">run</span><span class="params">(self)</span>:</span></div><div class="line">        print(<span class="string">'Dog is running!'</span>)</div><div class="line"></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Lion</span><span class="params">(Animal)</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">run</span><span class="params">(self)</span>:</span></div><div class="line">        print(<span class="string">'Lion is running！'</span>)</div><div class="line"></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Timer</span><span class="params">(object)</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">run</span><span class="params">(self)</span>:</span></div><div class="line">        print(<span class="string">'Start........'</span>)</div><div class="line"></div><div class="line"></div><div class="line">a = list()</div><div class="line">b = Animal()</div><div class="line">c = Cat()</div><div class="line"></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">run_twice</span><span class="params">(fish)</span>:</span></div><div class="line">    fish.run()</div><div class="line">    fish.run()</div><div class="line"></div><div class="line"></div><div class="line">run_twice(Animal())</div><div class="line">run_twice(Cat())</div><div class="line">run_twice(Dog())</div><div class="line">run_twice(Lion())</div><div class="line">run_twice(Timer())</div><div class="line"></div><div class="line"></div><div class="line">print(isinstance(a, list))</div><div class="line">print(isinstance(b, Animal))</div><div class="line">print(isinstance(c, Cat))</div><div class="line"></div><div class="line">print(isinstance(c, Animal))</div><div class="line"></div><div class="line">print(isinstance(b, Cat))</div></pre></td></tr></table></figure>
+<p>欢迎访问<a href="https://family-treesy.github.io/" target="_blank" rel="external">Treehl的博客</a><br><a href="https://github.com/Family-TreeSY/Python-Study-Notes" target="_blank" rel="external">Github</a></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Python</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/05/28/面向对象编程/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-Django博客搭建" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -704,93 +825,6 @@
 
 
   
-    <article id="post-三、创建数据库模型Model" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/04/02/三、创建数据库模型Model/">创建数据库模型Model</a>
-    </h1>
-  
-
-        
-        <a href="/2018/04/02/三、创建数据库模型Model/" class="archive-article-date">
-  	<time datetime="2018-04-02T14:08:08.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-04-02</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="三、创建数据库模型Model"><a href="#三、创建数据库模型Model" class="headerlink" title="三、创建数据库模型Model"></a>三、创建数据库模型Model</h3><ul>
-<li>blog </li>
-<li>config</li>
-<li>comment</li>
-</ul>
-<p><strong>blog</strong></p>
-<blockquote>
-<p>author、category都有外键（foreignkey一对多关系），每篇文章只有一个分类，而一个分类下可以有多篇文章</p>
-<p>tag的ManyToManyField字段是多对多关系，一篇文章可以有多个标签，一个标签下也可以有多篇文章</p>
-</blockquote>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div><div class="line">125</div><div class="line">126</div><div class="line">127</div><div class="line">128</div><div class="line">129</div><div class="line">130</div><div class="line">131</div><div class="line">132</div><div class="line">133</div><div class="line">134</div><div class="line">135</div><div class="line">136</div><div class="line">137</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># blog/models.py</span></div><div class="line"><span class="comment"># -*- coding: utf-8 -*-</span></div><div class="line"><span class="keyword">from</span> __future__ <span class="keyword">import</span> unicode_literals</div><div class="line"></div><div class="line"><span class="keyword">from</span> django.db <span class="keyword">import</span> models</div><div class="line"><span class="keyword">from</span> django.contrib.auth.models <span class="keyword">import</span> User</div><div class="line"></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Category</span><span class="params">(models.Model)</span>:</span></div><div class="line">    STATUS_ITEMS = (</div><div class="line">        (<span class="number">1</span>, <span class="string">"正常"</span>),</div><div class="line">        (<span class="number">2</span>, <span class="string">"删除"</span>),</div><div class="line">    )</div><div class="line">    name = models.CharField(max_length=<span class="number">50</span>, verbose_name=<span class="string">"名城"</span>)</div><div class="line">    status = models.PositiveIntegerField(</div><div class="line">        default=<span class="number">1</span>, choices=STATUS_ITEMS, verbose_name=<span class="string">"状态"</span></div><div class="line">    )</div><div class="line">    is_nav = models.BooleanField(default=<span class="keyword">False</span>, verbose_name=<span class="string">"是否为导航"</span>)</div><div class="line">    author = models.ForeignKey(User, verbose_name=<span class="string">"作者"</span>)</div><div class="line">    created_time = models.DateTimeField(auto_now_add=<span class="keyword">True</span>, verbose_name=<span class="string">"创建时间"</span>)</div><div class="line"></div><div class="line">    <span class="class"><span class="keyword">class</span> <span class="title">Meta</span>:</span></div><div class="line">        verbose_name = verbose_name_plural = <span class="string">'分类'</span></div><div class="line"></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Tag</span><span class="params">(models.Model)</span>:</span></div><div class="line">    STATUS_ITEMS = (</div><div class="line">        (<span class="number">1</span>, <span class="string">"正常"</span>),</div><div class="line">        (<span class="number">2</span>, <span class="string">"删除"</span>),</div><div class="line">    )</div><div class="line">    name = models.CharField(max_length=<span class="number">50</span>, verbose_name=<span class="string">"名称"</span>)</div><div class="line">    status = models.PositiveIntegerField(</div><div class="line">        default=<span class="number">1</span>, choices=STATUS_ITEMS, verbose_name=<span class="string">"状态"</span></div><div class="line">    )</div><div class="line">    author = models.ForeignKey(User, verbose_name=<span class="string">"作者"</span>)</div><div class="line">    created_time = models.DateTimeField(auto_now_add=<span class="keyword">True</span>, verbose_name=<span class="string">"创建时间"</span>)</div><div class="line"></div><div class="line">    <span class="class"><span class="keyword">class</span> <span class="title">Meta</span>:</span></div><div class="line">        verbose_name = verbose_name_plural = <span class="string">"标签"</span></div><div class="line"></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Post</span><span class="params">(models.Model)</span>:</span></div><div class="line">    <span class="string">"""</span></div><div class="line"><span class="string">    1、指定title字段类型为字符（charfield）</span></div><div class="line"><span class="string">    2、max_length指定字符长度</span></div><div class="line"><span class="string">    3、verbose_name可以理解为注释</span></div><div class="line"><span class="string">    4、Textfild因为是正文内容，输入会非常长</span></div><div class="line"><span class="string">    5、status默认为1,意思是文章默认状态是上线状态</span></div><div class="line"><span class="string">    6、auto_now_add为创建时使用</span></div><div class="line"><span class="string">    7、auto_now为更新时使用</span></div><div class="line"><span class="string">    """</span></div><div class="line">    STATUS_ITEM = (</div><div class="line">        (<span class="number">1</span>, <span class="string">"上线"</span>),</div><div class="line">        (<span class="number">2</span>, <span class="string">"删除"</span>),</div><div class="line">    )</div><div class="line">    title = models.CharField(max_length=<span class="number">50</span>, verbose_name=<span class="string">"标题"</span>)</div><div class="line">    desc = models.CharField(max_length=<span class="number">255</span>, blank=<span class="keyword">True</span>, verbose_name=<span class="string">"摘要"</span>)</div><div class="line">    content = models.TextField(verbose_name=<span class="string">"正文内容"</span>, help_text=<span class="string">"正文必须为markdown"</span>)</div><div class="line">    status = models.PositiveIntegerField(</div><div class="line">        default=<span class="number">1</span>, choices=STATUS_ITEM, verbose_name=<span class="string">"状态"</span></div><div class="line">    )</div><div class="line">    category = models.ForeignKey(Category, verbose_name=<span class="string">"分类"</span>)</div><div class="line">    tag = models.ManyToManyField(Tag, verbose_name=<span class="string">"标签"</span>)</div><div class="line">    author = models.ForeignKey(User, verbose_name=<span class="string">"作者"</span>)</div><div class="line">    created_time = models.DateTimeField(auto_now_add=<span class="keyword">True</span>, verbose_name=<span class="string">"创建时间"</span>)</div><div class="line">    last_update_time = models.DateTimeField(auto_now=<span class="keyword">True</span>, verbose_name=<span class="string">"更新时间"</span>)</div><div class="line"></div><div class="line">    <span class="class"><span class="keyword">class</span> <span class="title">Meta</span>:</span></div><div class="line">        verbose_name = verbose_name_plural = <span class="string">"文章"</span></div><div class="line"><span class="comment"># -*- coding: utf-8 -*-</span></div><div class="line"><span class="keyword">from</span> __future__ <span class="keyword">import</span> unicode_literals</div><div class="line"></div><div class="line"><span class="keyword">from</span> django.db <span class="keyword">import</span> models</div><div class="line"><span class="keyword">from</span> django.contrib.auth.models <span class="keyword">import</span> User</div><div class="line"></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Category</span><span class="params">(models.Model)</span>:</span></div><div class="line">    STATUS_ITEMS = (</div><div class="line">        (<span class="number">1</span>, <span class="string">"正常"</span>),</div><div class="line">        (<span class="number">2</span>, <span class="string">"删除"</span>),</div><div class="line">    )</div><div class="line">    name = models.CharField(max_length=<span class="number">50</span>, verbose_name=<span class="string">"名城"</span>)</div><div class="line">    status = models.PositiveIntegerField(</div><div class="line">        default=<span class="number">1</span>, choices=STATUS_ITEMS, verbose_name=<span class="string">"状态"</span></div><div class="line">    )</div><div class="line">    is_nav = models.BooleanField(default=<span class="keyword">False</span>, verbose_name=<span class="string">"是否为导航"</span>)</div><div class="line">    author = models.ForeignKey(User, verbose_name=<span class="string">"作者"</span>)</div><div class="line">    created_time = models.DateTimeField(auto_now_add=<span class="keyword">True</span>, verbose_name=<span class="string">"创建时间"</span>)</div><div class="line"></div><div class="line">    <span class="class"><span class="keyword">class</span> <span class="title">Meta</span>:</span></div><div class="line">        verbose_name = verbose_name_plural = <span class="string">'分类'</span></div><div class="line"></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Tag</span><span class="params">(models.Model)</span>:</span></div><div class="line">    STATUS_ITEMS = (</div><div class="line">        (<span class="number">1</span>, <span class="string">"正常"</span>),</div><div class="line">        (<span class="number">2</span>, <span class="string">"删除"</span>),</div><div class="line">    )</div><div class="line">    name = models.CharField(max_length=<span class="number">50</span>, verbose_name=<span class="string">"名称"</span>)</div><div class="line">    status = models.PositiveIntegerField(</div><div class="line">        default=<span class="number">1</span>, choices=STATUS_ITEMS, verbose_name=<span class="string">"状态"</span></div><div class="line">    )</div><div class="line">    author = models.ForeignKey(User, verbose_name=<span class="string">"作者"</span>)</div><div class="line">    created_time = models.DateTimeField(auto_now_add=<span class="keyword">True</span>, verbose_name=<span class="string">"创建时间"</span>)</div><div class="line"></div><div class="line">    <span class="class"><span class="keyword">class</span> <span class="title">Meta</span>:</span></div><div class="line">        verbose_name = verbose_name_plural = <span class="string">"标签"</span></div><div class="line"></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Post</span><span class="params">(models.Model)</span>:</span></div><div class="line">    <span class="string">"""</span></div><div class="line"><span class="string">    1、指定title字段类型为字符（charfield）</span></div><div class="line"><span class="string">    2、max_length指定字符长度</span></div><div class="line"><span class="string">    3、verbose_name可以理解为注释</span></div><div class="line"><span class="string">    4、Textfild因为是正文内容，输入会非常长</span></div><div class="line"><span class="string">    5、status默认为1,意思是文章默认状态是上线状态</span></div><div class="line"><span class="string">    6、auto_now_add为创建时使用</span></div><div class="line"><span class="string">    7、auto_now为更新时使用</span></div><div class="line"><span class="string">    """</span></div><div class="line">    STATUS_ITEM = (</div><div class="line">        (<span class="number">1</span>, <span class="string">"上线"</span>),</div><div class="line">        (<span class="number">2</span>, <span class="string">"删除"</span>),</div><div class="line">    )</div><div class="line">    title = models.CharField(max_length=<span class="number">50</span>, verbose_name=<span class="string">"标题"</span>)</div><div class="line">    desc = models.CharField(max_length=<span class="number">255</span>, blank=<span class="keyword">True</span>, verbose_name=<span class="string">"摘要"</span>)</div><div class="line">    content = models.TextField(verbose_name=<span class="string">"正文内容"</span>, help_text=<span class="string">"正文必须为markdown"</span>)</div><div class="line">    status = models.PositiveIntegerField(</div><div class="line">        default=<span class="number">1</span>, choices=STATUS_ITEM, verbose_name=<span class="string">"状态"</span></div><div class="line">    )</div><div class="line">    category = models.ForeignKey(Category, verbose_name=<span class="string">"分类"</span>)</div><div class="line">    tag = models.ManyToManyField(Tag, verbose_name=<span class="string">"标签"</span>)</div><div class="line">    author = models.ForeignKey(User, verbose_name=<span class="string">"作者"</span>)</div><div class="line">    created_time = models.DateTimeField(auto_now_add=<span class="keyword">True</span>, verbose_name=<span class="string">"创建时间"</span>)</div><div class="line">    last_update_time = models.DateTimeField(auto_now=<span class="keyword">True</span>, verbose_name=<span class="string">"更新时间"</span>)</div><div class="line"></div><div class="line">    <span class="class"><span class="keyword">class</span> <span class="title">Meta</span>:</span></div><div class="line">        verbose_name = verbose_name_plural = <span class="string">"文章"</span></div></pre></td></tr></table></figure>
-<p><strong>config</strong><br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># -*- coding: utf-8 -*-</span></div><div class="line"><span class="keyword">from</span> __future__ <span class="keyword">import</span> unicode_literals</div><div class="line"></div><div class="line"><span class="keyword">from</span> django.db <span class="keyword">import</span> models</div><div class="line"><span class="keyword">from</span> django.contrib.auth.models <span class="keyword">import</span> User</div><div class="line"></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Link</span><span class="params">(models.Model)</span>:</span></div><div class="line">    <span class="string">"""友链"""</span></div><div class="line">    STATUS_ITEMS = (</div><div class="line">        (<span class="number">1</span>, <span class="string">"正常"</span>),</div><div class="line">        (<span class="number">2</span>, <span class="string">"删除"</span>),</div><div class="line">    )</div><div class="line">    title = models.CharField(max_length=<span class="number">50</span>, verbose_name=<span class="string">"名称"</span>)</div><div class="line">    href = models.URLField(verbose_name=<span class="string">"链接"</span>)</div><div class="line">    status = models.PositiveIntegerField(</div><div class="line">        default=<span class="number">1</span>, choices=STATUS_ITEMS, verbose_name=<span class="string">"状态"</span></div><div class="line">    )</div><div class="line">    weight = models.PositiveIntegerField(</div><div class="line">        default=<span class="number">1</span>, choices=zip(</div><div class="line">            range(<span class="number">1</span>, <span class="number">6</span>), range(<span class="number">1</span>, <span class="number">6</span>),</div><div class="line">        ), verbose_name=<span class="string">"权重"</span>, help_text=<span class="string">"权重越高展示顺序越靠前"</span></div><div class="line">    )</div><div class="line">    author = models.ForeignKey(User, verbose_name=<span class="string">"作者"</span>)</div><div class="line">    created_time = models.DateTimeField(auto_now_add=<span class="keyword">True</span>, verbose_name=<span class="string">"创建时间"</span>)</div><div class="line"></div><div class="line">    <span class="class"><span class="keyword">class</span> <span class="title">Meta</span>:</span></div><div class="line">        verbose_name = verbose_name_plural = <span class="string">"友链"</span></div><div class="line"></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">SideBar</span><span class="params">(models.Model)</span>:</span></div><div class="line">    <span class="string">"""侧边栏"""</span></div><div class="line">    STATUS_ITEMS = (</div><div class="line">        (<span class="number">1</span>, <span class="string">"展示"</span>),</div><div class="line">        (<span class="number">2</span>, <span class="string">"下线"</span>)</div><div class="line">    )</div><div class="line">    SIDE_TYPE = (</div><div class="line">        (<span class="number">1</span>, <span class="string">"HTML"</span>),</div><div class="line">        (<span class="number">2</span>, <span class="string">"最新文章"</span>),</div><div class="line">        (<span class="number">3</span>, <span class="string">"最热文章"</span>),</div><div class="line">        (<span class="number">4</span>, <span class="string">"最热评论"</span>),</div><div class="line">    )</div><div class="line">    title = models.CharField(max_length=<span class="number">50</span>, verbose_name=<span class="string">"标题"</span>)</div><div class="line">    status = models.PositiveIntegerField(</div><div class="line">        default=<span class="number">1</span>, choices=STATUS_ITEMS, verbose_name=<span class="string">"状态"</span></div><div class="line">    )</div><div class="line">    display_type = models.PositiveIntegerField(</div><div class="line">        default=<span class="number">1</span>, choices=SIDE_TYPE, verbose_name=<span class="string">"展示类型"</span></div><div class="line">    )</div><div class="line">    content = models.CharField(</div><div class="line">        max_length=<span class="number">100</span>,</div><div class="line">        blank=<span class="keyword">True</span>,</div><div class="line">        verbose_name=<span class="string">"内容"</span>,</div><div class="line">        help_text=<span class="string">"如果设置的不是HTML类型，可为空"</span></div><div class="line">    )</div><div class="line">    author = models.ForeignKey(User, verbose_name=<span class="string">"作者"</span>)</div><div class="line">    created_time = models.DateTimeField(auto_now_add=<span class="keyword">True</span>, verbose_name=<span class="string">"创建时间"</span>)</div><div class="line"></div><div class="line">    <span class="class"><span class="keyword">class</span> <span class="title">Meta</span>:</span></div><div class="line">        verbose_name = verbose_name_plural = <span class="string">"侧边栏"</span></div></pre></td></tr></table></figure></p>
-<p><strong>comment</strong><br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># -*- coding: utf-8 -*-</span></div><div class="line"><span class="keyword">from</span> __future__ <span class="keyword">import</span> unicode_literals</div><div class="line"></div><div class="line"><span class="keyword">from</span> django.db <span class="keyword">import</span> models</div><div class="line"></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Comment</span><span class="params">(models.Model)</span>:</span></div><div class="line">    STATUS_ITEMS = (</div><div class="line">        (<span class="number">1</span>, <span class="string">'正常'</span>),</div><div class="line">        (<span class="number">2</span>, <span class="string">'删除'</span>),</div><div class="line">    )</div><div class="line">    target = models.CharField(max_length=<span class="number">200</span>, null=<span class="keyword">True</span>, verbose_name=<span class="string">'评论目标'</span>)</div><div class="line">    content = models.CharField(max_length=<span class="number">2000</span>, verbose_name=<span class="string">'内容'</span>)</div><div class="line">    nickname = models.CharField(max_length=<span class="number">50</span>, verbose_name=<span class="string">'昵称'</span>)</div><div class="line">    status = models.PositiveIntegerField(</div><div class="line">        default=<span class="number">1</span>, choices=STATUS_ITEMS, verbose_name=<span class="string">'状态'</span></div><div class="line">    )</div><div class="line">    website = models.URLField(verbose_name=<span class="string">'网站'</span>)</div><div class="line">    email = models.EmailField(verbose_name=<span class="string">'邮箱'</span>)</div><div class="line">    created_time = models.DateTimeField(auto_now_add=<span class="keyword">True</span>, verbose_name=<span class="string">'创建时间'</span>)</div><div class="line"></div><div class="line">    <span class="class"><span class="keyword">class</span> <span class="title">Meta</span>:</span></div><div class="line">        verbose_name = verbose_name_plural = <span class="string">'评论'</span></div></pre></td></tr></table></figure></p>
-<p><a href="https://github.com/Family-TreeSY/Myblog" target="_blank" rel="external">GitHub</a><br>欢迎访问<a href="https://family-treesy.github.io/" target="_blank" rel="external">Treehl的博客</a></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Django</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/04/02/三、创建数据库模型Model/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
       <a class="extend prev" rel="prev" href="/page/2/">&laquo; Prev</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><a class="page-number" href="/page/5/">5</a><span class="space">&hellip;</span><a class="page-number" href="/page/7/">7</a><a class="extend next" rel="next" href="/page/4/">Next &raquo;</a>
@@ -892,6 +926,14 @@ getOwnMetadataKeys:function(t){return o(i(t),arguments.length<2?void 0:u(argumen
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">Git</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">GitHub</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">PYTHON</a>
               </li>
              
@@ -904,19 +946,11 @@ getOwnMetadataKeys:function(t){return o(i(t),arguments.length<2?void 0:u(argumen
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">Git</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">GitHub</a>
+                <a href="javascript:void(0)" class="js-tag color2">Django</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">MySQL</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Django</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -928,11 +962,11 @@ getOwnMetadataKeys:function(t){return o(i(t),arguments.length<2?void 0:u(argumen
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Redis</a>
+                <a href="javascript:void(0)" class="js-tag color2">Scrapy</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Scrapy</a>
+                <a href="javascript:void(0)" class="js-tag color1">Redis</a>
               </li>
              
               <li class="article-tag-list-item">

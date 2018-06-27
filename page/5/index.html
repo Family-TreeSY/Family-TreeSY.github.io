@@ -173,6 +173,140 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-scrapy-redis(一)" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/12/23/scrapy-redis(一)/">Scrapy-Redis分布式爬取自如网（一）</a>
+    </h1>
+  
+
+        
+        <a href="/2017/12/23/scrapy-redis(一)/" class="archive-article-date">
+  	<time datetime="2017-12-23T09:48:23.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-12-23</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>继上次<a href="https://family-treesy.github.io/2017/12/21/Scrapy%E7%88%AC%E5%8F%96%E7%8C%AB%E7%9C%BC%E7%94%B5%E5%BD%B1/" target="_blank" rel="external">Scrapy爬取猫眼电影</a>之后，这几天学习了Scrapy-Redis分布式来提高爬取效率，也算是停留在舒适圈一段时间后往前走了一步！！</p>
+<p><strong>准备工作</strong><br><a href="https://www.mongodb.com/" target="_blank" rel="external">MongoDB</a><br><a href="https://redis.io/" target="_blank" rel="external">Redis</a><br><a href="https://github.com/rmax/scrapy-redis" target="_blank" rel="external">Scrapy-Redis</a><br><a href="https://github.com/scrapy/scrapy" target="_blank" rel="external">Scrapy</a></p>
+<p>这次爬取的是<a href="http://sh.ziroom.com/z/nl/z2.html?qwd=" target="_blank" rel="external">上海自如租房</a>，相信在魔都生活的小伙伴们如果不是本地人，租房费用占了每月开销很大的一部分，我们来看下租房体验比较好的自如，除了价格贵外 - -！！</p>
+<h4 id="实战应用"><a href="#实战应用" class="headerlink" title="实战应用"></a><strong>实战应用</strong></h4><p>创建一个工程</p>
+<blockquote>
+<p>scrapy startproject ziru</p>
+</blockquote>
+<p><strong>第一步 编辑item.py</strong><br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> scrapy</div><div class="line"></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">ZiruItem</span><span class="params">(scrapy.Item)</span>:</span></div><div class="line">    <span class="comment"># define the fields for your item here like:</span></div><div class="line">    <span class="comment"># name = scrapy.Field()</span></div><div class="line">    ziroom_area = scrapy.Field()</div><div class="line">    ziroom_face = scrapy.Field()</div><div class="line">    ziroom_floor = scrapy.Field()</div><div class="line">    ziroom_label = scrapy.Field()</div><div class="line">    <span class="comment"># ziroom_location = scrapy.Field()</span></div><div class="line">    ziroom_name = scrapy.Field()</div><div class="line">    ziroom_price = scrapy.Field()</div><div class="line">    ziroom_type = scrapy.Field()</div><div class="line">    ziroom_traffic = scrapy.Field()</div><div class="line">    rounding_info = scrapy.Field()</div><div class="line">    traffic_info = scrapy.Field()</div><div class="line">    ziroom_image = scrapy.Field()</div><div class="line">    <span class="keyword">pass</span></div></pre></td></tr></table></figure></p>
+<ul>
+<li>首先，引入Scrapy</li>
+<li>接着，创建一个类，继承自scrapy.item,这个是用来储存要爬下来的数据的存放容器</li>
+</ul>
+<p><strong>第二步 获取网页数据</strong><br>在spider文件下创建spider.py<br> <img src="http://m.qpic.cn/psb?/V10WDaE22S84Sl/vTL5TWP6nxsx3u*xqp2ZyF0SlQj9jH5V*yObgpA6u7Y!/b/dF4BAAAAAAAA&amp;bo=iwWAAgAAAAADBy4!&amp;rf=viewer_4" alt=""></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># -*- coding: utf-8 -*-</span></div><div class="line"></div><div class="line"><span class="keyword">from</span> scrapy.spiders <span class="keyword">import</span> Rule</div><div class="line"><span class="keyword">from</span> scrapy.selector <span class="keyword">import</span> Selector</div><div class="line"><span class="keyword">from</span> scrapy.linkextractors <span class="keyword">import</span> LinkExtractor</div><div class="line"><span class="keyword">from</span> ziru.items <span class="keyword">import</span> ZiruItem</div><div class="line"><span class="keyword">from</span> scrapy_redis.spiders <span class="keyword">import</span> RedisCrawlSpider</div><div class="line"></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">ZiroomSpider</span><span class="params">(RedisCrawlSpider)</span>:</span></div><div class="line">    name = <span class="string">'ziroom'</span></div><div class="line">    <span class="comment"># allowed_domains = ['http://sh.ziroom.com/z/nl/z2.html?qwd=']</span></div><div class="line">    <span class="comment"># start_urls = ['http://sh.ziroom.com/z/nl/z2.html?qwd=']</span></div><div class="line">    redis_key = <span class="string">'ziroomspider:start_urls'</span></div><div class="line">    rules = (</div><div class="line">        Rule(LinkExtractor(allow=(<span class="string">r'http://sh.ziroom.com/z/nl/z2.html\?qwd=\&amp;p=\d+'</span>))),</div><div class="line">        Rule(LinkExtractor(allow=(<span class="string">r'http:\//sh\.ziroom\.com\/z\/vr\/\d+\.html'</span>)), callback=<span class="string">'parse_item'</span>)</div><div class="line">    )</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">parse_item</span><span class="params">(self, response)</span>:</span></div><div class="line">        <span class="comment"># print(response.body)</span></div><div class="line">        sel = Selector(response)</div><div class="line">        </div><div class="line">      ...省略索取元素的代码...</div><div class="line"></div><div class="line">        <span class="keyword">yield</span> item</div></pre></td></tr></table></figure>
+<ul>
+<li>比起Scrapy，又多引入了 from scrapy_redis.spiders import RedisCrawlSpider</li>
+<li>start_urls变为redis_key = ‘ziroomspider:start_urls’ 作为所有链接存储到 redis</li>
+<li>爬取rule还是一个链接为翻页，一个为详情页链接</li>
+</ul>
+<p><strong>第三步 编辑管道pipeline.py</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"></div><div class="line"><span class="keyword">import</span> pymongo</div><div class="line"><span class="keyword">from</span> scrapy.conf <span class="keyword">import</span> settings</div><div class="line"><span class="keyword">from</span> scrapy.exceptions <span class="keyword">import</span> DropItem</div><div class="line"><span class="keyword">from</span> scrapy <span class="keyword">import</span> log</div><div class="line"></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">MongoDBPipeline</span><span class="params">(object)</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self)</span>:</span></div><div class="line">        client = pymongo.MongoClient(settings[<span class="string">'MONGODB_SERVER'</span>], settings[<span class="string">'MONGODB_PORT'</span>])</div><div class="line">        db = client[settings[<span class="string">'MONGODB_DB'</span>]]</div><div class="line">        self.collection = db[settings[<span class="string">'MONGODB_COLLECTION'</span>]]</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">process_item</span><span class="params">(self, item, spider)</span>:</span></div><div class="line">        <span class="comment"># item:  (Item 对象) – 被爬取的item</span></div><div class="line">        <span class="comment"># (Spider 对象) – 爬取该item的spider</span></div><div class="line">        <span class="comment"># 去重，删除重复的数据</span></div><div class="line">        valid = <span class="keyword">True</span></div><div class="line">        <span class="keyword">for</span> data <span class="keyword">in</span> item:</div><div class="line">            <span class="keyword">if</span> <span class="keyword">not</span> data:</div><div class="line">                valid = <span class="keyword">False</span></div><div class="line">                <span class="keyword">raise</span> DropItem(<span class="string">'Missing %s of blogpost from %s'</span> % (data, item[<span class="string">'url'</span>]))</div><div class="line">        <span class="keyword">if</span> valid:</div><div class="line">            homes = [&#123;</div><div class="line">                <span class="string">'ziroom_area'</span>: item[<span class="string">'ziroom_area'</span>],</div><div class="line">                <span class="string">'ziroom_face'</span>: item[<span class="string">'ziroom_face'</span>],</div><div class="line">                <span class="string">'ziroom_floor'</span>: item[<span class="string">'ziroom_floor'</span>],</div><div class="line">                <span class="string">'ziroom_label'</span>: item[<span class="string">'ziroom_label'</span>],</div><div class="line">                <span class="comment"># 'ziroom_location': item['ziroom_location'],</span></div><div class="line">                <span class="string">'ziroom_name'</span> :item[<span class="string">'ziroom_name'</span>],</div><div class="line">                <span class="string">'ziroom_price'</span> : item[<span class="string">'ziroom_price'</span>],</div><div class="line">                <span class="string">'ziroom_type'</span> : item[<span class="string">'ziroom_type'</span>],</div><div class="line">                <span class="string">'ziroom_traffic'</span>: item[<span class="string">'ziroom_traffic'</span>],</div><div class="line">                <span class="string">'rounding_info'</span>: item[<span class="string">'rounding_info'</span>],</div><div class="line">                <span class="string">'traffic_info'</span>: item[<span class="string">'traffic_info'</span>],</div><div class="line">                <span class="string">'ziroom_image'</span>: item[<span class="string">'ziroom_image'</span>],</div><div class="line">            &#125;]</div><div class="line"></div><div class="line">            <span class="comment"># 插入数据库集合中</span></div><div class="line">            self.collection.insert(homes)</div><div class="line">            log.msg(<span class="string">'Item wrote to MongoDB database %s/%s'</span> % (settings[<span class="string">'MONGODB_DB'</span>], settings[<span class="string">'MONGODB_COLLECTION'</span>]),</div><div class="line">                    level=log.DEBUG, spider=spider)</div><div class="line">        <span class="keyword">return</span> item</div></pre></td></tr></table></figure>
+<p>编辑MongoDBpipelines，将获取的数据存入MongoDB数据库中</p>
+<p><strong>第四步 编辑middlewares.py</strong><br>在中间件中写入随机选取伪造请求头来防止spider被封掉</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">RotateUserAgentMiddleware</span><span class="params">(UserAgentMiddleware)</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__int__</span><span class="params">(self, user_agent=<span class="string">''</span>)</span>:</span></div><div class="line">        self.user_agent = user_agent</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">process_request</span><span class="params">(self, request, spider)</span>:</span></div><div class="line">        <span class="comment"># 这句话用于随机选择user-agent</span></div><div class="line">        ua = random.choice(self.user_agent_list)</div><div class="line">        <span class="keyword">if</span> ua:</div><div class="line">            logging.info(ua)</div><div class="line">            request.headers.setdefault(<span class="string">'User-Agent'</span>, ua)</div><div class="line"></div><div class="line">    <span class="comment"># the default user_agent_list composes chrome,I E,firefox,Mozilla,opera,netscape</span></div><div class="line">    <span class="comment"># for more user agent strings,you can find it in http://www.useragentstring.com/pages/useragentstring.php</span></div><div class="line">    user_agent_list = [</div><div class="line">        <span class="string">"Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.1 (KHTML, like Gecko) Chrome/22.0.1207.1 Safari/537.1"</span>,</div><div class="line">        <span class="string">"Mozilla/5.0 (X11; CrOS i686 2268.111.0) AppleWebKit/536.11 (KHTML, like Gecko) Chrome/20.0.1132.57 Safari/536.11"</span>,</div><div class="line">        <span class="string">"Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/536.6 (KHTML, like Gecko) Chrome/20.0.1092.0 Safari/536.6"</span>,</div><div class="line">        <span class="string">"Mozilla/5.0 (Windows NT 6.2) AppleWebKit/536.6 (KHTML, like Gecko) Chrome/20.0.1090.0 Safari/536.6"</span>,</div><div class="line">        <span class="string">"Mozilla/5.0 (Windows NT 6.2; WOW64) AppleWebKit/537.1 (KHTML, like Gecko) Chrome/19.77.34.5 Safari/537.1"</span>,</div><div class="line">        <span class="string">"Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/536.5 (KHTML, like Gecko) Chrome/19.0.1084.9 Safari/536.5"</span>,</div><div class="line">        <span class="string">"Mozilla/5.0 (Windows NT 6.0) AppleWebKit/536.5 (KHTML, like Gecko) Chrome/19.0.1084.36 Safari/536.5"</span>,</div><div class="line">        <span class="string">"Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/536.3 (KHTML, like Gecko) Chrome/19.0.1063.0 Safari/536.3"</span>,</div><div class="line">        <span class="string">"Mozilla/5.0 (Windows NT 5.1) AppleWebKit/536.3 (KHTML, like Gecko) Chrome/19.0.1063.0 Safari/536.3"</span>,</div><div class="line">        <span class="string">"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_8_0) AppleWebKit/536.3 (KHTML, like Gecko) Chrome/19.0.1063.0 Safari/536.3"</span>,</div><div class="line">        <span class="string">"Mozilla/5.0 (Windows NT 6.2) AppleWebKit/536.3 (KHTML, like Gecko) Chrome/19.0.1062.0 Safari/536.3"</span>,</div><div class="line">        <span class="string">"Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/536.3 (KHTML, like Gecko) Chrome/19.0.1062.0 Safari/536.3"</span>,</div><div class="line">        <span class="string">"Mozilla/5.0 (Windows NT 6.2) AppleWebKit/536.3 (KHTML, like Gecko) Chrome/19.0.1061.1 Safari/536.3"</span>,</div><div class="line">        <span class="string">"Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/536.3 (KHTML, like Gecko) Chrome/19.0.1061.1 Safari/536.3"</span>,</div><div class="line">        <span class="string">"Mozilla/5.0 (Windows NT 6.1) AppleWebKit/536.3 (KHTML, like Gecko) Chrome/19.0.1061.1 Safari/536.3"</span>,</div><div class="line">        <span class="string">"Mozilla/5.0 (Windows NT 6.2) AppleWebKit/536.3 (KHTML, like Gecko) Chrome/19.0.1061.0 Safari/536.3"</span>,</div><div class="line">        <span class="string">"Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/535.24 (KHTML, like Gecko) Chrome/19.0.1055.1 Safari/535.24"</span>,</div><div class="line">        <span class="string">"Mozilla/5.0 (Windows NT 6.2; WOW64) AppleWebKit/535.24 (KHTML, like Gecko) Chrome/19.0.1055.1 Safari/535.24"</span>,</div><div class="line">        <span class="string">"Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US) AppleWebKit/531.21.8 (KHTML, like Gecko) Version/4.0.4 Safari/531.21.10"</span>,</div><div class="line">        <span class="string">"Mozilla/5.0 (Windows; U; Windows NT 5.2; en-US) AppleWebKit/533.17.8 (KHTML, like Gecko) Version/5.0.1 Safari/533.17.8"</span>,</div><div class="line">        <span class="string">"Mozilla/5.0 (Windows; U; Windows NT 6.1; en-US) AppleWebKit/533.19.4 (KHTML, like Gecko) Version/5.0.2 Safari/533.18.5"</span>,</div><div class="line">        <span class="string">"Mozilla/5.0 (Windows; U; Windows NT 6.1; en-GB; rv:1.9.1.17) Gecko/20110123 (like Firefox/3.x) SeaMonkey/2.0.12"</span>,</div><div class="line">        <span class="string">"Mozilla/5.0 (Windows NT 5.2; rv:10.0.1) Gecko/20100101 Firefox/10.0.1 SeaMonkey/2.7.1"</span>,</div><div class="line">        <span class="string">"Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10_5_8; en-US) AppleWebKit/532.8 (KHTML, like Gecko) Chrome/4.0.302.2 Safari/532.8"</span>,</div><div class="line">        <span class="string">"Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10_6_4; en-US) AppleWebKit/534.3 (KHTML, like Gecko) Chrome/6.0.464.0 Safari/534.3"</span>,</div><div class="line">        <span class="string">"Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10_6_5; en-US) AppleWebKit/534.13 (KHTML, like Gecko) Chrome/9.0.597.15 Safari/534.13"</span>,</div><div class="line">        <span class="string">"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_7_2) AppleWebKit/535.1 (KHTML, like Gecko) Chrome/14.0.835.186 Safari/535.1"</span>,</div><div class="line">        <span class="string">"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_6_8) AppleWebKit/535.2 (KHTML, like Gecko) Chrome/15.0.874.54 Safari/535.2"</span>,</div><div class="line">        <span class="string">"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_6_8) AppleWebKit/535.7 (KHTML, like Gecko) Chrome/16.0.912.36 Safari/535.7"</span>,</div><div class="line">        <span class="string">"Mozilla/5.0 (Macintosh; U; Mac OS X Mach-O; en-US; rv:2.0a) Gecko/20040614 Firefox/3.0.0 "</span>,</div><div class="line">        <span class="string">"Mozilla/5.0 (Macintosh; U; PPC Mac OS X 10.5; en-US; rv:1.9.0.3) Gecko/2008092414 Firefox/3.0.3"</span>,</div><div class="line">        <span class="string">"Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.5; en-US; rv:1.9.1) Gecko/20090624 Firefox/3.5"</span>,</div><div class="line">        <span class="string">"Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.6; en-US; rv:1.9.2.14) Gecko/20110218 AlexaToolbar/alxf-2.0 Firefox/3.6.14"</span>,</div><div class="line">        <span class="string">"Mozilla/5.0 (Macintosh; U; PPC Mac OS X 10.5; en-US; rv:1.9.2.15) Gecko/20110303 Firefox/3.6.15"</span>,</div><div class="line">        <span class="string">"Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:2.0.1) Gecko/20100101 Firefox/4.0.1"</span></div><div class="line">    ]</div></pre></td></tr></table></figure>
+<p><strong>第五步 设置setting.py</strong></p>
+<p>这一步要修改配置了</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line">DOWNLOADER_MIDDLEWARES = &#123;</div><div class="line">    <span class="comment"># 'ziru.middlewares.MyCustomDownloaderMiddleware': 543,</span></div><div class="line">    <span class="string">'ziru.middlewares.RotateUserAgentMiddleware'</span>:<span class="number">200</span>,</div><div class="line">    <span class="string">'scrapy.downloadermiddlewares.retry.RetryMiddleware'</span>: <span class="number">80</span>,</div><div class="line">    <span class="comment"># 'itjuzi_dis.middlewares.ProxyMiddleware': 90,</span></div><div class="line">    <span class="string">'scrapy.downloadermiddlewares.httpproxy.HttpProxyMiddleware'</span>: <span class="number">100</span>,</div><div class="line">&#125;</div><div class="line"></div><div class="line">ITEM_PIPELINES = &#123;</div><div class="line">    <span class="string">'ziru.pipelines.MongoDBPipeline'</span>: <span class="number">300</span>,</div><div class="line">    <span class="string">'scrapy_redis.pipelines.RedisPipeline'</span>: <span class="number">400</span>,</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">#使用Scrapy-Redis的调度器</span></div><div class="line">SCHEDULER = <span class="string">"scrapy_redis.scheduler.Scheduler"</span></div><div class="line"><span class="comment">#利用Redis的集合实现去重</span></div><div class="line">DUPEFILTER_CLASS = <span class="string">"scrapy_redis.dupefilter.RFPDupeFilter"</span></div><div class="line"><span class="comment">#允许继续爬取</span></div><div class="line">SCHEDULER_PERSIST = <span class="keyword">True</span></div><div class="line"><span class="comment">#设置优先级</span></div><div class="line">SCHEDULER_QUEUE_CLASS = <span class="string">'scrapy_redis.queue.SpiderPriorityQueue'</span></div><div class="line">REDIS_PARAMS = &#123;<span class="string">'host'</span>: <span class="string">'localhost'</span>, <span class="string">'port'</span>: <span class="string">'6379'</span>&#125;</div></pre></td></tr></table></figure>
+<p>好了，所有的配置全部部署完了，现在来启动spider来爬取数据吧！！</p>
+<blockquote>
+<p>scrapy crawl ziroom</p>
+</blockquote>
+<p><img src="http://m.qpic.cn/psb?/V10WDaE22S84Sl/Z4440zj2oYT8nndgHw*D8nneUQyvzidoskXf3zHI9.E!/b/dPMAAAAAAAAA&amp;bo=IAPMAQAAAAARB94!&amp;rf=viewer_4" alt=""></p>
+<p>spider启动，它在等待我们的指令来爬取</p>
+<p>打开redis-cli</p>
+<blockquote>
+<p>lpush ziroomspider:start_urls <a href="http://sh.ziroom.com/z/nl/z2.html?qwd=" target="_blank" rel="external">http://sh.ziroom.com/z/nl/z2.html?qwd=</a></p>
+</blockquote>
+<p><img src="http://m.qpic.cn/psb?/V10WDaE22S84Sl/A6Q6q0FfiRjUjyDCADt4ZOVPO3.BuvLtDyXBZCObz0Y!/b/dD8BAAAAAAAA&amp;bo=KwczAgAAAAADBz8!&amp;rf=viewer_4" alt=""></p>
+<p>我开了六个spider来爬取，电脑CPU有几个处理器就能开几个，我是8核，最多能开8个，接下来准备学习docker来部署spider</p>
+<p><a href="https://github.com/Family-TreeSY/SpiderList/blob/master/ziru/ziru/spiders/ziroom.py" target="_blank" rel="external">完整代码</a><br><a href="https://www.jianshu.com/u/a01bc3ec4f88" target="_blank" rel="external">简书</a><br>[欢迎访问Treehl的博客(<a href="https://family-treesy.github.io/" target="_blank" rel="external">https://family-treesy.github.io/</a>)</p>
+<p>最后放一个爬虫集合，是我最近学习Python写的，喜欢的亲！给个Star呗！！！<br><a href="https://github.com/Family-TreeSY/SpiderList" target="_blank" rel="external">SpiderList</a></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">PYTHON</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">MongoDB</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">爬虫</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Scrapy</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Redis</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">Scrapy-Redis</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2017/12/23/scrapy-redis(一)/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-Scrapy爬取猫眼电影" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -1023,140 +1157,6 @@
 
 
   
-    <article id="post-lianjia" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/11/29/lianjia/">Python爬取上海链家网房源数据并存入MongoDB数据库</a>
-    </h1>
-  
-
-        
-        <a href="/2017/11/29/lianjia/" class="archive-article-date">
-  	<time datetime="2017-11-29T11:40:23.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-11-29</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>以下是我爬取<a href="http://sh.lianjia.com/ershoufang/baoshan" target="_blank" rel="external">上海链家网宝山区</a>房源信息的学习总结</p>
-<h4 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a><strong>准备工作</strong></h4><p>用到的Python模块：</p>
-<ul>
-<li>requests</li>
-<li>bs4</li>
-<li>pymongo</li>
-<li>datetime</li>
-<li>time</li>
-<li>random</li>
-</ul>
-<h4 id="分析网页"><a href="#分析网页" class="headerlink" title="分析网页"></a><strong>分析网页</strong></h4><p>登陆<a href="http://sh.lianjia.com/ershoufang/baoshan" target="_blank" rel="external">http://sh.lianjia.com/ershoufang/baoshan</a> 用Chrome打开开发者工具<br><img src="http://a2.qpic.cn/psb?/V10WDaE22S84Sl/OWX8XXIREtlNyAkBe52YViDpyDxfk5XwFAoUUjx6vso!/b/dD8BAAAAAAAA&amp;bo=eQdpAgAAAAADBzc!&amp;rf=viewer_4" alt=""><br>每条房源信息都在li元素中，我们再来看一下翻页链接<br><img src="http://a1.qpic.cn/psb?/V10WDaE22S84Sl/lDEAd9FQQ79CUtKdVLMJoGolSXELOAqjwFm.nmJ.wkw!/b/dPMAAAAAAAAA&amp;bo=aAdtAQAAAAADByE!&amp;rf=viewer_4" alt=""></p>
-<p>试着点击下一页，我们浏览器上的链接是有规律可循的</p>
-<blockquote>
-<p><a href="http://sh.lianjia.com/ershoufang/baoshan/d1" target="_blank" rel="external">http://sh.lianjia.com/ershoufang/baoshan/d1</a><br><a href="http://sh.lianjia.com/ershoufang/baoshan/d2" target="_blank" rel="external">http://sh.lianjia.com/ershoufang/baoshan/d2</a><br><a href="http://sh.lianjia.com/ershoufang/baoshan/d3" target="_blank" rel="external">http://sh.lianjia.com/ershoufang/baoshan/d3</a><br>………<br><a href="http://sh.lianjia.com/ershoufang/baoshan/100" target="_blank" rel="external">http://sh.lianjia.com/ershoufang/baoshan/100</a></p>
-</blockquote>
-<p>现在我们试着爬取前10页的链接</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> requests</div><div class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1</span>, <span class="number">11</span>):</div><div class="line">    r = requests.get(<span class="string">'http://sh.lianjia.com/ershoufang/baoshan/d'</span> + str(i))</div><div class="line">    print(r.url)</div></pre></td></tr></table></figure>
-<p>爬取结果</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">http://sh.lianjia.com/ershoufang/baoshan/d1</div><div class="line">http://sh.lianjia.com/ershoufang/baoshan/d2</div><div class="line">http://sh.lianjia.com/ershoufang/baoshan/d3</div><div class="line">http://sh.lianjia.com/ershoufang/baoshan/d4</div><div class="line">http://sh.lianjia.com/ershoufang/baoshan/d5</div><div class="line">http://sh.lianjia.com/ershoufang/baoshan/d6</div><div class="line">http://sh.lianjia.com/ershoufang/baoshan/d7</div><div class="line">http://sh.lianjia.com/ershoufang/baoshan/d8</div><div class="line">http://sh.lianjia.com/ershoufang/baoshan/d9</div><div class="line">http://sh.lianjia.com/ershoufang/baoshan/d10</div></pre></td></tr></table></figure>
-<h4 id="解析网页"><a href="#解析网页" class="headerlink" title="解析网页"></a><strong>解析网页</strong></h4><p><img src="http://a3.qpic.cn/psb?/V10WDaE22S84Sl/Yq7DpRZ0c*o0bN6NkHnGoGJx9HzDr2Tpa1xrEng*JnA!/b/dPIAAAAAAAAA&amp;bo=UAT.AAAAAAADB4g!&amp;rf=viewer_4" alt=""></p>
-<p>要抓取的信息如下：</p>
-<ul>
-<li>标题：room_title = room.find(‘div’, attrs={‘class’: ‘prop-title’})</li>
-<li>房屋信息：room_info = room.find(‘span’, attrs={‘class’: ‘info-col row1-text’})</li>
-<li>位置：room_location = room.find(‘span’, attrs={‘class’: ‘info-col row2-text’})</li>
-<li>附加信息：extra_info = room.find(‘div’, attrs={‘class’: ‘property-tag-container’})</li>
-<li>总价：room_price = room.find(‘span’, attrs={‘class’: ‘total-price strong-num’})</li>
-<li>单价：room_unit_price = room.find(‘span’, attrs={‘class’: ‘info-col price-item minor’})</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div></pre></td><td class="code"><pre><div class="line">soup = BeautifulSoup(r.text, <span class="string">'html.parser'</span>)</div><div class="line">rooms = soup.find(<span class="string">'ul'</span>, attrs=&#123;<span class="string">'class'</span>: <span class="string">'js_fang_list'</span>&#125;)</div><div class="line"><span class="keyword">for</span> room <span class="keyword">in</span> rooms.find_all(<span class="string">'li'</span>):</div><div class="line">    room_title = room.find(<span class="string">'div'</span>, attrs=&#123;<span class="string">'class'</span>: <span class="string">'prop-title'</span>&#125;).get_text()</div><div class="line">    room_info = room.find(<span class="string">'span'</span>, attrs=&#123;<span class="string">'class'</span>: <span class="string">'info-col row1-text'</span>&#125;).get_text()</div><div class="line">    room_location = room.find(<span class="string">'span'</span>, attrs=&#123;<span class="string">'class'</span>: <span class="string">'info-col row2-text'</span>&#125;).find(<span class="string">'a'</span>).get_text()</div><div class="line">    room_price = room.find(<span class="string">'span'</span>, attrs=&#123;<span class="string">'class'</span>: <span class="string">'total-price strong-num'</span>&#125;).get_text()</div><div class="line">    room_unit_price = room.find(<span class="string">'span'</span>, attrs=&#123;<span class="string">'class'</span>: <span class="string">'info-col price-item minor'</span>&#125;).get_text()</div><div class="line">    extra_info = room.find(<span class="string">'div'</span>, attrs=&#123;<span class="string">'class'</span>: <span class="string">'property-tag-container'</span>&#125;).get_text()</div><div class="line"></div><div class="line"></div><div class="line">    print(room_title, room_info, room_location, room_price, room_unit_price, extra_info)</div><div class="line"></div><div class="line">``` </div><div class="line"></div><div class="line"></div><div class="line">下面是网页解析下来的一个房源信息</div><div class="line"></div><div class="line"></div><div class="line">``` python</div><div class="line"></div><div class="line">厨卫全明，卧室带阳台，地铁房，高区采光好</div><div class="line"> </div><div class="line">							<span class="number">1</span>室<span class="number">1</span>厅 | <span class="number">44.73</span>平</div><div class="line">							</div><div class="line">								| 高区/<span class="number">6</span>层</div><div class="line">							</div><div class="line">							</div><div class="line">								| 朝南</div><div class="line">							</div><div class="line">						 葑润华庭 <span class="number">255</span> </div><div class="line">							单价<span class="number">57008</span>元/平</div><div class="line">						 </div><div class="line">距离<span class="number">7</span>号线祁华路站<span class="number">698</span>米</div><div class="line">满二</div><div class="line">有钥匙</div></pre></td></tr></table></figure>
-<h4 id="存入MongoDB数据库"><a href="#存入MongoDB数据库" class="headerlink" title="存入MongoDB数据库"></a><strong>存入MongoDB数据库</strong></h4><p>MongoDB数据结构是以键值对{key:value}形式组成，有点类似于JSON<br><img src="http://a1.qpic.cn/psb?/V10WDaE22S84Sl/UddoxaYMkMYW.yttCHnp450QvwYz732SEb0MvRU0Od4!/b/dD4BAAAAAAAA&amp;bo=iQPVAAAAAAADB30!&amp;rf=viewer_4" alt=""></p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># 链接数据库</span></div><div class="line">client = MongoClient(<span class="string">'localhost'</span>, <span class="number">27017</span>)</div><div class="line"><span class="comment"># 建立数据库</span></div><div class="line">db = client.tests</div><div class="line"><span class="comment"># 建立集合</span></div><div class="line">homes = db.homes</div><div class="line"></div><div class="line">rooms_list = []</div><div class="line"></div><div class="line"><span class="comment"># 先将爬下来的数据赋值为字典</span></div><div class="line">rooms_info =&#123;</div><div class="line">                <span class="string">'title'</span>: room_title,</div><div class="line">                <span class="string">'info'</span>: room_info,</div><div class="line">                <span class="string">'location'</span>: room_location,</div><div class="line">                <span class="string">'price'</span>: room_price,</div><div class="line">                <span class="string">'unit_proce'</span>: room_unit_price,</div><div class="line">                <span class="string">'message'</span>: extra_info,</div><div class="line">                <span class="string">'time'</span>: datetime.datetime.now()</div><div class="line">            &#125;</div><div class="line"></div><div class="line">rooms_list.append(rooms_info)</div><div class="line"><span class="comment"># 存入数据库</span></div><div class="line">result = homes.insert_many(rooms_list)</div><div class="line">print(result)</div></pre></td></tr></table></figure>
-<p>运行代码，我们可以看到数据存入了MongoDB</p>
-<pre><code class="python">&lt;pymongo.results.InsertManyResult object at <span class="number">0x00000260C536AB8</span>&gt;
-&lt;pymongo.results.InsertManyResult object at <span class="number">0x00000260C536AAC</span>&gt;
-&lt;pymongo.results.InsertManyResult object at <span class="number">0x00000260C536AA0</span>&gt;
-&lt;pymongo.results.InsertManyResult object at <span class="number">0x00000260C536AB4</span>&gt;
-&lt;pymongo.results.InsertManyResult object at <span class="number">0x00000260C536AB0</span>&gt;
-&lt;pymongo.results.InsertManyResult object at <span class="number">0x00000260C536A28</span>&gt;
-&lt;pymongo.results.InsertManyResult object at <span class="number">0x00000260C536AC8</span>&gt;
-&lt;pymongo.results.InsertManyResult object at <span class="number">0x00000260C536A08</span>&gt;
-&lt;pymongo.results.InsertManyResult object at <span class="number">0x00000260C536A88</span>&gt;
-&lt;pymongo.results.InsertManyResult object at <span class="number">0x00000260C536A88</span>&gt;
-&lt;pymongo.results.InsertManyResult object at <span class="number">0x00000260C536888</span>&gt;
-&lt;pymongo.results.InsertManyResult object at <span class="number">0x00000260C536A08</span>&gt;
-&lt;pymongo.results.InsertManyResult object at <span class="number">0x00000260C536AC8</span>&gt;
-&lt;pymongo.results.InsertManyResult object at <span class="number">0x00000260C536A48</span>&gt;
-&lt;pymongo.results.InsertManyResult object at <span class="number">0x00000260C536A88</span>&gt;
-</code></pre>
-<p>可以下载一个MongoDB可视化工具，我用的是Robo3T，数据就这样存入了</p>
-<p><img src="http://a1.qpic.cn/psb?/V10WDaE22S84Sl/VSPcQXPsEyWxVdgnsXKjSMUznFRMd6H*9kjsdbfcuI8!/b/dPMAAAAAAAAA&amp;bo=AAWAAgAAAAADB6U!&amp;rf=viewer_4" alt=""></p>
-<p>总共有100页的数据，用time.sleep()来控制速度防止被封掉，但爬取效率实在很低，这两天准备学习pandas</p>
-<p>完整代码在<a href="https://github.com/Family-TreeSY/LianjiaSpider/blob/master/lianjia.py" target="_blank" rel="external">GitHub</a><br><a href="http://www.jianshu.com/u/a01bc3ec4f88" target="_blank" rel="external">简书</a><br>欢迎访问博客<a href="https://family-treesy.github.io/" target="_blank" rel="external">Treehl的博客</a></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">PYTHON</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">MongoDB</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">爬虫</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/11/29/lianjia/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
       <a class="extend prev" rel="prev" href="/page/4/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><span class="page-number current">5</span><a class="page-number" href="/page/6/">6</a><a class="page-number" href="/page/7/">7</a><a class="extend next" rel="next" href="/page/6/">Next &raquo;</a>
@@ -1258,6 +1258,14 @@ getOwnMetadataKeys:function(t){return o(i(t),arguments.length<2?void 0:u(argumen
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">Git</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">GitHub</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">PYTHON</a>
               </li>
              
@@ -1270,19 +1278,11 @@ getOwnMetadataKeys:function(t){return o(i(t),arguments.length<2?void 0:u(argumen
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">Git</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">GitHub</a>
+                <a href="javascript:void(0)" class="js-tag color2">Django</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">MySQL</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Django</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1294,11 +1294,11 @@ getOwnMetadataKeys:function(t){return o(i(t),arguments.length<2?void 0:u(argumen
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Redis</a>
+                <a href="javascript:void(0)" class="js-tag color2">Scrapy</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Scrapy</a>
+                <a href="javascript:void(0)" class="js-tag color1">Redis</a>
               </li>
              
               <li class="article-tag-list-item">
