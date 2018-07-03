@@ -179,6 +179,169 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-内置序列类型" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/07/03/内置序列类型/">序列构成的数组</a>
+    </h1>
+  
+
+        
+        <a href="/2018/07/03/内置序列类型/" class="archive-article-date">
+  	<time datetime="2018-07-03T03:14:43.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-07-03</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><strong>ChapterTwo</strong></p>
+<h5 id="内置序列类型"><a href="#内置序列类型" class="headerlink" title="内置序列类型"></a><strong>内置序列类型</strong></h5><p>容器序列</p>
+<ul>
+<li>list, tuple和collections.deque这些序列能存放不同类型的数据</li>
+</ul>
+<p>扁平序列</p>
+<ul>
+<li>str、bytes、bytearray、memoryview和array.array，这类序列只能容纳一种类型</li>
+</ul>
+<p>可变序列</p>
+<ul>
+<li>list、bytearray、array.array、collection.deque和memoryview</li>
+</ul>
+<p>不可变序列</p>
+<ul>
+<li>tuple、str、bytes</li>
+</ul>
+<p><strong>list是一个可变序列，能够同时存放不同类型的元素</strong></p>
+<h3 id="列表推导式"><a href="#列表推导式" class="headerlink" title="列表推导式"></a><strong>列表推导式</strong></h3><p>也可以叫做列表生成式，它的作用就是生成列表</p>
+<p>把字符串变成相应的整数表示，就是unicode码位的列表</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">In [<span class="number">1</span>]: symbols = <span class="string">'abcdefg'</span></div><div class="line"></div><div class="line">In [<span class="number">2</span>]: codes = []</div><div class="line"></div><div class="line">In [<span class="number">3</span>]: <span class="keyword">for</span> symbol <span class="keyword">in</span> symbols:</div><div class="line">   ...:     codes.append(ord(symbol))</div><div class="line">   ...:</div><div class="line"></div><div class="line">In [<span class="number">4</span>]: codes</div><div class="line">Out[<span class="number">4</span>]: [<span class="number">97</span>, <span class="number">98</span>, <span class="number">99</span>, <span class="number">100</span>, <span class="number">101</span>, <span class="number">102</span>, <span class="number">103</span>]</div></pre></td></tr></table></figure>
+<p>使用列表推导式</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">In [<span class="number">6</span>]: codes = [ord(symbol) <span class="keyword">for</span> symbol <span class="keyword">in</span> symbols]</div><div class="line"></div><div class="line">In [<span class="number">7</span>]: codes</div><div class="line">Out[<span class="number">7</span>]: [<span class="number">97</span>, <span class="number">98</span>, <span class="number">99</span>, <span class="number">100</span>, <span class="number">101</span>, <span class="number">102</span>, <span class="number">103</span>]</div></pre></td></tr></table></figure>
+<h5 id="列表推导变量泄露问题"><a href="#列表推导变量泄露问题" class="headerlink" title="列表推导变量泄露问题"></a><strong>列表推导变量泄露问题</strong></h5><p>在python2中，列表推导式中的for关键字之后的赋值操作可能会影响到列表推导上下文中的同名变量</p>
+<p>这里x的值被取代了</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">In [<span class="number">1</span>]: x = <span class="string">'my previous'</span></div><div class="line"></div><div class="line">In [<span class="number">2</span>]: dummy = [x <span class="keyword">for</span> x <span class="keyword">in</span> <span class="string">'abc'</span>]</div><div class="line"></div><div class="line">In [<span class="number">3</span>]: x</div><div class="line">Out[<span class="number">3</span>]: <span class="string">'c'</span></div><div class="line"></div><div class="line">In [<span class="number">4</span>]: x</div><div class="line">Out[<span class="number">4</span>]: <span class="string">'c'</span></div><div class="line"></div><div class="line">In [<span class="number">5</span>]: x</div><div class="line">Out[<span class="number">5</span>]: <span class="string">'c'</span></div><div class="line"></div><div class="line">In [<span class="number">6</span>]: dummy</div><div class="line">Out[<span class="number">6</span>]: [<span class="string">'a'</span>, <span class="string">'b'</span>, <span class="string">'c'</span>]</div></pre></td></tr></table></figure>
+<p>Python3中就不会出现变量泄露的问题</p>
+<p>x的值被保留了，列表推导式也生成了新的列表</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">In [<span class="number">8</span>]: x = <span class="string">'my precious'</span></div><div class="line"></div><div class="line">In [<span class="number">9</span>]: dummy = [x <span class="keyword">for</span> x <span class="keyword">in</span> <span class="string">'ABC'</span>]</div><div class="line"></div><div class="line">In [<span class="number">10</span>]: x</div><div class="line">Out[<span class="number">10</span>]: <span class="string">'my precious'</span></div><div class="line"></div><div class="line">In [<span class="number">11</span>]: dummy</div><div class="line">Out[<span class="number">11</span>]: [<span class="string">'A'</span>, <span class="string">'B'</span>, <span class="string">'C'</span>]</div></pre></td></tr></table></figure>
+<h4 id="笛卡儿积"><a href="#笛卡儿积" class="headerlink" title="笛卡儿积"></a><strong>笛卡儿积</strong></h4><blockquote>
+<p>两个或以上的列表中的元素对构成元组，这些元组构成的列表就是笛卡儿积</p>
+</blockquote>
+<p>看一下维基的解释，再结合代码就能很容易理解了</p>
+<p><img src="http://m.qpic.cn/psb?/V10WDaE22S84Sl/76597w7TV9OrFrP6uOLDHGDBYjhUKxjQg88B.lDeSz4!/b/dDIBAAAAAAAA&amp;bo=PARaAQAAAAADB0E!&amp;rf=viewer_4" alt=""></p>
+<p>colors和sizes两个元素对列表，然后使用列表推导式，先以颜色为排列，再以尺码排列</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">In [<span class="number">12</span>]: colors = [<span class="string">'black'</span>, <span class="string">'white'</span>]</div><div class="line"></div><div class="line">In [<span class="number">13</span>]: sizes = [<span class="string">'s'</span>, <span class="string">'m'</span>, <span class="string">'l'</span>]</div><div class="line"></div><div class="line">In [<span class="number">14</span>]: tshirts = [(color, size) <span class="keyword">for</span> color <span class="keyword">in</span> colors <span class="keyword">for</span> size <span class="keyword">in</span> sizes]</div><div class="line"></div><div class="line">In [<span class="number">16</span>]: tshirts</div><div class="line">Out[<span class="number">16</span>]:</div><div class="line">[(<span class="string">'black'</span>, <span class="string">'s'</span>),</div><div class="line"> (<span class="string">'black'</span>, <span class="string">'m'</span>),</div><div class="line"> (<span class="string">'black'</span>, <span class="string">'l'</span>),</div><div class="line"> (<span class="string">'white'</span>, <span class="string">'s'</span>),</div><div class="line"> (<span class="string">'white'</span>, <span class="string">'m'</span>),</div><div class="line"> (<span class="string">'white'</span>, <span class="string">'l'</span>)]</div></pre></td></tr></table></figure>
+<p>这里用两个for循环嵌套也可以得出上面的结果</p>
+<p>先颜色后尺码</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">In [<span class="number">17</span>]: <span class="keyword">for</span> color <span class="keyword">in</span> colors:</div><div class="line">    ...:     <span class="keyword">for</span> size <span class="keyword">in</span> sizes:</div><div class="line">    ...:         print(color, size)</div><div class="line">    ...:</div><div class="line">black s</div><div class="line">black m</div><div class="line">black l</div><div class="line">white s</div><div class="line">white m</div><div class="line">white l</div></pre></td></tr></table></figure>
+<p>这里再换个需求，先尺码后颜色，只需要调换for循环的顺序即可</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">In [<span class="number">22</span>]: tshirts = [(color, size) <span class="keyword">for</span> size <span class="keyword">in</span> sizes <span class="keyword">for</span> color <span class="keyword">in</span> colors]</div><div class="line"></div><div class="line">In [<span class="number">23</span>]: tshirts</div><div class="line">Out[<span class="number">23</span>]:</div><div class="line">[(<span class="string">'red'</span>, <span class="string">'s'</span>),</div><div class="line"> (<span class="string">'green'</span>, <span class="string">'s'</span>),</div><div class="line"> (<span class="string">'red'</span>, <span class="string">'m'</span>),</div><div class="line"> (<span class="string">'green'</span>, <span class="string">'m'</span>),</div><div class="line"> (<span class="string">'red'</span>, <span class="string">'l'</span>),</div><div class="line"> (<span class="string">'green'</span>, <span class="string">'l'</span>)]</div></pre></td></tr></table></figure>
+<h3 id="生成器表达式"><a href="#生成器表达式" class="headerlink" title="生成器表达式"></a><strong>生成器表达式</strong></h3><p>生成器表达式遵守了迭代协议，可以逐个产出元素，而不是直接生成一个列表；它是边循环边计算的，这样做的目的就是节省内存</p>
+<p>生成器表达式的语法就是把列表表达式的方括号[]，改成圆括号()</p>
+<p>使用生成器表达式计算笛卡儿积</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">In [<span class="number">28</span>]: colors = [<span class="string">'red'</span>, <span class="string">'green'</span>]</div><div class="line"></div><div class="line">In [<span class="number">29</span>]: sizes = [<span class="string">'s'</span>, <span class="string">'m'</span>, <span class="string">'l'</span>]</div><div class="line"></div><div class="line">shirt = ((c, s) <span class="keyword">for</span> c <span class="keyword">in</span> colors <span class="keyword">for</span> s <span class="keyword">in</span> sizes)</div></pre></td></tr></table></figure>
+<p>执行结果：<br>用生成器表达式后，每次执行只会生成一个结果，直到最后一个元素抛出StopIteration</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line">In [<span class="number">50</span>]: next(shirt)</div><div class="line">Out[<span class="number">50</span>]: (<span class="string">'red'</span>, <span class="string">'s'</span>)</div><div class="line"></div><div class="line">In [<span class="number">51</span>]: next(shirt)</div><div class="line">Out[<span class="number">51</span>]: (<span class="string">'red'</span>, <span class="string">'m'</span>)</div><div class="line"></div><div class="line">In [<span class="number">52</span>]: next(shirt)</div><div class="line">Out[<span class="number">52</span>]: (<span class="string">'red'</span>, <span class="string">'l'</span>)</div><div class="line"></div><div class="line">In [<span class="number">53</span>]: next(shirt)</div><div class="line">Out[<span class="number">53</span>]: (<span class="string">'green'</span>, <span class="string">'s'</span>)</div><div class="line"></div><div class="line">In [<span class="number">54</span>]: next(shirt)</div><div class="line">Out[<span class="number">54</span>]: (<span class="string">'green'</span>, <span class="string">'m'</span>)</div><div class="line"></div><div class="line">In [<span class="number">55</span>]: next(shirt)</div><div class="line">Out[<span class="number">55</span>]: (<span class="string">'green'</span>, <span class="string">'l'</span>)</div><div class="line"></div><div class="line">In [<span class="number">56</span>]: next(shirt)</div><div class="line">---------------------------------------------------------------------------</div><div class="line">StopIteration                             Traceback (most recent call last)</div><div class="line">&lt;ipython-input<span class="number">-56</span><span class="number">-0</span>db0c79f79aa&gt; <span class="keyword">in</span> &lt;module&gt;()</div><div class="line">----&gt; 1 next(shirt)</div><div class="line"></div><div class="line">StopIteration:</div></pre></td></tr></table></figure>
+<p>用for循环看下结果</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">In [<span class="number">30</span>]: <span class="keyword">for</span> tshirt <span class="keyword">in</span> (<span class="string">'%s %s'</span> % (c, s) <span class="keyword">for</span> c <span class="keyword">in</span> colors <span class="keyword">for</span> s <span class="keyword">in</span> sizes):</div><div class="line">    ...:     print(tshirt)</div><div class="line">    ...:</div><div class="line">red s</div><div class="line">red m</div><div class="line">red l</div><div class="line">green s</div><div class="line">green m</div><div class="line">green l</div></pre></td></tr></table></figure>
+<h3 id="元组"><a href="#元组" class="headerlink" title="元组"></a><strong>元组</strong></h3><h5 id="元组拆包（unpacking）"><a href="#元组拆包（unpacking）" class="headerlink" title="元组拆包（unpacking）"></a><strong>元组拆包（unpacking）</strong></h5><p><strong>平行赋值</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">In [<span class="number">70</span>]: lax_coordinates = (<span class="number">33.9425</span>, <span class="number">-118.408056</span>)</div><div class="line"><span class="comment"># 元组拆包</span></div><div class="line">In [<span class="number">71</span>]: latitude, longitude = lax_coordinates</div><div class="line"></div><div class="line">In [<span class="number">72</span>]: latitude</div><div class="line">Out[<span class="number">72</span>]: <span class="number">33.9425</span></div><div class="line"></div><div class="line">In [<span class="number">73</span>]: longitude</div><div class="line">Out[<span class="number">73</span>]: <span class="number">-118.408056</span></div></pre></td></tr></table></figure>
+<p><strong>用*来处理剩下的元素</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">In [<span class="number">3</span>]:     a, b, *rest = range(<span class="number">5</span>)</div><div class="line"></div><div class="line">In [<span class="number">4</span>]: a, b, *rest = range(<span class="number">5</span>)</div><div class="line"></div><div class="line">In [<span class="number">5</span>]: a, b, rest</div><div class="line">Out[<span class="number">5</span>]: (<span class="number">0</span>, <span class="number">1</span>, [<span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>])</div><div class="line"></div><div class="line">In [<span class="number">6</span>]: a, b , *rest = range(<span class="number">3</span>)</div><div class="line"></div><div class="line">In [<span class="number">7</span>]: a, b, rest</div><div class="line">Out[<span class="number">7</span>]: (<span class="number">0</span>, <span class="number">1</span>, [<span class="number">2</span>])</div><div class="line"></div><div class="line">In [<span class="number">8</span>]: a, b, *rest = range(<span class="number">2</span>)</div><div class="line"></div><div class="line">In [<span class="number">9</span>]: a, b, rest</div><div class="line">Out[<span class="number">9</span>]: (<span class="number">0</span>, <span class="number">1</span>, [])</div></pre></td></tr></table></figure>
+<p>平行赋值中，<strong>*前缀只能用在一个变量名前面</strong>，但它可以在任意位置</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">In [<span class="number">10</span>]: a, *body, c, d = range(<span class="number">5</span>)</div><div class="line"></div><div class="line">In [<span class="number">11</span>]: a, body, c, d</div><div class="line">Out[<span class="number">11</span>]: (<span class="number">0</span>, [<span class="number">1</span>, <span class="number">2</span>], <span class="number">3</span>, <span class="number">4</span>)</div><div class="line"></div><div class="line">In [<span class="number">12</span>]: *body, a, b, c = range(<span class="number">6</span>)</div><div class="line"></div><div class="line">In [<span class="number">13</span>]: body, a, b, c</div><div class="line">Out[<span class="number">13</span>]: ([<span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>], <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>)</div></pre></td></tr></table></figure>
+<h5 id="嵌套元组拆包"><a href="#嵌套元组拆包" class="headerlink" title="嵌套元组拆包"></a><strong>嵌套元组拆包</strong></h5><p> 元组是可以嵌套的，(a, b(c, d), e, f)</p>
+<h5 id="具名元组（namedtuple）"><a href="#具名元组（namedtuple）" class="headerlink" title="具名元组（namedtuple）"></a><strong>具名元组（namedtuple）</strong></h5><p>collections.namedtuple是一个工厂函数，用来构建一个带字段名的元组和一个有名字的类</p>
+<p>先来个简单的，namedtuple创建了一个tuple对象，它也是不可变的，它可以用属性来访问元素，而不再是用索引</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">In [<span class="number">14</span>]: <span class="keyword">from</span> collections <span class="keyword">import</span> namedtuple</div><div class="line"></div><div class="line">In [<span class="number">15</span>]: Point = namedtuple(<span class="string">'Point'</span>, [<span class="string">'x'</span>, <span class="string">'y'</span>])</div><div class="line"></div><div class="line">In [<span class="number">16</span>]: p = Point(<span class="number">1</span>, <span class="number">2</span>)</div><div class="line"></div><div class="line">In [<span class="number">17</span>]: p</div><div class="line">Out[<span class="number">17</span>]: Point(x=<span class="number">1</span>, y=<span class="number">2</span>)</div><div class="line"></div><div class="line">In [<span class="number">18</span>]: p.x</div><div class="line">Out[<span class="number">18</span>]: <span class="number">1</span></div><div class="line"></div><div class="line">In [<span class="number">19</span>]: p.y</div><div class="line">Out[<span class="number">19</span>]: <span class="number">2</span></div></pre></td></tr></table></figure>
+<p>再来看一个复杂点的</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># -*- coding:utf-8 -*-</span></div><div class="line"><span class="keyword">from</span> collections <span class="keyword">import</span> namedtuple</div><div class="line"></div><div class="line"></div><div class="line"><span class="comment"># 创建具名元组需要两个参数，一个是类名，一个是类的各个字段的名字</span></div><div class="line">City = namedtuple(<span class="string">'City'</span>, <span class="string">'name country population coordinates'</span>)</div><div class="line"><span class="comment"># 创建实例，传入参数</span></div><div class="line">shanghai = City(<span class="string">'Shanghai'</span>, <span class="string">'CN'</span>, <span class="number">25</span>, (<span class="number">1</span>, <span class="number">2</span>))</div><div class="line">print(shanghai)</div><div class="line">print(shanghai.country)</div><div class="line"><span class="comment"># 通过位置来获取字段信息</span></div><div class="line">print(shanghai[<span class="number">2</span>])</div></pre></td></tr></table></figure>
+<p><strong>namedtuple的专有属性</strong></p>
+<ul>
+<li>_fields类属性</li>
+<li>_make(iterable)类方法</li>
+<li>_asdict()实例方法</li>
+</ul>
+<h3 id="切片（slicing）"><a href="#切片（slicing）" class="headerlink" title="切片（slicing）"></a><strong>切片（slicing）</strong></h3><p><strong>给切片赋值</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div></pre></td><td class="code"><pre><div class="line">In [<span class="number">24</span>]: l = list(range(<span class="number">10</span>))</div><div class="line"></div><div class="line">In [<span class="number">25</span>]: l</div><div class="line">Out[<span class="number">25</span>]: [<span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span>, <span class="number">9</span>]</div><div class="line"></div><div class="line">In [<span class="number">26</span>]: l[<span class="number">2</span>:<span class="number">5</span>] = [<span class="number">20</span>, <span class="number">30</span>]</div><div class="line"></div><div class="line">In [<span class="number">27</span>]: l</div><div class="line">Out[<span class="number">27</span>]: [<span class="number">0</span>, <span class="number">1</span>, <span class="number">20</span>, <span class="number">30</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span>, <span class="number">9</span>]</div><div class="line"></div><div class="line">In [<span class="number">28</span>]: <span class="keyword">del</span> l[<span class="number">5</span>:<span class="number">7</span>]</div><div class="line"></div><div class="line">In [<span class="number">29</span>]: l</div><div class="line">Out[<span class="number">29</span>]: [<span class="number">0</span>, <span class="number">1</span>, <span class="number">20</span>, <span class="number">30</span>, <span class="number">5</span>, <span class="number">8</span>, <span class="number">9</span>]</div><div class="line"></div><div class="line">In [<span class="number">30</span>]: l[<span class="number">3</span>:<span class="number">2</span>] = [<span class="number">11</span>, <span class="number">22</span>]</div><div class="line"></div><div class="line">In [<span class="number">31</span>]: l</div><div class="line">Out[<span class="number">31</span>]: [<span class="number">0</span>, <span class="number">1</span>, <span class="number">20</span>, <span class="number">11</span>, <span class="number">22</span>, <span class="number">30</span>, <span class="number">5</span>, <span class="number">8</span>, <span class="number">9</span>]</div><div class="line"></div><div class="line">In [<span class="number">32</span>]: l[<span class="number">2</span>:<span class="number">5</span>] = <span class="number">100</span></div><div class="line">---------------------------------------------------------------------------</div><div class="line">TypeError                                 Traceback (most recent call last)</div><div class="line">&lt;ipython-input<span class="number">-32</span>-da8b10461280&gt; <span class="keyword">in</span> &lt;module&gt;()</div><div class="line">----&gt; 1 l[2:5] = 100</div><div class="line"></div><div class="line">TypeError: can only assign an iterable</div><div class="line"></div><div class="line">In [<span class="number">33</span>]: l[<span class="number">2</span>:<span class="number">5</span>] = [<span class="number">100</span>]</div><div class="line"></div><div class="line">In [<span class="number">34</span>]: l</div><div class="line">Out[<span class="number">34</span>]: [<span class="number">0</span>, <span class="number">1</span>, <span class="number">100</span>, <span class="number">30</span>, <span class="number">5</span>, <span class="number">8</span>, <span class="number">9</span>]</div></pre></td></tr></table></figure>
+<p><strong>一个关于+=的谜题</strong></p>
+<p>t[2]被改动了，但也有异常抛出</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">In [<span class="number">37</span>]: t = (<span class="number">1</span>, <span class="number">2</span>, [<span class="number">30</span>, <span class="number">40</span>])</div><div class="line"></div><div class="line">In [<span class="number">38</span>]: t[<span class="number">2</span>] += [<span class="number">50</span>, <span class="number">60</span>]</div><div class="line">---------------------------------------------------------------------------</div><div class="line">TypeError                                 Traceback (most recent call last)</div><div class="line">&lt;ipython-input<span class="number">-38</span>-d877fb0e9d36&gt; <span class="keyword">in</span> &lt;module&gt;()</div><div class="line">----&gt; 1 t[2] += [50, 60]</div><div class="line"></div><div class="line">TypeError: <span class="string">'tuple'</span> object does <span class="keyword">not</span> support item assignment</div><div class="line"></div><div class="line">In [<span class="number">39</span>]: t</div><div class="line">Out[<span class="number">39</span>]: (<span class="number">1</span>, <span class="number">2</span>, [<span class="number">30</span>, <span class="number">40</span>, <span class="number">50</span>, <span class="number">60</span>])</div></pre></td></tr></table></figure>
+<p>用extend就可以避免抛出异常</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">In [<span class="number">40</span>]: t[<span class="number">2</span>].extend([<span class="number">50</span>, <span class="number">60</span>])</div><div class="line"></div><div class="line">In [<span class="number">41</span>]: t</div><div class="line">Out[<span class="number">41</span>]: (<span class="number">1</span>, <span class="number">2</span>, [<span class="number">30</span>, <span class="number">40</span>, <span class="number">50</span>, <span class="number">60</span>, <span class="number">50</span>, <span class="number">60</span>])</div></pre></td></tr></table></figure>
+<h3 id="list-sort-方法和内置函数sorted"><a href="#list-sort-方法和内置函数sorted" class="headerlink" title="list.sort()方法和内置函数sorted()"></a><strong>list.sort()方法和内置函数sorted()</strong></h3><ul>
+<li>sort()方法会就地排序列表，它会永久性改变列表，并且不会复制原列表</li>
+<li>sorted()方法是临时排序列表，它会新建一个列表作为返回值</li>
+<li>reverse  默认值是False，如果设定为True 就会反序排序</li>
+<li>key  key=str.lower()忽略大小写的排序；key=len基于字符串长度的排序</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">In [<span class="number">1</span>]: fruits = [<span class="string">'grape'</span>, <span class="string">'respberry'</span>, <span class="string">'apple'</span>, <span class="string">'banana'</span>]</div><div class="line"></div><div class="line">In [<span class="number">2</span>]: sorted(fruits, reverse=<span class="keyword">True</span>)</div><div class="line">Out[<span class="number">2</span>]: [<span class="string">'respberry'</span>, <span class="string">'grape'</span>, <span class="string">'banana'</span>, <span class="string">'apple'</span>]</div><div class="line"></div><div class="line">In [<span class="number">3</span>]: sorted(fruits, key=len)</div><div class="line">Out[<span class="number">3</span>]: [<span class="string">'grape'</span>, <span class="string">'apple'</span>, <span class="string">'banana'</span>, <span class="string">'respberry'</span>]</div><div class="line"></div><div class="line">In [<span class="number">4</span>]: sorted(fruits, key=len, reverse=<span class="keyword">True</span>)</div><div class="line">Out[<span class="number">4</span>]: [<span class="string">'respberry'</span>, <span class="string">'banana'</span>, <span class="string">'grape'</span>, <span class="string">'apple'</span>]</div><div class="line"></div><div class="line">In [<span class="number">5</span>]: fruits.sort()</div><div class="line"></div><div class="line">In [<span class="number">6</span>]: fruits</div><div class="line">Out[<span class="number">6</span>]: [<span class="string">'apple'</span>, <span class="string">'banana'</span>, <span class="string">'grape'</span>, <span class="string">'respberry'</span>]</div></pre></td></tr></table></figure>
+<p>欢迎访问<a href="https://family-treesy.github.io/" target="_blank" rel="external">Treehl的博客</a><br><a href="https://github.com/Family-TreeSY/Fluent-Python-Notes" target="_blank" rel="external">GitHub</a></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Python</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">FluentPython</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">流畅的Python</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/07/03/内置序列类型/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-流畅的Python学习笔记" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -738,107 +901,9 @@
 
 
   
-    <article id="post-ORM" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/06/04/ORM/">什么是 Django ORM？</a>
-    </h1>
-  
-
-        
-        <a href="/2018/06/04/ORM/" class="archive-article-date">
-  	<time datetime="2018-06-04T10:30:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-06-04</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="ORM"><a href="#ORM" class="headerlink" title="ORM"></a><strong>ORM</strong></h3><blockquote>
-<p>ORM（Object Relational Mapping）：对象关系映射。它的作用是在关系型数据库和业务对象之间作一个映射，一个对象对应一张表，不用再操作SQL语句</p>
-</blockquote>
-<p>这里以我之前写的项目为例子，这里有两张表 Tag    Category</p>
-<p>Category有6列分别对应 </p>
-<ul>
-<li>name</li>
-<li>status</li>
-<li>is_nav</li>
-<li>author</li>
-<li>created_time</li>
-<li>id</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># 这里是Django  Model层代码</span></div><div class="line"></div><div class="line"></div><div class="line"><span class="comment"># -*- coding: utf-8 -*-</span></div><div class="line"><span class="keyword">from</span> __future__ <span class="keyword">import</span> unicode_literals</div><div class="line"></div><div class="line"><span class="keyword">from</span> django.db <span class="keyword">import</span> models</div><div class="line"><span class="keyword">from</span> django.contrib.auth.models <span class="keyword">import</span> User</div><div class="line"><span class="keyword">from</span> django.db.models <span class="keyword">import</span> F</div><div class="line"></div><div class="line"><span class="keyword">import</span> markdown</div><div class="line"></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Category</span><span class="params">(models.Model)</span>:</span></div><div class="line">    STATUS_ITEMS = (</div><div class="line">        (<span class="number">1</span>, <span class="string">"正常"</span>),</div><div class="line">        (<span class="number">2</span>, <span class="string">"删除"</span>),</div><div class="line">    )</div><div class="line">    name = models.CharField(max_length=<span class="number">50</span>, verbose_name=<span class="string">"名称"</span>)</div><div class="line">    status = models.PositiveIntegerField(</div><div class="line">        default=<span class="number">1</span>, choices=STATUS_ITEMS, verbose_name=<span class="string">"状态"</span></div><div class="line">    )</div><div class="line">    is_nav = models.BooleanField(default=<span class="keyword">False</span>, verbose_name=<span class="string">"是否为导航"</span>)</div><div class="line">    author = models.ForeignKey(User, verbose_name=<span class="string">"作者"</span>)</div><div class="line">    created_time = models.DateTimeField(auto_now_add=<span class="keyword">True</span>, verbose_name=<span class="string">"创建时间"</span>)</div><div class="line"></div><div class="line">    <span class="class"><span class="keyword">class</span> <span class="title">Meta</span>:</span></div><div class="line">        verbose_name = verbose_name_plural = <span class="string">'分类'</span></div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__unicode__</span><span class="params">(self)</span>:</span></div><div class="line">        <span class="keyword">return</span> self.name</div><div class="line"></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Tag</span><span class="params">(models.Model)</span>:</span></div><div class="line">    STATUS_ITEMS = (</div><div class="line">        (<span class="number">1</span>, <span class="string">"正常"</span>),</div><div class="line">        (<span class="number">2</span>, <span class="string">"删除"</span>),</div><div class="line">    )</div><div class="line">    name = models.CharField(max_length=<span class="number">50</span>, verbose_name=<span class="string">"名称"</span>)</div><div class="line">    status = models.PositiveIntegerField(</div><div class="line">        default=<span class="number">1</span>, choices=STATUS_ITEMS, verbose_name=<span class="string">"状态"</span></div><div class="line">    )</div><div class="line">    author = models.ForeignKey(User, verbose_name=<span class="string">"作者"</span>)</div><div class="line">    created_time = models.DateTimeField(auto_now_add=<span class="keyword">True</span>, verbose_name=<span class="string">"创建时间"</span>)</div><div class="line"></div><div class="line">    <span class="class"><span class="keyword">class</span> <span class="title">Meta</span>:</span></div><div class="line">        verbose_name = verbose_name_plural = <span class="string">"标签"</span></div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__unicode__</span><span class="params">(self)</span>:</span></div><div class="line">        <span class="keyword">return</span> self.name</div></pre></td></tr></table></figure>
-<p>进入MySQL</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># category的表</span></div><div class="line"></div><div class="line">mysql&gt; SELECT * FROM blog_category;</div><div class="line">+----+--------+--------+--------+----------------------------+-----------+</div><div class="line">| id | name   | status | is_nav | created_time               | author_id |</div><div class="line">+----+--------+--------+--------+----------------------------+-----------+</div><div class="line">|  <span class="number">1</span> | Django |      <span class="number">1</span> |      <span class="number">1</span> | <span class="number">2018</span><span class="number">-04</span><span class="number">-27</span> <span class="number">06</span>:<span class="number">32</span>:<span class="number">58.097000</span> |         <span class="number">1</span> |</div><div class="line">|  <span class="number">2</span> | Python |      <span class="number">1</span> |      <span class="number">1</span> | <span class="number">2018</span><span class="number">-04</span><span class="number">-27</span> <span class="number">11</span>:<span class="number">32</span>:<span class="number">39.440000</span> |         <span class="number">1</span> |</div><div class="line">|  <span class="number">3</span> | Spider |      <span class="number">1</span> |      <span class="number">1</span> | <span class="number">2018</span><span class="number">-04</span><span class="number">-27</span> <span class="number">11</span>:<span class="number">32</span>:<span class="number">45.248000</span> |         <span class="number">1</span> |</div><div class="line">+----+--------+--------+--------+----------------------------+-----------+</div><div class="line"><span class="number">3</span> rows <span class="keyword">in</span> set (<span class="number">0.00</span> sec)</div></pre></td></tr></table></figure>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># Tag表</span></div><div class="line"></div><div class="line">mysql&gt; SELECT * FROM blog_tag;</div><div class="line">+----+-------+--------+----------------------------+-----------+</div><div class="line">| id | name  | status | created_time               | author_id |</div><div class="line">+----+-------+--------+----------------------------+-----------+</div><div class="line">|  <span class="number">1</span> | MySQL |      <span class="number">1</span> | <span class="number">2018</span><span class="number">-04</span><span class="number">-27</span> <span class="number">06</span>:<span class="number">33</span>:<span class="number">11.871000</span> |         <span class="number">1</span> |</div><div class="line">+----+-------+--------+----------------------------+-----------+</div><div class="line"><span class="number">1</span> row <span class="keyword">in</span> set (<span class="number">0.00</span> sec)</div></pre></td></tr></table></figure>
-<p>假如这里有Category的实例，创建一条新的category分类叫treehl，最后存入数据库</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">category = Category()</div><div class="line">category.name = <span class="string">'treehl'</span> </div><div class="line">category.save()</div></pre></td></tr></table></figure>
-<p>对应mysql</p>
-<blockquote>
-<p>INSERT INTO (category.name) VALUES(‘treehl’)</p>
-</blockquote>
-<p>这就是对象到sql的映射</p>
-<p>欢迎访问<a href="https://family-treesy.github.io/" target="_blank" rel="external">Treehl的博客</a><br><a href="https://github.com/Family-TreeSY/Python-Study-Notes" target="_blank" rel="external">Github</a></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Django</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/06/04/ORM/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
-      <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/7/">7</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
+      <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/8/">8</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
     </nav>
   
 
@@ -937,14 +1002,6 @@ getOwnMetadataKeys:function(t){return o(i(t),arguments.length<2?void 0:u(argumen
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">Git</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">GitHub</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">PYTHON</a>
               </li>
              
@@ -953,11 +1010,19 @@ getOwnMetadataKeys:function(t){return o(i(t),arguments.length<2?void 0:u(argumen
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">DailyQuestion</a>
+                <a href="javascript:void(0)" class="js-tag color2">Django</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Django</a>
+                <a href="javascript:void(0)" class="js-tag color4">Git</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">GitHub</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">DailyQuestion</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -973,11 +1038,11 @@ getOwnMetadataKeys:function(t){return o(i(t),arguments.length<2?void 0:u(argumen
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Redis</a>
+                <a href="javascript:void(0)" class="js-tag color2">Scrapy</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Scrapy</a>
+                <a href="javascript:void(0)" class="js-tag color1">Redis</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -989,11 +1054,15 @@ getOwnMetadataKeys:function(t){return o(i(t),arguments.length<2?void 0:u(argumen
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">Unittest</a>
+                <a href="javascript:void(0)" class="js-tag color3">FluentPython</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">FluentPython</a>
+                <a href="javascript:void(0)" class="js-tag color5">流畅的Python</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">Unittest</a>
               </li>
             
             <div class="clearfix"></div>
