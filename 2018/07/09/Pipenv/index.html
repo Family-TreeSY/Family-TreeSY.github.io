@@ -6,20 +6,20 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="//Family-TreeSY.github.io">
-  <title>什么是 Django ORM？ | Treehl的博客</title>
+  <title>Pipenv：Python项目环境与依赖管理工具 | Treehl的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="ORM ORM（Object Relational Mapping）：对象关系映射。它的作用是在关系型数据库和业务对象之间作一个映射，一个对象对应一张表，不用再操作SQL语句  这里以我之前写的项目为例子，这里有两张表 Tag    Category Category有6列分别对应   name status is_nav author created_time id  1234567891011">
-<meta name="keywords" content="Django">
+  <meta name="description" content="Pipenv Pipenv就是Requests的作者Kenneth Reitz写出来的，我们可以把它看做pip和virtualenv的结合  记录下Pipenv，方便以后查看 安装Pipenv pip install pipenv  创建虚拟环境 pipenv install  12345678910treehl@ssaw:~/env_test$ pipenv installCreating a">
+<meta name="keywords" content="Python,Pipenv">
 <meta property="og:type" content="article">
-<meta property="og:title" content="什么是 Django ORM？">
-<meta property="og:url" content="//Family-TreeSY.github.io/2018/06/04/ORM/index.html">
+<meta property="og:title" content="Pipenv：Python项目环境与依赖管理工具">
+<meta property="og:url" content="//Family-TreeSY.github.io/2018/07/09/Pipenv/index.html">
 <meta property="og:site_name" content="Treehl的博客">
-<meta property="og:description" content="ORM ORM（Object Relational Mapping）：对象关系映射。它的作用是在关系型数据库和业务对象之间作一个映射，一个对象对应一张表，不用再操作SQL语句  这里以我之前写的项目为例子，这里有两张表 Tag    Category Category有6列分别对应   name status is_nav author created_time id  1234567891011">
+<meta property="og:description" content="Pipenv Pipenv就是Requests的作者Kenneth Reitz写出来的，我们可以把它看做pip和virtualenv的结合  记录下Pipenv，方便以后查看 安装Pipenv pip install pipenv  创建虚拟环境 pipenv install  12345678910treehl@ssaw:~/env_test$ pipenv installCreating a">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-06-04T11:21:27.733Z">
+<meta property="og:updated_time" content="2018-07-09T13:48:22.138Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="什么是 Django ORM？">
-<meta name="twitter:description" content="ORM ORM（Object Relational Mapping）：对象关系映射。它的作用是在关系型数据库和业务对象之间作一个映射，一个对象对应一张表，不用再操作SQL语句  这里以我之前写的项目为例子，这里有两张表 Tag    Category Category有6列分别对应   name status is_nav author created_time id  1234567891011">
+<meta name="twitter:title" content="Pipenv：Python项目环境与依赖管理工具">
+<meta name="twitter:description" content="Pipenv Pipenv就是Requests的作者Kenneth Reitz写出来的，我们可以把它看做pip和virtualenv的结合  记录下Pipenv，方便以后查看 安装Pipenv pip install pipenv  创建虚拟环境 pipenv install  12345678910treehl@ssaw:~/env_test$ pipenv installCreating a">
   
     <link rel="alternative" href="/atom.xml" title="Treehl的博客" type="application/atom+xml">
   
@@ -179,51 +179,60 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-ORM" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-Pipenv" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      什么是 Django ORM？
+      Pipenv：Python项目环境与依赖管理工具
     </h1>
   
 
         
-        <a href="/2018/06/04/ORM/" class="archive-article-date">
-  	<time datetime="2018-06-04T10:30:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-06-04</time>
+        <a href="/2018/07/09/Pipenv/" class="archive-article-date">
+  	<time datetime="2018-07-09T10:16:31.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-07-09</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h3 id="ORM"><a href="#ORM" class="headerlink" title="ORM"></a><strong>ORM</strong></h3><blockquote>
-<p>ORM（Object Relational Mapping）：对象关系映射。它的作用是在关系型数据库和业务对象之间作一个映射，一个对象对应一张表，不用再操作SQL语句</p>
+        <h3 id="Pipenv"><a href="#Pipenv" class="headerlink" title="Pipenv"></a><strong>Pipenv</strong></h3><blockquote>
+<p>Pipenv就是Requests的作者Kenneth Reitz写出来的，我们可以把它看做pip和virtualenv的结合</p>
 </blockquote>
-<p>这里以我之前写的项目为例子，这里有两张表 Tag    Category</p>
-<p>Category有6列分别对应 </p>
-<ul>
-<li>name</li>
-<li>status</li>
-<li>is_nav</li>
-<li>author</li>
-<li>created_time</li>
-<li>id</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># 这里是Django  Model层代码</span></div><div class="line"></div><div class="line"></div><div class="line"><span class="comment"># -*- coding: utf-8 -*-</span></div><div class="line"><span class="keyword">from</span> __future__ <span class="keyword">import</span> unicode_literals</div><div class="line"></div><div class="line"><span class="keyword">from</span> django.db <span class="keyword">import</span> models</div><div class="line"><span class="keyword">from</span> django.contrib.auth.models <span class="keyword">import</span> User</div><div class="line"><span class="keyword">from</span> django.db.models <span class="keyword">import</span> F</div><div class="line"></div><div class="line"><span class="keyword">import</span> markdown</div><div class="line"></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Category</span><span class="params">(models.Model)</span>:</span></div><div class="line">    STATUS_ITEMS = (</div><div class="line">        (<span class="number">1</span>, <span class="string">"正常"</span>),</div><div class="line">        (<span class="number">2</span>, <span class="string">"删除"</span>),</div><div class="line">    )</div><div class="line">    name = models.CharField(max_length=<span class="number">50</span>, verbose_name=<span class="string">"名称"</span>)</div><div class="line">    status = models.PositiveIntegerField(</div><div class="line">        default=<span class="number">1</span>, choices=STATUS_ITEMS, verbose_name=<span class="string">"状态"</span></div><div class="line">    )</div><div class="line">    is_nav = models.BooleanField(default=<span class="keyword">False</span>, verbose_name=<span class="string">"是否为导航"</span>)</div><div class="line">    author = models.ForeignKey(User, verbose_name=<span class="string">"作者"</span>)</div><div class="line">    created_time = models.DateTimeField(auto_now_add=<span class="keyword">True</span>, verbose_name=<span class="string">"创建时间"</span>)</div><div class="line"></div><div class="line">    <span class="class"><span class="keyword">class</span> <span class="title">Meta</span>:</span></div><div class="line">        verbose_name = verbose_name_plural = <span class="string">'分类'</span></div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__unicode__</span><span class="params">(self)</span>:</span></div><div class="line">        <span class="keyword">return</span> self.name</div><div class="line"></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Tag</span><span class="params">(models.Model)</span>:</span></div><div class="line">    STATUS_ITEMS = (</div><div class="line">        (<span class="number">1</span>, <span class="string">"正常"</span>),</div><div class="line">        (<span class="number">2</span>, <span class="string">"删除"</span>),</div><div class="line">    )</div><div class="line">    name = models.CharField(max_length=<span class="number">50</span>, verbose_name=<span class="string">"名称"</span>)</div><div class="line">    status = models.PositiveIntegerField(</div><div class="line">        default=<span class="number">1</span>, choices=STATUS_ITEMS, verbose_name=<span class="string">"状态"</span></div><div class="line">    )</div><div class="line">    author = models.ForeignKey(User, verbose_name=<span class="string">"作者"</span>)</div><div class="line">    created_time = models.DateTimeField(auto_now_add=<span class="keyword">True</span>, verbose_name=<span class="string">"创建时间"</span>)</div><div class="line"></div><div class="line">    <span class="class"><span class="keyword">class</span> <span class="title">Meta</span>:</span></div><div class="line">        verbose_name = verbose_name_plural = <span class="string">"标签"</span></div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__unicode__</span><span class="params">(self)</span>:</span></div><div class="line">        <span class="keyword">return</span> self.name</div></pre></td></tr></table></figure>
-<p>进入MySQL</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># category的表</span></div><div class="line"></div><div class="line">mysql&gt; SELECT * FROM blog_category;</div><div class="line">+----+--------+--------+--------+----------------------------+-----------+</div><div class="line">| id | name   | status | is_nav | created_time               | author_id |</div><div class="line">+----+--------+--------+--------+----------------------------+-----------+</div><div class="line">|  <span class="number">1</span> | Django |      <span class="number">1</span> |      <span class="number">1</span> | <span class="number">2018</span><span class="number">-04</span><span class="number">-27</span> <span class="number">06</span>:<span class="number">32</span>:<span class="number">58.097000</span> |         <span class="number">1</span> |</div><div class="line">|  <span class="number">2</span> | Python |      <span class="number">1</span> |      <span class="number">1</span> | <span class="number">2018</span><span class="number">-04</span><span class="number">-27</span> <span class="number">11</span>:<span class="number">32</span>:<span class="number">39.440000</span> |         <span class="number">1</span> |</div><div class="line">|  <span class="number">3</span> | Spider |      <span class="number">1</span> |      <span class="number">1</span> | <span class="number">2018</span><span class="number">-04</span><span class="number">-27</span> <span class="number">11</span>:<span class="number">32</span>:<span class="number">45.248000</span> |         <span class="number">1</span> |</div><div class="line">+----+--------+--------+--------+----------------------------+-----------+</div><div class="line"><span class="number">3</span> rows <span class="keyword">in</span> set (<span class="number">0.00</span> sec)</div></pre></td></tr></table></figure>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># Tag表</span></div><div class="line"></div><div class="line">mysql&gt; SELECT * FROM blog_tag;</div><div class="line">+----+-------+--------+----------------------------+-----------+</div><div class="line">| id | name  | status | created_time               | author_id |</div><div class="line">+----+-------+--------+----------------------------+-----------+</div><div class="line">|  <span class="number">1</span> | MySQL |      <span class="number">1</span> | <span class="number">2018</span><span class="number">-04</span><span class="number">-27</span> <span class="number">06</span>:<span class="number">33</span>:<span class="number">11.871000</span> |         <span class="number">1</span> |</div><div class="line">+----+-------+--------+----------------------------+-----------+</div><div class="line"><span class="number">1</span> row <span class="keyword">in</span> set (<span class="number">0.00</span> sec)</div></pre></td></tr></table></figure>
-<p>假如这里有Category的实例，创建一条新的category分类叫treehl，最后存入数据库</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">category = Category()</div><div class="line">category.name = <span class="string">'treehl'</span> </div><div class="line">category.save()</div></pre></td></tr></table></figure>
-<p>对应mysql</p>
+<p>记录下Pipenv，方便以后查看</p>
+<h4 id="安装Pipenv"><a href="#安装Pipenv" class="headerlink" title="安装Pipenv"></a><strong>安装Pipenv</strong></h4><blockquote>
+<p>pip install pipenv</p>
+</blockquote>
+<h4 id="创建虚拟环境"><a href="#创建虚拟环境" class="headerlink" title="创建虚拟环境"></a><strong>创建虚拟环境</strong></h4><blockquote>
+<p>pipenv install</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">treehl@ssaw:~/env_test$ pipenv install</div><div class="line">Creating a Pipfile <span class="keyword">for</span> this project...</div><div class="line">Pipfile.lock <span class="keyword">not</span> found, creating...</div><div class="line">Locking [dev-packages] dependencies...</div><div class="line">Locking [packages] dependencies...</div><div class="line">Updated Pipfile.lock (dfae9f)!</div><div class="line">Installing dependencies <span class="keyword">from</span> Pipfile.lock (dfae9f)...</div><div class="line">  🐍   ▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉ <span class="number">0</span>/<span class="number">0</span> — <span class="number">00</span>:<span class="number">00</span>:<span class="number">00</span></div><div class="line">To activate this project<span class="string">'s virtualenv, run pipenv shell.</span></div><div class="line"><span class="string">Alternatively, run a command inside the virtualenv with pipenv run.</span></div></pre></td></tr></table></figure>
+<h4 id="激活虚拟环境"><a href="#激活虚拟环境" class="headerlink" title="激活虚拟环境"></a><strong>激活虚拟环境</strong></h4><blockquote>
+<p>pipenv shell</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">treehl@ssaw:~/env_test$ pipenv shell</div><div class="line">Launching subshell <span class="keyword">in</span> virtual environment…</div><div class="line">treehl@ssaw:~/env_test$  . /home/treehl/.local/share/virtualenvs/env_test-jaLbPeP-/bin/activate</div><div class="line">(env_test-jaLbPeP-) treehl@ssaw:~/env_test$</div></pre></td></tr></table></figure>
+<h4 id="安装包"><a href="#安装包" class="headerlink" title="安装包"></a><strong>安装包</strong></h4><p>这里安装两个包，依赖会添加到Pipfile文件中</p>
 <blockquote>
-<p>INSERT INTO (category.name) VALUES(‘treehl’)</p>
+<p>pipenv install requests django</p>
 </blockquote>
-<p>这就是对象到sql的映射</p>
-<p>欢迎访问<a href="https://family-treesy.github.io/" target="_blank" rel="external">Treehl的博客</a><br><a href="https://github.com/Family-TreeSY/Python-Study-Notes" target="_blank" rel="external">Github</a></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line">(env_test-jaLbPeP-) treehl@ssaw:~/env_test$ pipenv install requests django</div><div class="line">Installing requests...</div><div class="line">Collecting requests</div><div class="line">  Downloading https://files.pythonhosted.org/packages/<span class="number">65</span>/<span class="number">47</span>/<span class="number">7e02164</span>a2a3db50ed6d8a6ab1d6d60b69c4c3fdf57a284257925dfc12bda/requests<span class="number">-2.19</span><span class="number">.1</span>-py2.py3-none-any.whl (<span class="number">91</span>kB)</div><div class="line">Collecting idna&lt;<span class="number">2.8</span>,&gt;=<span class="number">2.5</span> (<span class="keyword">from</span> requests)</div><div class="line">  Downloading https://files.pythonhosted.org/packages/<span class="number">4</span>b/<span class="number">2</span>a/<span class="number">0276479</span>a4b3caeb8a8c1af2f8e4355746a97fab05a372e4a2c6a6b876165/idna<span class="number">-2.7</span>-py2.py3-none-any.whl (<span class="number">58</span>kB)</div><div class="line">Collecting certifi&gt;=<span class="number">2017.4</span><span class="number">.17</span> (<span class="keyword">from</span> requests)</div><div class="line">  Downloading https://files.pythonhosted.org/packages/<span class="number">7</span>c/e6/<span class="number">92</span>ad559b7192d846975fc916b65f667c7b8c3a32bea7372340bfe9a15fa5/certifi<span class="number">-2018.4</span><span class="number">.16</span>-py2.py3-none-any.whl (<span class="number">150</span>kB)</div><div class="line">Collecting chardet&lt;<span class="number">3.1</span><span class="number">.0</span>,&gt;=<span class="number">3.0</span><span class="number">.2</span> (<span class="keyword">from</span> requests)</div><div class="line">  Downloading https://files.pythonhosted.org/packages/bc/a9/<span class="number">01</span>ffebfb562e4274b6487b4bb1ddec7ca55ec7510b22e4c51f14098443b8/chardet<span class="number">-3.0</span><span class="number">.4</span>-py2.py3-none-any.whl (<span class="number">133</span>kB)</div><div class="line">Collecting urllib3&lt;<span class="number">1.24</span>,&gt;=<span class="number">1.21</span><span class="number">.1</span> (<span class="keyword">from</span> requests)</div><div class="line">  Downloading https://files.pythonhosted.org/packages/bd/c9/<span class="number">6</span>fdd990019071a4a32a5e7cb78a1d92c53851ef4f56f62a3486e6a7d8ffb/urllib3<span class="number">-1.23</span>-py2.py3-none-any.whl (<span class="number">133</span>kB)</div><div class="line">Installing collected packages: idna, certifi, chardet, urllib3, requests</div><div class="line">Successfully installed certifi<span class="number">-2018.4</span><span class="number">.16</span> chardet<span class="number">-3.0</span><span class="number">.4</span> idna<span class="number">-2.7</span> requests<span class="number">-2.19</span><span class="number">.1</span> urllib3<span class="number">-1.23</span></div><div class="line"></div><div class="line">Adding requests to Pipfile<span class="string">'s [packages]...</span></div><div class="line"><span class="string">Installing django...</span></div><div class="line"><span class="string">Collecting django</span></div><div class="line"><span class="string">  Downloading https://files.pythonhosted.org/packages/bf/e0/e659df5b5b82299fffd8b3df2910c99351b9308b8f45f5702cc4cdf946e9/Django-1.11.14-py2.py3-none-any.whl (7.0MB)</span></div><div class="line"><span class="string">Collecting pytz (from django)</span></div><div class="line"><span class="string">  Downloading https://files.pythonhosted.org/packages/30/4e/27c34b62430286c6d59177a0842ed90dc789ce5d1ed740887653b898779a/pytz-2018.5-py2.py3-none-any.whl (510kB)</span></div><div class="line"><span class="string">Installing collected packages: pytz, django</span></div><div class="line"><span class="string">Successfully installed django-1.11.14 pytz-2018.5</span></div><div class="line"><span class="string"></span></div><div class="line"><span class="string">Adding django to Pipfile'</span>s [packages]...</div><div class="line">Pipfile.lock (dfae9f) out of date, updating to (b7e917)...</div><div class="line">Locking [dev-packages] dependencies...</div><div class="line">Locking [packages] dependencies...</div></pre></td></tr></table></figure>
+<h4 id="记录依赖"><a href="#记录依赖" class="headerlink" title="记录依赖"></a><strong>记录依赖</strong></h4><p><strong>用virtualenv记录依赖，需要创建requirements.txt，每次添加或者删除新的依赖需要多次执行pip freeze &gt; requierements.txt</strong></p>
+<p><strong>使用Pipenv会自动帮我们管理依赖，在创建虚拟环境的时候会自动创建Pipfile和Pipfile.lock两个文件，在使用pipenv install和pipenv uninstall命令安装和卸载包的时候自动更新</strong></p>
+<p><strong>目录下有Pipfile和Pipfile.lock</strong></p>
+<ul>
+<li>Pipfile用来记录项目依赖列表</li>
+<li>Pipfile.lock记录了固定版本的详细依赖包列表</li>
+</ul>
+<h4 id="安装依赖"><a href="#安装依赖" class="headerlink" title="安装依赖"></a><strong>安装依赖</strong></h4><blockquote>
+<p>pipenv install</p>
+</blockquote>
+<h4 id="查看依赖关系"><a href="#查看依赖关系" class="headerlink" title="查看依赖关系"></a><strong>查看依赖关系</strong></h4><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">(env_test-jaLbPeP-) treehl@ssaw:~/env_test$ pipenv graph</div><div class="line">Django==<span class="number">1.11</span><span class="number">.14</span></div><div class="line">  - pytz [required: Any, installed: <span class="number">2018.5</span>]</div><div class="line">requests==<span class="number">2.19</span><span class="number">.1</span></div><div class="line">  - certifi [required: &gt;=<span class="number">2017.4</span><span class="number">.17</span>, installed: <span class="number">2018.4</span><span class="number">.16</span>]</div><div class="line">  - chardet [required: &gt;=<span class="number">3.0</span><span class="number">.2</span>,&lt;<span class="number">3.1</span><span class="number">.0</span>, installed: <span class="number">3.0</span><span class="number">.4</span>]</div><div class="line">  - idna [required: &gt;=<span class="number">2.5</span>,&lt;<span class="number">2.8</span>, installed: <span class="number">2.7</span>]</div><div class="line">  - urllib3 [required: &gt;=<span class="number">1.21</span><span class="number">.1</span>,&lt;<span class="number">1.24</span>, installed: <span class="number">1.23</span>]</div></pre></td></tr></table></figure>
+<h4 id="检查安装的包的安全性"><a href="#检查安装的包的安全性" class="headerlink" title="检查安装的包的安全性"></a><strong>检查安装的包的安全性</strong></h4><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">(env_test-jaLbPeP-) treehl@ssaw:~/env_test$ pipenv check</div><div class="line">Checking PEP <span class="number">508</span> requirements...</div><div class="line">Passed!</div><div class="line">Checking installed package safety...</div><div class="line">All good!</div></pre></td></tr></table></figure>
+<p>欢迎访问<a href="https://family-treesy.github.io/" target="_blank" rel="external">Treehl的博客</a></p>
+<p><a href="https://github.com/Family-TreeSY" target="_blank" rel="external">GitHub</a></p>
 
       
 
@@ -268,7 +277,11 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Django</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Python</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Pipenv</a>
         		</li>
       		
 		</ul>
@@ -324,7 +337,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="http://s.jiathis.com/qrcode.php?url=http://Family-TreeSY.github.io/2018/06/04/ORM/" alt="微信分享二维码">
+      <img src="http://s.jiathis.com/qrcode.php?url=http://Family-TreeSY.github.io/2018/07/09/Pipenv/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -338,18 +351,9 @@
   
 <nav id="article-nav">
   
-    <a href="/2018/06/04/QuerySet/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          Django的QuerySet
-        
-      </div>
-    </a>
   
-  
-    <a href="/2018/05/30/装饰器/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">什么是装饰器</div>
+    <a href="/2018/07/04/字典和集合/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">字典和集合</div>
       <i class="icon-circle-right"></i>
     </a>
   

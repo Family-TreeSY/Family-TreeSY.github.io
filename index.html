@@ -179,6 +179,179 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-Pipenv" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/07/09/Pipenv/">Pipenv：Python项目环境与依赖管理工具</a>
+    </h1>
+  
+
+        
+        <a href="/2018/07/09/Pipenv/" class="archive-article-date">
+  	<time datetime="2018-07-09T10:16:31.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-07-09</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="Pipenv"><a href="#Pipenv" class="headerlink" title="Pipenv"></a><strong>Pipenv</strong></h3><blockquote>
+<p>Pipenv就是Requests的作者Kenneth Reitz写出来的，我们可以把它看做pip和virtualenv的结合</p>
+</blockquote>
+<p>记录下Pipenv，方便以后查看</p>
+<h4 id="安装Pipenv"><a href="#安装Pipenv" class="headerlink" title="安装Pipenv"></a><strong>安装Pipenv</strong></h4><blockquote>
+<p>pip install pipenv</p>
+</blockquote>
+<h4 id="创建虚拟环境"><a href="#创建虚拟环境" class="headerlink" title="创建虚拟环境"></a><strong>创建虚拟环境</strong></h4><blockquote>
+<p>pipenv install</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">treehl@ssaw:~/env_test$ pipenv install</div><div class="line">Creating a Pipfile <span class="keyword">for</span> this project...</div><div class="line">Pipfile.lock <span class="keyword">not</span> found, creating...</div><div class="line">Locking [dev-packages] dependencies...</div><div class="line">Locking [packages] dependencies...</div><div class="line">Updated Pipfile.lock (dfae9f)!</div><div class="line">Installing dependencies <span class="keyword">from</span> Pipfile.lock (dfae9f)...</div><div class="line">  🐍   ▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉ <span class="number">0</span>/<span class="number">0</span> — <span class="number">00</span>:<span class="number">00</span>:<span class="number">00</span></div><div class="line">To activate this project<span class="string">'s virtualenv, run pipenv shell.</span></div><div class="line"><span class="string">Alternatively, run a command inside the virtualenv with pipenv run.</span></div></pre></td></tr></table></figure>
+<h4 id="激活虚拟环境"><a href="#激活虚拟环境" class="headerlink" title="激活虚拟环境"></a><strong>激活虚拟环境</strong></h4><blockquote>
+<p>pipenv shell</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">treehl@ssaw:~/env_test$ pipenv shell</div><div class="line">Launching subshell <span class="keyword">in</span> virtual environment…</div><div class="line">treehl@ssaw:~/env_test$  . /home/treehl/.local/share/virtualenvs/env_test-jaLbPeP-/bin/activate</div><div class="line">(env_test-jaLbPeP-) treehl@ssaw:~/env_test$</div></pre></td></tr></table></figure>
+<h4 id="安装包"><a href="#安装包" class="headerlink" title="安装包"></a><strong>安装包</strong></h4><p>这里安装两个包，依赖会添加到Pipfile文件中</p>
+<blockquote>
+<p>pipenv install requests django</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line">(env_test-jaLbPeP-) treehl@ssaw:~/env_test$ pipenv install requests django</div><div class="line">Installing requests...</div><div class="line">Collecting requests</div><div class="line">  Downloading https://files.pythonhosted.org/packages/<span class="number">65</span>/<span class="number">47</span>/<span class="number">7e02164</span>a2a3db50ed6d8a6ab1d6d60b69c4c3fdf57a284257925dfc12bda/requests<span class="number">-2.19</span><span class="number">.1</span>-py2.py3-none-any.whl (<span class="number">91</span>kB)</div><div class="line">Collecting idna&lt;<span class="number">2.8</span>,&gt;=<span class="number">2.5</span> (<span class="keyword">from</span> requests)</div><div class="line">  Downloading https://files.pythonhosted.org/packages/<span class="number">4</span>b/<span class="number">2</span>a/<span class="number">0276479</span>a4b3caeb8a8c1af2f8e4355746a97fab05a372e4a2c6a6b876165/idna<span class="number">-2.7</span>-py2.py3-none-any.whl (<span class="number">58</span>kB)</div><div class="line">Collecting certifi&gt;=<span class="number">2017.4</span><span class="number">.17</span> (<span class="keyword">from</span> requests)</div><div class="line">  Downloading https://files.pythonhosted.org/packages/<span class="number">7</span>c/e6/<span class="number">92</span>ad559b7192d846975fc916b65f667c7b8c3a32bea7372340bfe9a15fa5/certifi<span class="number">-2018.4</span><span class="number">.16</span>-py2.py3-none-any.whl (<span class="number">150</span>kB)</div><div class="line">Collecting chardet&lt;<span class="number">3.1</span><span class="number">.0</span>,&gt;=<span class="number">3.0</span><span class="number">.2</span> (<span class="keyword">from</span> requests)</div><div class="line">  Downloading https://files.pythonhosted.org/packages/bc/a9/<span class="number">01</span>ffebfb562e4274b6487b4bb1ddec7ca55ec7510b22e4c51f14098443b8/chardet<span class="number">-3.0</span><span class="number">.4</span>-py2.py3-none-any.whl (<span class="number">133</span>kB)</div><div class="line">Collecting urllib3&lt;<span class="number">1.24</span>,&gt;=<span class="number">1.21</span><span class="number">.1</span> (<span class="keyword">from</span> requests)</div><div class="line">  Downloading https://files.pythonhosted.org/packages/bd/c9/<span class="number">6</span>fdd990019071a4a32a5e7cb78a1d92c53851ef4f56f62a3486e6a7d8ffb/urllib3<span class="number">-1.23</span>-py2.py3-none-any.whl (<span class="number">133</span>kB)</div><div class="line">Installing collected packages: idna, certifi, chardet, urllib3, requests</div><div class="line">Successfully installed certifi<span class="number">-2018.4</span><span class="number">.16</span> chardet<span class="number">-3.0</span><span class="number">.4</span> idna<span class="number">-2.7</span> requests<span class="number">-2.19</span><span class="number">.1</span> urllib3<span class="number">-1.23</span></div><div class="line"></div><div class="line">Adding requests to Pipfile<span class="string">'s [packages]...</span></div><div class="line"><span class="string">Installing django...</span></div><div class="line"><span class="string">Collecting django</span></div><div class="line"><span class="string">  Downloading https://files.pythonhosted.org/packages/bf/e0/e659df5b5b82299fffd8b3df2910c99351b9308b8f45f5702cc4cdf946e9/Django-1.11.14-py2.py3-none-any.whl (7.0MB)</span></div><div class="line"><span class="string">Collecting pytz (from django)</span></div><div class="line"><span class="string">  Downloading https://files.pythonhosted.org/packages/30/4e/27c34b62430286c6d59177a0842ed90dc789ce5d1ed740887653b898779a/pytz-2018.5-py2.py3-none-any.whl (510kB)</span></div><div class="line"><span class="string">Installing collected packages: pytz, django</span></div><div class="line"><span class="string">Successfully installed django-1.11.14 pytz-2018.5</span></div><div class="line"><span class="string"></span></div><div class="line"><span class="string">Adding django to Pipfile'</span>s [packages]...</div><div class="line">Pipfile.lock (dfae9f) out of date, updating to (b7e917)...</div><div class="line">Locking [dev-packages] dependencies...</div><div class="line">Locking [packages] dependencies...</div></pre></td></tr></table></figure>
+<h4 id="记录依赖"><a href="#记录依赖" class="headerlink" title="记录依赖"></a><strong>记录依赖</strong></h4><p><strong>用virtualenv记录依赖，需要创建requirements.txt，每次添加或者删除新的依赖需要多次执行pip freeze &gt; requierements.txt</strong></p>
+<p><strong>使用Pipenv会自动帮我们管理依赖，在创建虚拟环境的时候会自动创建Pipfile和Pipfile.lock两个文件，在使用pipenv install和pipenv uninstall命令安装和卸载包的时候自动更新</strong></p>
+<p><strong>目录下有Pipfile和Pipfile.lock</strong></p>
+<ul>
+<li>Pipfile用来记录项目依赖列表</li>
+<li>Pipfile.lock记录了固定版本的详细依赖包列表</li>
+</ul>
+<h4 id="安装依赖"><a href="#安装依赖" class="headerlink" title="安装依赖"></a><strong>安装依赖</strong></h4><blockquote>
+<p>pipenv install</p>
+</blockquote>
+<h4 id="查看依赖关系"><a href="#查看依赖关系" class="headerlink" title="查看依赖关系"></a><strong>查看依赖关系</strong></h4><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">(env_test-jaLbPeP-) treehl@ssaw:~/env_test$ pipenv graph</div><div class="line">Django==<span class="number">1.11</span><span class="number">.14</span></div><div class="line">  - pytz [required: Any, installed: <span class="number">2018.5</span>]</div><div class="line">requests==<span class="number">2.19</span><span class="number">.1</span></div><div class="line">  - certifi [required: &gt;=<span class="number">2017.4</span><span class="number">.17</span>, installed: <span class="number">2018.4</span><span class="number">.16</span>]</div><div class="line">  - chardet [required: &gt;=<span class="number">3.0</span><span class="number">.2</span>,&lt;<span class="number">3.1</span><span class="number">.0</span>, installed: <span class="number">3.0</span><span class="number">.4</span>]</div><div class="line">  - idna [required: &gt;=<span class="number">2.5</span>,&lt;<span class="number">2.8</span>, installed: <span class="number">2.7</span>]</div><div class="line">  - urllib3 [required: &gt;=<span class="number">1.21</span><span class="number">.1</span>,&lt;<span class="number">1.24</span>, installed: <span class="number">1.23</span>]</div></pre></td></tr></table></figure>
+<h4 id="检查安装的包的安全性"><a href="#检查安装的包的安全性" class="headerlink" title="检查安装的包的安全性"></a><strong>检查安装的包的安全性</strong></h4><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">(env_test-jaLbPeP-) treehl@ssaw:~/env_test$ pipenv check</div><div class="line">Checking PEP <span class="number">508</span> requirements...</div><div class="line">Passed!</div><div class="line">Checking installed package safety...</div><div class="line">All good!</div></pre></td></tr></table></figure>
+<p>欢迎访问<a href="https://family-treesy.github.io/" target="_blank" rel="external">Treehl的博客</a></p>
+<p><a href="https://github.com/Family-TreeSY" target="_blank" rel="external">GitHub</a></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Python</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Pipenv</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/07/09/Pipenv/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-字典和集合" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/07/04/字典和集合/">字典和集合</a>
+    </h1>
+  
+
+        
+        <a href="/2018/07/04/字典和集合/" class="archive-article-date">
+  	<time datetime="2018-07-04T08:39:43.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-07-04</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/07/04/字典和集合/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-内置序列类型" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -663,246 +836,6 @@
 
 
   
-    <article id="post-进程（Process）" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/06/25/进程（Process）/">Python多进程.md</a>
-    </h1>
-  
-
-        
-        <a href="/2018/06/25/进程（Process）/" class="archive-article-date">
-  	<time datetime="2018-06-25T08:59:52.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-06-25</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><strong>参考自：</strong></p>
-<blockquote>
-<p><a href="https://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/001431927781401bb47ccf187b24c3b955157bb12c5882d000" target="_blank" rel="external">廖雪峰的Python教程</a><br><a href="http://www.dongwm.com/archives/%E4%BD%BF%E7%94%A8Python%E8%BF%9B%E8%A1%8C%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B-%E8%BF%9B%E7%A8%8B%E7%AF%87/" target="_blank" rel="external">董伟明的博客</a></p>
-</blockquote>
-<p><strong>知识点：</strong></p>
-<ul>
-<li>Process</li>
-<li>Pool</li>
-<li><p>进程间通信</p>
-<hr>
-</li>
-</ul>
-<h4 id="进程（Process）"><a href="#进程（Process）" class="headerlink" title="进程（Process）"></a><strong>进程（Process）</strong></h4><blockquote>
-<p>对于操作系统来说，一个任务就是一个进程（Process），比如打开一个word就是启动一个word进程。它不止干同一件事情，可以同时进行打字、打印等子任务操作，这些进程内的子任务就是线程（Thread）</p>
-</blockquote>
-<ul>
-<li>单核CPU也可以执行多任务，操作系统轮流</li>
-<li>让各个任务交替，Task1执行0.01秒，切换到Task2，Task2执行0.01秒，再切换到Task3，执行0.01秒……..这样反复执行下去</li>
-<li>真正的并行执行多任务只能在多核CPU上实现</li>
-</ul>
-<p><strong>多进程（Multiprocessing）</strong></p>
-<p>Multiprocessing模块提供了一个Process类来代表一个进程对象，下面代码演示了创建一个子进程，并等待其结束</p>
-<ul>
-<li>os.getpid()  获取父进程的ID</li>
-<li>创建子进程时，首先创建Process类的实例，再传入一个函数和它的参数</li>
-<li>用start()来启动子进程</li>
-<li>jion()  等待子进程结束后再继续运行下去，用于进程之间的同步</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="comment"># -*- coding:utf-8 -*-</span></div><div class="line"><span class="keyword">import</span> os</div><div class="line"><span class="keyword">from</span> multiprocessing <span class="keyword">import</span> Process</div><div class="line"></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">run_process</span><span class="params">(name)</span>:</span></div><div class="line">    print(<span class="string">'Run child process %s(%s)'</span> % (name, os.getpid()))</div><div class="line"></div><div class="line"></div><div class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</div><div class="line">    print(<span class="string">'Run parent process %s'</span> % os.getpid())</div><div class="line">    <span class="comment"># 创建子进程（创建Process类的实例p），传入一个函数和函数的参数</span></div><div class="line">    p = Process(target=run_process, args=(<span class="string">'test'</span>, ))</div><div class="line">    print(<span class="string">'Child process will start!'</span>)</div><div class="line">    <span class="comment"># 启动子进程</span></div><div class="line">    p.start()</div><div class="line">    <span class="comment"># 等待子进程结束后再运行下去，用于进程间的同步</span></div><div class="line">    p.join()</div><div class="line">    print(<span class="string">'Child process end!'</span>)</div></pre></td></tr></table></figure>
-<p>执行结果如下：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">Run parent process <span class="number">9156</span></div><div class="line">Child process will start!</div><div class="line">Run child process test(<span class="number">1564</span>)</div><div class="line">Child process end!</div><div class="line"></div><div class="line">Process finished <span class="keyword">with</span> exit code <span class="number">0</span></div></pre></td></tr></table></figure>
-<hr>
-<h4 id="Pool"><a href="#Pool" class="headerlink" title="Pool"></a><strong>Pool</strong></h4><p>如果要启动大量的子进程，可以使用进程池（Pool）。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="comment"># -*- coding:utf-8 -*-</span></div><div class="line"><span class="keyword">import</span> os</div><div class="line"><span class="keyword">import</span> time</div><div class="line"><span class="keyword">import</span> random</div><div class="line"><span class="keyword">from</span> multiprocessing <span class="keyword">import</span> Pool</div><div class="line"></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">long_time_task</span><span class="params">(name)</span>:</span></div><div class="line">    print(<span class="string">'Run task %s()%s'</span> % (name, os.getpid()))</div><div class="line">    start = time.time()</div><div class="line">    <span class="comment"># random.random()：随机生成0~1之间的浮点数</span></div><div class="line">    time.sleep(random.random() * <span class="number">3</span>)</div><div class="line">    end = time.time()</div><div class="line">    print(<span class="string">'Task %s run %0.2f seconds'</span> % (name, end - start))</div><div class="line"></div><div class="line"></div><div class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</div><div class="line">    print(<span class="string">'Parent process %s'</span> % os.getpid())</div><div class="line">    <span class="comment"># 创建进程池，大小是4，创建Pool类的实例p，不写子进程数量，默认开到CPU最大</span></div><div class="line">    p = Pool(<span class="number">4</span>)</div><div class="line">    <span class="comment"># 创建5个子进程，apply_async传入一个函数和它的参数</span></div><div class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">5</span>):</div><div class="line">        p.apply_async(long_time_task, args=(i, ))</div><div class="line">    print(<span class="string">'Waiting all subprocess done!'</span>)</div><div class="line">    <span class="comment"># join()之前必须先调用close()，调用close()后就不能再添加新的subprocess了</span></div><div class="line">    p.close()</div><div class="line">    <span class="comment"># 等待所有子进程执行完毕</span></div><div class="line">    p.join()</div><div class="line">    print(<span class="string">'All subprocess done!'</span>)</div></pre></td></tr></table></figure>
-<p>执行结果如下：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">Parent process <span class="number">13524</span></div><div class="line">Waiting all subprocess done!</div><div class="line">Run task <span class="number">0</span>()<span class="number">14440</span></div><div class="line">Run task <span class="number">1</span>()<span class="number">15016</span></div><div class="line">Run task <span class="number">2</span>()<span class="number">8072</span></div><div class="line">Run task <span class="number">3</span>()<span class="number">3268</span></div><div class="line">Task <span class="number">0</span> run <span class="number">0.28</span> seconds</div><div class="line">Run task <span class="number">4</span>()<span class="number">14440</span></div><div class="line">Task <span class="number">3</span> run <span class="number">1.14</span> seconds</div><div class="line">Task <span class="number">2</span> run <span class="number">1.54</span> seconds</div><div class="line">Task <span class="number">1</span> run <span class="number">2.11</span> seconds</div><div class="line">Task <span class="number">4</span> run <span class="number">2.82</span> seconds</div><div class="line">All subprocess done!</div></pre></td></tr></table></figure>
-<p>Pool对象需要调用join()方法会等待所有subprocess执行完毕，调用join()方法之前必须要先调用close()方法，调用close()方法后就不能再添加新的subprocess了</p>
-<p>我们看到输出是task0, 1, 2, 3执行了，而task4需要等待某个task执行完毕才能运行，这是因为我们设置了进程池大小为4，它只能同时执行4个子进程，如果不设置进程池大小，就是默认电脑的CPU最大核数</p>
-<p>之前用Multiprocess写过多进程爬虫，抓取速度极快，数据量小的甚至可以做到秒抓</p>
-<hr>
-<h4 id="进程间通信"><a href="#进程间通信" class="headerlink" title="进程间通信"></a><strong>进程间通信</strong></h4><p>Process之间都需要通信，Multiprocessing提供了Queue（队列）Pipe（管道）来进行数据的交换</p>
-<p>这里是Queue（队列）为例子，创建两个子进程，一个写数据，一个读数据。创建Queue的实例q，父进程创建队列，分别传递给write和read两个子进程</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="comment"># -*- coding:utf-8 -*-</span></div><div class="line"><span class="keyword">import</span> os</div><div class="line"><span class="keyword">import</span> time</div><div class="line"><span class="keyword">import</span> random</div><div class="line"><span class="keyword">from</span> multiprocessing <span class="keyword">import</span> Process, Queue</div><div class="line"></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">write</span><span class="params">(q)</span>:</span></div><div class="line">    print(<span class="string">'Process write to: %s'</span> % os.getpid())</div><div class="line">    <span class="keyword">for</span> value <span class="keyword">in</span> [<span class="string">'A'</span>, <span class="string">'B'</span>, <span class="string">'C'</span>]:</div><div class="line">        print(<span class="string">'Put %s to queue...'</span> % value)</div><div class="line">        <span class="comment"># 调用put将value放置队列当中</span></div><div class="line">        q.put(value)</div><div class="line">        time.sleep(random.random())</div><div class="line"></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">read</span><span class="params">(q)</span>:</span></div><div class="line">    print(<span class="string">'Proecss to read: %s'</span> % os.getpid())</div><div class="line">    <span class="keyword">while</span> <span class="keyword">True</span>:</div><div class="line">        <span class="comment"># 将数据从队列中取出</span></div><div class="line">        value = q.get(<span class="keyword">True</span>)</div><div class="line">        print(<span class="string">'Get %s from queue'</span> % value)</div><div class="line"></div><div class="line"></div><div class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</div><div class="line">    <span class="comment"># 父进程创建队列，并传递给各个子进程</span></div><div class="line">    q = Queue()</div><div class="line">    <span class="comment"># 创建write子进程</span></div><div class="line">    pw = Process(target=write, args=(q, ))</div><div class="line">    <span class="comment"># 创建read子进程</span></div><div class="line">    pr = Process(target=read, args=(q, ))</div><div class="line">    <span class="comment"># 开启write子进程</span></div><div class="line">    pw.start()</div><div class="line">    <span class="comment"># 开启read子进程</span></div><div class="line">    pr.start()</div><div class="line">    <span class="comment"># 等待write子进程结束</span></div><div class="line">    pw.join()</div><div class="line">    <span class="comment"># read子进程是死循环，需要强制关闭</span></div><div class="line">    pr.terminate()</div></pre></td></tr></table></figure>
-<p><strong>执行结果如下：</strong></p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">Process write to: <span class="number">868</span></div><div class="line">Put A to queue...</div><div class="line">Proecss to read: <span class="number">9844</span></div><div class="line">Get A <span class="keyword">from</span> queue</div><div class="line">Put B to queue...</div><div class="line">Get B <span class="keyword">from</span> queue</div><div class="line">Put C to queue...</div><div class="line">Get C <span class="keyword">from</span> queue</div><div class="line"></div><div class="line">Process finished <span class="keyword">with</span> exit code <span class="number">0</span></div></pre></td></tr></table></figure>
-<hr>
-<p>董伟明老师写的多进程教程明显难度要高于廖老师的，用了很多Python的语法糖，需要额外去理解闭包、装饰器、递归，但廖老师的更容易理解</p>
-<p>欢迎访问<a href="https://family-treesy.github.io/" target="_blank" rel="external">Treehl的博客</a><br><a href="https://github.com/Family-TreeSY/Python-Study-Notes" target="_blank" rel="external">Github</a></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Python</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/06/25/进程（Process）/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-QuerySet" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/06/04/QuerySet/">Django的QuerySet</a>
-    </h1>
-  
-
-        
-        <a href="/2018/06/04/QuerySet/" class="archive-article-date">
-  	<time datetime="2018-06-04T11:27:54.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-06-04</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="QuerySet"><a href="#QuerySet" class="headerlink" title="QuerySet"></a><strong>QuerySet</strong></h3><ul>
-<li>懒加载</li>
-<li>支持链式调用</li>
-<li>不支持链式调用</li>
-</ul>
-<p><strong>支持链式调用</strong></p>
-<ul>
-<li>all()</li>
-<li>filter()</li>
-<li>exclude()</li>
-<li>reverse()</li>
-<li>distinct()</li>
-<li>none()</li>
-</ul>
-<p><strong>不支持链式调用</strong></p>
-<ul>
-<li>get()</li>
-<li>create()</li>
-<li>get_or_create()</li>
-<li>update_or_create()</li>
-<li>count()</li>
-<li>latest()</li>
-<li>earliest()</li>
-<li>first()</li>
-<li>last()</li>
-<li>exists()</li>
-<li>update()</li>
-<li>delete()</li>
-<li>bulk_create()</li>
-<li>in_bulk()</li>
-</ul>
-<p><a href="https://docs.djangoproject.com/en/2.0/ref/models/querysets/" target="_blank" rel="external">Django常用API</a></p>
-<p>QuerySet是Django中非常重要的概念，创建完model对象之后，django会自动对它关联一个Manager对象，这个对象是Model对数据库进行操作的接口，Manager对象默认名称为objects</p>
-<p>以objects为数据接口，查询所有的category，Category.objects.all()返回一个queryset赋值给categories。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">In [<span class="number">11</span>]: <span class="keyword">from</span> blog.models <span class="keyword">import</span> Category</div><div class="line"></div><div class="line">In [<span class="number">12</span>]: categories = Category.objects.all() <span class="comment"># 没有调出数据</span></div><div class="line"></div><div class="line">In [<span class="number">13</span>]: categories <span class="comment"># 调出数据</span></div><div class="line">Out[<span class="number">13</span>]: &lt;QuerySet [&lt;Category: Django&gt;, &lt;Category: Python&gt;, &lt;Category: Spider&gt;, &lt;Category: Web后端&gt;, &lt;Category: Code&gt;]&gt;</div></pre></td></tr></table></figure>
-<p><strong>queryset是懒加载的，写它的时候并没有从数据库中调出数据，只有使用数据时才会进入数据库查询，原因是queryset支持链式调用，如果每次都要进入数据查询，会损耗性能。</strong></p>
-<p>这里举个例子</p>
-<p>查询all后又给出条件查询状态等于1的category，filter对应sql就是where</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">In [<span class="number">14</span>]: categories = Category.objects.all().filter(status=<span class="number">1</span>)</div><div class="line"></div><div class="line">In [<span class="number">15</span>]: categories</div><div class="line">Out[<span class="number">15</span>]: &lt;QuerySet [&lt;Category: Django&gt;, &lt;Category: Python&gt;, &lt;Category: Spider&gt;, &lt;Category: Web后端&gt;, &lt;Category: Code&gt;]&gt;</div><div class="line">In [<span class="number">16</span>]: print(categories.query)</div><div class="line">SELECT <span class="string">"blog_category"</span>.<span class="string">"id"</span>, <span class="string">"blog_category"</span>.<span class="string">"name"</span>, <span class="string">"blog_category"</span>.<span class="string">"status"</span>, <span class="string">"blog_category"</span>.<span class="string">"is_nav"</span>, <span class="string">"blog_category"</span>.<span class="string">"author_id"</span>, <span class="string">"blog_category"</span>.<span class="string">"created_time"</span> FROM <span class="string">"blog_category"</span> WHERE <span class="string">"blog_category"</span>.<span class="string">"status"</span> = <span class="number">1</span></div><div class="line"></div><div class="line">In [<span class="number">18</span>]: categories = Category.objects.all().filter(status=<span class="number">1</span>).filter(name__icontains=<span class="string">"django"</span>)</div><div class="line"></div><div class="line">In [<span class="number">19</span>]: categories</div><div class="line">Out[<span class="number">19</span>]: &lt;QuerySet [&lt;Category: Django&gt;]&gt;</div><div class="line"></div><div class="line">In [<span class="number">20</span>]: print(categories.query)</div><div class="line">SELECT <span class="string">"blog_category"</span>.<span class="string">"id"</span>, <span class="string">"blog_category"</span>.<span class="string">"name"</span>, <span class="string">"blog_category"</span>.<span class="string">"status"</span>, <span class="string">"blog_category"</span>.<span class="string">"is_nav"</span>, <span class="string">"blog_category"</span>.<span class="string">"author_id"</span>, <span class="string">"blog_category"</span>.<span class="string">"created_time"</span> FROM <span class="string">"blog_category"</span> WHERE (<span class="string">"blog_category"</span>.<span class="string">"status"</span> = <span class="number">1</span> AND <span class="string">"blog_category"</span>.<span class="string">"name"</span> LIKE %django% ESCAPE <span class="string">'\')</span></div></pre></td></tr></table></figure>
-<h4 id="Q查询"><a href="#Q查询" class="headerlink" title="Q查询"></a><strong>Q查询</strong></h4><p>filter()对等sql查询语句AND操作，OR操作就对等Q()查询</p>
-<blockquote>
-<p>filter(Q(id=1) | Q(id=2))   等于 where id=1 or id=2<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">n [<span class="number">7</span>]: <span class="keyword">from</span> django.db.models <span class="keyword">import</span> Q</div><div class="line"></div><div class="line">In [<span class="number">8</span>]: cates = Category.objects.filter(Q(id=<span class="number">1</span>) | Q(id=<span class="number">2</span>))</div><div class="line"></div><div class="line"></div><div class="line"><span class="comment"># 等于sql操作</span></div><div class="line"></div><div class="line">SELECT <span class="string">"blog_category"</span>.<span class="string">"id"</span>, <span class="string">"blog_category"</span>.<span class="string">"name"</span>, <span class="string">"blog_category"</span>.<span class="string">"status"</span>, <span class="string">"blog_category"</span>.<span class="string">"is_nav"</span>, <span class="string">"blog_category"</span>.<span class="string">"author_id"</span>, <span class="string">"blog_category"</span>.<span class="string">"created_time"</span> FROM <span class="string">"blog_category"</span> WHERE (<span class="string">"blog_category"</span>.<span class="string">"id"</span> = <span class="number">1</span> OR <span class="string">"blog_category"</span>.<span class="string">"id"</span> = <span class="number">2</span>)</div></pre></td></tr></table></figure></p>
-</blockquote>
-<h4 id="F-查询"><a href="#F-查询" class="headerlink" title="F()查询"></a>F()查询</h4><p>F 查询主要用来处理表中字段之间的比较，例如查询 blog_category 表中 name=id 的记录。同时 F 查询还支持计算（加减乘除）</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">In [<span class="number">19</span>]: cates = Category.objects.filter(name=F(<span class="string">'id'</span>))</div><div class="line"></div><div class="line">In [<span class="number">20</span>]: print(cates.query)</div><div class="line">SELECT <span class="string">"blog_category"</span>.<span class="string">"id"</span>, <span class="string">"blog_category"</span>.<span class="string">"name"</span>, <span class="string">"blog_category"</span>.<span class="string">"status"</span>, <span class="string">"blog_category"</span>.<span class="string">"is_nav"</span>, <span class="string">"blog_category"</span>.<span class="string">"author_id"</span>, <span class="string">"blog_category"</span>.<span class="string">"created_time"</span> FROM <span class="string">"blog_category"</span> WHERE <span class="string">"blog_category"</span>.<span class="string">"name"</span> = (<span class="string">"blog_category"</span>.<span class="string">"id"</span>)</div></pre></td></tr></table></figure>
-<p>欢迎访问<a href="https://family-treesy.github.io/" target="_blank" rel="external">Treehl的博客</a><br><a href="https://github.com/Family-TreeSY/Python-Study-Notes" target="_blank" rel="external">Github</a></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Django</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/06/04/QuerySet/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
       <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/8/">8</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
@@ -1004,11 +937,15 @@ getOwnMetadataKeys:function(t){return o(i(t),arguments.length<2?void 0:u(argumen
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">DailyQuestion</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">MongoDB</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">DailyQuestion</a>
+                <a href="javascript:void(0)" class="js-tag color2">Python</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1020,15 +957,15 @@ getOwnMetadataKeys:function(t){return o(i(t),arguments.length<2?void 0:u(argumen
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Python</a>
+                <a href="javascript:void(0)" class="js-tag color1">MySQL</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Pipenv</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">Django</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">MySQL</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1040,11 +977,11 @@ getOwnMetadataKeys:function(t){return o(i(t),arguments.length<2?void 0:u(argumen
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Scrapy</a>
+                <a href="javascript:void(0)" class="js-tag color1">Redis</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Redis</a>
+                <a href="javascript:void(0)" class="js-tag color2">Scrapy</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1056,15 +993,15 @@ getOwnMetadataKeys:function(t){return o(i(t),arguments.length<2?void 0:u(argumen
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">Unittest</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">FluentPython</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">流畅的Python</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">Unittest</a>
               </li>
             
             <div class="clearfix"></div>
