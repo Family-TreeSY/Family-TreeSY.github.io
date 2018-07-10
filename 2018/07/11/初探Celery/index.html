@@ -6,19 +6,21 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="//Family-TreeSY.github.io">
-  <title>字典和集合 | Treehl的博客</title>
+  <title>Treehl的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="Changing &amp; Building">
+  <meta name="description" content="初探Celery 参考自董伟明的Python Web开发实战  了解Celery前，可以先了解下任务与消息队列  Celery是一个专注于实时处理和任务调度的分布式任务队列  使用Celery常见场景：  Web应用：当用户触发的一个操作需要较长时间才能执行完成时，可以把它作为任务交给Celery去异步执行，执行完再返回给用户。所谓异步就是要执行耗时的IO操作时，它只发出指令，不需要等待结果，然后">
 <meta property="og:type" content="article">
-<meta property="og:title" content="字典和集合">
-<meta property="og:url" content="//Family-TreeSY.github.io/2018/07/04/字典和集合/index.html">
+<meta property="og:title" content="Treehl的博客">
+<meta property="og:url" content="//Family-TreeSY.github.io/2018/07/11/初探Celery/index.html">
 <meta property="og:site_name" content="Treehl的博客">
-<meta property="og:description" content="Changing &amp; Building">
+<meta property="og:description" content="初探Celery 参考自董伟明的Python Web开发实战  了解Celery前，可以先了解下任务与消息队列  Celery是一个专注于实时处理和任务调度的分布式任务队列  使用Celery常见场景：  Web应用：当用户触发的一个操作需要较长时间才能执行完成时，可以把它作为任务交给Celery去异步执行，执行完再返回给用户。所谓异步就是要执行耗时的IO操作时，它只发出指令，不需要等待结果，然后">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-07-04T08:39:43.388Z">
+<meta property="og:image" content="https://pic1.zhimg.com/80/bed316c5eeffaea1e09eff340be15361_hd.jpg">
+<meta property="og:updated_time" content="2018-07-10T21:06:36.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="字典和集合">
-<meta name="twitter:description" content="Changing &amp; Building">
+<meta name="twitter:title" content="Treehl的博客">
+<meta name="twitter:description" content="初探Celery 参考自董伟明的Python Web开发实战  了解Celery前，可以先了解下任务与消息队列  Celery是一个专注于实时处理和任务调度的分布式任务队列  使用Celery常见场景：  Web应用：当用户触发的一个操作需要较长时间才能执行完成时，可以把它作为任务交给Celery去异步执行，执行完再返回给用户。所谓异步就是要执行耗时的IO操作时，它只发出指令，不需要等待结果，然后">
+<meta name="twitter:image" content="https://pic1.zhimg.com/80/bed316c5eeffaea1e09eff340be15361_hd.jpg">
   
     <link rel="alternative" href="/atom.xml" title="Treehl的博客" type="application/atom+xml">
   
@@ -178,27 +180,106 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-字典和集合" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-初探Celery" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 class="article-title" itemprop="name">
-      字典和集合
-    </h1>
-  
-
-        
-        <a href="/2018/07/04/字典和集合/" class="archive-article-date">
-  	<time datetime="2018-07-04T08:39:43.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-07-04</time>
-</a>
-        
-      </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        
+        <h3 id="初探Celery"><a href="#初探Celery" class="headerlink" title="初探Celery"></a><strong>初探Celery</strong></h3><blockquote>
+<p><strong>参考自董伟明的Python Web开发实战</strong></p>
+</blockquote>
+<p>了解Celery前，可以先了解下<a href="https://zhuanlan.zhihu.com/p/37648767" target="_blank" rel="external">任务与消息队列</a></p>
+<blockquote>
+<p>Celery是一个专注于实时处理和任务调度的分布式任务队列</p>
+</blockquote>
+<p>使用Celery常见场景：</p>
+<ul>
+<li>Web应用：当用户触发的一个操作需要较长时间才能执行完成时，可以把它作为任务交给Celery去异步执行，执行完再返回给用户。所谓异步就是要执行耗时的IO操作时，它只发出指令，不需要等待结果，然后去执行其他代码了；一段时间后，返回结果后再去处理。</li>
+<li>定时任务：</li>
+<li>其他可以异步执行的任务</li>
+</ul>
+<h3 id="Celery的架构"><a href="#Celery的架构" class="headerlink" title="Celery的架构"></a><strong>Celery的架构</strong></h3><ul>
+<li>Celery Beat：任务调度器，Beat进程会读取配置文件的内容，周期性地将配置中到期需要执行的任务发送给消息队列</li>
+<li>Celery Worker：执行任务的消费者，通常会在多台服务器运行多个消费者来提高执行效率</li>
+<li>Broker：消息代理，或消息中间件，接受任务生产者发送过来的任务消息，存进队列再按序分发给任务消费方（通常是消息队列或者数据库）</li>
+<li>Producer：调用了Celery提供的API、函数或者装饰器而产生任务并交给任务队列处理的都是任务生产者</li>
+<li>Result Backend：任务处理完后保存状态信息和结果，以供查询。Celery默认支持Redis、RabbitMQ、MongoDB、Django ORM</li>
+</ul>
+<p>架构图：</p>
+<p><img src="https://pic1.zhimg.com/80/bed316c5eeffaea1e09eff340be15361_hd.jpg" alt=""></p>
+<h3 id="选择消息代理"><a href="#选择消息代理" class="headerlink" title="选择消息代理"></a><strong>选择消息代理</strong></h3><p>Celery目前支持RabbitMQ、Redis、MongoDB、Beanstalk等作为消息代理，但适用于生产环境的只有RabbitMQ和Redis</p>
+<h3 id="Celery序列化"><a href="#Celery序列化" class="headerlink" title="Celery序列化"></a><strong>Celery序列化</strong></h3><ul>
+<li>pickle</li>
+<li>json</li>
+<li>yaml</li>
+<li>magpack</li>
+</ul>
+<h3 id="安装配置Celery"><a href="#安装配置Celery" class="headerlink" title="安装配置Celery"></a><strong>安装配置Celery</strong></h3><ul>
+<li>选择Redis作为消息代理</li>
+<li>选择Msgpack做序列化</li>
+<li>选择Redis做结果存储</li>
+</ul>
+<h3 id="小试牛刀"><a href="#小试牛刀" class="headerlink" title="小试牛刀"></a><strong>小试牛刀</strong></h3><p>首先用pipenv创建虚拟环境，附上昨天写的<a href="https://github.com/Family-TreeSY/Python-Study-Notes/blob/master/Pipenv.md" target="_blank" rel="external">Pipenv简单小结</a></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">(celery_env-_UvHbTzp) treehl@ssaw:~/celery_env$ tree</div><div class="line">.</div><div class="line">├── Pipfile</div><div class="line">├── Pipfile.lock</div><div class="line">└── proj</div><div class="line">    ├── celeryconfig.py</div><div class="line">    ├── celery.py</div><div class="line">    ├── __init__.py</div><div class="line">    └── tasks.py</div><div class="line"></div><div class="line"><span class="number">1</span> directory, <span class="number">6</span> files</div></pre></td></tr></table></figure>
+<p>celery.py</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># -*- coding:utf-8 -*-</span></div><div class="line"><span class="keyword">from</span> __future__ <span class="keyword">import</span> absolute_import <span class="comment"># 拒绝隐式引入，celery.py和包名字有冲突，使程序运行正常</span></div><div class="line"></div><div class="line"><span class="keyword">from</span> celery <span class="keyword">import</span> Celery</div><div class="line"></div><div class="line"><span class="comment"># proj.tasks包含了proj/tasks.py这个文件</span></div><div class="line">app = Celery(<span class="string">'proj'</span>, include=[<span class="string">'proj.tasks'</span>])</div><div class="line"><span class="comment"># app.config_from_object加载配置</span></div><div class="line">app.config_from_object(<span class="string">'proj.celeryconfig'</span>)</div><div class="line"></div><div class="line"></div><div class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</div><div class="line">    app.start()</div></pre></td></tr></table></figure>
+<p>存放任务函数的文件，tasks.py</p>
+<p>tasks.py只有一个任务函数add，添加app.task来生效</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># -*- coding:utf-8 -*-</span></div><div class="line"><span class="keyword">from</span> __future__ <span class="keyword">import</span> absolute_import</div><div class="line"></div><div class="line"><span class="keyword">from</span> proj.celery <span class="keyword">import</span> app</div><div class="line"></div><div class="line"></div><div class="line"><span class="meta">@app.task</span></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">add</span><span class="params">(x, y)</span>:</span></div><div class="line">    <span class="keyword">return</span> x + y</div></pre></td></tr></table></figure>
+<p>配置文件celeryconfig.py</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># -*- coding:utf-8 -*-</span></div><div class="line"><span class="comment"># 消息代理，这里使用redis</span></div><div class="line">BROKEN_URL = <span class="string">'redis://localhost:6379/0'</span></div><div class="line"><span class="comment"># 任务结果存储在redis</span></div><div class="line">CELERY_RESULT_BACKEND = <span class="string">'redis://localhost:6379/0'</span></div><div class="line"><span class="comment"># 任务序列化和反序列化</span></div><div class="line">CELERY_TASK_SERIALIZER = <span class="string">'msgpack'</span></div><div class="line"><span class="comment"># 读取任务结果</span></div><div class="line">CELERY_RESULT_SERIALIZER = <span class="string">'json'</span></div><div class="line"><span class="comment"># 任务过期时间，设置为24小时</span></div><div class="line">CELERY_TASK_RESULT_EXPIRES = <span class="number">60</span>*<span class="number">60</span>*<span class="number">24</span></div><div class="line"><span class="comment"># 指定接受的内容类型</span></div><div class="line">CELERY_ACCEPT_CONTENT = [<span class="string">'json'</span>, <span class="string">'msgpack'</span>]</div></pre></td></tr></table></figure>
+<p>任务生产者tasks将任务交给消息中间件redis，存入队列，在按序发放给worker</p>
+<blockquote>
+<p>cd celery_env 项目名字，随便写</p>
+<p>celery -A proj worker -l info  </p>
+</blockquote>
+<p>-A参数会自动寻找proj.celery这个模块</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line">(celery_env-_UvHbTzp) treehl@ssaw:~/celery_env$ celery -A proj worker -l info</div><div class="line"> </div><div class="line"> -------------- celery@ssaw v4<span class="number">.2</span><span class="number">.0</span> (windowlicker)</div><div class="line">---- **** ----- </div><div class="line">--- * ***  * -- Linux<span class="number">-4.15</span><span class="number">.0</span><span class="number">-20</span>-generic-x86_64-<span class="keyword">with</span>-Ubuntu<span class="number">-18.04</span>-bionic <span class="number">2018</span><span class="number">-07</span><span class="number">-10</span> <span class="number">19</span>:<span class="number">54</span>:<span class="number">51</span></div><div class="line">-- * - **** --- </div><div class="line">- ** ---------- [config]</div><div class="line">- ** ---------- .&gt; app:         proj:<span class="number">0x7f16777619d0</span></div><div class="line">- ** ---------- .&gt; transport:   amqp://guest:**@localhost:<span class="number">5672</span>//</div><div class="line">- ** ---------- .&gt; results:     redis://localhost:<span class="number">6379</span>/<span class="number">0</span></div><div class="line">- *** --- * --- .&gt; concurrency: <span class="number">8</span> (prefork)</div><div class="line">-- ******* ---- .&gt; task events: OFF (enable -E to monitor tasks <span class="keyword">in</span> this worker)</div><div class="line">--- ***** ----- </div><div class="line"> -------------- [queues]</div><div class="line">                .&gt; celery           exchange=celery(direct) key=celery</div><div class="line">                </div><div class="line"></div><div class="line">[tasks]</div><div class="line">  . proj.tasks.add</div><div class="line"></div><div class="line">[<span class="number">2018</span><span class="number">-07</span><span class="number">-10</span> <span class="number">19</span>:<span class="number">54</span>:<span class="number">52</span>,<span class="number">087</span>: INFO/MainProcess] Connected to amqp://guest:**@<span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span>:<span class="number">5672</span>//</div><div class="line">[<span class="number">2018</span><span class="number">-07</span><span class="number">-10</span> <span class="number">19</span>:<span class="number">54</span>:<span class="number">52</span>,<span class="number">096</span>: INFO/MainProcess] mingle: searching <span class="keyword">for</span> neighbors</div><div class="line">[<span class="number">2018</span><span class="number">-07</span><span class="number">-10</span> <span class="number">19</span>:<span class="number">54</span>:<span class="number">53</span>,<span class="number">113</span>: INFO/MainProcess] mingle: all alone</div><div class="line">[<span class="number">2018</span><span class="number">-07</span><span class="number">-10</span> <span class="number">19</span>:<span class="number">54</span>:<span class="number">53</span>,<span class="number">143</span>: INFO/MainProcess] celery@ssaw ready.</div></pre></td></tr></table></figure>
+<p>开启另一个终端，用Ipython调用add函数</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">In [<span class="number">1</span>]: <span class="keyword">from</span> proj.tasks <span class="keyword">import</span> add</div><div class="line"></div><div class="line">In [<span class="number">2</span>]: r = add.delay(<span class="number">1</span>, <span class="number">3</span>)</div><div class="line"></div><div class="line">In [<span class="number">3</span>]: r</div><div class="line">Out[<span class="number">3</span>]: &lt;AsyncResult: <span class="number">09</span>a5ae36-baf2<span class="number">-49</span>d5-a40c<span class="number">-092</span>ee1941825&gt;</div><div class="line"></div><div class="line">In [<span class="number">4</span>]: r.result</div><div class="line">Out[<span class="number">4</span>]: <span class="number">4</span></div><div class="line"></div><div class="line">In [<span class="number">5</span>]: r.status</div><div class="line">Out[<span class="number">5</span>]: <span class="string">u'SUCCESS'</span></div><div class="line"></div><div class="line">In [<span class="number">6</span>]: r.successful()</div><div class="line">Out[<span class="number">6</span>]: <span class="keyword">True</span></div><div class="line"></div><div class="line">In [<span class="number">7</span>]: r.backend</div><div class="line">Out[<span class="number">7</span>]: &lt;celery.backends.redis.RedisBackend at <span class="number">0x7fbd1aa6dcd0</span>&gt;</div></pre></td></tr></table></figure>
+<p>worker的终端上显示执行了任务</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">[<span class="number">2018</span><span class="number">-07</span><span class="number">-10</span> <span class="number">20</span>:<span class="number">03</span>:<span class="number">22</span>,<span class="number">038</span>: INFO/ForkPoolWorker<span class="number">-7</span>] Task proj.tasks.add[<span class="number">09</span>a5ae36-baf2<span class="number">-49</span>d5-a40c<span class="number">-092</span>ee1941825] succeeded <span class="keyword">in</span> <span class="number">0.00298636799562</span>s: <span class="number">4</span></div><div class="line">[<span class="number">2018</span><span class="number">-07</span><span class="number">-10</span> <span class="number">20</span>:<span class="number">10</span>:<span class="number">25</span>,<span class="number">297</span>: INFO/MainProcess] Received task: proj.tasks.add[<span class="number">699</span>f81a4<span class="number">-4</span>fae<span class="number">-4</span>c18<span class="number">-901</span>b-ecf87be1f909]  </div><div class="line">[<span class="number">2018</span><span class="number">-07</span><span class="number">-10</span> <span class="number">20</span>:<span class="number">10</span>:<span class="number">25</span>,<span class="number">324</span>: INFO/ForkPoolWorker<span class="number">-2</span>] Task proj.tasks.add[<span class="number">699</span>f81a4<span class="number">-4</span>fae<span class="number">-4</span>c18<span class="number">-901</span>b-ecf87be1f909] succeeded <span class="keyword">in</span> <span class="number">0.0243313319952</span>s: <span class="number">3</span></div></pre></td></tr></table></figure>
+<p>任务的结果都需要根据上面提到的task_id获得</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">In [<span class="number">13</span>]: task_id = <span class="string">'09a5ae36-baf2-49d5-a40c-092ee1941825'</span></div><div class="line"></div><div class="line">In [<span class="number">14</span>]: <span class="keyword">from</span> celery.result <span class="keyword">import</span> AsyncResult</div><div class="line">    </div><div class="line">In [<span class="number">16</span>]: AsyncResult(task_id).get()</div><div class="line">Out[<span class="number">16</span>]: <span class="number">4</span></div></pre></td></tr></table></figure>
+<h3 id="指定队列"><a href="#指定队列" class="headerlink" title="指定队列"></a><strong>指定队列</strong></h3><p>Celery会使用默认名为celery的队列用来存放任务，<strong>我们可以使用优先级不同的队列来确保高优先级的任务不需要等待就得到响应</strong></p>
+<p>我们在proj同目录下创建projq目录，将proj中的代码复制进projq，再给celeryconfig.py添加如下配置：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> kombu <span class="keyword">import</span> Queue</div><div class="line"></div><div class="line"></div><div class="line"><span class="comment"># 定义任务队列</span></div><div class="line">CELERY_QUEUES = (</div><div class="line">    Queue(<span class="string">'default'</span>, routing_key=<span class="string">'task.#'</span>),  <span class="comment"># 路由键以task.开头的消息都进入default队列</span></div><div class="line">    Queue(<span class="string">'web_tasks'</span>, routing_key=<span class="string">'web.#'</span>),  <span class="comment"># 路由键以web.开头的消息都进入web_tasks队列, '#'表示任意数量</span></div><div class="line">)</div><div class="line"><span class="comment"># 默认交换机名字为tasks</span></div><div class="line">CELERY_DEFAULT_EXCHANGE = <span class="string">'tasks'</span> <span class="comment"># 交换机就像邮局，通过它做路由分发</span></div><div class="line"><span class="comment"># 默认交换的类型为topic</span></div><div class="line">CELERY_DEFAULT_EXCHANGE_TYPE = <span class="string">'topic'</span></div><div class="line"><span class="comment"># 默认的路由键是task.default，这个路由键符合上面的default队列</span></div><div class="line">CELERY_DEFAULT_ROUTING_KEY = <span class="string">'task.default'</span></div><div class="line"></div><div class="line"><span class="comment"># tasks.add的消息会进入web_tasks队列</span></div><div class="line">CELERY_ROUTES = &#123;</div><div class="line">    <span class="string">'projq.tasks.add'</span>: &#123;</div><div class="line">        <span class="string">'queue'</span>: <span class="string">'web_tasks'</span>,</div><div class="line">        <span class="string">'routing_key'</span>: <span class="string">'web.add'</span>, </div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>现在用指定队列的方式来启动worker ，worker只会执行web_tasks的任务</p>
+<ul>
+<li>-A自动寻找projq.celery</li>
+<li>-Q指定web_tasks队列</li>
+</ul>
+<blockquote>
+<p>celery -A projq worker -Q web_tasks -l info</p>
+</blockquote>
+<h3 id="使用任务调度"><a href="#使用任务调度" class="headerlink" title="使用任务调度"></a><strong>使用任务调度</strong></h3><p>之前的列子都是由发布者触发的，这里使用<strong>Celery的Beat进程自动生成任务</strong>，还记得前面的Celery架构图么，它和生产这一样都是处于任务发布者的位置</p>
+<p>基于proj目录下的源码，创建一个projb目录，对projb/celeryconfig.py添加以下配置：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">CELERYBEAT_SCHEDULE = &#123;</div><div class="line">    <span class="string">'add'</span>: &#123;</div><div class="line">        <span class="string">'task'</span>: <span class="string">'projb.tasks.add'</span>,</div><div class="line">        <span class="string">'schedule'</span>: timedelta(seconds=<span class="number">10</span>),</div><div class="line">        <span class="string">'args'</span>: (<span class="number">16</span>, <span class="number">16</span>),</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>timedelta表示两个时间的差值，tasks.add这个任务每隔10秒跑一次</p>
+<p>Beat和Worker一起启动</p>
+<blockquote>
+<p>celery -B -A projb worker -l info</p>
+</blockquote>
+<p>运行后可以看到每10秒都会运行一次tasks.add</p>
+<h3 id="任务绑定、记录日志、重试"><a href="#任务绑定、记录日志、重试" class="headerlink" title="任务绑定、记录日志、重试"></a><strong>任务绑定、记录日志、重试</strong></h3><p>任务绑定、记录日志和重试是Celery中常用的三个高级属性，修改proj/tasks.py，添加div函数</p>
+<p><strong>当使用bind=True后，函数的参数发生变化，多出了参数self，相当于把div变成了一个已绑定的方法，通过self可以获得任务的上下文</strong></p>
+<p>异常ZeroDivisionError中 as e，e为异常的实例，出现异常后就抛出重试retry</p>
+<p>!r：表示为字符串格式化方法，只能用于format，在%中使用会报错</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> celery.utils.log <span class="keyword">import</span> get_task_logger</div><div class="line"></div><div class="line"></div><div class="line">logger = get_task_logger(__name__)</div><div class="line"></div><div class="line"></div><div class="line"><span class="meta">@app.task(bind=True)</span></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">div</span><span class="params">(self, x, y)</span>:</span></div><div class="line">    logger.info((<span class="string">'Executing task id &#123;0.id&#125;, args:&#123;0.args!r&#125;'</span></div><div class="line">                <span class="string">'kwargs: &#123;0.kwargs!r&#125;'</span>).format(self.request))</div><div class="line">    <span class="keyword">try</span>:</div><div class="line">        result = x / y</div><div class="line">    <span class="keyword">except</span> ZeroDivisionError <span class="keyword">as</span> e:</div><div class="line">        <span class="keyword">raise</span> self.retry(exc=e, countdown=<span class="number">5</span>, max_retries=<span class="number">3</span>)</div><div class="line">    <span class="keyword">return</span> result</div></pre></td></tr></table></figure>
+<p>先启动worker进程</p>
+<blockquote>
+<p>celery -A proj worker -l info</p>
+</blockquote>
+<p>另开一个终端，进入ipython</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">In [<span class="number">1</span>]: <span class="keyword">from</span> proj.tasks <span class="keyword">import</span> div</div><div class="line"></div><div class="line">In [<span class="number">2</span>]: r = div.delay(<span class="number">2</span>, <span class="number">1</span>)</div></pre></td></tr></table></figure>
+<p>可以看到worker端出现一下执行信息：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">[<span class="number">2018</span><span class="number">-07</span><span class="number">-11</span> <span class="number">12</span>:<span class="number">57</span>:<span class="number">23</span>,<span class="number">673</span>: INFO/ForkPoolWorker<span class="number">-1</span>] proj.tasks.div[<span class="number">5</span>cf9ec88<span class="number">-5</span>a90<span class="number">-4</span>fd9-b4a4-f9580f2110ea]: Executing task id <span class="number">5</span>cf9ec88<span class="number">-5</span>a90<span class="number">-4</span>fd9-b4a4-f9580f2110ea, args:[<span class="number">2</span>, <span class="number">1</span>]kwargs: &#123;&#125;</div></pre></td></tr></table></figure>
+<p>换成造成异常的参数</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">[<span class="number">4</span>]: r = div.delay(<span class="number">2</span>, <span class="number">0</span>)</div></pre></td></tr></table></figure>
+<p>worker端</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">[<span class="number">2018</span><span class="number">-07</span><span class="number">-11</span> <span class="number">12</span>:<span class="number">59</span>:<span class="number">07</span>,<span class="number">177</span>: INFO/ForkPoolWorker<span class="number">-3</span>] Task proj.tasks.div[c5ec9012-f7c9<span class="number">-44</span>cf<span class="number">-83</span>bd-f94507f6ddc4] retry: Retry <span class="keyword">in</span> <span class="number">5</span>s: ZeroDivisionError(<span class="string">'integer division or modulo by zero'</span>,)</div></pre></td></tr></table></figure>
+<p>每5条就执行一次，执行完三次以后抛出异常结束</p>
+
       
 
       
@@ -287,7 +368,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="http://s.jiathis.com/qrcode.php?url=http://Family-TreeSY.github.io/2018/07/04/字典和集合/" alt="微信分享二维码">
+      <img src="http://s.jiathis.com/qrcode.php?url=http://Family-TreeSY.github.io/2018/07/11/初探Celery/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -301,18 +382,9 @@
   
 <nav id="article-nav">
   
-    <a href="/2018/07/09/Pipenv/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          Pipenv：Python项目环境与依赖管理工具
-        
-      </div>
-    </a>
   
-  
-    <a href="/2018/07/03/内置序列类型/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">序列构成的数组</div>
+    <a href="/2018/07/09/Pipenv/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Pipenv：Python项目环境与依赖管理工具</div>
       <i class="icon-circle-right"></i>
     </a>
   
@@ -453,19 +525,11 @@ getOwnMetadataKeys:function(t){return o(i(t),arguments.length<2?void 0:u(argumen
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">MongoDB</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">Python</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">Git</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">GitHub</a>
+                <a href="javascript:void(0)" class="js-tag color3">MongoDB</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -481,6 +545,14 @@ getOwnMetadataKeys:function(t){return o(i(t),arguments.length<2?void 0:u(argumen
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">Git</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">GitHub</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">爬虫</a>
               </li>
              
@@ -489,15 +561,15 @@ getOwnMetadataKeys:function(t){return o(i(t),arguments.length<2?void 0:u(argumen
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Redis</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">Scrapy</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">豆瓣</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Redis</a>
               </li>
              
               <li class="article-tag-list-item">
