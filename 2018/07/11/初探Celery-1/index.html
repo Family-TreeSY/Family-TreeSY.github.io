@@ -6,19 +6,20 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="//Family-TreeSY.github.io">
-  <title>Treehl的博客</title>
+  <title>初探Celery | Treehl的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="初探Celery 参考自董伟明的Python Web开发实战  了解Celery前，可以先了解下任务与消息队列  Celery是一个专注于实时处理和任务调度的分布式任务队列  使用Celery常见场景：  Web应用：当用户触发的一个操作需要较长时间才能执行完成时，可以把它作为任务交给Celery去异步执行，执行完再返回给用户。所谓异步就是要执行耗时的IO操作时，它只发出指令，不需要等待结果，然后">
+<meta name="keywords" content="Celery Python">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Treehl的博客">
-<meta property="og:url" content="//Family-TreeSY.github.io/2018/07/11/初探Celery/index.html">
+<meta property="og:title" content="初探Celery">
+<meta property="og:url" content="//Family-TreeSY.github.io/2018/07/11/初探Celery-1/index.html">
 <meta property="og:site_name" content="Treehl的博客">
 <meta property="og:description" content="初探Celery 参考自董伟明的Python Web开发实战  了解Celery前，可以先了解下任务与消息队列  Celery是一个专注于实时处理和任务调度的分布式任务队列  使用Celery常见场景：  Web应用：当用户触发的一个操作需要较长时间才能执行完成时，可以把它作为任务交给Celery去异步执行，执行完再返回给用户。所谓异步就是要执行耗时的IO操作时，它只发出指令，不需要等待结果，然后">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://pic1.zhimg.com/80/bed316c5eeffaea1e09eff340be15361_hd.jpg">
-<meta property="og:updated_time" content="2018-07-10T21:06:36.000Z">
+<meta property="og:updated_time" content="2018-07-11T07:04:55.859Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Treehl的博客">
+<meta name="twitter:title" content="初探Celery">
 <meta name="twitter:description" content="初探Celery 参考自董伟明的Python Web开发实战  了解Celery前，可以先了解下任务与消息队列  Celery是一个专注于实时处理和任务调度的分布式任务队列  使用Celery常见场景：  Web应用：当用户触发的一个操作需要较长时间才能执行完成时，可以把它作为任务交给Celery去异步执行，执行完再返回给用户。所谓异步就是要执行耗时的IO操作时，它只发出指令，不需要等待结果，然后">
 <meta name="twitter:image" content="https://pic1.zhimg.com/80/bed316c5eeffaea1e09eff340be15361_hd.jpg">
   
@@ -180,8 +181,23 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-初探Celery" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-初探Celery-1" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      初探Celery
+    </h1>
+  
+
+        
+        <a href="/2018/07/11/初探Celery-1/" class="archive-article-date">
+  	<time datetime="2018-07-11T06:58:06.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-07-11</time>
+</a>
+        
+      </header>
     
     <div class="article-entry" itemprop="articleBody">
       
@@ -318,6 +334,17 @@
     <div class="article-info article-info-index">
       
       
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">Celery Python</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
       
 
       
@@ -368,7 +395,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="http://s.jiathis.com/qrcode.php?url=http://Family-TreeSY.github.io/2018/07/11/初探Celery/" alt="微信分享二维码">
+      <img src="http://s.jiathis.com/qrcode.php?url=http://Family-TreeSY.github.io/2018/07/11/初探Celery-1/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -517,6 +544,10 @@ getOwnMetadataKeys:function(t){return o(i(t),arguments.length<2?void 0:u(argumen
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Python</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">PYTHON</a>
               </li>
              
@@ -525,23 +556,15 @@ getOwnMetadataKeys:function(t){return o(i(t),arguments.length<2?void 0:u(argumen
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Python</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">MongoDB</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">MySQL</a>
+                <a href="javascript:void(0)" class="js-tag color2">Django</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">Pipenv</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Django</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -550,6 +573,10 @@ getOwnMetadataKeys:function(t){return o(i(t),arguments.length<2?void 0:u(argumen
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">GitHub</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">MySQL</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -565,11 +592,11 @@ getOwnMetadataKeys:function(t){return o(i(t),arguments.length<2?void 0:u(argumen
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">豆瓣</a>
+                <a href="javascript:void(0)" class="js-tag color1">Redis</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Redis</a>
+                <a href="javascript:void(0)" class="js-tag color3">豆瓣</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -586,6 +613,10 @@ getOwnMetadataKeys:function(t){return o(i(t),arguments.length<2?void 0:u(argumen
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">流畅的Python</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">Celery Python</a>
               </li>
             
             <div class="clearfix"></div>
