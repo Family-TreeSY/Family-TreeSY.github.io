@@ -179,6 +179,101 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-函数式编程" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/05/30/函数式编程/">函数式编程工具</a>
+    </h1>
+  
+
+        
+        <a href="/2018/05/30/函数式编程/" class="archive-article-date">
+  	<time datetime="2018-05-30T12:19:02.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-05-30</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h4 id="函数式编程"><a href="#函数式编程" class="headerlink" title="函数式编程"></a><strong>函数式编程</strong></h4><blockquote>
+<p>参考Python学习shouce / 廖雪峰的Python教程</p>
+</blockquote>
+<ul>
+<li>map()</li>
+<li>filter()</li>
+<li>reduce()</li>
+</ul>
+<h4 id="1、map"><a href="#1、map" class="headerlink" title="1、map()"></a><strong>1、map()</strong></h4><p>map()函数接受两个参数，一个是函数另外一个是迭代对象</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">In [<span class="number">11</span>]: <span class="function"><span class="keyword">def</span> <span class="title">f</span><span class="params">(x)</span>:</span></div><div class="line">    ...:     <span class="keyword">return</span> x*x</div><div class="line">    ...:</div><div class="line"></div><div class="line">In [<span class="number">12</span>]: l = [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>, <span class="number">4</span>]</div><div class="line">In [<span class="number">14</span>]: list(map(f, l))</div><div class="line">Out[<span class="number">14</span>]: [<span class="number">1</span>, <span class="number">4</span>, <span class="number">9</span>, <span class="number">16</span>]</div></pre></td></tr></table></figure>
+<p>这里可以用lambda表达式来表示， lambda表达式由关键字lambda和参数x组成，也称作匿名函数</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">In [<span class="number">15</span>]: l = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>]</div><div class="line"></div><div class="line">In [<span class="number">16</span>]: list(map(<span class="keyword">lambda</span> x: x*x, l))</div><div class="line">Out[<span class="number">16</span>]: [<span class="number">1</span>, <span class="number">4</span>, <span class="number">9</span>, <span class="number">16</span>, <span class="number">25</span>, <span class="number">36</span>]</div></pre></td></tr></table></figure>
+<h4 id="2、filter"><a href="#2、filter" class="headerlink" title="2、filter()"></a><strong>2、filter()</strong></h4><p>filter()函数也接受两个参数，一个函数，一个序列</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># 从一个序列中挑选出大于0的元素</span></div><div class="line"></div><div class="line">In [<span class="number">20</span>]: list(range(<span class="number">-5</span>, <span class="number">5</span>))</div><div class="line">Out[<span class="number">20</span>]: [<span class="number">-5</span>, <span class="number">-4</span>, <span class="number">-3</span>, <span class="number">-2</span>, <span class="number">-1</span>, <span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>]</div><div class="line">In [<span class="number">23</span>]: list(filter(<span class="keyword">lambda</span> x: x &gt; <span class="number">0</span>, range(<span class="number">-5</span>, <span class="number">5</span>)))</div><div class="line">Out[<span class="number">23</span>]: [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>]</div></pre></td></tr></table></figure>
+<h4 id="reduce"><a href="#reduce" class="headerlink" title="reduce()"></a><strong>reduce()</strong></h4><p>reduce把一个函数作用在一个序列[x1, x2, x3, …]上，这个函数必须接收两个参数，reduce把结果继续和序列的下一个元素做累积计算<br><strong>reduce(f, [x1, x2, x3, x4]) = f(f(f(x1, x2), x3), x4)</strong></p>
+<p>如下代码计算过程：</p>
+<blockquote>
+<p>x <em> y : 1</em>2—-&gt; 2 <em> 3——&gt; 6 </em> 4 ——-&gt; 24</p>
+<p>x + y: 1 + 2——&gt; 3 + 3 ——&gt; 6 + 4——–&gt; 10</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">In [<span class="number">27</span>]: reduce((<span class="keyword">lambda</span> x, y: x * y), [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>])</div><div class="line">Out[<span class="number">27</span>]: <span class="number">24</span></div><div class="line"></div><div class="line">In [<span class="number">28</span>]: reduce((<span class="keyword">lambda</span> x, y: x+ y), [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>])</div><div class="line">Out[<span class="number">28</span>]: <span class="number">10</span></div></pre></td></tr></table></figure>
+<p>欢迎访问<a href="https://family-treesy.github.io/" target="_blank" rel="external">Treehl的博客</a><br><a href="https://github.com/Family-TreeSY/Python-Study-Notes" target="_blank" rel="external">Github</a></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Python</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/05/30/函数式编程/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-sort()和sorted()的区别" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -690,133 +785,6 @@
 
 
   
-    <article id="post-Django博客搭建" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <blockquote>
-<p>用Django搭建博客</p>
-</blockquote>
-<p><img src="https://img.shields.io/badge/Python-2.7-brightgreen.svg" alt=""> <img src="https://img.shields.io/badge/Django-1.11.3-green.svg" alt=""> <img src="https://img.shields.io/badge/xadmin-0.6.1-yellowgreen.svg" alt=""> <img src="https://img.shields.io/badge/ckedior-4.7.1-yellow.svg" alt=""> <img src="https://img.shields.io/badge/Django--debug--toolbar-2.0-orange.svg" alt=""><br><img src="https://img.shields.io/badge/Django--silk-2.0-red.svg" alt=""> <img src="https://img.shields.io/badge/Redis-4.0.9-lightgrey.svg" alt=""> <img src="https://img.shields.io/badge/MySQL-5.7.21-blue.svg" alt=""> <img src="https://img.shields.io/badge/Bootstrap-4.1.0-brown.svg" alt=""></p>
-<p><strong>欢迎访问</strong>   <a href="http://treehl.top/" target="_blank" rel="external">www.treehl.top</a> ，此博客仅作为项目展示</p>
-<h3 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h3><ul>
-<li>项目主要是记录学习Django的过程</li>
-<li>前端使用Bootstrap框架并没有套模板，自己画页面会丑点，最主要是简单学习下前端，在W3SCHOOL上学习了HTML和CSS的可以练练手</li>
-<li>后台管理一开始先开发Django自带的admin到后面会转到Xadmin上</li>
-<li>视图先用FunctionView来写逻辑，后面再使用ClassBasedView</li>
-<li>数据库在开发环境中先使用SQLITE，最后准备上线前替换为MySQL数据库</li>
-<li>文本编辑使用Ckeditor富文本编辑</li>
-<li>使用Django-Rest-Framework来构建Web API</li>
-<li>使用Django-debug-toolbar和silk来分析检查</li>
-<li>配置MySQL和开发环境</li>
-<li>配置Redis</li>
-<li>使用Nginx和Gunicorn部署网站</li>
-<li>使用Fabric自动化部署</li>
-</ul>
-<h3 id="环境"><a href="#环境" class="headerlink" title="环境"></a>环境</h3><ul>
-<li>开发语言：Python2.7</li>
-<li>开发环境:Ubuntu16.04</li>
-<li>IDE:Pycharm</li>
-<li>数据库:MySQL、Redis</li>
-</ul>
-<h3 id="代码风格"><a href="#代码风格" class="headerlink" title="代码风格"></a>代码风格</h3><ul>
-<li><a href="http://zh-google-styleguide.readthedocs.io/en/latest/google-python-styleguide/contents/" target="_blank" rel="external">谷歌开源项目风格</a></li>
-<li>用flake8来检测代码</li>
-</ul>
-<h3 id="项目分四大块"><a href="#项目分四大块" class="headerlink" title="项目分四大块"></a>项目分四大块</h3><ul>
-<li>后台admin开发</li>
-<li>前台开发</li>
-<li>增加功能插件</li>
-<li>部署项目</li>
-</ul>
-<p><strong>一、后台admin开发</strong></p>
-<ol>
-<li><a href="https://github.com/Family-TreeSY/Myblog/blob/master/Doc/%E4%B8%80%E3%80%81%E6%90%AD%E5%BB%BA%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83.md" target="_blank" rel="external">搭建开发环境</a></li>
-<li><a href="https://github.com/Family-TreeSY/Myblog/blob/master/Doc/%E4%BA%8C%E3%80%81%E5%BB%BA%E7%AB%8B%E5%8D%9A%E5%AE%A2%E5%BA%94%E7%94%A8.md" target="_blank" rel="external">建立博客应用</a></li>
-<li><a href="https://github.com/Family-TreeSY/Myblog/blob/master/Doc/%E4%B8%89%E3%80%81%E5%88%9B%E5%BB%BA%E6%95%B0%E6%8D%AE%E5%BA%93%E6%A8%A1%E5%9E%8BModel.md" target="_blank" rel="external">创建数据库模型Model</a></li>
-<li><a href="https://github.com/Family-TreeSY/Myblog/blob/master/Doc/%E5%9B%9B%E3%80%81%E5%88%9B%E5%BB%BA%E5%90%8E%E5%8F%B0%E7%AE%A1%E7%90%86%E8%B4%A6%E5%8F%B7%E3%80%81%E8%BF%81%E7%A7%BB%E6%95%B0%E6%8D%AE%E5%BA%93.md" target="_blank" rel="external">创建后台管理账号、迁移数据库</a></li>
-<li><a href="https://github.com/Family-TreeSY/Myblog/blob/master/Doc/%E4%BA%94%E3%80%81%E5%BC%80%E5%8F%91%E5%90%8E%E5%8F%B0%E7%AE%A1%E7%90%86%EF%BC%88%E4%B8%80%EF%BC%89.md" target="_blank" rel="external">开发后台管理（一）</a></li>
-<li><a href="https://github.com/Family-TreeSY/Myblog/blob/master/Doc/%E5%85%AD%E3%80%81%E5%BC%80%E5%8F%91%E5%90%8E%E5%8F%B0%E7%AE%A1%E7%90%86%EF%BC%88%E4%BA%8C%EF%BC%89.md" target="_blank" rel="external">开发后台管理（二）</a></li>
-</ol>
-<p><strong>二、前台开发</strong></p>
-<ol>
-<li><a href="https://github.com/Family-TreeSY/Myblog/blob/master/Doc/%E4%B8%83%E3%80%81FunctionView.md" target="_blank" rel="external">FunctionView</a></li>
-<li><a href="https://github.com/Family-TreeSY/Myblog/blob/master/Doc/%E5%85%AB%E3%80%81%E5%88%86%E9%A1%B5%E8%AE%BE%E7%BD%AE.md" target="_blank" rel="external">分页设置</a></li>
-<li><a href="https://github.com/Family-TreeSY/Myblog/blob/master/Doc/%E4%B9%9D%E3%80%81%E8%AE%BE%E7%BD%AE%E5%88%86%E7%B1%BB%E5%AF%BC%E8%88%AA%E6%A0%8F.md" target="_blank" rel="external">设置分类导航栏</a></li>
-<li><a href="https://github.com/Family-TreeSY/Myblog/blob/master/Doc/%E5%8D%81%E3%80%81%E8%AE%BE%E7%BD%AE%E4%BE%A7%E8%BE%B9%E6%A0%8F.md" target="_blank" rel="external">设置侧边栏</a></li>
-<li><a href="https://github.com/Family-TreeSY/Myblog/blob/master/Doc/%E5%8D%81%E4%B8%80%E3%80%81%E5%AE%8C%E6%88%90%E6%AD%A3%E6%96%87%E3%80%81%E9%85%8D%E7%BD%AE%E9%80%9A%E7%94%A8%E4%BB%A3%E7%A0%81.md" target="_blank" rel="external">完成正文、配置通用代码</a></li>
-<li><a href="https://github.com/Family-TreeSY/Myblog/blob/master/Doc/%E5%8D%81%E4%BA%8C%E3%80%81ClassBasedView.md" target="_blank" rel="external">ClassBasedView</a></li>
-<li><a href="https://github.com/Family-TreeSY/Myblog/blob/master/Doc/%E5%8D%81%E4%B8%89%E3%80%81%E4%BD%BF%E7%94%A8BootStrap%E6%A1%86%E6%9E%B6.md" target="_blank" rel="external">使用BootStrap框架</a></li>
-<li><a href="https://github.com/Family-TreeSY/Myblog/blob/master/Doc/%E5%8D%81%E5%9B%9B%E3%80%81%E6%8A%BD%E5%8F%96%E9%9D%99%E6%80%81%E8%B5%84%E6%BA%90.md" target="_blank" rel="external">抽取静态资源</a></li>
-<li><a href="https://github.com/Family-TreeSY/Myblog/blob/master/Doc/%E5%8D%81%E4%BA%94%E3%80%81%E5%A2%9E%E5%8A%A0%E6%90%9C%E7%B4%A2%E5%8A%9F%E8%83%BD.md" target="_blank" rel="external">增加搜索功能</a></li>
-<li><a href="https://github.com/Family-TreeSY/Myblog/blob/master/Doc/%E5%8D%81%E5%85%AD%E3%80%81%E5%A2%9E%E5%8A%A0%E4%BD%9C%E8%80%85%E6%96%87%E7%AB%A0%E5%88%97%E8%A1%A8.md" target="_blank" rel="external">增加作者文章列表</a></li>
-<li><a href="https://github.com/Family-TreeSY/Myblog/blob/master/Doc/%E5%8D%81%E4%B8%83%E3%80%81%E5%A2%9E%E5%8A%A0%E5%8F%8B%E9%93%BE.md" target="_blank" rel="external">增加友链</a></li>
-<li><a href="https://github.com/Family-TreeSY/Myblog/blob/master/Doc/%E5%8D%81%E5%85%AB%E3%80%81%E5%A2%9E%E5%8A%A0%E7%95%99%E8%A8%80%E6%9D%BF%E6%A8%A1%E5%9D%97%EF%BC%88%E4%B8%80%EF%BC%89.md" target="_blank" rel="external">增加留言板模块（一）</a></li>
-<li><a href="https://github.com/Family-TreeSY/Myblog/blob/master/Doc/%E5%8D%81%E4%B9%9D%E3%80%81%E5%A2%9E%E5%8A%A0%E7%95%99%E8%A8%80%E6%9D%BF%E6%A8%A1%E5%9D%97%EF%BC%88%E4%BA%8C%EF%BC%89.md" target="_blank" rel="external">增加留言板模块（二）</a></li>
-<li><a href="https://github.com/Family-TreeSY/Myblog/blob/master/Doc/%E4%BA%8C%E5%8D%81%E3%80%81%E5%A2%9E%E5%8A%A0Markdown%E7%BC%96%E8%BE%91.md" target="_blank" rel="external">增加Markdown编辑</a></li>
-<li><a href="https://github.com/Family-TreeSY/Myblog/blob/master/Doc/%E4%BA%8C%E5%8D%81%E4%B8%80%E3%80%81%E5%A2%9E%E5%8A%A0PV%E3%80%81UV%E6%A8%A1%E5%9D%97.md" target="_blank" rel="external">增加PV、UV功能</a></li>
-</ol>
-<p><strong>三、增加插件</strong></p>
-<ol>
-<li><a href="https://github.com/Family-TreeSY/Myblog/blob/master/Doc/%E4%BA%8C%E5%8D%81%E4%BA%8C%E3%80%81admin%E6%9B%BF%E6%8D%A2%E4%B8%BAxadmin.md" target="_blank" rel="external">admin替换为xadmin</a></li>
-<li><a href="https://github.com/Family-TreeSY/Myblog/blob/master/Doc/%E4%BA%8C%E5%8D%81%E4%B8%89%E3%80%81%E9%85%8D%E7%BD%AEautocomplete-light.md" target="_blank" rel="external">配置autocomplete-light</a></li>
-<li><a href="https://github.com/Family-TreeSY/Myblog/blob/master/Doc/%E4%BA%8C%E5%8D%81%E5%9B%9B%E3%80%81%E9%85%8D%E7%BD%AEckeditor.md" target="_blank" rel="external">配置ckeditor</a></li>
-<li><a href="https://github.com/Family-TreeSY/Myblog/blob/master/Doc/%E4%BA%8C%E5%8D%81%E4%BA%94%E3%80%81%E9%85%8D%E7%BD%AEDjango-Rest-Framework.md" target="_blank" rel="external">配置Django-Rest-Framework</a></li>
-<li><a href="https://github.com/Family-TreeSY/Myblog/blob/master/Doc/%E4%BA%8C%E5%8D%81%E5%85%AD%E3%80%81%E9%85%8D%E7%BD%AEDjango-Debug-ToolBar.md" target="_blank" rel="external">配置Django-Debug-ToolBar</a></li>
-<li><a href="https://github.com/Family-TreeSY/Myblog/blob/master/Doc/%E4%BA%8C%E5%8D%81%E4%B8%83%E3%80%81%E9%85%8D%E7%BD%AEDjango-Silk.md" target="_blank" rel="external">配置Django-Silk</a></li>
-<li><a href="https://github.com/Family-TreeSY/Myblog/blob/master/Doc/%E4%BA%8C%E5%8D%81%E5%85%AB%E3%80%81%E9%85%8D%E7%BD%AEMySQL.md" target="_blank" rel="external">配置MySQL</a></li>
-<li><a href="https://github.com/Family-TreeSY/Myblog/blob/master/Doc/%E4%BA%8C%E5%8D%81%E4%B9%9D%E3%80%81%E9%85%8D%E7%BD%AECache%20Redis.md" target="_blank" rel="external">配置Cache Redis</a></li>
-</ol>
-<p><strong>四、部署项目</strong></p>
-<ol>
-<li><a href="https://github.com/Family-TreeSY/Myblog/blob/master/Doc/%E4%B8%89%E5%8D%81%E3%80%81%E4%BD%BF%E7%94%A8Nginx%E5%92%8CGunicorn%E9%83%A8%E7%BD%B2%E7%BD%91%E7%AB%99.md" target="_blank" rel="external">使用nginx和gunicorn部署网站</a></li>
-<li><a href="">使用Fabric自动部署</a></li>
-</ol>
-<h3 id="展示"><a href="#展示" class="headerlink" title="展示"></a>展示</h3><p><img src="http://m.qpic.cn/psb?/V10WDaE22S84Sl/lo3NpqcqxHdKcuVWjkli046pkO.2rwCqK4SwzlHJEFA!/b/dEIBAAAAAAAA&amp;bo=0AbbAwAAAAADByw!&amp;rf=viewer_4" alt="列表页"></p>
-<p><img src="http://m.qpic.cn/psb?/V10WDaE22S84Sl/3F6v9R5npPuBjVNAmW0A2HSxphxtwJ2fu8T7Ekwk9Ds!/b/dFYBAAAAAAAA&amp;bo=TgeNAwAAAAADJ8U!&amp;rf=viewer_4" alt="正文页"></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/05/08/Django博客搭建/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
       <a class="extend prev" rel="prev" href="/page/2/">&laquo; Prev</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><a class="page-number" href="/page/5/">5</a><span class="space">&hellip;</span><a class="page-number" href="/page/8/">8</a><a class="extend next" rel="next" href="/page/4/">Next &raquo;</a>
@@ -926,6 +894,10 @@ getOwnMetadataKeys:function(t){return o(i(t),arguments.length<2?void 0:u(argumen
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Pipenv</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">DailyQuestion</a>
               </li>
              
@@ -946,10 +918,6 @@ getOwnMetadataKeys:function(t){return o(i(t),arguments.length<2?void 0:u(argumen
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Pipenv</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">爬虫</a>
               </li>
              
@@ -958,11 +926,11 @@ getOwnMetadataKeys:function(t){return o(i(t),arguments.length<2?void 0:u(argumen
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Redis</a>
+                <a href="javascript:void(0)" class="js-tag color2">Scrapy</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Scrapy</a>
+                <a href="javascript:void(0)" class="js-tag color1">Redis</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -970,7 +938,19 @@ getOwnMetadataKeys:function(t){return o(i(t),arguments.length<2?void 0:u(argumen
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">Web</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">Scrapy-Redis</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">Celery Python</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">Unittest</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -979,14 +959,6 @@ getOwnMetadataKeys:function(t){return o(i(t),arguments.length<2?void 0:u(argumen
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">流畅的Python</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">Unittest</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">Celery Python</a>
               </li>
             
             <div class="clearfix"></div>
