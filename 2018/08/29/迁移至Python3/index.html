@@ -6,20 +6,20 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="//Family-TreeSY.github.io">
-  <title>Python每日一题：第六题 | Treehl的博客</title>
+  <title>Django博客迁移至Python3 | Treehl的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="今天来学一下Python之禅和他朋友们的第四题，原总结Python之禅 题目 如何设计一个代码统计工具?设计一个程序，用于统计一个项目中的代码行数，包括文件个数，代码行数，注释行数，空行行数。尽量设计灵活一点可以通过输入不同参数来统计不同语言的项目，例如：  12# type用于指定文件类型python counter.py --type python 输出1234files:10code_lin">
-<meta name="keywords" content="PYTHON,DailyQuestion">
+  <meta name="description" content="迁移至Python3这里我们把项目迁移至Python3 新建python3虚拟环境  python -m venv myblog-env3  激活虚拟环境  source bin/activate  接下来安装项目所需要的包，这里发现一个新技能，之前我们用setup.py打包了项目，我们可以将需要安装的包放入install_requires里，然后修改requirements.txt 这里面要提醒">
+<meta name="keywords" content="Python,Django">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Python每日一题：第六题">
-<meta property="og:url" content="//Family-TreeSY.github.io/2017/11/22/Sixth/index.html">
+<meta property="og:title" content="Django博客迁移至Python3">
+<meta property="og:url" content="//Family-TreeSY.github.io/2018/08/29/迁移至Python3/index.html">
 <meta property="og:site_name" content="Treehl的博客">
-<meta property="og:description" content="今天来学一下Python之禅和他朋友们的第四题，原总结Python之禅 题目 如何设计一个代码统计工具?设计一个程序，用于统计一个项目中的代码行数，包括文件个数，代码行数，注释行数，空行行数。尽量设计灵活一点可以通过输入不同参数来统计不同语言的项目，例如：  12# type用于指定文件类型python counter.py --type python 输出1234files:10code_lin">
+<meta property="og:description" content="迁移至Python3这里我们把项目迁移至Python3 新建python3虚拟环境  python -m venv myblog-env3  激活虚拟环境  source bin/activate  接下来安装项目所需要的包，这里发现一个新技能，之前我们用setup.py打包了项目，我们可以将需要安装的包放入install_requires里，然后修改requirements.txt 这里面要提醒">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-11-22T08:41:23.657Z">
+<meta property="og:updated_time" content="2018-08-29T07:55:27.485Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Python每日一题：第六题">
-<meta name="twitter:description" content="今天来学一下Python之禅和他朋友们的第四题，原总结Python之禅 题目 如何设计一个代码统计工具?设计一个程序，用于统计一个项目中的代码行数，包括文件个数，代码行数，注释行数，空行行数。尽量设计灵活一点可以通过输入不同参数来统计不同语言的项目，例如：  12# type用于指定文件类型python counter.py --type python 输出1234files:10code_lin">
+<meta name="twitter:title" content="Django博客迁移至Python3">
+<meta name="twitter:description" content="迁移至Python3这里我们把项目迁移至Python3 新建python3虚拟环境  python -m venv myblog-env3  激活虚拟环境  source bin/activate  接下来安装项目所需要的包，这里发现一个新技能，之前我们用setup.py打包了项目，我们可以将需要安装的包放入install_requires里，然后修改requirements.txt 这里面要提醒">
   
     <link rel="alternative" href="/atom.xml" title="Treehl的博客" type="application/atom+xml">
   
@@ -179,132 +179,49 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-Sixth" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-迁移至Python3" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      Python每日一题：第六题
+      Django博客迁移至Python3
     </h1>
   
 
         
-        <a href="/2017/11/22/Sixth/" class="archive-article-date">
-  	<time datetime="2017-11-22T02:47:16.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-11-22</time>
+        <a href="/2018/08/29/迁移至Python3/" class="archive-article-date">
+  	<time datetime="2018-08-29T13:08:08.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-08-29</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>今天来学一下<a href="https://wx.xiaomiquan.com/mweb/views/joingroup/join_group.html?group_id=518855855524&amp;secret=meqx22a2blf4c1ae3ucbgpui4somnpwa&amp;user_id=1152122252" target="_blank" rel="external">Python之禅和他朋友们</a>的第四题，原总结<a href="https://foofish.net/how-to-count-code.html" target="_blank" rel="external">Python之禅</a></p>
-<h3 id="题目"><a href="#题目" class="headerlink" title="题目"></a><strong>题目</strong></h3><blockquote>
-<p>如何设计一个代码统计工具?<br>设计一个程序，用于统计一个项目中的代码行数，包括文件个数，代码行数，注释行数，空行行数。尽量设计灵活一点可以通过输入不同参数来统计不同语言的项目，例如：</p>
-</blockquote>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># type用于指定文件类型</span></div><div class="line">python counter.py --type python</div></pre></td></tr></table></figure>
-<p>输出<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">files:<span class="number">10</span></div><div class="line">code_lines:<span class="number">200</span></div><div class="line">comments:<span class="number">100</span></div><div class="line">blanks:<span class="number">20</span></div></pre></td></tr></table></figure></p>
-<h3 id="分析"><a href="#分析" class="headerlink" title="分析"></a><strong>分析</strong></h3><p>先来学习下三种注释方式</p>
-<ol>
-<li><p>已#开头的单行注释</p>
+        <h4 id="迁移至Python3"><a href="#迁移至Python3" class="headerlink" title="迁移至Python3"></a><strong>迁移至Python3</strong></h4><p>这里我们把项目迁移至Python3</p>
+<p>新建python3虚拟环境</p>
 <blockquote>
-<p>单行注释</p>
+<p>python -m venv myblog-env3</p>
 </blockquote>
-</li>
-<li><p>多行注释符在同一行的情况</p>
+<p>激活虚拟环境</p>
 <blockquote>
-<p>“””这是多行注释”””<br>‘’’这也是多行注释’’’ </p>
+<p>source bin/activate</p>
 </blockquote>
-</li>
-<li><p>多行注释符</p>
+<p>接下来安装项目所需要的包，这里发现一个新技能，之前我们用setup.py打包了项目，我们可以将需要安装的包放入install_requires里，然后修改requirements.txt</p>
+<p>这里面要提醒下，xadmin需要用git去装，不然会出现版本冲突，所以xadmin就不要放入install中了，后面单独手动安装</p>
 <blockquote>
-<p>“””<br>这3行都是注释符<br>“”” </p>
+<p>pip install git+<a href="https://github.com/the5fire/django-xadmin.git" target="_blank" rel="external">https://github.com/the5fire/django-xadmin.git</a></p>
 </blockquote>
-</li>
-</ol>
-<p>多行注释需要一个额外的标识符in_multi_comment 来标识当前行是不是处于多行注释符当中，默认为 False，多行注释开始时，置为 True，遇到下一个多行注释符时置为 False。从多行注释开始符号直到下一个结束符号之间的代码都应该属于注释行。遇到多行注释符号时，in_multi_comment 标识符进行取反操作是关键操作，而不是单纯地置为 False 或 True，第一次遇到 “”” 时为True，第二次遇到 “”” 就是多行注释的结束符，取反为False，以此类推，第三次又是开始，取反又是True。</p>
-<p>好了，现在来学习下军哥的代码，代码我写了注释以此来弄明白每一行的意义<br><strong>单行注释</strong><br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># -*- coding:utf-8 -*-</span></div><div class="line"><span class="string">'''</span></div><div class="line"><span class="string">只能统计单行注释的py文件</span></div><div class="line"><span class="string">'''</span></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">parse</span><span class="params">(path)</span>:</span></div><div class="line">    <span class="comment"># 注释</span></div><div class="line">    comments = <span class="number">0</span></div><div class="line">    <span class="comment"># 空行</span></div><div class="line">    blanks = <span class="number">0</span></div><div class="line">    <span class="comment"># 代码</span></div><div class="line">    codes = <span class="number">0</span></div><div class="line">    <span class="comment"># 用encoding='utf-8'是因为注释有中文</span></div><div class="line">    <span class="keyword">with</span> open(path, encoding=<span class="string">'utf-8'</span>) <span class="keyword">as</span> f:</div><div class="line">        <span class="comment"># 一次性读取所以行</span></div><div class="line">        <span class="keyword">for</span> line <span class="keyword">in</span> f.readlines():</div><div class="line">            <span class="comment"># strip()方法:移除字符串头尾指定的字符（默认为空格）</span></div><div class="line">            line = line.strip()</div><div class="line">            <span class="comment"># 调用if...elif...else...</span></div><div class="line">            <span class="comment"># 判断空行</span></div><div class="line">            <span class="keyword">if</span> line == <span class="string">''</span>:</div><div class="line">                blanks += <span class="number">1</span></div><div class="line">            <span class="comment"># startswith() 方法用于检查字符串是否是以指定子字符串开头</span></div><div class="line">            <span class="comment"># 判断注释行</span></div><div class="line">            <span class="keyword">elif</span> line.startswith(<span class="string">'#'</span>):</div><div class="line">                comments += <span class="number">1</span></div><div class="line">            <span class="comment"># 上面两个条件过滤下来就是代码行</span></div><div class="line">            <span class="keyword">else</span>:</div><div class="line">                codes += <span class="number">1</span></div><div class="line"></div><div class="line">    <span class="keyword">return</span> &#123;<span class="string">"comments"</span>:comments, <span class="string">"blanks"</span>: blanks, <span class="string">"codes"</span>: codes&#125;</div><div class="line"></div><div class="line"></div><div class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</div><div class="line">    print(parse(<span class="string">"jd_iphone8.py"</span>))</div></pre></td></tr></table></figure></p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&#123;<span class="string">'comments'</span>: <span class="number">4</span>, <span class="string">'blanks'</span>: <span class="number">6</span>, <span class="string">'codes'</span>: <span class="number">22</span>&#125;</div></pre></td></tr></table></figure>
-<p>补充一下return，假如有不理解return语句的可以参考一下这个回答<a href="https://www.zhihu.com/question/23765556" target="_blank" rel="external">Python的return如何理解</a>，很简单易懂</p>
-<p><strong>多行注释</strong><br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># -*- coding: utf-8 -*-</span></div><div class="line"><span class="string">"""</span></div><div class="line"><span class="string">可以统计包含有多行注释的py文件</span></div><div class="line"><span class="string">"""</span></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">parse</span><span class="params">(path)</span>:</span></div><div class="line">    in_multi_comment = <span class="keyword">False</span>  <span class="comment"># 多行注释符标识符号</span></div><div class="line">    comments = <span class="number">0</span></div><div class="line">    blanks = <span class="number">0</span></div><div class="line">    codes = <span class="number">0</span></div><div class="line">    <span class="keyword">with</span> open(path, encoding=<span class="string">"utf-8"</span>) <span class="keyword">as</span> f:</div><div class="line">        <span class="keyword">for</span> line <span class="keyword">in</span> f.readlines():</div><div class="line">            line = line.strip()</div><div class="line"></div><div class="line">            <span class="string">'''</span></div><div class="line"><span class="string">            多行注释中的空行当做注释处理</span></div><div class="line"><span class="string">            运用布尔值逻辑运算</span></div><div class="line"><span class="string">            '''</span></div><div class="line">            <span class="keyword">if</span> line == <span class="string">""</span> <span class="keyword">and</span> <span class="keyword">not</span> in_multi_comment:</div><div class="line">                blanks += <span class="number">1</span></div><div class="line">            <span class="comment"># 注释有4种</span></div><div class="line">            <span class="comment"># 1. # 井号开头的单行注释</span></div><div class="line">            <span class="comment"># 2. 多行注释符在同一行的情况</span></div><div class="line">            <span class="comment"># 3. 多行注释之间的行</span></div><div class="line">            <span class="comment"># \ 是转义字符</span></div><div class="line">            <span class="keyword">elif</span> line.startswith(<span class="string">"#"</span>) <span class="keyword">or</span> \</div><div class="line">                (line.startswith(<span class="string">'"""'</span>) <span class="keyword">and</span> line.endswith(<span class="string">'"""'</span>) <span class="keyword">and</span> len(line)) &gt; <span class="number">3</span> <span class="keyword">or</span> \</div><div class="line">                (line.startswith(<span class="string">"'''"</span>) <span class="keyword">and</span> line.endswith(<span class="string">"'''"</span>) <span class="keyword">and</span> len(line) &gt; <span class="number">3</span>) <span class="keyword">or</span> \</div><div class="line">                (in_multi_comment <span class="keyword">and</span> <span class="keyword">not</span> (line.startswith(<span class="string">'"""'</span>) <span class="keyword">or</span> line.startswith(<span class="string">"'''"</span>))):</div><div class="line">                comments += <span class="number">1</span></div><div class="line"></div><div class="line">            <span class="comment"># 4. 多行指示符的开始行和结束行</span></div><div class="line">            <span class="keyword">elif</span> line.startswith(<span class="string">'"""'</span>) <span class="keyword">or</span> line.startswith(<span class="string">"'''"</span>):</div><div class="line">                in_multi_comment = <span class="keyword">not</span> in_multi_comment</div><div class="line">                comments += <span class="number">1</span></div><div class="line">            <span class="keyword">else</span>:</div><div class="line">                codes += <span class="number">1</span></div><div class="line"></div><div class="line">    <span class="keyword">return</span> &#123;<span class="string">"comments"</span>: comments, <span class="string">"blanks"</span>: blanks, <span class="string">"codes"</span>: codes&#125;</div><div class="line"></div><div class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</div><div class="line">    print(parse(<span class="string">"jd_iphone8.py"</span>))</div></pre></td></tr></table></figure></p>
-<p>这段代码也运用到了布尔值逻辑运算，有兴趣的可以参考<a href="https://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/001431658624177ea4f8fcb06bc4d0e8aab2fd7aa65dd95000" target="_blank" rel="external">廖雪峰的Python教程</a></p>
-<table>
-<thead>
-<tr>
-<th style="text-align:left">Not</th>
-<th style="text-align:right">真假</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left">not False</td>
-<td style="text-align:right">True</td>
-</tr>
-<tr>
-<td style="text-align:left">not True</td>
-<td style="text-align:right">False</td>
-</tr>
-</tbody>
-</table>
-<table>
-<thead>
-<tr>
-<th style="text-align:left">OR</th>
-<th style="text-align:right">真假</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left">True or False</td>
-<td style="text-align:right">True</td>
-</tr>
-<tr>
-<td style="text-align:left">True or True</td>
-<td style="text-align:right">True</td>
-</tr>
-<tr>
-<td style="text-align:left">False or True</td>
-<td style="text-align:right">True</td>
-</tr>
-<tr>
-<td style="text-align:left">False or False</td>
-<td style="text-align:right">False</td>
-</tr>
-</tbody>
-</table>
-<table>
-<thead>
-<tr>
-<th style="text-align:left">AND</th>
-<th style="text-align:right">真假</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left">True and False</td>
-<td style="text-align:right">False</td>
-</tr>
-<tr>
-<td style="text-align:left">True and True</td>
-<td style="text-align:right">True</td>
-</tr>
-<tr>
-<td style="text-align:left">False and True</td>
-<td style="text-align:right">False</td>
-</tr>
-<tr>
-<td style="text-align:left">False and False</td>
-<td style="text-align:right">False</td>
-</tr>
-</tbody>
-</table>
-<p><strong>统计目录、注释、代码行</strong><br>这是我自己的代码，水平待提高，多见谅！！<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># _*_ coding:utf-8 _*_</span></div><div class="line"></div><div class="line"><span class="keyword">import</span> os</div><div class="line"></div><div class="line">path = <span class="string">'/Users/ssaw/PycharmProjects/untitled/DailyQuestion/'</span></div><div class="line"><span class="comment"># 列出指定目录的文件</span></div><div class="line">files = os.listdir(path)</div><div class="line"><span class="comment"># 打印files</span></div><div class="line"><span class="comment"># print(files)</span></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">count</span><span class="params">(file)</span>:</span></div><div class="line">    codes, comments, blanks = <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span></div><div class="line">    <span class="keyword">with</span> open(file, encoding=<span class="string">'utf-8'</span>) <span class="keyword">as</span> f:</div><div class="line">        <span class="keyword">for</span> line <span class="keyword">in</span> f.readlines():</div><div class="line">            line = line.strip()</div><div class="line">            <span class="keyword">if</span> line == <span class="string">''</span>:</div><div class="line">                blanks += <span class="number">1</span></div><div class="line">            <span class="keyword">elif</span> line == <span class="string">"#"</span>:</div><div class="line">                comments += <span class="number">1</span></div><div class="line">            <span class="keyword">else</span>:</div><div class="line">                codes += <span class="number">1</span></div><div class="line"></div><div class="line">    <span class="keyword">return</span> &#123;<span class="string">"comments"</span>:comments, <span class="string">"blanks"</span>: blanks, <span class="string">"codes"</span>: codes&#125;</div><div class="line"></div><div class="line"></div><div class="line"><span class="keyword">if</span> __name__ == <span class="string">"__main__"</span>:</div><div class="line">    <span class="keyword">for</span> f <span class="keyword">in</span> files:</div><div class="line">        print(f)</div><div class="line">        print(count(f))</div></pre></td></tr></table></figure></p>
-<p>输出结果：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">Fifth.py</div><div class="line">&#123;<span class="string">'comments'</span>: <span class="number">0</span>, <span class="string">'blanks'</span>: <span class="number">8</span>, <span class="string">'codes'</span>: <span class="number">26</span>&#125;</div><div class="line">First.py</div><div class="line">&#123;<span class="string">'comments'</span>: <span class="number">0</span>, <span class="string">'blanks'</span>: <span class="number">4</span>, <span class="string">'codes'</span>: <span class="number">16</span>&#125;</div><div class="line">Fourth.py</div><div class="line">&#123;<span class="string">'comments'</span>: <span class="number">0</span>, <span class="string">'blanks'</span>: <span class="number">4</span>, <span class="string">'codes'</span>: <span class="number">26</span>&#125;</div><div class="line">importthis.txt</div><div class="line">&#123;<span class="string">'comments'</span>: <span class="number">0</span>, <span class="string">'blanks'</span>: <span class="number">1</span>, <span class="string">'codes'</span>: <span class="number">20</span>&#125;</div><div class="line">Second.py</div><div class="line">&#123;<span class="string">'comments'</span>: <span class="number">0</span>, <span class="string">'blanks'</span>: <span class="number">8</span>, <span class="string">'codes'</span>: <span class="number">37</span>&#125;</div><div class="line">Sixth.py</div><div class="line">&#123;<span class="string">'comments'</span>: <span class="number">0</span>, <span class="string">'blanks'</span>: <span class="number">9</span>, <span class="string">'codes'</span>: <span class="number">47</span>&#125;</div><div class="line">Third.py</div><div class="line">&#123;<span class="string">'comments'</span>: <span class="number">0</span>, <span class="string">'blanks'</span>: <span class="number">4</span>, <span class="string">'codes'</span>: <span class="number">34</span>&#125;</div><div class="line">__init__.py</div><div class="line">&#123;<span class="string">'comments'</span>: <span class="number">0</span>, <span class="string">'blanks'</span>: <span class="number">0</span>, <span class="string">'codes'</span>: <span class="number">0</span>&#125;</div></pre></td></tr></table></figure>
-<p>这里要了解下OS模块</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#os.remove() 删除文件</span></div><div class="line"><span class="comment">#os.rename() 重命名文件</span></div><div class="line"><span class="comment">#os.walk() 生成目录树下的所有文件名</span></div><div class="line"><span class="comment">#os.chdir() 改变目录</span></div><div class="line"><span class="comment">#os.mkdir/makedirs 创建目录/多层目录</span></div><div class="line"><span class="comment">#os.rmdir/removedirs 删除目录/多层目录</span></div><div class="line"><span class="comment">#os.listdir() 列出指定目录的文件</span></div><div class="line"><span class="comment">#os.getcwd() 取得当前工作目录</span></div><div class="line"><span class="comment">#os.chmod() 改变目录权限</span></div><div class="line"><span class="comment">#os.path.basename() 去掉目录路径，返回文件名</span></div><div class="line"><span class="comment">#os.path.dirname() 去掉文件名，返回目录路径</span></div><div class="line"><span class="comment">#os.path.join() 将分离的各部分组合成一个路径名</span></div><div class="line"><span class="comment">#os.path.split() 返回( dirname(), basename())元组</span></div><div class="line"><span class="comment">#os.path.splitext() 返回 (filename, extension) 元组</span></div><div class="line"><span class="comment">#os.path.getatime\ctime\mtime 分别返回最近访问、创建、修改时间</span></div><div class="line"><span class="comment">#os.path.getsize() 返回文件大小</span></div><div class="line"><span class="comment">#os.path.exists() 是否存在</span></div><div class="line"><span class="comment">#os.path.isabs() 是否为绝对路径</span></div><div class="line"><span class="comment">#os.path.isdir() 是否为目录</span></div><div class="line"><span class="comment">#os.path.isfile() 是否为文件</span></div></pre></td></tr></table></figure>
-<p>欢迎大家访问我的博客<a href="https://family-treesy.github.io/" target="_blank" rel="external">Treehl的博客</a><br><a href="https://github.com/Family-TreeSY" target="_blank" rel="external">GitHub</a><br><a href="http://www.jianshu.com/u/a01bc3ec4f88" target="_blank" rel="external">简书</a></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># requirements.txt</span></div><div class="line"><span class="comment"># 意思是从setup.py中寻找</span></div><div class="line"></div><div class="line">-e .</div></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># setup.py</span></div><div class="line"></div><div class="line"> install_requires=[</div><div class="line">        <span class="string">'asn1crypto==0.24.0'</span>,</div><div class="line">        <span class="string">'autopep8==1.3.4'</span>,</div><div class="line">        <span class="string">'backports.shutil-get-terminal-size==1.0.0'</span>,</div><div class="line">        <span class="string">'bcrypt==3.1.4'</span>,</div><div class="line">        <span class="string">'certifi==2018.1.18'</span>,</div><div class="line">        <span class="string">'cffi==1.11.5'</span>,</div><div class="line">        <span class="string">'chardet==3.0.4'</span>,</div><div class="line">        <span class="string">'colorama==0.3.9'</span>,</div><div class="line">        <span class="string">'coreapi==2.3.3'</span>,</div><div class="line">        <span class="string">'coreschema==0.0.4'</span>,</div><div class="line">        <span class="string">'cryptography==2.2.2'</span>,</div><div class="line">        <span class="string">'decorator==4.2.1'</span>,</div><div class="line">        <span class="string">'diff-match-patch==20121119'</span>,</div><div class="line">        <span class="string">'Django==1.11.3'</span>,</div><div class="line">      .............</div><div class="line">      .............</div><div class="line">      .............</div></pre></td></tr></table></figure>
+<p>所有包安装完毕后就运行下试试看，应该不会有太大问题，如果缺包就需要手动再安装</p>
+<blockquote>
+<p>python manage.py runserver</p>
+</blockquote>
+<p>最后，几个app的model需要将<strong><strong>unicode</strong></strong>改为<strong><strong>str</strong></strong>，Python3并不支持<strong>_unicode__</strong></p>
+<p>欢迎访问<a href="https://family-treesy.github.io/" target="_blank" rel="external">Treehl的博客</a></p>
+<p><a href="https://github.com/Family-TreeSY" target="_blank" rel="external">GitHub</a></p>
 
       
 
@@ -349,11 +266,11 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">PYTHON</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Python</a>
         		</li>
       		 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">DailyQuestion</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Django</a>
         		</li>
       		
 		</ul>
@@ -409,7 +326,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="http://s.jiathis.com/qrcode.php?url=http://Family-TreeSY.github.io/2017/11/22/Sixth/" alt="微信分享二维码">
+      <img src="http://s.jiathis.com/qrcode.php?url=http://Family-TreeSY.github.io/2018/08/29/迁移至Python3/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -423,18 +340,9 @@
   
 <nav id="article-nav">
   
-    <a href="/2017/11/29/lianjia/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          Python爬取上海链家网房源数据并存入MongoDB数据库
-        
-      </div>
-    </a>
   
-  
-    <a href="/2017/11/14/Python爬取豆瓣电影TOP250/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">Python爬取豆瓣电影TOP250</div>
+    <a href="/2018/08/28/setup.py 打包/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">用setup.py打包项目</div>
       <i class="icon-circle-right"></i>
     </a>
   

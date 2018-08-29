@@ -179,6 +179,126 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-Python多线程" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/06/26/Python多线程/">Python多线程</a>
+    </h1>
+  
+
+        
+        <a href="/2018/06/26/Python多线程/" class="archive-article-date">
+  	<time datetime="2018-06-26T02:29:21.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-06-26</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>参考自：</p>
+<blockquote>
+<p><a href="https://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/00143192823818768cd506abbc94eb5916192364506fa5d000" target="_blank" rel="external">廖雪峰的Python教程</a><br><a href="http://www.dongwm.com/archives/%E4%BD%BF%E7%94%A8Python%E8%BF%9B%E8%A1%8C%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B-%E7%BA%BF%E7%A8%8B%E7%AF%87/" target="_blank" rel="external">董伟明的博客</a></p>
+</blockquote>
+<hr>
+<blockquote>
+<p>多任务可以由多进程完成，也可以由一个进程内的多线程完成</p>
+</blockquote>
+<h4 id="Python多线程"><a href="#Python多线程" class="headerlink" title="Python多线程"></a><strong>Python多线程</strong></h4><ul>
+<li>一个进程默认会启动一个线程，我们称作为主线程。主线程又可以启动多个新的线程</li>
+<li>threading模块有一个current_thread()方法表示返回当前线程实例</li>
+<li>主线程实例名字叫MainThread</li>
+<li>子线程在创建时指定，这里定义为LoopThread</li>
+<li>start()方法启动线程</li>
+<li>join()方法等待线程结束</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># -*- coding:utf-8 -*-</span></div><div class="line"><span class="keyword">import</span> time</div><div class="line"><span class="keyword">import</span> threading</div><div class="line"></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">loop</span><span class="params">()</span>:</span></div><div class="line">    <span class="string">"""当前新线程</span></div><div class="line"><span class="string">    current_thread(): 返回当前线程实例</span></div><div class="line"><span class="string">    """</span></div><div class="line">    print(<span class="string">'thread %s is running...'</span> % threading.current_thread().name)</div><div class="line">    n = <span class="number">0</span></div><div class="line">    <span class="comment"># 设置循环条件，大于5就停止</span></div><div class="line">    <span class="keyword">while</span> n &lt; <span class="number">5</span>:</div><div class="line">        n = n + <span class="number">1</span></div><div class="line">        print(<span class="string">'thread %s &gt;&gt;&gt; %s'</span> % (threading.current_thread().name, n))</div><div class="line">        time.sleep(<span class="number">1</span>)</div><div class="line">    print(<span class="string">'thread %s ended.'</span> % threading.current_thread().name)</div><div class="line"></div><div class="line"></div><div class="line"><span class="comment"># 进程启动默认会启动一个主线程</span></div><div class="line">print(<span class="string">'thread %s is running！！！'</span> % threading.current_thread().name)</div><div class="line"><span class="comment"># 创建Thread实例，传入loop函数</span></div><div class="line">t = threading.Thread(target=loop, name=<span class="string">'LoopThread'</span>)</div><div class="line"><span class="comment"># 开启线程</span></div><div class="line">t.start()</div><div class="line"><span class="comment"># 等待所有线程结束，用于线程间的同步</span></div><div class="line">t.join()</div><div class="line">print(<span class="string">'thread %s ended'</span> % threading.current_thread().name)</div></pre></td></tr></table></figure>
+<p>执行结果：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">thread MainThread <span class="keyword">is</span> running！！！</div><div class="line">thread LoopThread <span class="keyword">is</span> running...</div><div class="line">thread LoopThread &gt;&gt;&gt; <span class="number">1</span></div><div class="line">thread LoopThread &gt;&gt;&gt; <span class="number">2</span></div><div class="line">thread LoopThread &gt;&gt;&gt; <span class="number">3</span></div><div class="line">thread LoopThread &gt;&gt;&gt; <span class="number">4</span></div><div class="line">thread LoopThread &gt;&gt;&gt; <span class="number">5</span></div><div class="line">thread LoopThread ended.</div><div class="line">thread MainThread ended</div></pre></td></tr></table></figure>
+<hr>
+<h4 id="Lock"><a href="#Lock" class="headerlink" title="Lock"></a><strong>Lock</strong></h4><p>在多线程中，所有变量是由所有线程共享的，因此任何变量都会被任何线程修改，所以线程之间数据共享最大的危险就是多个线程去修改一个变量，会把内容给改乱了</p>
+<p>下面代码就没有加上锁，balance为0，开启两个线程，理论上运行结果应该都是0，但由于线程的调度是由操作系统决定的，只要循环次数够多就不会一直为0<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># -*- coding:utf-8 -*-</span></div><div class="line"><span class="keyword">import</span> threading</div><div class="line"></div><div class="line"></div><div class="line">balance = <span class="number">0</span></div><div class="line"></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">change_it</span><span class="params">(n)</span>:</span></div><div class="line">    <span class="keyword">global</span> balance</div><div class="line">    balance = balance + n</div><div class="line">    balance = balance - n</div><div class="line"></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">run_thread</span><span class="params">(n)</span>:</span></div><div class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1000000</span>):</div><div class="line">        change_it(n)</div><div class="line"></div><div class="line"></div><div class="line">t1 = threading.Thread(target=run_thread, args=(<span class="number">5</span>, ))</div><div class="line">t2 = threading.Thread(target=run_thread, args=(<span class="number">8</span>, ))</div><div class="line">t1.start()</div><div class="line">t2.start()</div><div class="line">t1.join()</div><div class="line">t2.join()</div><div class="line">print(balance)</div></pre></td></tr></table></figure></p>
+<p>看下上Lock后的代码</p>
+<p>这里给change_it()上了锁，当一个线程执行chang_it()的时候，其他线程就不能同时执行change_it()，需要等到这个线程执行完毕，并且释放锁，其他线程可以执行change_it()。锁只有一个，无论有多少个线程，同一时刻只有一个线程会有这个锁，其他线程处于等待状态，这样修改就不会发生冲突</p>
+<ul>
+<li>锁的好处：确保一段代码只有一个线程从头到尾执行完毕，不会发生冲突</li>
+<li>锁的坏处：无法实现多线程的并发执行，包含锁的代码只能以单线程运行，效率会大打折扣</li>
+<li>由于可以存在多个锁，不同的线程持有不同的锁，在试图获取对方锁时，可能会造成死锁，造成多个线程全部挂起，不能执行也无法结束，只能强制关闭</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># -*- coding:utf-8 -*-</span></div><div class="line"><span class="keyword">import</span> threading</div><div class="line"></div><div class="line"></div><div class="line">balance = <span class="number">0</span></div><div class="line">lock = threading.Lock()</div><div class="line"></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">change_it</span><span class="params">(n)</span>:</span></div><div class="line">    <span class="keyword">global</span> balance</div><div class="line">    balance = balance + n</div><div class="line">    balance = balance - n</div><div class="line"></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">run_thread</span><span class="params">(n)</span>:</span></div><div class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1000000</span>):</div><div class="line">        <span class="comment"># 获取锁</span></div><div class="line">        lock.acquire()</div><div class="line">        <span class="keyword">try</span>:</div><div class="line">            change_it(n)</div><div class="line">        <span class="keyword">finally</span>:</div><div class="line">            <span class="comment"># 释放锁，获取所以后必须释放锁，不然其他线程会一直等待下去，成为死线程</span></div><div class="line">            lock.release()</div><div class="line"></div><div class="line"></div><div class="line">t1 = threading.Thread(target=run_thread, args=(<span class="number">5</span>, ))</div><div class="line">t2 = threading.Thread(target=run_thread, args=(<span class="number">8</span>, ))</div><div class="line">t1.start()</div><div class="line">t2.start()</div><div class="line">t1.join()</div><div class="line">t2.join()</div><div class="line">print(balance)</div></pre></td></tr></table></figure>
+<hr>
+<h4 id="GIL（Global-Interperter-Lock）全局解释锁"><a href="#GIL（Global-Interperter-Lock）全局解释锁" class="headerlink" title="GIL（Global Interperter Lock）全局解释锁"></a><strong>GIL（Global Interperter Lock）全局解释锁</strong></h4><p>Python的多线程代码并不能利用多核的优势，而是通过GIL来处理。对于计算型任务（CPU计算占主要的任务），使用多线程GIL就会使运行速度变慢，这里举个例子看下Gil的问题。执行结果，开启多线程后反而速度更慢</p>
+<p>Python为了保证线程安全而采取的独立线程运行的限制，就是一个核在同一时间只能运行一个线程；对于IO密集型的任务，Python多线程就能起到作用，提高并发效率</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="comment"># -*- coding:utf-8 -*-</span></div><div class="line"><span class="keyword">import</span> time</div><div class="line"><span class="keyword">import</span> threading</div><div class="line"></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">profile</span><span class="params">(func)</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">wrapper</span><span class="params">(*args, **kwargs)</span>:</span></div><div class="line">        start = time.time()</div><div class="line">        func(*args, **kwargs)</div><div class="line">        end = time.time()</div><div class="line">        print(<span class="string">'Cost: &#123;&#125;'</span>.format(end - start))</div><div class="line">    <span class="keyword">return</span> wrapper</div><div class="line"></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">fib</span><span class="params">(n)</span>:</span></div><div class="line">    <span class="keyword">if</span> n &lt;= <span class="number">2</span>:</div><div class="line">        <span class="keyword">return</span> <span class="number">1</span></div><div class="line">    <span class="keyword">return</span> fib(n - <span class="number">1</span>) + fib(n - <span class="number">2</span>)</div><div class="line"></div><div class="line"></div><div class="line"><span class="meta">@profile</span></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">nothread</span><span class="params">()</span>:</span></div><div class="line">    fib(<span class="number">35</span>)</div><div class="line"></div><div class="line"></div><div class="line"><span class="meta">@profile</span></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">hasthread</span><span class="params">()</span>:</span></div><div class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">2</span>):</div><div class="line">        t = threading.Thread(target=fib, args=(<span class="number">35</span>, ))</div><div class="line">        t.start()</div><div class="line">    main_thread = threading.current_thread()</div><div class="line">    <span class="keyword">for</span> t <span class="keyword">in</span> threading.enumerate():</div><div class="line">        <span class="keyword">if</span> t <span class="keyword">is</span> main_thread:</div><div class="line">            <span class="keyword">continue</span></div><div class="line">        t.join()</div><div class="line"></div><div class="line"></div><div class="line">nothread()</div><div class="line">hasthread()</div></pre></td></tr></table></figure>
+<p>执行结果：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">Cost: <span class="number">2.1560332775115967</span></div><div class="line">Cost: <span class="number">4.16700291633606</span></div><div class="line"></div><div class="line">Process finished <span class="keyword">with</span> exit code <span class="number">0</span></div></pre></td></tr></table></figure>
+<hr>
+<h4 id="Semaphore（信号量）"><a href="#Semaphore（信号量）" class="headerlink" title="Semaphore（信号量）"></a><strong>Semaphore（信号量）</strong></h4><p>前面Lock小结里面就讲过所有变量都是由所有线程共享的，要防止多个线程同时改修一个变量，需要控制同时访问的数量。信号量的同步基于内部的计数器，每调用一次acquire()就减1，每调用一次release()就+1，acquire就被阻塞了</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># -*- coding:utf-8 -*-</span></div><div class="line"><span class="keyword">import</span> time</div><div class="line"><span class="keyword">import</span> random</div><div class="line"><span class="keyword">from</span> threading <span class="keyword">import</span> Thread, Semaphore</div><div class="line"></div><div class="line"></div><div class="line">sema = Semaphore(<span class="number">3</span>)</div><div class="line"></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">foo</span><span class="params">(tid)</span>:</span></div><div class="line">    <span class="keyword">with</span> sema:</div><div class="line">        print(<span class="string">'&#123;&#125; acquire sema'</span>.format(tid))</div><div class="line">        wt = random.random() * <span class="number">2</span></div><div class="line">        time.sleep(wt)</div><div class="line">    print(<span class="string">'&#123;&#125; release sema'</span>.format(tid))</div><div class="line"></div><div class="line"></div><div class="line">threads = []</div><div class="line"></div><div class="line"></div><div class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">5</span>):</div><div class="line">    t = Thread(target=foo, args=(i, ))</div><div class="line">    threads.append(t)</div><div class="line">    t.start()</div><div class="line"></div><div class="line"><span class="keyword">for</span> t <span class="keyword">in</span> threads:</div><div class="line">    t.join()</div></pre></td></tr></table></figure>
+<p>执行结果：</p>
+<p>这里我们限制了同时访问资源的数量为3</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="number">0</span> acquire sema</div><div class="line"><span class="number">1</span> acquire sema</div><div class="line"><span class="number">2</span> acquire sema</div><div class="line"><span class="number">1</span> release sema</div><div class="line"><span class="number">3</span> acquire sema</div><div class="line"><span class="number">2</span> release sema</div><div class="line"><span class="number">4</span> acquire sema</div><div class="line"><span class="number">0</span> release sema</div><div class="line"><span class="number">4</span> release sema</div><div class="line"><span class="number">3</span> release sema</div></pre></td></tr></table></figure>
+<hr>
+<h4 id="Queue"><a href="#Queue" class="headerlink" title="Queue"></a><strong>Queue</strong></h4><p>多线程的队列，这里以生产者/消费者的模式来做例子，生产者把生产出来的消息放入队列，消费者从这个队列中去执行对应的消息</p>
+<p>首先这个进程创建队列，然后传递给两个线程</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># -*- coding:utf-8 -*-</span></div><div class="line"><span class="keyword">import</span> time</div><div class="line"><span class="keyword">import</span> threading</div><div class="line"><span class="keyword">from</span> random <span class="keyword">import</span> random</div><div class="line"><span class="keyword">from</span> Queue <span class="keyword">import</span> Queue</div><div class="line"></div><div class="line"><span class="comment"># 创建队列</span></div><div class="line">q = Queue()</div><div class="line"></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">double</span><span class="params">(n)</span>:</span></div><div class="line">    <span class="keyword">return</span> n * <span class="number">2</span></div><div class="line"></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">producer</span><span class="params">()</span>:</span></div><div class="line">    <span class="keyword">while</span> <span class="number">1</span>:</div><div class="line">        wt = random()</div><div class="line">        time.sleep(wt)</div><div class="line">        q.put((double, wt))</div><div class="line"></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">consumer</span><span class="params">()</span>:</span></div><div class="line">    <span class="keyword">while</span> <span class="number">1</span>:</div><div class="line">        task, arg = q.get()</div><div class="line">        print(arg, task(arg))</div><div class="line">        q.task_done()</div><div class="line"></div><div class="line"><span class="comment"># 创建两个线程 producer, consumer</span></div><div class="line"><span class="keyword">for</span> target <span class="keyword">in</span>(producer, consumer):</div><div class="line">    t = threading.Thread(target=target)</div><div class="line">    <span class="comment"># 开启线程</span></div><div class="line">    t.start()</div></pre></td></tr></table></figure>
+<p>欢迎访问<a href="https://family-treesy.github.io/" target="_blank" rel="external">Treehl的博客</a><br><a href="https://github.com/Family-TreeSY/Python-Study-Notes" target="_blank" rel="external">Github</a></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Python</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/06/26/Python多线程/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-@staticmethod和@classmethod的区别" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -712,100 +832,6 @@
 
 
   
-    <article id="post-Python闭包" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/05/30/Python闭包/">闭包</a>
-    </h1>
-  
-
-        
-        <a href="/2018/05/30/Python闭包/" class="archive-article-date">
-  	<time datetime="2018-05-30T13:24:50.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-05-30</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h4 id="Python闭包"><a href="#Python闭包" class="headerlink" title="Python闭包"></a><strong>Python闭包</strong></h4><blockquote>
-<p>参考自廖雪峰的Python教程</p>
-</blockquote>
-<p>在理解闭包之前，我们需要先理解 <strong>变量是可以指向函数的，同时函数也是变量</strong>。<br>这里我们使用绝对值函数作为示例，我们把abs函数赋值给变量f，f也就有了abs函数的功能</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">In [<span class="number">40</span>]: abs(<span class="number">-10</span>)</div><div class="line">Out[<span class="number">40</span>]: <span class="number">10</span></div><div class="line"></div><div class="line">In [<span class="number">41</span>]: abs</div><div class="line">Out[<span class="number">41</span>]: &lt;function abs&gt;</div><div class="line"></div><div class="line">In [<span class="number">42</span>]: f = abs</div><div class="line"></div><div class="line">In [<span class="number">43</span>]: f(<span class="number">-10</span>)</div><div class="line">Out[<span class="number">43</span>]: <span class="number">10</span></div><div class="line"></div><div class="line">In [<span class="number">44</span>]: f</div><div class="line">Out[<span class="number">44</span>]: &lt;function abs&gt;</div></pre></td></tr></table></figure>
-<p>再写一个示例</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">In [<span class="number">45</span>]: <span class="function"><span class="keyword">def</span> <span class="title">example</span><span class="params">(x)</span>:</span></div><div class="line">    ...:     <span class="keyword">return</span> x * x</div><div class="line">    ...:</div><div class="line"></div><div class="line">In [<span class="number">46</span>]: f = example</div><div class="line"></div><div class="line">In [<span class="number">47</span>]: f</div><div class="line">Out[<span class="number">47</span>]: &lt;function __main__.example&gt;</div><div class="line"></div><div class="line">In [<span class="number">48</span>]: f(<span class="number">10</span>)</div><div class="line">Out[<span class="number">48</span>]: <span class="number">100</span></div></pre></td></tr></table></figure>
-<p><strong>函数也可以作为结果值返回</strong></p>
-<p>这里以一个求和函数为例子</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">In [<span class="number">1</span>]: <span class="function"><span class="keyword">def</span> <span class="title">add_sum</span><span class="params">(*args)</span>:</span></div><div class="line">   ...:     x = <span class="number">0</span></div><div class="line">   ...:     <span class="keyword">for</span> n <span class="keyword">in</span> args:</div><div class="line">   ...:         x = x + n</div><div class="line">   ...:     <span class="keyword">return</span> x</div><div class="line">   ...:</div><div class="line"></div><div class="line">In [<span class="number">2</span>]: add_sum(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>)</div><div class="line">Out[<span class="number">2</span>]: <span class="number">21</span></div></pre></td></tr></table></figure>
-<p>这里写个函数它不马上返回求和结果，而是返回求和函数！外部函数add_sum有内嵌函数sum，内嵌函数sum使用了外部函数add_sum的参数args，外部函数的返回值是内嵌函数sum，当我们调用add_sum的时候返回的不是求和结果而是求和函数，调用函数f()时候才是求和结果！！！这种就是闭包（Closure）</p>
-<p>创建闭包必须满足以下三点：</p>
-<ul>
-<li>必须有一个内嵌函数</li>
-<li>内嵌函数必须引用外部函数的参数和变量</li>
-<li>外部函数的返回值必须是内嵌函数</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">In [<span class="number">4</span>]: <span class="function"><span class="keyword">def</span> <span class="title">add_sum</span><span class="params">(*args)</span>:</span></div><div class="line">   ...:     <span class="function"><span class="keyword">def</span> <span class="title">sum</span><span class="params">()</span>:</span></div><div class="line">   ...:         x = <span class="number">0</span></div><div class="line">   ...:         <span class="keyword">for</span> n <span class="keyword">in</span> args:</div><div class="line">   ...:             x = x + n</div><div class="line">   ...:         <span class="keyword">return</span> x</div><div class="line">   ...:     <span class="keyword">return</span> sum</div><div class="line">   ...:</div><div class="line"></div><div class="line">In [<span class="number">5</span>]: add_sum(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>)</div><div class="line">Out[<span class="number">5</span>]: &lt;function __main__.add_sum.&lt;locals&gt;.sum&gt;</div><div class="line"></div><div class="line">In [<span class="number">6</span>]: f = add_sum(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>)</div><div class="line"></div><div class="line">In [<span class="number">7</span>]: f</div><div class="line">Out[<span class="number">7</span>]: &lt;function __main__.add_sum.&lt;locals&gt;.sum&gt;</div><div class="line"></div><div class="line">In [<span class="number">8</span>]: f()</div><div class="line">Out[<span class="number">8</span>]: <span class="number">21</span></div></pre></td></tr></table></figure>
-<p>当我们调用add_sum时每次返回的都是一个新的函数，f1和f2的调用结果互不影响</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">In [<span class="number">15</span>]: f1 = add_sum(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>,)</div><div class="line"></div><div class="line">In [<span class="number">16</span>]: f2 = add_sum(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>)</div><div class="line"></div><div class="line">In [<span class="number">17</span>]: f1 == f2</div><div class="line">Out[<span class="number">17</span>]: <span class="keyword">False</span></div><div class="line"></div><div class="line">In [<span class="number">18</span>]: f1()</div><div class="line">Out[<span class="number">18</span>]: <span class="number">21</span></div><div class="line"></div><div class="line">In [<span class="number">19</span>]: f2()</div><div class="line">Out[<span class="number">19</span>]: <span class="number">21</span></div></pre></td></tr></table></figure>
-<p>欢迎访问<a href="https://family-treesy.github.io/" target="_blank" rel="external">Treehl的博客</a><br><a href="https://github.com/Family-TreeSY/Python-Study-Notes" target="_blank" rel="external">Github</a></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Python</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/05/30/Python闭包/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
       <a class="extend prev" rel="prev" href="/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><span class="space">&hellip;</span><a class="page-number" href="/page/8/">8</a><a class="extend next" rel="next" href="/page/3/">Next &raquo;</a>
@@ -915,6 +941,10 @@ getOwnMetadataKeys:function(t){return o(i(t),arguments.length<2?void 0:u(argumen
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">DailyQuestion</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">Git</a>
               </li>
              
@@ -923,7 +953,7 @@ getOwnMetadataKeys:function(t){return o(i(t),arguments.length<2?void 0:u(argumen
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">DailyQuestion</a>
+                <a href="javascript:void(0)" class="js-tag color1">MySQL</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -932,10 +962,6 @@ getOwnMetadataKeys:function(t){return o(i(t),arguments.length<2?void 0:u(argumen
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">Pipenv</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">MySQL</a>
               </li>
              
               <li class="article-tag-list-item">
