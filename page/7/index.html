@@ -179,6 +179,259 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-1. 什么是MongoDB数据库？" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/11/30/1. 什么是MongoDB数据库？/">MongoDB数据库学习</a>
+    </h1>
+  
+
+        
+        <a href="/2017/11/30/1. 什么是MongoDB数据库？/" class="archive-article-date">
+  	<time datetime="2017-11-30T09:00:23.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-11-30</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h5 id="1-什么是MongoDB数据库？"><a href="#1-什么是MongoDB数据库？" class="headerlink" title="1. 什么是MongoDB数据库？"></a><strong>1. 什么是MongoDB数据库？</strong></h5><p><img src="http://m.qpic.cn/psb?/V10WDaE22S84Sl/UOPr3jkXyfGKr.VjNF02tCCUoFH7h7sxSE427VZ0z3Q!/b/dPMAAAAAAAAA&amp;bo=IAMWAQAAAAARBwQ!&amp;rf=viewer_4" alt=""><br>MongoDB 是由C++语言编写的，是一个基于分布式文件存储的开源数据库系统。<br>MongoDB中的一条记录就是一个文档，是一个数据结构，由字段和值对组成。MongoDB文档与JSON对象类似。字段的值有可能包括其它文档、数组以及文档数组。<br><img src="http://www.mongoing.com/docs/_images/crud-annotated-document.png" alt=""></p>
+<h5 id="2-安装与环境"><a href="#2-安装与环境" class="headerlink" title="2. 安装与环境"></a><strong>2. 安装与环境</strong></h5><p><a href="https://www.mongodb.com/download-center?jmp=nav#community" target="_blank" rel="external">MongoDB下载地址</a><br>Windows安装：可以参考<a href="http://www.runoob.com/mongodb/mongodb-window-install.html" target="_blank" rel="external">http://www.runoob.com/mongodb/mongodb-window-install.html</a><br>Linux安装：可以参考<a href="http://www.runoob.com/mongodb/mongodb-linux-install.html" target="_blank" rel="external">http://www.runoob.com/mongodb/mongodb-linux-install.html</a><br>Mac安装：可以参考<a href="http://www.runoob.com/mongodb/mongodb-osx-install.html" target="_blank" rel="external">http://www.runoob.com/mongodb/mongodb-osx-install.html</a></p>
+<h5 id="3-创建数据库、集合-amp-删除数据库、集合"><a href="#3-创建数据库、集合-amp-删除数据库、集合" class="headerlink" title="3. 创建数据库、集合&amp;删除数据库、集合"></a><strong>3. 创建数据库、集合&amp;删除数据库、集合</strong></h5><p>打开Mongo shell</p>
+<blockquote>
+<p>use test</p>
+</blockquote>
+<p>这样就创建了一个叫<strong>test</strong>的数据库，但这个时候数据库还是空的，用下面命令查看</p>
+<blockquote>
+<p>show dbs</p>
+</blockquote>
+<p>可以看到并没有<strong>test</strong>这个数据库（lianjia数据库是我之前创建的，大家忽略，哈哈！！）</p>
+<blockquote>
+<p>admin    0.000GB<br>   lianjia  0.000GB<br>   local    0.000GB</p>
+</blockquote>
+<p> 在数据库中添加一个集合（<strong>collection</strong>）</p>
+<blockquote>
+<p>db.createCollection(‘movies’)<br>{ “ok” : 1 }</p>
+</blockquote>
+<p> 我们再执行<strong>show dbs</strong>，<strong>test</strong>数据库就显示出来啦！！</p>
+<blockquote>
+<p>admin    0.000GB<br>    lianjia  0.000GB<br>    local    0.000GB<br>    test     0.000GB</p>
+</blockquote>
+<p>先暂时不要<strong>movies</strong>这个集合，执行删除命令</p>
+<blockquote>
+<p>db.movies.drop()<br>true</p>
+</blockquote>
+<p>执行<strong>show collections</strong>命令就不会再出现集合啦</p>
+<p>再来执行删除数据库的命令</p>
+<blockquote>
+<p>db.dropDatabase()</p>
+</blockquote>
+<p>shell返回{ “dropped” : “test”, “ok” : 1 }就删除啦！！，再确认下数据库</p>
+<blockquote>
+<p>show dbs</p>
+</blockquote>
+<p><strong>test</strong>数据库就没了</p>
+<blockquote>
+<p>admin    0.000GB<br>    lianjia  0.000GB<br>    local    0.000GB</p>
+</blockquote>
+<h5 id="4-插入文档"><a href="#4-插入文档" class="headerlink" title="4. 插入文档"></a><strong>4. 插入文档</strong></h5><p>先创建数据库和集合，别忘了噢！<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># 创建数据库</span></div><div class="line">use test</div><div class="line"><span class="comment"># 创建集合</span></div><div class="line">db.createCollection(<span class="string">'movies'</span>)</div><div class="line"><span class="comment"># 查看数据库</span></div><div class="line">show dbs</div></pre></td></tr></table></figure></p>
+<p><a href="https://movie.douban.com/subject/1292052/" target="_blank" rel="external">肖申克的救赎</a><br><img src="http://m.qpic.cn/psb?/V10WDaE22S84Sl/dK1GMZZjXdWg.9pszN81pZPSlW7zj6Bv6.ZF6bpHsK8!/b/dPMAAAAAAAAA&amp;bo=ZAQ7AgAAAAADB3s!&amp;rf=viewer_4" alt=""><br>我们以肖申克的救赎为例，把电影信息存储到MongoDB中，电影信息：</p>
+<ul>
+<li>电影名字</li>
+<li>导演</li>
+<li>编剧</li>
+<li>主演</li>
+<li>类型</li>
+<li>制片国家</li>
+<li>语言</li>
+<li>上映时间</li>
+<li>片长</li>
+<li>评分</li>
+</ul>
+<p>插入数据</p>
+<blockquote>
+<p>  db.movies.insert(<br>… {<br>… title: ‘肖申克的救赎’,<br>… directed_by: ‘弗兰克’,<br>… actor: [‘摩根.摩里曼’, ‘罗宾斯’],<br>… type: ‘剧情’,<br>… country: ‘美国’,<br>… language: ‘英语’,<br>… release_time: ‘1994-09-10’,<br>… time: ‘142’,<br>… score: 9.6<br>… }<br>… )</p>
+</blockquote>
+<p><strong>insert操作</strong>有几点需要注意：</p>
+<ul>
+<li>数据是以key:value键值对形式组成，有点类似与JSON</li>
+<li>如果一个key有多个value，value要用[]，现在只有一个value，到后面还要添加可以预先使用[]</li>
+<li>一整个数据块要用花括号{}</li>
+</ul>
+<p>shell对格式要求很高，中英文的逗号都一样，肉眼分辨不出来，大家注意格式，不然不断报错很浪费时间。。。。，看到<strong>WriteResult({ “nInserted” : 1 })</strong>，说明写入成功</p>
+<p>查询数据</p>
+<blockquote>
+<p>db.movies.find().pretty()</p>
+</blockquote>
+<p>返回的数据</p>
+<blockquote>
+<p>{<br>        “_id” : ObjectId(“5a1ff3a6bff1b3cbd8e8f812”),<br>        “title” : “肖申克的救赎”,<br>        “directed_by” : “弗兰克”,<br>        “actor” : [<br>                “摩根.摩里曼”,<br>                “罗宾斯”<br>        ],<br>        “type” : “剧情”,<br>        “country” : “美国”,<br>        “language” : “英语”,<br>        “release_time” : “1994-09-10”,<br>        “time” : “142”,<br>        “score” : 9.6<br>}</p>
+</blockquote>
+<p>这里使用了<strong>pretty()</strong>，它的作用是让美化数据返回，使用<strong>db.movies.find()</strong><br>返回的数据就是一坨一坨的 - -！！！大家可以试一下！</p>
+<blockquote>
+<p>{ “_id” : ObjectId(“5a1fee21bff1b3cbd8e8f80f”), “title” : “肖申克的救赎”, “directed_by” : “弗兰克”, “actor” : [ “摩根.摩里曼”, “罗宾斯” ], “type” : “剧情”, “country” : “美国”, “language” : “英语”, “release_time” : “1994-09-10”, “time” : “142”, “score” : “9.6” }</p>
+</blockquote>
+<p>同时插入多个数据</p>
+<blockquote>
+<p>db.movies.insert([<br>… {<br>… title: ‘肖申克的救赎’,<br>… directed_by: ‘弗兰克’,<br>… actor: [‘摩根.摩里曼’, ‘罗宾斯’],<br>… type: ‘剧情’,<br>… country: ‘美国’,<br>… language: ‘英语’,<br>… release_time: ‘1994-09-10’,<br>… time: ‘142’,<br>… score: 9.6<br>… },<br>… {<br>… title: ‘霸王别姬’,<br>… directed_by: ‘陈凯歌’,<br>… actor: [‘张国荣’, ‘巩俐’],<br>… type: ‘剧情’,<br>… country: ‘中国’,<br>… language: ‘汉语普通法’,<br>… release_time: ‘1993-01-01’,<br>… time: ‘171’,<br>… score: 9.5<br>… }<br>… ])</p>
+</blockquote>
+<p>如果插入成功，就会返回</p>
+<blockquote>
+<p>BulkWriteResult({<br>        “writeErrors” : [ ],<br>        “writeConcernErrors” : [ ],<br>        “nInserted” : 2,<br>        “nUpserted” : 0,<br>        “nMatched” : 0,<br>        “nModified” : 0,<br>        “nRemoved” : 0,<br>        “upserted” : [ ]<br>})</p>
+</blockquote>
+<p>多数据插入模式为：<strong>db.collection.insert([{key1: ‘value1’},{key2: ‘value2’}]</strong></p>
+<h4 id="5-查询数据"><a href="#5-查询数据" class="headerlink" title="5. 查询数据"></a><strong>5. 查询数据</strong></h4><p>以特定条件查询</p>
+<blockquote>
+<p>db.movies.find({‘language’: ‘汉语普通法’}).pretty()</p>
+</blockquote>
+<p>我们看下返回的数据</p>
+<blockquote>
+<p>{<br>        “_id” : ObjectId(“5a1ff19bbff1b3cbd8e8f811”),<br>        “title” : “霸王别姬”,<br>        “directed_by” : “陈凯歌”,<br>        “actor” : [<br>                “张国荣”,<br>                “巩俐”<br>        ],<br>        “type” : “剧情”,<br>        “country” : “中国”,<br>        “language” : “汉语普通法”,<br>        “release_time” : “1993-01-01”,<br>        “time” : “171”,<br>        “score” : 9.5<br>}</p>
+</blockquote>
+<p><strong>AND</strong>条件查询</p>
+<blockquote>
+<p>db.movies.find({‘title’:’霸王别姬’, ‘language’:’汉语普通法’}).pretty()</p>
+</blockquote>
+<p>只有同时满足两个条件的电影才会被查找出来</p>
+<p><strong>OR条件查询</strong></p>
+<blockquote>
+<p>db.movies.find({$or:[{‘title’:’霸王别姬’}, {‘language’:’英语’}]}).pretty()</p>
+</blockquote>
+<p>这里面的括号略显复杂，写的时候要仔细点</p>
+<p><strong>条件操作符</strong><br>大于操作符 - $gt，查找评分大于9的电影</p>
+<blockquote>
+<p>db.movies.find({‘score’:{$gt:9}}).pretty()</p>
+</blockquote>
+<p>小于操作符 - $lt</p>
+<blockquote>
+<p>db.movies.find({‘score’:{$lt:10}}).pretty()</p>
+</blockquote>
+<p>类似操作符还有，大于等于操作符 - $gte，小于等于操作符 - $lte，不等于操作符 - $ne<br>这里就不一一列举了，与上同理</p>
+<p><strong>limit和skip</strong>条件操作符<br>limit()方法接受一个数字参数，该参数指定从MongoDB中读取的记录条数</p>
+<blockquote>
+<p>db.movies.find().limit(1).pretty()</p>
+</blockquote>
+<p>这样就返回一部电影信息</p>
+<blockquote>
+<p> {<br>        “_id” : ObjectId(“5a1feb04bff1b3cbd8e8f80e”),<br>        “title” : “肖申克的救赎”,<br>        “directed_by” : “弗兰克”,<br>        “actor” : “摩根.摩里曼”,<br>        “type” : “剧情”,<br>        “country” : “美国”,<br>        “language” : “英语”,<br>        “release_time” : “1994-09-10”,<br>        “time” : “142”,<br>        “score” : 9.6<br>}</p>
+</blockquote>
+<p>skip()方法来跳过指定数量的数据，skip方法同样接受一个数字参数作为跳过的记录条数</p>
+<blockquote>
+<p>db.movies.find().skip(1).pretty()</p>
+</blockquote>
+<h4 id="6-删除文档"><a href="#6-删除文档" class="headerlink" title="6. 删除文档"></a><strong>6. 删除文档</strong></h4><blockquote>
+<p>db.movies.remove({‘title’: ‘霸王别姬’})</p>
+</blockquote>
+<p> 删除title为霸王别姬的文档，再查询下还剩几条文档</p>
+<blockquote>
+<p>db.movies.find()</p>
+</blockquote>
+<h4 id="7-更新文档"><a href="#7-更新文档" class="headerlink" title="7. 更新文档"></a><strong>7. 更新文档</strong></h4><blockquote>
+<p>db.movies.update({‘title’:’肖申克的救赎’},{$set:{‘title’:’MongoDB_Test’}})</p>
+</blockquote>
+<p>把value改成了MongoDB_Test</p>
+<blockquote>
+<p>{<br>        “_id” : ObjectId(“5a200300bff1b3cbd8e8f813”),<br>        “title” : “MongoDB_Test”,<br>        “directed_by” : “弗兰克”,<br>        “actor” : [<br>                “摩根.摩里曼”,<br>                “罗宾斯”<br>        ],<br>        “type” : “剧情”,<br>        “country” : “美国”,<br>        “language” : “英语”,<br>        “release_time” : “1994-09-10”,<br>        “time” : “142”,<br>        “score” : 9.6<br>}</p>
+</blockquote>
+<p><strong>$set</strong> 操作符表示更新文档中的某一个字段，而不是全部替换<br>{ $set: { <field1>: <value1>, … } }</value1></field1></p>
+<p><strong>修改多条相同的文档，只需要设置 multi 参数为 true</strong></p>
+<blockquote>
+<p>db.movies.update({‘title’:’肖申克的救赎’},{$set:{‘title’:’MongoDB_Test’}},{multi:true})</p>
+</blockquote>
+<p>以上两个操作会把原有数据改掉，如果想在原有值的基础上增加一个值的话需要添加<strong>$push</strong>，比如在actor中添加一个新演员进去</p>
+<blockquote>
+<p>db.movies.update({‘title’:’霸王别姬’}.{$push:{‘actor’:’Treehl’}})</p>
+</blockquote>
+<p>这样actor就有三个演员了</p>
+<blockquote>
+<p>actor” : [<br>                “张国荣”,<br>                “巩俐”,<br>                “Treehl”<br>        ]</p>
+</blockquote>
+<h4 id="8-排序和索引"><a href="#8-排序和索引" class="headerlink" title="8. 排序和索引"></a><strong>8. 排序和索引</strong></h4><p><strong>sort()</strong>方法</p>
+<p>对数据进行排序，sort()方法可以通过参数指定排序的字段，并使用 1 和 -1 来指定排序的方式，其中 1 为升序排列，而-1是用于降序排列<br>举个例子以score电影评分为例</p>
+<blockquote>
+<p>db.movies.find().sort({‘score’:1}).pretty()</p>
+</blockquote>
+<p><strong>ensureIndex()</strong>方法<br>索引通常能够极大的提高查询的效率，如果没有索引，MongoDB在读取数据时必须扫描集合中的每个文件并选取那些符合查询条件的记录。为文档中的一些key加上索引(index)可以加快搜索速度，比如给type电影类型加上索引，这样电影type这个字符串与数字形成了映射，搜索速度会快很多</p>
+<blockquote>
+<p>db.movies.ensureIndex({‘type’:1})</p>
+</blockquote>
+<p>1:升序；-1：降序</p>
+<h4 id="9-聚合"><a href="#9-聚合" class="headerlink" title="9. 聚合"></a><strong>9. 聚合</strong></h4><p>MongoDB中聚合(aggregate)主要用于处理数据(诸如统计平均值,求和等)，并返回计算后的数据结果</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&gt; db.movies.aggregate([&#123;$group:&#123;_id:<span class="string">'$title'</span>,num_movies:&#123;$sum:<span class="number">1</span>&#125;&#125;&#125;])</div></pre></td></tr></table></figure>
+<p>返回</p>
+<blockquote>
+<p>{ “_id” : “霸王别姬”, “num_movies” : 1 }<br>{ “_id” : “MongoDB_Test”, “num_movies” : 1 }</p>
+</blockquote>
+<p>理解一下命令<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">$group: 将集合中的文档分组，可用于统计结果</div><div class="line">$sum:计算总和</div></pre></td></tr></table></figure></p>
+<p>这是建议可以参考菜鸟教程的<a href="http://www.runoob.com/mongodb/mongodb-aggregate.html" target="_blank" rel="external">聚合</a></p>
+<h4 id="10-Python操作MongoDB"><a href="#10-Python操作MongoDB" class="headerlink" title="10. Python操作MongoDB"></a><strong>10. Python操作MongoDB</strong></h4><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> pymongo <span class="keyword">import</span> MongoClient</div><div class="line"></div><div class="line"><span class="comment"># 链接数据库</span></div><div class="line">client = MongoClient(<span class="string">'localhost'</span>, <span class="number">27017</span>)</div><div class="line"><span class="comment"># 建立douban数据库</span></div><div class="line">db = client.douban</div><div class="line"><span class="comment"># 建立movies集合</span></div><div class="line">movies = db.movies</div><div class="line"></div><div class="line">movie_name_list = []</div><div class="line"></div><div class="line">movie_name = &#123;</div><div class="line">    <span class="string">'title'</span>: <span class="string">'肖申克的救赎'</span>,</div><div class="line">    <span class="string">'description'</span>: <span class="string">'小有成就的青年银行家安迪'</span>,</div><div class="line">    <span class="string">'year'</span>: <span class="string">'1991'</span></div><div class="line">&#125;</div><div class="line">movie_name_list.append(movie_name)</div><div class="line"></div><div class="line"><span class="comment"># 使用for循环打印出数据</span></div><div class="line"><span class="keyword">for</span> item <span class="keyword">in</span> movie_name_list:</div><div class="line">    movies.insert(item)</div><div class="line">    </div><div class="line"><span class="comment"># 查找数据</span></div><div class="line"><span class="keyword">for</span> item <span class="keyword">in</span> movies.find():</div><div class="line">    print(item)</div></pre></td></tr></table></figure>
+<p>返回</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&#123;<span class="string">'_id'</span>: ObjectId(<span class="string">'5a20c4f3aa85c109e881c7c7'</span>), <span class="string">'title'</span>: <span class="string">'肖申克的救赎'</span>, <span class="string">'description'</span>: <span class="string">'小有成就的青年银行家安迪'</span>, <span class="string">'year'</span>: <span class="string">'1991'</span>&#125;</div></pre></td></tr></table></figure>
+<p>这是个简单的python操作MongoDB的例子，有兴趣的可以看下我的[Python爬取上海链家房源存入MongoDB数据库(<a href="https://family-treesy.github.io/2017/11/29/lianjia/" target="_blank" rel="external">https://family-treesy.github.io/2017/11/29/lianjia/</a>)</p>
+<p>相信大家看完一遍能对MongoDB有个最基本的认识啦！！！</p>
+<p>参考链接<a href="http://www.runoob.com/mongodb/mongodb-tutorial.html" target="_blank" rel="external">菜鸟教程</a></p>
+<p>欢迎大家访问我的博客<a href="https://family-treesy.github.io/" target="_blank" rel="external">Treehl的博客</a><br><a href="http://www.jianshu.com/u/a01bc3ec4f88" target="_blank" rel="external">简书</a><br><a href="https://github.com/Family-TreeSY" target="_blank" rel="external">GitHub</a></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">PYTHON</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">MongoDB</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2017/11/30/1. 什么是MongoDB数据库？/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-lianjia" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -878,135 +1131,6 @@
 
 
   
-    <article id="post-third" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/11/05/third/">Python每日一题：第三题</a>
-    </h1>
-  
-
-        
-        <a href="/2017/11/05/third/" class="archive-article-date">
-  	<time datetime="2017-11-05T10:21:16.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-11-05</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>今天我们来学习总结下<a href="https://wx.xiaomiquan.com/mweb/views/joingroup/join_group.html?group_id=518855855524&amp;secret=meqx22a2blf4c1ae3ucbgpui4somnpwa&amp;user_id=1152122252" target="_blank" rel="external">Python之禅和他朋友们</a>的第三题，这两天一直有事情没跟上大家的学习学习节奏，现在来学习一下的军哥的代码<a href="https://foofish.net/daily-question3.html" target="_blank" rel="external">Python之禅</a>，搞清楚每一行代码的意思</p>
-<h3 id="题目"><a href="#题目" class="headerlink" title="题目"></a><strong>题目</strong></h3><p>统计一个文件中每个单词出现的次数，列出出现频率最多的5个单词。</p>
-<blockquote>
-<p>The Zen of Python, by Tim Peters<br>Beautiful is better than ugly.<br>Explicit is better than implicit.<br>Simple is better than complex.<br>Complex is better than complicated.<br>Flat is better than nested.<br>Sparse is better than dense.<br>Readability counts.<br>Special cases aren’t special enough to break the rules.<br>Although practicality beats purity.<br>Errors should never pass silently.<br>Unless explicitly silenced.<br>In the face of ambiguity, refuse the temptation to guess.<br>There should be one– and preferably only one –obvious way to do it.<br>Although that way may not be obvious at first unless you’re Dutch.<br>Now is better than never.<br>Although never is often better than <em>right</em> now.<br>If the implementation is hard to explain, it’s a bad idea.<br>If the implementation is easy to explain, it may be a good idea.<br>Namespaces are one honking great idea – let’s do more of those!</p>
-</blockquote>
-<p>在学习前我们需要了解一下几点知识：</p>
-<ul>
-<li>Python的i\o操作</li>
-<li>列表解析、sort()方法、sorted()函数</li>
-<li>字典Dict操作</li>
-<li>正则表达式re</li>
-<li>lambda表达式</li>
-<li>Counter</li>
-<li>assert断言</li>
-</ul>
-<h3 id="Python的i-o操作"><a href="#Python的i-o操作" class="headerlink" title="Python的i\o操作"></a><strong>Python的i\o操作</strong></h3><p>I\O：input\output<br>这里推荐网上两个参考教程，一个是廖雪峰老师的，另一个是菜鸟教程<br><a href="https://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/001431917715991ef1ebc19d15a4afdace1169a464eecc2000" target="_blank" rel="external">参考链接</a><br><a href="http://www.runoob.com/python/python-files-io.html" target="_blank" rel="external">参考链接</a></p>
-<p><strong>读写文件</strong><br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#r:表示读，</span></div><div class="line"><span class="comment">#w:表示输出生成并打开文件</span></div><div class="line"><span class="comment">#a:文件尾部追加内容而打开文件</span></div><div class="line"><span class="comment">#文件处理模式字符串尾部加上b可以进行二进制数据处理，Example:'rb'</span></div><div class="line"><span class="comment">#加上‘+’:同时为输入和输出打开文件</span></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>f = open(<span class="string">'myfile.txt'</span>, <span class="string">'w'</span>) <span class="comment">#</span></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>f.write(<span class="string">'hello world!'</span>, <span class="string">'w'</span>) <span class="comment">#在文本内写入“hello world!”</span></div><div class="line"><span class="meta">&gt;&gt;&gt; </span><span class="number">12</span></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>f.write(<span class="string">'hello treehl!'</span>, <span class="string">'w'</span>) <span class="comment">#在文本内写入“hello world!”</span></div><div class="line"><span class="meta">&gt;&gt;&gt; </span><span class="number">12</span></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>f.close() <span class="comment">#关闭文本</span></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>f = open(<span class="string">'myfile.txt'</span>)</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>f.readline() <span class="comment">#读取一行</span></div><div class="line"><span class="meta">&gt;&gt;&gt; </span><span class="string">'hello world!'</span></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>f.readline()</div><div class="line"><span class="meta">&gt;&gt;&gt; </span><span class="string">'hello treehl!'</span></div><div class="line">使用<span class="keyword">for</span>循环打印文本：</div><div class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">for</span> line <span class="keyword">in</span> open(<span class="string">'myfile'</span>):</div><div class="line">print(line)</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>data = open(<span class="string">'data.bin'</span>, <span class="string">'rb'</span>)</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>print(data.read())</div><div class="line"><span class="meta">&gt;&gt;&gt; </span><span class="string">b' \x00\x00\x07spam\x00\x08'</span></div></pre></td></tr></table></figure></p>
-<p>由于文件读写时都有可能产生IOError，一旦出错，后面的f.close()就不会调用。所以，Python引入了with语句来自动帮我们调用close()方法<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">with</span> open(<span class="string">'myfile.txt'</span>, <span class="string">'r'</span>) <span class="keyword">as</span> f: <span class="comment">#r:表示读，w:</span></div><div class="line">print(f.read())</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>hello world!</div><div class="line">hello treehl!</div></pre></td></tr></table></figure></p>
-<h3 id="列表解析、sort-方法、sorted-函数"><a href="#列表解析、sort-方法、sorted-函数" class="headerlink" title="列表解析、sort()方法、sorted()函数"></a><strong>列表解析、sort()方法、sorted()函数</strong></h3><p>在军哥的代码中有一行使用了列表解析式，我们正好学习下</p>
-<blockquote>
-<p>words = [s.lower() for s in re.findall(“\w+”, data)]</p>
-</blockquote>
-<p><strong>1. 列表解析</strong><br>我们先看一下普通的生成列表<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&gt;&gt;&gt; </span>res =[]</div><div class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">for</span> x <span class="keyword">in</span> <span class="string">'spam'</span>:</div><div class="line">res.append(x * <span class="number">4</span>)</div><div class="line"></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>res</div><div class="line">[<span class="string">'ssss'</span>, <span class="string">'pppp'</span>, <span class="string">'aaaa'</span>, <span class="string">'mmmm'</span>]</div><div class="line">``` </div><div class="line"></div><div class="line">我们再来看一下列表解析的代码</div><div class="line"></div><div class="line">``` python</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>res = [x * <span class="number">4</span> <span class="keyword">for</span> x <span class="keyword">in</span> <span class="string">'spam'</span>]</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>res</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>[<span class="string">'ssss'</span>, <span class="string">'pppp'</span>, <span class="string">'aaaa'</span>, <span class="string">'mmmm'</span>]</div></pre></td></tr></table></figure></p>
-<p>生成列表res的方式包含三行代码，而用列表解析只需要一行，非常简单！我们来分析下列表解析，首先制定列表名称，如res，接着定义一个表达式 x * 4 ，最后再编写一个for 循环 for x in ‘spam’</p>
-<p><strong>2. sort()方法</strong><br>sort()方法：原地对列表进行永久性排序，而且已递增的顺序进行排序</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&gt;&gt;&gt; </span>cars = [<span class="string">'bmw'</span>, <span class="string">'audi'</span>, <span class="string">'tesla'</span>, <span class="string">'honda'</span>]</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>cars.sort()</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>print(cars)</div><div class="line">[<span class="string">'audi'</span>, <span class="string">'bmw'</span>, <span class="string">'honda'</span>, <span class="string">'tesla'</span>]</div><div class="line"><span class="comment"># </span></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>print(cars) <span class="comment">#使用sort()方法后无法再回到原来的排序</span></div><div class="line">[<span class="string">'audi'</span>, <span class="string">'bmw'</span>, <span class="string">'honda'</span>, <span class="string">'tesla'</span>]</div></pre></td></tr></table></figure>
-<p>我们可以在列表中添加reverse参数使列表反转</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&gt;&gt;&gt; </span>cars = [<span class="string">'bmw'</span>, <span class="string">'audi'</span>, <span class="string">'tesla'</span>, <span class="string">'honda'</span>]</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>cars.sort(reverse=<span class="keyword">True</span>)</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>print(cars)</div><div class="line">[<span class="string">'tesla'</span>, <span class="string">'honda'</span>, <span class="string">'bmw'</span>, <span class="string">'audi'</span>]</div><div class="line">``` </div><div class="line"></div><div class="line"><span class="comment">### **sorted()函数**</span></div><div class="line">**sort 与 sorted 区别：**</div><div class="line">sort 是应用在 list 上的方法，sorted 可以对所有可迭代的对象进行排序操作。</div><div class="line">list 的 sort 方法返回的是对已经存在的列表进行操作，而内建函数 sorted 方法返回的是一个新的 list，而不是在原来的基础上进行的操作。</div><div class="line">sorted()对列表进行临时性排序，并且同样也可以向sorted函数传递reverse参数</div><div class="line"></div><div class="line">``` python</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>cars = [<span class="string">'bmw'</span>, <span class="string">'audi'</span>, <span class="string">'tesla'</span>, <span class="string">'honda'</span>]</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>print(cars)</div><div class="line">[<span class="string">'bmw'</span>, <span class="string">'audi'</span>, <span class="string">'tesla'</span>, <span class="string">'honda'</span>]</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>cars = [<span class="string">'bmw'</span>, <span class="string">'audi'</span>, <span class="string">'tesla'</span>, <span class="string">'honda'</span>]</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>print(sorted(cars))</div><div class="line">[<span class="string">'audi'</span>, <span class="string">'bmw'</span>, <span class="string">'honda'</span>, <span class="string">'tesla'</span>]</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>print(cars) <span class="comment">#调用函数sorted()列表顺序并没有发生改变</span></div><div class="line">[<span class="string">'bmw'</span>, <span class="string">'audi'</span>, <span class="string">'tesla'</span>, <span class="string">'honda'</span>]</div><div class="line">&gt;&gt;&gt;print(sorted(cars, reverse=<span class="keyword">True</span>))</div><div class="line">[<span class="string">'tesla'</span>, <span class="string">'honda'</span>, <span class="string">'bmw'</span>, <span class="string">'audi'</span>]</div></pre></td></tr></table></figure>
-<h3 id="字典操作"><a href="#字典操作" class="headerlink" title="字典操作"></a><strong>字典操作</strong></h3><p>这里就不总结字典使用方法了，可以参考廖雪峰老师的<a href="https://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/00143167793538255adf33371774853a0ef943280573f4d000" target="_blank" rel="external">Python教程</a><br>我们看到军哥的代码中使用了dict中的get方法</p>
-<blockquote>
-<p>self.mapping[word] = self.mapping.get(word, 0) + 1</p>
-</blockquote>
-<p>字典以“键：值（key：value）”对形式表达</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">D = &#123;<span class="string">'spam'</span>: <span class="number">2</span>, <span class="string">'eggs'</span>: <span class="number">3</span>&#125;</div></pre></td></tr></table></figure>
-<p>字典values和items方法分别返回字典的key值列表和（key, value）对元组</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&gt;&gt;&gt; </span>D = &#123;<span class="string">'spam'</span>: <span class="number">2</span>, <span class="string">'hams'</span>: <span class="number">1</span>, <span class="string">'eggs'</span>: <span class="number">3</span>&#125;</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>D.keys()</div><div class="line">dict_keys([<span class="string">'spam'</span>, <span class="string">'hams'</span>, <span class="string">'eggs'</span>])</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>D.values()</div><div class="line">dict_values([<span class="number">2</span>, <span class="number">1</span>, <span class="number">3</span>])</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>D.items()</div><div class="line">dict_items([(<span class="string">'spam'</span>, <span class="number">2</span>), (<span class="string">'hams'</span>, <span class="number">1</span>), (<span class="string">'eggs'</span>, <span class="number">3</span>)])</div></pre></td></tr></table></figure>
-<h4 id="这里需要重点看下"><a href="#这里需要重点看下" class="headerlink" title="这里需要重点看下"></a><strong>这里需要重点看下</strong></h4><p>读取不存在的键会报错，然而通过get()方法能够返回默认的值（None或用户定义的默认值），这是为了避免missing-key错误而填入默认值的一个方法：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&gt;&gt;&gt; </span>D.get(<span class="string">'spam'</span>)</div><div class="line"><span class="number">2</span></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>print(D.get(<span class="string">'toast'</span>))</div><div class="line"><span class="keyword">None</span></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>D.get(<span class="string">'toast'</span>, <span class="number">88</span>)</div><div class="line"><span class="number">88</span></div></pre></td></tr></table></figure>
-<h3 id="正则表达式re"><a href="#正则表达式re" class="headerlink" title="正则表达式re"></a><strong>正则表达式re</strong></h3><p>学习正则还是有点繁琐的，不多废话附上参考<br><a href="https://github.com/zeeshanu/learn-regex/blob/master/README-cn.md" target="_blank" rel="external">参考链接</a><br><a href="http://www.cnblogs.com/huxi/archive/2010/07/04/1771073.html" target="_blank" rel="external">参考链接</a><br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="string">"\w+"</span></div><div class="line">\w:匹配[A-Z,a-z,<span class="number">0</span><span class="number">-9</span>]；</div><div class="line">+ :匹配前一个字符<span class="number">0</span>次或无限次</div></pre></td></tr></table></figure></p>
-<h3 id="lambda表达式"><a href="#lambda表达式" class="headerlink" title="lambda表达式"></a><strong>lambda表达式</strong></h3><p>lambda表达式创建了一个之后能够调用的函数，但是它返回了一个函数而不是将这个函数赋值给一个变量名，这里不多写了，想深入了解的可以看Python学习手册</p>
-<ul>
-<li>lambda能够出现在Python语法不允许def出现的地方</li>
-<li>lambda的主体是一个单个的表达式，而不是一个代码块</li>
-</ul>
-<p>现在我们看一下def和lambda表达式的区别：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">func</span><span class="params">(x, y, z)</span>:</span></div><div class="line">	<span class="keyword">return</span> x + Y + z</div><div class="line"></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>func(<span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>)</div><div class="line"><span class="number">9</span></div></pre></td></tr></table></figure></p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&gt;&gt;&gt; </span>f = <span class="keyword">lambda</span> x, y, z: x + y +z</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>f(<span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>)</div><div class="line"><span class="number">9</span></div></pre></td></tr></table></figure>
-<p>来看个复杂点的</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">knights</span><span class="params">()</span>:</span></div><div class="line">	title = <span class="string">'Sir'</span></div><div class="line">	action = (<span class="keyword">lambda</span> x: title + <span class="string">' '</span> + x)</div><div class="line">	<span class="keyword">return</span> action</div><div class="line">	</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>act = knights()</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>act(<span class="string">'treehl'</span>)</div><div class="line"><span class="string">'Sir treehl'</span></div></pre></td></tr></table></figure>
-<h3 id="counter"><a href="#counter" class="headerlink" title="counter"></a><strong>counter</strong></h3><p><a href="http://blog.csdn.net/spynao/article/details/50186531" target="_blank" rel="external">参考链接</a><br>这里也谢谢九二同学的分享</p>
-<h3 id="assert断言"><a href="#assert断言" class="headerlink" title="assert断言"></a><strong>assert断言</strong></h3><p>凡是用print()来辅助查看的地方，都可以用断言（assert）来替代，假如断言失败，就会抛出错误<br>这里分享下参考链接，今天翻了Python学习手册的assert，相比廖雪峰老师的教程Python学习手册的assert显得有点难懂。。。。。。。<br><a href="https://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/001431915578556ad30ab3933ae4e82a03ee2e9a4f70871000" target="_blank" rel="external">参考链接</a></p>
-<p>最后附上军哥的代码<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># _*_ coding:utf-8 _*_</span></div><div class="line"><span class="keyword">import</span> io</div><div class="line"><span class="keyword">import</span> re</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Counter</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, path)</span>:</span></div><div class="line">        <span class="string">'''</span></div><div class="line"><span class="string"></span></div><div class="line"><span class="string">        :param path: 文件路径</span></div><div class="line"><span class="string">        '''</span></div><div class="line">        self.mapping = dict()</div><div class="line">        <span class="comment">#使用io.open可以添加encoding参数</span></div><div class="line">        <span class="keyword">with</span> io.open(path, encoding=<span class="string">'utf-8'</span>) <span class="keyword">as</span> f:</div><div class="line">            data = f.read()</div><div class="line">            <span class="comment">#使用列表解析式</span></div><div class="line">            <span class="comment">#findall(string[, pos[, endpos]]) | re.findall(pattern, string[, flags]):</span></div><div class="line">            <span class="comment">#搜索string，以列表形式返回全部能匹配的子串</span></div><div class="line">            <span class="comment">#\w匹配[A-Z,a-z,0-9]；+ 匹配前一个字符0次或无限次，data为读取的文件</span></div><div class="line">            <span class="comment">#Python lower() 方法转换字符串中所有大写字符为小写</span></div><div class="line">            words = [s.lower() <span class="keyword">for</span> s <span class="keyword">in</span> re.findall(<span class="string">'\w+'</span>, data)]</div><div class="line">            <span class="keyword">for</span> word <span class="keyword">in</span> words:</div><div class="line">                <span class="comment">#当key不存在时通过get方法返回默认值</span></div><div class="line">                self.mapping[word] = self.mapping.get(word, <span class="number">0</span>) + <span class="number">1</span></div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">most_common</span><span class="params">(self, n)</span>:</span></div><div class="line">        <span class="comment">#使用assert断言</span></div><div class="line">        <span class="keyword">assert</span> n &gt;<span class="number">0</span>, <span class="string">'n should be larger than 0'</span></div><div class="line">        <span class="comment">#sort()方法对列表进行永久性排列</span></div><div class="line">        <span class="comment">#sorted()函数对列表进行临时排序</span></div><div class="line">        <span class="comment">#reverse=True使列表反转</span></div><div class="line">        <span class="comment">#字典items()返回（key, value）对元组</span></div><div class="line">        <span class="comment">#使用lambda表达式</span></div><div class="line">        <span class="keyword">return</span> sorted(self.mapping.items(), key=<span class="keyword">lambda</span> item:item[<span class="number">1</span>], reverse=<span class="keyword">True</span>)[:n]</div><div class="line"></div><div class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</div><div class="line">    <span class="comment">#创建实例，调用most_common方法，打印排名前五的单词</span></div><div class="line">    most_common_5 = Counter(<span class="string">'importthis.txt'</span>).most_common(<span class="number">5</span>)</div><div class="line">    <span class="keyword">for</span> item <span class="keyword">in</span> most_common_5:</div><div class="line">        print(item)</div></pre></td></tr></table></figure></p>
-<p>欢迎大家访问我的博客<a href="https://family-treesy.github.io/" target="_blank" rel="external">Treehl的博客</a></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">PYTHON</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">DailyQuestion</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/11/05/third/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
       <a class="extend prev" rel="prev" href="/page/6/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><a class="page-number" href="/page/6/">6</a><span class="page-number current">7</span><a class="page-number" href="/page/8/">8</a><a class="extend next" rel="next" href="/page/8/">Next &raquo;</a>
@@ -1104,19 +1228,7 @@ getOwnMetadataKeys:function(t){return o(i(t),arguments.length<2?void 0:u(argumen
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">PYTHON</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">MongoDB</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">Python</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">DailyQuestion</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1128,11 +1240,23 @@ getOwnMetadataKeys:function(t){return o(i(t),arguments.length<2?void 0:u(argumen
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">MySQL</a>
+                <a href="javascript:void(0)" class="js-tag color2">PYTHON</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">MongoDB</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">DailyQuestion</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">Django</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">MySQL</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1160,15 +1284,19 @@ getOwnMetadataKeys:function(t){return o(i(t),arguments.length<2?void 0:u(argumen
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">Scrapy-Redis</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">Web</a>
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">Scrapy-Redis</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">Unittest</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">Celery Python</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1177,10 +1305,6 @@ getOwnMetadataKeys:function(t){return o(i(t),arguments.length<2?void 0:u(argumen
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">流畅的Python</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">Celery Python</a>
               </li>
             
             <div class="clearfix"></div>

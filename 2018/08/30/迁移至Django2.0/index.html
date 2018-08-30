@@ -6,18 +6,23 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="//Family-TreeSY.github.io">
-  <title>Tag: 流畅的Python | Treehl的博客</title>
+  <title>Django1.11迁移至Django2.0 | Treehl的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="Changing &amp; Building">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Treehl的博客">
-<meta property="og:url" content="//Family-TreeSY.github.io/tags/流畅的Python/index.html">
+  <meta name="description" content="迁移至Django2.0当时写这个项目的时候用的是Python2.7+Django1.11.3，现在Django2.1都出来了，由于xadmin似乎不兼容Django2.1版本，所以我是迁移至2.0版本 Django2.0新特性  放弃对Python2的支持，只支持Python3.x url不用再匹配正则表达式 admin自带autocomplete_light，以前版本都是以插件形式的，假如后台">
+<meta name="keywords" content="Python,Django">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Django1.11迁移至Django2.0">
+<meta property="og:url" content="//Family-TreeSY.github.io/2018/08/30/迁移至Django2.0/index.html">
 <meta property="og:site_name" content="Treehl的博客">
-<meta property="og:description" content="Changing &amp; Building">
+<meta property="og:description" content="迁移至Django2.0当时写这个项目的时候用的是Python2.7+Django1.11.3，现在Django2.1都出来了，由于xadmin似乎不兼容Django2.1版本，所以我是迁移至2.0版本 Django2.0新特性  放弃对Python2的支持，只支持Python3.x url不用再匹配正则表达式 admin自带autocomplete_light，以前版本都是以插件形式的，假如后台">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://m.qpic.cn/psb?/V10WDaE22S84Sl/jRzn0r39sHlq9zLjbML0n.JTYOBZWQv7TjY9P6Kx4C4!/b/dGYBAAAAAAAA&bo=2wPlAQAAAAADBx4!&rf=viewer_4">
+<meta property="og:image" content="http://m.qpic.cn/psb?/V10WDaE22S84Sl/4*a084q3.G9*iiMNwwP*dWoxN1t2diOyktjsWw3S4Vs!/b/dDcBAAAAAAAA&bo=iwRUAAAAAAADB*k!&rf=viewer_4">
+<meta property="og:updated_time" content="2018-08-30T04:04:54.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Treehl的博客">
-<meta name="twitter:description" content="Changing &amp; Building">
+<meta name="twitter:title" content="Django1.11迁移至Django2.0">
+<meta name="twitter:description" content="迁移至Django2.0当时写这个项目的时候用的是Python2.7+Django1.11.3，现在Django2.1都出来了，由于xadmin似乎不兼容Django2.1版本，所以我是迁移至2.0版本 Django2.0新特性  放弃对Python2的支持，只支持Python3.x url不用再匹配正则表达式 admin自带autocomplete_light，以前版本都是以插件形式的，假如后台">
+<meta name="twitter:image" content="http://m.qpic.cn/psb?/V10WDaE22S84Sl/jRzn0r39sHlq9zLjbML0n.JTYOBZWQv7TjY9P6Kx4C4!/b/dGYBAAAAAAAA&bo=2wPlAQAAAAADBx4!&rf=viewer_4">
   
     <link rel="alternative" href="/atom.xml" title="Treehl的博客" type="application/atom+xml">
   
@@ -177,36 +182,89 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-迁移至Django2.0" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2018" class="archive-year">2018</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/07/03/内置序列类型/" class="archive-article-date">
-  	<time datetime="2018-07-03T03:14:43.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-07-03</time>
-</a>
-        </div>
-    	 
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/07/03/内置序列类型/">序列构成的数组</a>
+    <h1 class="article-title" itemprop="name">
+      Django1.11迁移至Django2.0
     </h1>
   
 
-        <div class="article-info info-on-right">
-          
+        
+        <a href="/2018/08/30/迁移至Django2.0/" class="archive-article-date">
+  	<time datetime="2018-08-30T04:08:08.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-08-30</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h4 id="迁移至Django2-0"><a href="#迁移至Django2-0" class="headerlink" title="迁移至Django2.0"></a><strong>迁移至Django2.0</strong></h4><p>当时写这个项目的时候用的是Python2.7+Django1.11.3，现在Django2.1都出来了，由于xadmin似乎不兼容Django2.1版本，所以我是迁移至2.0版本</p>
+<p><a href="https://github.com/the5fire/django-xadmin.git" target="_blank" rel="external"><strong>Django2.0新特性</strong></a></p>
+<ul>
+<li>放弃对Python2的支持，只支持Python3.x</li>
+<li>url不用再匹配正则表达式</li>
+<li>admin自带autocomplete_light，以前版本都是以插件形式的，假如后台又使用xadmin插件，会有冲突</li>
+</ul>
+<p>首先，进入虚拟环境后安装Django2.0</p>
+<blockquote>
+<p>pip install django==2.0</p>
+</blockquote>
+<p>接下来把原先安装的xadmin删掉重新安装，进入github的xadmin仓库，我建议用the5fire的django-xadmin，安装速度快、没有版本冲突，选择2.0的分支</p>
+<p><img src="http://m.qpic.cn/psb?/V10WDaE22S84Sl/jRzn0r39sHlq9zLjbML0n.JTYOBZWQv7TjY9P6Kx4C4!/b/dGYBAAAAAAAA&amp;bo=2wPlAQAAAAADBx4!&amp;rf=viewer_4" alt=""><br><a href="https://github.com/the5fire/django-xadmin" target="_blank" rel="external">https://github.com/the5fire/django-xadmin</a></p>
+<blockquote>
+<p>pip install git+<a href="https://github.com/the5fire/django-xadmin.git@django2" target="_blank" rel="external">https://github.com/the5fire/django-xadmin.git@django2</a></p>
+</blockquote>
+<p>安装完成后，runserver下，发现ckeditor编辑器插件有冲突，有可能会遇到版本过低不支持的情况，安装最新版本即可</p>
+<p>开启服务后进入后台，用ckeditor插入一张图片，应该会出现以下错误</p>
+<p><img src="http://m.qpic.cn/psb?/V10WDaE22S84Sl/4*a084q3.G9*iiMNwwP*dWoxN1t2diOyktjsWw3S4Vs!/b/dDcBAAAAAAAA&amp;bo=iwRUAAAAAAADB*k!&amp;rf=viewer_4" alt=""></p>
+<p>错误提示：string参数，意外得到bytes</p>
+<p>增加水印的这块代码出现了错误，这里把StringIO改成BytesIO<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> io <span class="keyword">import</span> BytesIO</div><div class="line"></div><div class="line"></div><div class="line">temp = BytesIO()</div><div class="line">        image.save(temp, format=<span class="string">'PNG'</span>)</div><div class="line">        buffer = temp.getbuffer()</div><div class="line">        <span class="keyword">return</span> InMemoryUploadedFile(temp, <span class="keyword">None</span>, name, <span class="string">'image/png'</span>,</div><div class="line">                                    buffer.nbytes, <span class="keyword">None</span>)</div></pre></td></tr></table></figure></p>
+<p>runserver下，就这样愉快的迁移到了2.0版本</p>
+<p>欢迎访问<a href="https://family-treesy.github.io/" target="_blank" rel="external">Treehl的博客</a></p>
+<p><a href="https://github.com/Family-TreeSY" target="_blank" rel="external">GitHub</a></p>
+
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/img/alipay.jpg">
+                      <span class="reward-type">支付宝</span>
+                    </div>
+                    
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/img/wechat.jpg">
+                      <span class="reward-type">微信</span>
+                    </div>
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
@@ -216,29 +274,119 @@
         		</li>
       		 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">FluentPython</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">流畅的Python</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Django</a>
         		</li>
       		
 		</ul>
 	</div>
 
-          
+      
 
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="http://s.jiathis.com/qrcode.php?url=http://Family-TreeSY.github.io/2018/08/30/迁移至Django2.0/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
+  
+<nav id="article-nav">
   
   
-    </div></section>
+    <a href="/2018/08/29/迁移至Python3/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Django博客迁移至Python3</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+  
+  <!-- UY BEGIN -->
+<div id="uyan_frame"></div>
+<script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=2147729"></script>
+<!-- UY END -->
   
 
-    
+  
+  
+  
+
+  
+
+  
+
+  
 
 
           </div>
@@ -261,9 +409,9 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
+		isPost: true,
 		isArchive: false,
-		isTag: true,
+		isTag: false,
 		isCategory: false,
 		open_in_new: false,
 		toc_hide_index: true,

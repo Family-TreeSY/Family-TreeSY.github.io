@@ -179,6 +179,114 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-流畅的Python学习笔记" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/07/02/流畅的Python学习笔记/">Fluent Python Notes</a>
+    </h1>
+  
+
+        
+        <a href="/2018/07/02/流畅的Python学习笔记/" class="archive-article-date">
+  	<time datetime="2018-07-02T09:03:09.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-07-02</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="流畅的Python学习笔记"><a href="#流畅的Python学习笔记" class="headerlink" title="流畅的Python学习笔记"></a><strong>流畅的Python学习笔记</strong></h3><h4 id="Chapter-One"><a href="#Chapter-One" class="headerlink" title="Chapter One"></a><strong>Chapter One</strong></h4><p>变量名类似<strong><strong>xxx</strong></strong>，以双下划线开头，双下划线结尾的就是特殊变量，特殊方法的存在是为了被Python解释器调用的</p>
+<p>例如  <strong><strong>getitem</strong></strong>  这里我们查找key来得出value，d[‘a’]背后的动作就是<strong><strong>getitem</strong></strong>方法</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># -*- coding:utf-8 -*-</span></div><div class="line">d = &#123;<span class="string">'a'</span>: <span class="number">1</span>, <span class="string">'b'</span>: <span class="number">2</span>, <span class="string">'c'</span>: <span class="number">3</span>&#125;</div><div class="line">print(d[<span class="string">'a'</span>])</div><div class="line"></div><div class="line">print(d.__getitem__(<span class="string">'a'</span>))</div><div class="line"></div><div class="line">print(d[<span class="string">'a'</span>] == d.__getitem__(<span class="string">'a'</span>))</div></pre></td></tr></table></figure>
+<p>执行结果：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="number">1</span></div><div class="line"><span class="number">1</span></div><div class="line"><span class="keyword">True</span></div></pre></td></tr></table></figure>
+<h4 id="Python风格纸牌"><a href="#Python风格纸牌" class="headerlink" title="Python风格纸牌"></a><strong>Python风格纸牌</strong></h4><p>namedtuple()用来创建一个自定义的tuple对象，它和tuple一样都是不可变的，它可以用属性而不是索引来引用tuple的元素</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># -*- coding:utf-8 -*-</span></div><div class="line"><span class="keyword">import</span> collections</div><div class="line"></div><div class="line"></div><div class="line">Card = collections.namedtuple(<span class="string">'Card'</span>, [<span class="string">'rank'</span>, <span class="string">'suit'</span>])</div><div class="line"></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">FrenchDeck</span>:</span></div><div class="line">    ranks = [str(n) <span class="keyword">for</span> n <span class="keyword">in</span> range(<span class="number">2</span>, <span class="number">11</span>)] + list(<span class="string">'JQKA'</span>)</div><div class="line">    suits = <span class="string">'spades diamonds clubs hearts'</span>.split()</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self)</span>:</span></div><div class="line">        <span class="string">"""</span></div><div class="line"><span class="string">        初始化纸牌</span></div><div class="line"><span class="string">        """</span></div><div class="line">        self._cards = [Card(rank, suit) <span class="keyword">for</span> suit <span class="keyword">in</span> self.suits</div><div class="line">                       <span class="keyword">for</span> rank <span class="keyword">in</span> self.ranks]</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__len__</span><span class="params">(self)</span>:</span></div><div class="line">        <span class="string">"""</span></div><div class="line"><span class="string">        返回这套字牌的长度</span></div><div class="line"><span class="string">        """</span></div><div class="line">        <span class="keyword">return</span> len(self._cards)</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__getitem__</span><span class="params">(self, position)</span>:</span></div><div class="line">        <span class="string">"""</span></div><div class="line"><span class="string">        1、返回索引的位置</span></div><div class="line"><span class="string">        2、__getitem__把[]操作self._cards,所以自动支持切片操作</span></div><div class="line"><span class="string">        """</span></div><div class="line">        <span class="keyword">return</span> self._cards[position]</div><div class="line"></div><div class="line"></div><div class="line">beer_card = Card(<span class="string">'7'</span>, <span class="string">'diamonds'</span>)</div><div class="line"><span class="comment"># 用属性来调用tuple的元素</span></div><div class="line">print(beer_card.rank)</div><div class="line">print(beer_card.suit)</div><div class="line"></div><div class="line"><span class="comment"># 创建实例</span></div><div class="line">deck = FrenchDeck()</div><div class="line"><span class="comment"># 输出deck长度</span></div><div class="line">print(len(deck))</div><div class="line"></div><div class="line"><span class="comment"># 索引出第一张牌</span></div><div class="line">print(deck[<span class="number">0</span>])</div><div class="line"><span class="comment"># 索引出最后一张纸牌</span></div><div class="line">print(deck[<span class="number">-1</span>])</div></pre></td></tr></table></figure>
+<p>执行结果：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="number">7</span></div><div class="line">diamonds</div><div class="line"><span class="number">52</span></div><div class="line">Card(rank=<span class="string">'2'</span>, suit=<span class="string">'spades'</span>)</div><div class="line">Card(rank=<span class="string">'A'</span>, suit=<span class="string">'hearts'</span>)</div></pre></td></tr></table></figure>
+<h5 id="随机抽取一张纸牌"><a href="#随机抽取一张纸牌" class="headerlink" title="随机抽取一张纸牌"></a><strong>随机抽取一张纸牌</strong></h5><p>这里用random.choice来随机生成一张纸牌<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> random <span class="keyword">import</span> choice</div><div class="line"></div><div class="line"></div><div class="line">print(choice(deck))</div><div class="line">print(choice(deck))</div></pre></td></tr></table></figure></p>
+<p>执行结果：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">Card(rank=<span class="string">'9'</span>, suit=<span class="string">'spades'</span>)</div><div class="line">Card(rank=<span class="string">'Q'</span>, suit=<span class="string">'clubs'</span>)</div></pre></td></tr></table></figure>
+<h5 id="切片（slicing）"><a href="#切片（slicing）" class="headerlink" title="切片（slicing）"></a><strong>切片（slicing）</strong></h5><p><strong><strong>getitem</strong></strong>()方法把[]交给了self._cards，所以类得对象是支持切片操作的</p>
+<ul>
+<li>索引出前三张牌</li>
+<li>抽出索引是12的那张牌，然后每隔13张牌拿一张</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">print(deck[:<span class="number">3</span>])</div><div class="line">print(deck[<span class="number">12</span>::<span class="number">13</span>])</div></pre></td></tr></table></figure>
+<p>执行结果：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">[Card(rank=<span class="string">'2'</span>, suit=<span class="string">'spades'</span>), Card(rank=<span class="string">'3'</span>, suit=<span class="string">'spades'</span>), Card(rank=<span class="string">'4'</span>, suit=<span class="string">'spades'</span>)]</div><div class="line">[Card(rank=<span class="string">'A'</span>, suit=<span class="string">'spades'</span>), Card(rank=<span class="string">'A'</span>, suit=<span class="string">'diamonds'</span>), Card(rank=<span class="string">'A'</span>, suit=<span class="string">'clubs'</span>), Card(rank=<span class="string">'A'</span>, suit=<span class="string">'hearts'</span>)</div></pre></td></tr></table></figure>
+<h5 id="迭代"><a href="#迭代" class="headerlink" title="迭代"></a><strong>迭代</strong></h5><p>实现<strong><strong>getitem</strong></strong>()后，这一副牌就是可迭代的了<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">for</span> card <span class="keyword">in</span> deck:</div><div class="line">	print(card)</div></pre></td></tr></table></figure></p>
+<p>执行结果：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">Card(rank=<span class="string">'2'</span>, suit=<span class="string">'spades'</span>)</div><div class="line">Card(rank=<span class="string">'3'</span>, suit=<span class="string">'spades'</span>)</div><div class="line">Card(rank=<span class="string">'4'</span>, suit=<span class="string">'spades'</span>)</div><div class="line">Card(rank=<span class="string">'5'</span>, suit=<span class="string">'spades'</span>)</div><div class="line">Card(rank=<span class="string">'6'</span>, suit=<span class="string">'spades'</span>)</div><div class="line">Card(rank=<span class="string">'7'</span>, suit=<span class="string">'spades'</span>)</div><div class="line">Card(rank=<span class="string">'8'</span>, suit=<span class="string">'spades'</span>)</div><div class="line"></div><div class="line">.............</div><div class="line">.............</div></pre></td></tr></table></figure>
+<p>也可以反向迭代，使用reversed()方法</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">for</span> card <span class="keyword">in</span> reversed(deck):</div><div class="line">	print(card)</div></pre></td></tr></table></figure>
+<h5 id="IN运算符"><a href="#IN运算符" class="headerlink" title="IN运算符"></a><strong>IN运算符</strong></h5><p>迭代通常都是隐式的，一个集合类型没有实现<strong><strong>contains</strong></strong>方法，那么in运算符就会按顺序做一次迭代搜索</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">print(Card(<span class="string">'Q'</span>, <span class="string">'hearts'</span>) <span class="keyword">in</span> deck)</div><div class="line">print(Card(<span class="string">'7'</span>, <span class="string">'beasts'</span>) <span class="keyword">in</span> deck)</div></pre></td></tr></table></figure>
+<h5 id="字符串表示形式"><a href="#字符串表示形式" class="headerlink" title="字符串表示形式"></a><strong>字符串表示形式</strong></h5><p><strong><strong>str</strong></strong>， <strong><strong>repr</strong></strong>两者都是字符串表示形式</p>
+<p>两者的区别：<br><strong><strong>str</strong></strong>是在str()函数被使用，或是在print函数打印一个对象的时候被调用的，是给终端用户看的</p>
+<p><strong><strong>repr</strong></strong>，如果一个对象没有<strong><strong>str</strong></strong>函数，而Python又需要调用它的时候，解释器会用<strong><strong>repr</strong></strong>作为替代，它又可以方便我们调试和记录日志</p>
+<p>欢迎访问<a href="https://family-treesy.github.io/" target="_blank" rel="external">Treehl的博客</a><br><a href="https://github.com/Family-TreeSY/Fluent-Python-Notes" target="_blank" rel="external">GitHub</a></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Python</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">FluentPython</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/07/02/流畅的Python学习笔记/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-Python多线程" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -728,110 +836,6 @@
 
 
   
-    <article id="post-装饰器" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/05/30/装饰器/">什么是装饰器</a>
-    </h1>
-  
-
-        
-        <a href="/2018/05/30/装饰器/" class="archive-article-date">
-  	<time datetime="2018-05-30T14:22:10.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-05-30</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h4 id="装饰器"><a href="#装饰器" class="headerlink" title="装饰器"></a><strong>装饰器</strong></h4><p><strong>参考</strong></p>
-<ol>
-<li>廖雪峰的Python教程</li>
-<li><a href="https://www.zhihu.com/question/26930016/answer/99243411" target="_blank" rel="external">什么是装饰器</a></li>
-<li><a href="https://zhuanlan.zhihu.com/p/31991754" target="_blank" rel="external">如何理解装饰器？</a></li>
-</ol>
-<blockquote>
-<p>装饰器的作用就是在原函数代码不做任何修改的情况下增加新的功能</p>
-</blockquote>
-<p>在理解装饰器之前，我们需要先理解 <strong>变量是可以指向函数的，同时函数也是变量</strong>。<br>这里我们使用绝对值函数作为示例，我们把abs函数赋值给变量f，f也就有了abs函数的功能。<br>再理解下函数可以作为返回值，什么是<a href="https://github.com/Family-TreeSY/Python-Study-Notes/blob/master/Python%E9%97%AD%E5%8C%85.md" target="_blank" rel="external">闭包</a></p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">In [<span class="number">40</span>]: abs(<span class="number">-10</span>)</div><div class="line">Out[<span class="number">40</span>]: <span class="number">10</span></div><div class="line"></div><div class="line">In [<span class="number">41</span>]: abs</div><div class="line">Out[<span class="number">41</span>]: &lt;function abs&gt;</div><div class="line"></div><div class="line">In [<span class="number">42</span>]: f = abs</div><div class="line"></div><div class="line">In [<span class="number">43</span>]: f(<span class="number">-10</span>)</div><div class="line">Out[<span class="number">43</span>]: <span class="number">10</span></div><div class="line"></div><div class="line">In [<span class="number">44</span>]: f</div><div class="line">Out[<span class="number">44</span>]: &lt;function abs&gt;</div></pre></td></tr></table></figure>
-<p>再写一个示例</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">In [<span class="number">45</span>]: <span class="function"><span class="keyword">def</span> <span class="title">example</span><span class="params">(x)</span>:</span></div><div class="line">    ...:     <span class="keyword">return</span> x * x</div><div class="line">    ...:</div><div class="line"></div><div class="line">In [<span class="number">46</span>]: f = example</div><div class="line"></div><div class="line">In [<span class="number">47</span>]: f</div><div class="line">Out[<span class="number">47</span>]: &lt;function __main__.example&gt;</div><div class="line"></div><div class="line">In [<span class="number">48</span>]: f(<span class="number">10</span>)</div><div class="line">Out[<span class="number">48</span>]: <span class="number">100</span></div></pre></td></tr></table></figure>
-<p><strong>简单装饰器</strong><br>进入正文，装饰器（decorator）</p>
-<p>函数是可以指向变量的，变量f也是函数now，调用函数f()<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">In [<span class="number">84</span>]: <span class="function"><span class="keyword">def</span> <span class="title">now</span><span class="params">()</span>:</span></div><div class="line">    ...:     print(<span class="string">'2018-5-31'</span>)</div><div class="line">    ...:</div><div class="line"></div><div class="line">In [<span class="number">85</span>]: now()</div><div class="line"><span class="number">2018</span><span class="number">-5</span><span class="number">-31</span></div><div class="line"></div><div class="line">In [<span class="number">86</span>]: f = now</div><div class="line"></div><div class="line">In [<span class="number">87</span>]: f</div><div class="line">Out[<span class="number">87</span>]: &lt;function __main__.now&gt;</div><div class="line"></div><div class="line">In [<span class="number">88</span>]: f()</div><div class="line"><span class="number">2018</span><span class="number">-5</span><span class="number">-31</span></div></pre></td></tr></table></figure></p>
-<p>这里我们需要不变动now函数代码的同时动态地增加打印日志的功能，</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">		<span class="keyword">import</span> logging</div><div class="line">		</div><div class="line">In [<span class="number">75</span>]: <span class="function"><span class="keyword">def</span> <span class="title">log</span><span class="params">(func)</span>:</span></div><div class="line">    ...:     <span class="function"><span class="keyword">def</span> <span class="title">wrapper</span><span class="params">(*args, **kwargs)</span>:</span></div><div class="line">    ...:         logging.warning(<span class="string">'%s is running'</span> % func.__name__)</div><div class="line">    ...:         <span class="keyword">return</span> func(*args, **kwargs)</div><div class="line">    ...:     <span class="keyword">return</span> wrapper</div><div class="line">    ...:</div><div class="line"></div><div class="line">In [<span class="number">76</span>]: @log</div><div class="line">    ...: <span class="function"><span class="keyword">def</span> <span class="title">now</span><span class="params">()</span>:</span></div><div class="line">    ...:     print(<span class="string">'2018-5-31'</span>)</div><div class="line">    ...:</div><div class="line"></div><div class="line">In [<span class="number">77</span>]: now()</div><div class="line">WARNING:root:now <span class="keyword">is</span> running</div><div class="line"><span class="number">2018</span><span class="number">-5</span><span class="number">-31</span></div></pre></td></tr></table></figure>
-<p>把@log放到now函数上等于执行了now = log(now)</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">In [<span class="number">93</span>]: now = log(now)</div><div class="line"></div><div class="line">In [<span class="number">94</span>]: now</div><div class="line">Out[<span class="number">94</span>]: &lt;function __main__.log.&lt;locals&gt;.wrapper&gt;</div><div class="line"></div><div class="line">In [<span class="number">95</span>]: f = now</div><div class="line"></div><div class="line">In [<span class="number">96</span>]: f</div><div class="line">Out[<span class="number">96</span>]: &lt;function __main__.log.&lt;locals&gt;.wrapper&gt;</div><div class="line"></div><div class="line">In [<span class="number">97</span>]: f()</div><div class="line">WARNING:root:wrapper <span class="keyword">is</span> running</div><div class="line">WARNING:root:now <span class="keyword">is</span> running</div><div class="line"><span class="number">2018</span><span class="number">-5</span><span class="number">-31</span></div></pre></td></tr></table></figure>
-<p><strong>带参数的装饰器</strong></p>
-<p>这里有三层嵌套，最里面内嵌函数wrapper引用了外部函数log和decorator的参数,decorator函数返回值为wrapper函数, log函数的返回值为decorator函数</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">In [<span class="number">102</span>]: <span class="keyword">import</span> logging</div><div class="line">     ...: <span class="function"><span class="keyword">def</span> <span class="title">log</span><span class="params">(text)</span>:</span></div><div class="line">     ...:     <span class="function"><span class="keyword">def</span> <span class="title">decorator</span><span class="params">(func)</span>:</span></div><div class="line">     ...:         <span class="function"><span class="keyword">def</span> <span class="title">wrapper</span><span class="params">(*args, **kwargs)</span>:</span></div><div class="line">     ...:             logging.warning(<span class="string">'%s is running %s'</span> % (func.__name__, text))</div><div class="line">     ...:             <span class="keyword">return</span> func(*args, **kwargs)</div><div class="line">     ...:         <span class="keyword">return</span> wrapper</div><div class="line">     ...:     <span class="keyword">return</span> decorator</div><div class="line">     ...:</div><div class="line"></div><div class="line">In [<span class="number">103</span>]: @log(<span class="string">'here'</span>)</div><div class="line">     ...: <span class="function"><span class="keyword">def</span> <span class="title">now</span><span class="params">()</span>:</span></div><div class="line">     ...:     print(<span class="string">'2018-5-31'</span>)</div><div class="line">     ...:</div><div class="line"></div><div class="line">In [<span class="number">104</span>]:</div><div class="line"></div><div class="line">In [<span class="number">104</span>]: now()</div><div class="line">WARNING:root:now <span class="keyword">is</span> running here</div><div class="line"><span class="number">2018</span><span class="number">-5</span><span class="number">-31</span></div></pre></td></tr></table></figure>
-<p>这相当于执行了now = log(‘here’)(now)</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">In [<span class="number">108</span>]: now = log(<span class="string">'here'</span>)(now)</div><div class="line"></div><div class="line">In [<span class="number">109</span>]: now</div><div class="line">Out[<span class="number">109</span>]: &lt;function __main__.log.&lt;locals&gt;.decorator.&lt;locals&gt;.wrapper&gt;</div><div class="line"></div><div class="line">In [<span class="number">110</span>]: f = now</div><div class="line"></div><div class="line">In [<span class="number">111</span>]: f()</div><div class="line">WARNING:root:wrapper <span class="keyword">is</span> running here</div><div class="line">WARNING:root:now <span class="keyword">is</span> running here</div><div class="line"><span class="number">2018</span><span class="number">-5</span><span class="number">-31</span></div></pre></td></tr></table></figure>
-<p>函数也是对象，它有<strong>name</strong>属性，经过装饰器装饰的函数，它们的<strong>name</strong>已经从原来的now变成了wrapper</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">In [<span class="number">112</span>]: now.__name__</div><div class="line">Out[<span class="number">112</span>]: <span class="string">'wrapper'</span></div><div class="line"></div><div class="line">In [<span class="number">113</span>]: f.__name__</div><div class="line">Out[<span class="number">113</span>]: <span class="string">'wrapper'</span></div></pre></td></tr></table></figure>
-<p>这里需要把原始函数的<strong>name</strong>复制到wrapper函数中，不然依赖函数签名的代码运行会出错</p>
-<p>functools.wraps()就可有解决这个问题</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div></pre></td><td class="code"><pre><div class="line">In [<span class="number">118</span>]: <span class="function"><span class="keyword">def</span> <span class="title">log</span><span class="params">(func)</span>:</span></div><div class="line">     ...:     @functools.wraps(func)</div><div class="line">     ...:     <span class="function"><span class="keyword">def</span> <span class="title">wrapper</span><span class="params">(*args, **kwargs)</span>:</span></div><div class="line">     ...:         logging.warning(<span class="string">'%s is running'</span> % func.__name__)</div><div class="line">     ...:         <span class="keyword">return</span> func(*args, **kwargs)</div><div class="line">     ...:     <span class="keyword">return</span> wrapper</div><div class="line">     ...:</div><div class="line"></div><div class="line">In [<span class="number">119</span>]: @log</div><div class="line">     ...: <span class="function"><span class="keyword">def</span> <span class="title">now</span><span class="params">()</span>:</span></div><div class="line">     ...:     print(<span class="string">'2018-5-31'</span>)</div><div class="line">     ...:</div><div class="line"></div><div class="line">In [<span class="number">120</span>]: now()</div><div class="line">WARNING:root:now <span class="keyword">is</span> running</div><div class="line"><span class="number">2018</span><span class="number">-5</span><span class="number">-31</span></div><div class="line"></div><div class="line">In [<span class="number">121</span>]: now.__name__</div><div class="line">Out[<span class="number">121</span>]: <span class="string">'now'</span></div><div class="line"></div><div class="line">In [<span class="number">122</span>]: now = log(now)</div><div class="line"></div><div class="line">In [<span class="number">123</span>]: f = now</div><div class="line"></div><div class="line">In [<span class="number">124</span>]: f</div><div class="line">Out[<span class="number">124</span>]: &lt;function __main__.now&gt;</div><div class="line"></div><div class="line">In [<span class="number">125</span>]: now</div><div class="line">Out[<span class="number">125</span>]: &lt;function __main__.now&gt;</div><div class="line"></div><div class="line">In [<span class="number">126</span>]: f.__name__</div><div class="line">Out[<span class="number">126</span>]: <span class="string">'now'</span></div><div class="line"></div><div class="line">In [<span class="number">127</span>]: now.__name__</div><div class="line">Out[<span class="number">127</span>]: <span class="string">'now'</span></div></pre></td></tr></table></figure>
-<p>对于带参数的装饰器同样是如此实现<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div></pre></td><td class="code"><pre><div class="line">In [<span class="number">131</span>]: <span class="keyword">import</span> functools</div><div class="line">     ...: <span class="keyword">import</span> logging</div><div class="line">     ...: <span class="function"><span class="keyword">def</span> <span class="title">log</span><span class="params">(text)</span>:</span></div><div class="line">     ...:     <span class="function"><span class="keyword">def</span> <span class="title">decorator</span><span class="params">(func)</span>:</span></div><div class="line">     ...:         @functools.wraps(func)</div><div class="line">     ...:         <span class="function"><span class="keyword">def</span> <span class="title">wrapper</span><span class="params">(*args, **kwargs)</span>:</span></div><div class="line">     ...:             logging.warning(<span class="string">'%s is running %s'</span> % (func.__name__, text))</div><div class="line">     ...:             <span class="keyword">return</span> func(*args, **kwargs)</div><div class="line">     ...:         <span class="keyword">return</span> wrapper</div><div class="line">     ...:     <span class="keyword">return</span> decorator</div><div class="line">     ...:</div><div class="line"></div><div class="line">In [<span class="number">132</span>]: @log(<span class="string">'here'</span>)</div><div class="line">     ...: <span class="function"><span class="keyword">def</span> <span class="title">now</span><span class="params">()</span>:</span></div><div class="line">     ...:     print(<span class="string">'2018-5-31'</span>)</div><div class="line">     ...:</div><div class="line"></div><div class="line">In [<span class="number">133</span>]: now()</div><div class="line">WARNING:root:now <span class="keyword">is</span> running here</div><div class="line"><span class="number">2018</span><span class="number">-5</span><span class="number">-31</span></div><div class="line"></div><div class="line">In [<span class="number">134</span>]: f = now</div><div class="line"></div><div class="line">In [<span class="number">135</span>]: f</div><div class="line">Out[<span class="number">135</span>]: &lt;function __main__.now&gt;</div><div class="line"></div><div class="line">In [<span class="number">136</span>]: now</div><div class="line">Out[<span class="number">136</span>]: &lt;function __main__.now&gt;</div><div class="line"></div><div class="line">In [<span class="number">137</span>]: f()</div><div class="line">WARNING:root:now <span class="keyword">is</span> running here</div><div class="line"><span class="number">2018</span><span class="number">-5</span><span class="number">-31</span></div><div class="line"></div><div class="line">In [<span class="number">138</span>]: f.__name__</div><div class="line">Out[<span class="number">138</span>]: <span class="string">'now'</span></div><div class="line"></div><div class="line">In [<span class="number">139</span>]: now.__name__</div><div class="line">Out[<span class="number">139</span>]: <span class="string">'now'</span></div></pre></td></tr></table></figure></p>
-<p>欢迎访问<a href="https://family-treesy.github.io/" target="_blank" rel="external">Treehl的博客</a><br><a href="https://github.com/Family-TreeSY/Python-Study-Notes" target="_blank" rel="external">Github</a></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Python</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/05/30/装饰器/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
       <a class="extend prev" rel="prev" href="/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><span class="space">&hellip;</span><a class="page-number" href="/page/8/">8</a><a class="extend next" rel="next" href="/page/3/">Next &raquo;</a>
@@ -929,19 +933,7 @@ getOwnMetadataKeys:function(t){return o(i(t),arguments.length<2?void 0:u(argumen
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">PYTHON</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">MongoDB</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">Python</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">DailyQuestion</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -953,11 +945,23 @@ getOwnMetadataKeys:function(t){return o(i(t),arguments.length<2?void 0:u(argumen
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">MySQL</a>
+                <a href="javascript:void(0)" class="js-tag color2">PYTHON</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">MongoDB</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">DailyQuestion</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">Django</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">MySQL</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -985,15 +989,19 @@ getOwnMetadataKeys:function(t){return o(i(t),arguments.length<2?void 0:u(argumen
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">Scrapy-Redis</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">Web</a>
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">Scrapy-Redis</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">Unittest</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">Celery Python</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1002,10 +1010,6 @@ getOwnMetadataKeys:function(t){return o(i(t),arguments.length<2?void 0:u(argumen
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">流畅的Python</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">Celery Python</a>
               </li>
             
             <div class="clearfix"></div>
