@@ -179,6 +179,104 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-ORM" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/06/04/ORM/">什么是 Django ORM？</a>
+    </h1>
+  
+
+        
+        <a href="/2018/06/04/ORM/" class="archive-article-date">
+  	<time datetime="2018-06-04T10:30:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-06-04</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="ORM"><a href="#ORM" class="headerlink" title="ORM"></a><strong>ORM</strong></h3><blockquote>
+<p>ORM（Object Relational Mapping）：对象关系映射。它的作用是在关系型数据库和业务对象之间作一个映射，一个对象对应一张表，不用再操作SQL语句</p>
+</blockquote>
+<p>这里以我之前写的项目为例子，这里有两张表 Tag    Category</p>
+<p>Category有6列分别对应 </p>
+<ul>
+<li>name</li>
+<li>status</li>
+<li>is_nav</li>
+<li>author</li>
+<li>created_time</li>
+<li>id</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># 这里是Django  Model层代码</span></div><div class="line"></div><div class="line"></div><div class="line"><span class="comment"># -*- coding: utf-8 -*-</span></div><div class="line"><span class="keyword">from</span> __future__ <span class="keyword">import</span> unicode_literals</div><div class="line"></div><div class="line"><span class="keyword">from</span> django.db <span class="keyword">import</span> models</div><div class="line"><span class="keyword">from</span> django.contrib.auth.models <span class="keyword">import</span> User</div><div class="line"><span class="keyword">from</span> django.db.models <span class="keyword">import</span> F</div><div class="line"></div><div class="line"><span class="keyword">import</span> markdown</div><div class="line"></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Category</span><span class="params">(models.Model)</span>:</span></div><div class="line">    STATUS_ITEMS = (</div><div class="line">        (<span class="number">1</span>, <span class="string">"正常"</span>),</div><div class="line">        (<span class="number">2</span>, <span class="string">"删除"</span>),</div><div class="line">    )</div><div class="line">    name = models.CharField(max_length=<span class="number">50</span>, verbose_name=<span class="string">"名称"</span>)</div><div class="line">    status = models.PositiveIntegerField(</div><div class="line">        default=<span class="number">1</span>, choices=STATUS_ITEMS, verbose_name=<span class="string">"状态"</span></div><div class="line">    )</div><div class="line">    is_nav = models.BooleanField(default=<span class="keyword">False</span>, verbose_name=<span class="string">"是否为导航"</span>)</div><div class="line">    author = models.ForeignKey(User, verbose_name=<span class="string">"作者"</span>)</div><div class="line">    created_time = models.DateTimeField(auto_now_add=<span class="keyword">True</span>, verbose_name=<span class="string">"创建时间"</span>)</div><div class="line"></div><div class="line">    <span class="class"><span class="keyword">class</span> <span class="title">Meta</span>:</span></div><div class="line">        verbose_name = verbose_name_plural = <span class="string">'分类'</span></div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__unicode__</span><span class="params">(self)</span>:</span></div><div class="line">        <span class="keyword">return</span> self.name</div><div class="line"></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Tag</span><span class="params">(models.Model)</span>:</span></div><div class="line">    STATUS_ITEMS = (</div><div class="line">        (<span class="number">1</span>, <span class="string">"正常"</span>),</div><div class="line">        (<span class="number">2</span>, <span class="string">"删除"</span>),</div><div class="line">    )</div><div class="line">    name = models.CharField(max_length=<span class="number">50</span>, verbose_name=<span class="string">"名称"</span>)</div><div class="line">    status = models.PositiveIntegerField(</div><div class="line">        default=<span class="number">1</span>, choices=STATUS_ITEMS, verbose_name=<span class="string">"状态"</span></div><div class="line">    )</div><div class="line">    author = models.ForeignKey(User, verbose_name=<span class="string">"作者"</span>)</div><div class="line">    created_time = models.DateTimeField(auto_now_add=<span class="keyword">True</span>, verbose_name=<span class="string">"创建时间"</span>)</div><div class="line"></div><div class="line">    <span class="class"><span class="keyword">class</span> <span class="title">Meta</span>:</span></div><div class="line">        verbose_name = verbose_name_plural = <span class="string">"标签"</span></div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__unicode__</span><span class="params">(self)</span>:</span></div><div class="line">        <span class="keyword">return</span> self.name</div></pre></td></tr></table></figure>
+<p>进入MySQL</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># category的表</span></div><div class="line"></div><div class="line">mysql&gt; SELECT * FROM blog_category;</div><div class="line">+----+--------+--------+--------+----------------------------+-----------+</div><div class="line">| id | name   | status | is_nav | created_time               | author_id |</div><div class="line">+----+--------+--------+--------+----------------------------+-----------+</div><div class="line">|  <span class="number">1</span> | Django |      <span class="number">1</span> |      <span class="number">1</span> | <span class="number">2018</span><span class="number">-04</span><span class="number">-27</span> <span class="number">06</span>:<span class="number">32</span>:<span class="number">58.097000</span> |         <span class="number">1</span> |</div><div class="line">|  <span class="number">2</span> | Python |      <span class="number">1</span> |      <span class="number">1</span> | <span class="number">2018</span><span class="number">-04</span><span class="number">-27</span> <span class="number">11</span>:<span class="number">32</span>:<span class="number">39.440000</span> |         <span class="number">1</span> |</div><div class="line">|  <span class="number">3</span> | Spider |      <span class="number">1</span> |      <span class="number">1</span> | <span class="number">2018</span><span class="number">-04</span><span class="number">-27</span> <span class="number">11</span>:<span class="number">32</span>:<span class="number">45.248000</span> |         <span class="number">1</span> |</div><div class="line">+----+--------+--------+--------+----------------------------+-----------+</div><div class="line"><span class="number">3</span> rows <span class="keyword">in</span> set (<span class="number">0.00</span> sec)</div></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># Tag表</span></div><div class="line"></div><div class="line">mysql&gt; SELECT * FROM blog_tag;</div><div class="line">+----+-------+--------+----------------------------+-----------+</div><div class="line">| id | name  | status | created_time               | author_id |</div><div class="line">+----+-------+--------+----------------------------+-----------+</div><div class="line">|  <span class="number">1</span> | MySQL |      <span class="number">1</span> | <span class="number">2018</span><span class="number">-04</span><span class="number">-27</span> <span class="number">06</span>:<span class="number">33</span>:<span class="number">11.871000</span> |         <span class="number">1</span> |</div><div class="line">+----+-------+--------+----------------------------+-----------+</div><div class="line"><span class="number">1</span> row <span class="keyword">in</span> set (<span class="number">0.00</span> sec)</div></pre></td></tr></table></figure>
+<p>假如这里有Category的实例，创建一条新的category分类叫treehl，最后存入数据库</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">category = Category()</div><div class="line">category.name = <span class="string">'treehl'</span> </div><div class="line">category.save()</div></pre></td></tr></table></figure>
+<p>对应mysql</p>
+<blockquote>
+<p>INSERT INTO (category.name) VALUES(‘treehl’)</p>
+</blockquote>
+<p>这就是对象到sql的映射</p>
+<p>欢迎访问<a href="https://family-treesy.github.io/" target="_blank" rel="external">Treehl的博客</a><br><a href="https://github.com/Family-TreeSY/Python-Study-Notes" target="_blank" rel="external">Github</a></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Django</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/06/04/ORM/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-装饰器" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -669,96 +767,9 @@
 
 
   
-    <article id="post-Python实例变量和类变量" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/05/29/Python实例变量和类变量/">Python实例变量和类变量</a>
-    </h1>
-  
-
-        
-        <a href="/2018/05/29/Python实例变量和类变量/" class="archive-article-date">
-  	<time datetime="2018-05-29T03:46:51.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-05-29</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h4 id="Python实例变量和类变量"><a href="#Python实例变量和类变量" class="headerlink" title="Python实例变量和类变量"></a>Python实例变量和类变量</h4><p>类变量（类属性）：</p>
-<blockquote>
-<p>类变量属于类所有，所有实例共享一个变量</p>
-</blockquote>
-<p>实例变量（实例属性）</p>
-<blockquote>
-<p>实例变量属于各个实例所有，相互不干扰</p>
-</blockquote>
-<p><strong>1、实例属性</strong><br>给实例绑定属性的方法可以通过<strong>self和实例变量</strong></p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">In [<span class="number">23</span>]: <span class="class"><span class="keyword">class</span> <span class="title">Cat</span><span class="params">(object)</span>:</span></div><div class="line">    ...:     <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, name)</span>:</span></div><div class="line">    ...:         self.name = name</div><div class="line">    ...:</div><div class="line">In [<span class="number">25</span>]: c = Cat(<span class="string">'Fat'</span>)</div><div class="line">In [<span class="number">26</span>]: c.name</div><div class="line">Out[<span class="number">26</span>]: <span class="string">'Fat'</span></div><div class="line"></div><div class="line"><span class="comment"># 通过实例变量绑定属性</span></div><div class="line"></div><div class="line">In [<span class="number">27</span>]: c.age = <span class="number">2</span></div><div class="line"></div><div class="line">In [<span class="number">28</span>]: c.age</div><div class="line">Out[<span class="number">28</span>]: <span class="number">2</span></div></pre></td></tr></table></figure>
-<p><strong>2、类属性</strong></p>
-<p>类属性归类所有，但所有实例都可以访问它</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div></pre></td><td class="code"><pre><div class="line">In [<span class="number">31</span>]: <span class="class"><span class="keyword">class</span> <span class="title">Cat</span><span class="params">(object)</span>:</span></div><div class="line">    ...:     name = <span class="string">'Fat'</span> <span class="comment"># 类属性</span></div><div class="line">    ...:</div><div class="line"></div><div class="line">In [<span class="number">32</span>]: c = Cat() <span class="comment"># 生成实例</span></div><div class="line"></div><div class="line">In [<span class="number">33</span>]: c.name <span class="comment"># 实例调用类属性</span></div><div class="line">Out[<span class="number">33</span>]: <span class="string">'Fat'</span></div><div class="line"></div><div class="line">In [<span class="number">34</span>]: c</div><div class="line">Out[<span class="number">34</span>]: &lt;__main__.Cat at <span class="number">0x78ba2e8</span>&gt;</div><div class="line"></div><div class="line">In [<span class="number">35</span>]: Cat.name <span class="comment"># 类调用类属性</span></div><div class="line">Out[<span class="number">35</span>]: <span class="string">'Fat'</span></div><div class="line"></div><div class="line">In [<span class="number">36</span>]: c.name = <span class="string">'thin'</span> <span class="comment"># 通过实例变量更改属性“名字为short”</span></div><div class="line"></div><div class="line">In [<span class="number">37</span>]: c.name <span class="comment"># 由于实例属性优先级比类属性高，会屏蔽类属性name=thin，所以输出就是thin</span></div><div class="line">Out[<span class="number">37</span>]: <span class="string">'thin'</span></div><div class="line"></div><div class="line">In [<span class="number">38</span>]: Cat.name  <span class="comment"># 类调用类属性依旧是Fat</span></div><div class="line">Out[<span class="number">38</span>]: <span class="string">'Fat'</span></div><div class="line"></div><div class="line">In [<span class="number">39</span>]: c.name</div><div class="line">Out[<span class="number">39</span>]: <span class="string">'thin'</span></div><div class="line"></div><div class="line">In [<span class="number">40</span>]: <span class="keyword">del</span> c.name <span class="comment"># 删除实例属性</span></div><div class="line"></div><div class="line">In [<span class="number">41</span>]: c.name <span class="comment"># 再次调用，由于实例属性被删除了，就又返回到了类属性</span></div><div class="line">Out[<span class="number">41</span>]: <span class="string">'Fat'</span></div></pre></td></tr></table></figure>
-<p>欢迎访问<a href="https://family-treesy.github.io/" target="_blank" rel="external">Treehl的博客</a><br><a href="https://github.com/Family-TreeSY/Python-Study-Notes" target="_blank" rel="external">Github</a></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Python</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/05/29/Python实例变量和类变量/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/page/2/">&laquo; Prev</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><a class="page-number" href="/page/5/">5</a><span class="space">&hellip;</span><a class="page-number" href="/page/8/">8</a><a class="extend next" rel="next" href="/page/4/">Next &raquo;</a>
+      <a class="extend prev" rel="prev" href="/page/2/">&laquo; Prev</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><a class="page-number" href="/page/5/">5</a><span class="space">&hellip;</span><a class="page-number" href="/page/9/">9</a><a class="extend next" rel="next" href="/page/4/">Next &raquo;</a>
     </nav>
   
 
@@ -857,14 +868,6 @@ getOwnMetadataKeys:function(t){return o(i(t),arguments.length<2?void 0:u(argumen
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">Git</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">GitHub</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">PYTHON</a>
               </li>
              
@@ -877,11 +880,19 @@ getOwnMetadataKeys:function(t){return o(i(t),arguments.length<2?void 0:u(argumen
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Django</a>
+                <a href="javascript:void(0)" class="js-tag color1">MySQL</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">MySQL</a>
+                <a href="javascript:void(0)" class="js-tag color4">Git</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">GitHub</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Django</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -897,11 +908,11 @@ getOwnMetadataKeys:function(t){return o(i(t),arguments.length<2?void 0:u(argumen
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Redis</a>
+                <a href="javascript:void(0)" class="js-tag color2">Scrapy</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Scrapy</a>
+                <a href="javascript:void(0)" class="js-tag color1">Redis</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -909,19 +920,15 @@ getOwnMetadataKeys:function(t){return o(i(t),arguments.length<2?void 0:u(argumen
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">Web</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">Scrapy-Redis</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">Unittest</a>
+                <a href="javascript:void(0)" class="js-tag color4">Web</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">Celery Python</a>
+                <a href="javascript:void(0)" class="js-tag color4">Unittest</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -930,6 +937,14 @@ getOwnMetadataKeys:function(t){return o(i(t),arguments.length<2?void 0:u(argumen
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">流畅的Python</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">Celery Python</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">前端</a>
               </li>
             
             <div class="clearfix"></div>
